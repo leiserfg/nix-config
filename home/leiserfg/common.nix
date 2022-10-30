@@ -1,0 +1,216 @@
+{
+  inputs,
+  lib,
+  pkgs,
+  config,
+  outputs,
+  ...
+}: rec {
+  home = {
+    username = lib.mkDefault "leiserfg";
+    homeDirectory = lib.mkDefault "/home/${config.home.username}";
+    stateVersion = lib.mkDefault "22.05";
+    home.stateVersion = "22.05";
+  };
+  nix = {
+    package = pkgs.nix;
+    settings = {
+      experimental-features = ["nix-command" "flakes" "repl-flake"];
+      warn-dirty = false;
+    };
+  };
+
+  home.packages =
+    with pkgs;
+    with builtins;
+    with lib; [
+      (python310.withPackages (ps:
+        with ps; [
+          python-lsp-black
+          pyls-isort
+        ]))
+      # inkscape
+      neovim-unwrapped
+      sumneko-lua-language-server
+      # gnumake
+      # vokoscreen-ng
+      # ffmpeg-full
+      glxinfo
+      bc
+      jq
+      # javx
+      # zig
+      # bintools
+      gcc
+      usbutils
+      wget
+      nodePackages.npm
+      blueman
+      pcmanfm
+      xarchiver
+      # krita
+      pinentry.qt
+      (iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
+      (nerdfonts.override {fonts = ["Agave"];})
+      lm_sensors
+      darktable
+      gimp
+      kitty
+      rofi
+      picom
+      awesome
+      polkit_gnome
+
+      sumneko-lua-language-server
+      lsof
+      file
+      unrar
+      aria2
+      zpaq
+      p7zip
+      dfeet
+
+      pavucontrol
+      tdesktop
+      firefox
+      zathura
+      nsxiv
+      xdragon
+      arandr
+      xcwd
+      moreutils
+      htop
+      lf
+      fzf
+      bat
+      zoxide
+      ripgrep
+      rustup
+      rust-analyzer-unwrapped
+      gnome.gnome-disk-utility
+      mupdf
+      quickemu
+
+      # git stuff
+      delta
+      sshuttle
+      gh
+      git
+      git-standup
+      git-absorb
+      xsel
+      patool
+      stylua
+      yadm
+      cachix
+      android-tools
+      ncdu
+      git-lfs
+
+      # My overlay
+      # wasm2luajit
+      # godot4
+      # glslviewer
+      # armourpaint
+      # nsxiv-extras
+      # material-maker
+      yt-dlp
+    ]
+    # ++ pkgs.lib.optionals isThePc [
+    #     dwarfs
+    #     fuse-overlayfs
+    #     psmisc
+    #     yuzu-mainline
+    #     wineWowPackages.staging
+    #     winetricks
+    #     cabextract
+    #     mediainfo
+    # ];
+    ;
+  programs = {
+    home-manager.enable = true;
+
+    fzf.enable = true;
+    lf.enable = true;
+    mpv = {
+      enable = true;
+      scripts = [pkgs.mpvScripts.mpris];
+    };
+    direnv.enable = true;
+    direnv.nix-direnv.enable = true;
+    fontconfig.enable = true;
+    xsettingsd.enable = true;
+  };
+
+  gtk = {
+    enable = true;
+    iconTheme = {
+      package = pkgs.papirus-icon-theme;
+      name = "Papirus-Dark";
+    };
+    font = {
+      package = pkgs.lato;
+      name = "Lato";
+    };
+    # cursorTheme = {
+    #     package = pkgs.gnome.adwaita-icon-theme;
+    #     name = "Adwaita";
+    # };
+  };
+
+  qt.enable = true;
+
+  home.pointerCursor = {
+    package = pkgs.gnome.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 16;
+    x11.enable = true;
+    gtk.enable = true;
+  };
+  xsession = {
+    enable = true;
+    windowManager.command = "awesome";
+  };
+
+  services = {
+    gpg-agent.enable = true;
+    unclutter.enable = true;
+
+    caffeine.enable = true;
+    udiskie = {
+      enable = true;
+      automount = true;
+    };
+    mpris-proxy.enable = true;
+
+    picom = {
+      enable = true;
+      vSync = true;
+      extraOptions = ''
+        xrender-sync-fence = true
+      '';
+    };
+
+    blueman-applet.enable = true;
+    network-manager-applet.enable = true;
+
+    pasystray.enable = true;
+    flameshot.enable = true;
+    screen-locker = with pkgs; {
+      enable = true;
+      lockCmd = "${i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 pixel";
+    };
+  };
+  # Force Rewrite
+  xdg.configFile."mimeapps.list".force = true;
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = "firefox.desktop";
+      "application/pdf" = "org.pwmt.zathura.desktop";
+      "x-scheme-handler/tg" = "telegram.desktop";
+      "inode/directory" = "pcmanfm.desktop";
+      "text/plain" = "neovim.desktop";
+    };
+  };
+}
