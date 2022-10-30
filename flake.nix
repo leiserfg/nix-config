@@ -55,7 +55,7 @@
         modules =
           (builtins.attrValues nixosModules)
           ++ [
-            ./hosts/shiralad/configuration.nix
+            ./hosts/shiralad
           ];
       };
     };
