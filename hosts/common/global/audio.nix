@@ -1,7 +1,10 @@
-{pkgs, ...}: {
-  boot = {
-    kernelPackages = pkgs.linuxPackages_xanmod;
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
+{...}: {
+  services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      jack.enable = true;
   };
+  sound.enable = true;
 }

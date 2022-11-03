@@ -11,7 +11,7 @@
     chrony.enable = true;
 
     gvfs.enable = true;
-    ananicy.enable = true;
+    ananicy-cpp.enable = true;
 
     interception-tools = let
       intercept = "${pkgs.interception-tools}/bin/intercept";

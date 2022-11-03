@@ -1,21 +1,26 @@
 # This file (and the global directory) holds config that i use on all hosts
 {
+  pkgs,
   lib,
   inputs,
   outputs,
   ...
 }: {
-  imports =
-    [
-      ./locale.nix
-      ./nix.nix
-      # ./openssh.nix
-      # ./podman.nix
-      # ./postgres.nix
-      # ./sops.nix
-      # ./ssh-serve-store.nix
-    ]
-    ++ (builtins.attrValues outputs.nixosModules);
+  imports = [
+    # ./locale.nix
+    ./audio.nix
+    ./boot.nix
+    # ./nix.nix
+    # ./games.nix
+    # ./gl.nix
+    # ./locale.nix
+    # ./netowork.nix
+    # ./nfs.nix
+    # ./nix.nix
+    # ./services.nix
+    # ./x11.nix
+  ];
+  # ++ (builtins.attrValues outputs.nixosModules);
   environment = {
     loginShellInit = ''
       # Activate home-manager environment, if not already
