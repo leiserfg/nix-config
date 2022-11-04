@@ -7,9 +7,10 @@
 }: let
   ifTheyExist = groups: builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
-  users.mutableUsers = false;
+  users.mutableUsers = true; # Allow changing the password via `passwd`
   users.users.leiserfg = {
     isNormalUser = true;
+    initialPassword = "password";
     shell = pkgs.fish;
     extraGroups =
       [

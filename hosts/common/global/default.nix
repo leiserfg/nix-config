@@ -7,18 +7,16 @@
   ...
 }: {
   imports = [
-    # ./locale.nix
     ./audio.nix
     ./boot.nix
-    # ./nix.nix
-    # ./games.nix
-    # ./gl.nix
-    # ./locale.nix
-    # ./netowork.nix
-    # ./nfs.nix
-    # ./nix.nix
-    # ./services.nix
-    # ./x11.nix
+    ./games.nix
+    ./gl.nix
+    ./locale.nix
+    ./netowork.nix
+    ./nfs.nix
+    ./nix.nix
+    ./services.nix
+    ./x11.nix
   ];
   # ++ (builtins.attrValues outputs.nixosModules);
   environment = {

@@ -10,7 +10,6 @@
     username = lib.mkDefault "leiserfg";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "22.05";
-    home.stateVersion = "22.05";
   };
   nix = {
     package = pkgs.nix;
@@ -20,113 +19,93 @@
     };
   };
 
-  home.packages =
-    with pkgs;
-    with builtins;
-    with lib; [
-      (python310.withPackages (ps:
-        with ps; [
-          python-lsp-black
-          pyls-isort
-        ]))
-      # inkscape
-      neovim-unwrapped
-      sumneko-lua-language-server
-      # gnumake
-      # vokoscreen-ng
-      # ffmpeg-full
-      glxinfo
-      bc
-      jq
-      # javx
-      # zig
-      # bintools
-      gcc
-      usbutils
-      wget
-      nodePackages.npm
-      blueman
-      pcmanfm
-      xarchiver
-      # krita
-      pinentry.qt
-      (iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
-      (nerdfonts.override {fonts = ["Agave"];})
-      lm_sensors
-      darktable
-      gimp
-      kitty
-      rofi
-      picom
-      awesome
-      polkit_gnome
+  home.packages = with pkgs;
+  with builtins;
+  with lib; [
+    (python310.withPackages (ps:
+      with ps; [
+        python-lsp-black
+        pyls-isort
+      ]))
+    neovim-unwrapped
+    sumneko-lua-language-server
+    bc
+    jq
+    gcc
+    usbutils
+    wget
+    nodePackages.npm
+    blueman
+    pcmanfm
+    xarchiver
+    # krita
+    pinentry.qt
+    (iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
+    (nerdfonts.override {fonts = ["Agave"];})
+    lm_sensors
+    darktable
+    gimp
+    kitty
+    rofi
+    picom
+    awesome
+    polkit_gnome
 
-      sumneko-lua-language-server
-      lsof
-      file
-      unrar
-      aria2
-      zpaq
-      p7zip
-      dfeet
+    sumneko-lua-language-server
+    lsof
+    file
+    unrar
+    aria2
+    zpaq
+    p7zip
+    dfeet
 
-      pavucontrol
-      tdesktop
-      firefox
-      zathura
-      nsxiv
-      xdragon
-      arandr
-      xcwd
-      moreutils
-      htop
-      lf
-      fzf
-      bat
-      zoxide
-      ripgrep
-      rustup
-      rust-analyzer-unwrapped
-      gnome.gnome-disk-utility
-      mupdf
-      quickemu
+    pavucontrol
+    tdesktop
+    firefox
+    zathura
+    nsxiv
+    xdragon
+    arandr
+    xcwd
+    moreutils
+    htop
+    lf
+    fzf
+    bat
+    zoxide
+    ripgrep
+    rustup
+    rust-analyzer-unwrapped
+    gnome.gnome-disk-utility
+    mupdf
+    quickemu
 
-      # git stuff
-      delta
-      sshuttle
-      gh
-      git
-      git-standup
-      git-absorb
-      xsel
-      patool
-      stylua
-      yadm
-      cachix
-      android-tools
-      ncdu
-      git-lfs
+    # git stuff
+    delta
+    sshuttle
+    gh
+    git
+    git-standup
+    git-absorb
+    xsel
+    patool
+    stylua
+    yadm
+    cachix
+    android-tools
+    ncdu
+    git-lfs
 
-      # My overlay
-      # wasm2luajit
-      # godot4
-      # glslviewer
-      # armourpaint
-      # nsxiv-extras
-      # material-maker
-      yt-dlp
-    ]
-    # ++ pkgs.lib.optionals isThePc [
-    #     dwarfs
-    #     fuse-overlayfs
-    #     psmisc
-    #     yuzu-mainline
-    #     wineWowPackages.staging
-    #     winetricks
-    #     cabextract
-    #     mediainfo
-    # ];
-    ;
+    # My overlay
+    # wasm2luajit
+    # godot4
+    # glslviewer
+    # armourpaint
+    # nsxiv-extras
+    # material-maker
+    yt-dlp
+  ];
   programs = {
     home-manager.enable = true;
 
@@ -138,10 +117,9 @@
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
-    fontconfig.enable = true;
-    xsettingsd.enable = true;
   };
 
+  fonts.fontconfig.enable = true;
   gtk = {
     enable = true;
     iconTheme = {
@@ -173,6 +151,7 @@
   };
 
   services = {
+    xsettingsd.enable = true;
     gpg-agent.enable = true;
     unclutter.enable = true;
 
@@ -186,9 +165,9 @@
     picom = {
       enable = true;
       vSync = true;
-      extraOptions = ''
-        xrender-sync-fence = true
-      '';
+      settings = {
+        xrender-sync-fence = true;
+      };
     };
 
     blueman-applet.enable = true;
@@ -202,6 +181,10 @@
     };
   };
   # Force Rewrite
+
+  manual.manpages.enable = false;  # Doc framework is broken, so let's stop updating this
+
+
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = {
     enable = true;

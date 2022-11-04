@@ -12,9 +12,8 @@
       '';
     };
     rpcbind.enable = true;
-
-    environment.systemPackages = with pkgs; [
-      nfs-utils
-    ];
   };
+  environment.systemPackages = with pkgs; [
+    nfs-utils
+  ];
 }
