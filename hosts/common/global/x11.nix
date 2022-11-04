@@ -13,6 +13,7 @@
       lightdm.enable = true;
     };
     windowManager.tinywm.enable = true;
+    libinput.enable = true;
   };
   programs.dconf.enable = true;
 }

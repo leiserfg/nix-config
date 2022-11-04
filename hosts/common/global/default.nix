@@ -8,6 +8,7 @@
 }: {
   imports = [
     ./audio.nix
+    ./fs.nix
     ./boot.nix
     ./games.nix
     ./gl.nix
