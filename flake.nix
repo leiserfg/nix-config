@@ -7,8 +7,8 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-
     neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
   };
 
   outputs = {
@@ -45,7 +45,11 @@
       system:
         import inputs.nixpkgs {
           inherit system;
-          overlays = (builtins.attrValues overlays) ++ [inputs.neovim-nightly.overlay];
+          overlays = (builtins.attrValues overlays) 
+          ++ [
+              inputs.neovim-nightly.overlay
+              inputs.leiserfg-overlay.overlays.default
+          ];
           config.allowUnfree = true;
         }
     );

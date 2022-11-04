@@ -10,8 +10,10 @@
   with builtins;
   with lib; [
     wineWowPackages.staging
+    # wine-ge
     winetricks
     yuzu-early-access
+    dwarfs
     godot
   ];
 }

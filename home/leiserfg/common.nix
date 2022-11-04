@@ -6,11 +6,13 @@
   outputs,
   ...
 }: rec {
+  imports = [../../shared/nix.nix];
   home = {
     username = lib.mkDefault "leiserfg";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "22.05";
   };
+
   nix = {
     package = pkgs.nix;
     settings = {
@@ -30,6 +32,7 @@
     neovim-unwrapped
     sumneko-lua-language-server
     bc
+    valgrind
     jq
     gcc
     usbutils
