@@ -1,3 +1,3 @@
 {
-  imports = [./common.nix];
+  imports = [./common.nix ./features/games.nix];
 }

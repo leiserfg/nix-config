@@ -7,6 +7,8 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
   };
 
   outputs = {
@@ -43,7 +45,7 @@
       system:
         import inputs.nixpkgs {
           inherit system;
-          overlays = builtins.attrValues overlays;
+          overlays = (builtins.attrValues overlays) ++ [inputs.neovim-nightly.overlay];
           config.allowUnfree = true;
         }
     );
@@ -58,6 +60,16 @@
             ./hosts/shiralad
           ];
       };
+
+      dunkel = nixpkgs.lib.nixosSystem {
+        pkgs = legacyPackages.x86_64-linux;
+        specialArgs = {inherit inputs;};
+        modules =
+          (builtins.attrValues nixosModules)
+          ++ [
+            ./hosts/dunkel
+          ];
+      };
     };
 
     homeConfigurations = {
@@ -68,6 +80,16 @@
           (builtins.attrValues homeManagerModules)
           ++ [
             ./home/leiserfg/shiralad.nix
+          ];
+      };
+
+      "leiserfg@dunkel" = home-manager.lib.homeManagerConfiguration {
+        pkgs = legacyPackages.x86_64-linux;
+        extraSpecialArgs = {inherit inputs;};
+        modules =
+          (builtins.attrValues homeManagerModules)
+          ++ [
+            ./home/leiserfg/dunkel.nix
           ];
       };
     };

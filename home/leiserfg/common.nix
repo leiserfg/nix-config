@@ -182,8 +182,7 @@
   };
   # Force Rewrite
 
-  manual.manpages.enable = false;  # Doc framework is broken, so let's stop updating this
-
+  manual.manpages.enable = false; # Doc framework is broken, so let's stop updating this
 
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = {
