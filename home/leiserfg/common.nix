@@ -32,7 +32,7 @@
     neovim-unwrapped
     sumneko-lua-language-server
     bc
-    valgrind
+    ffmpeg_5-full
     jq
     gcc
     usbutils

@@ -15,5 +15,7 @@
     yuzu-early-access
     dwarfs
     godot
+
+    glslviewer
   ];
 }
