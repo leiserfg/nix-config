@@ -31,10 +31,15 @@
       ]))
     neovim-unwrapped
     sumneko-lua-language-server
+    pipenv
+    sqlitebrowser
+    # clangd
+    clang-tools
+    llvmPackages.clang
     bc
     ffmpeg_5-full
     jq
-    gcc
+    # gcc
     usbutils
     wget
     nodePackages.npm
@@ -168,8 +173,9 @@
     picom = {
       enable = true;
       vSync = true;
+      backend = "xr_glx_hybrid";
       settings = {
-        xrender-sync-fence = true;
+        # xrender-sync-fence = true;
       };
     };
 

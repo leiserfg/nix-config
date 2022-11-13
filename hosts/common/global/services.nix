@@ -12,7 +12,9 @@
 
     gvfs.enable = true;
     ananicy.enable = true;
-
+    udev.packages = [
+        pkgs.android-udev-rules
+    ];
     interception-tools = let
       intercept = "${pkgs.interception-tools}/bin/intercept";
       caps2esc = "${pkgs.interception-tools-plugins.caps2esc}/bin/caps2esc";

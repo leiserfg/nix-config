@@ -18,6 +18,7 @@ in {
         "video"
         "audio"
         "netorkmanager"
+        "adbusers"
       ]
       ++ ifTheyExist [
         "network"

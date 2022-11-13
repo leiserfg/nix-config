@@ -13,6 +13,8 @@
     # wine-ge
     winetricks
     yuzu-early-access
+
+    fuse-overlayfs
     dwarfs
     godot
 
