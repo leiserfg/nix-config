@@ -106,6 +106,7 @@
     git-lfs
 
     # My overlay
+    git-branchless
     # wasm2luajit
     # godot4
     # glslviewer
