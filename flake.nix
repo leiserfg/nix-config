@@ -45,11 +45,12 @@
       system:
         import inputs.nixpkgs {
           inherit system;
-          overlays = (builtins.attrValues overlays) 
-          ++ [
+          overlays =
+            (builtins.attrValues overlays)
+            ++ [
               inputs.neovim-nightly.overlay
               inputs.leiserfg-overlay.overlays.default
-          ];
+            ];
           config.allowUnfree = true;
         }
     );

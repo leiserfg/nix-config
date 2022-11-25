@@ -35,16 +35,17 @@
     sqlitebrowser
     # clangd
     clang-tools
-    llvmPackages.clang
+    # llvmPackages.clang
     bc
     ffmpeg_5-full
     jq
-    # gcc
+    gcc
     usbutils
     wget
     nodePackages.npm
     blueman
     pcmanfm
+    spaceFM
     xarchiver
     # krita
     pinentry.qt
@@ -88,10 +89,11 @@
     gnome.gnome-disk-utility
     mupdf
     quickemu
-
+    rsync
     # git stuff
     delta
     sshuttle
+    openssh
     gh
     git
     git-standup
@@ -104,6 +106,10 @@
     android-tools
     ncdu
     git-lfs
+    clinfo
+
+
+    docker-compose
 
     # My overlay
     git-branchless
@@ -193,7 +199,7 @@
   # Force Rewrite
 
   manual.manpages.enable = false; # Doc framework is broken, so let's stop updating this
-
+  # xdg.enable = true ;
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = {
     enable = true;
