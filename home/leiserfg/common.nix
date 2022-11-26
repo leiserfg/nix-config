@@ -152,7 +152,10 @@
   };
 
   qt.enable = true;
-
+  home.sessionVariables = {
+      BROWSER="firefox";
+      TERMCMD="kitty";
+  };
   home.pointerCursor = {
     package = pkgs.gnome.adwaita-icon-theme;
     name = "Adwaita";
