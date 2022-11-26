@@ -155,6 +155,8 @@
   home.sessionVariables = {
       BROWSER="firefox";
       TERMCMD="kitty";
+      EDITOR="nvim";
+      MANPAGER="nvim +Man!";
   };
   home.pointerCursor = {
     package = pkgs.gnome.adwaita-icon-theme;
