@@ -29,6 +29,9 @@
         python-lsp-black
         pyls-isort
       ]))
+    podman
+    cni-plugins
+
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
