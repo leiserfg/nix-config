@@ -32,6 +32,7 @@
     podman
     cni-plugins
 
+    fish
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
