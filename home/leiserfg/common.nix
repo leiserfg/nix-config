@@ -20,7 +20,6 @@
       warn-dirty = false;
     };
   };
-
   home.packages = with pkgs;
   with builtins;
   with lib; [
@@ -112,7 +111,6 @@
     git-lfs
     clinfo
 
-
     docker-compose
 
     # My overlay
@@ -157,10 +155,10 @@
 
   qt.enable = true;
   home.sessionVariables = {
-      BROWSER="firefox";
-      TERMCMD="kitty";
-      EDITOR="nvim";
-      MANPAGER="nvim +Man!";
+    BROWSER = "firefox";
+    TERMCMD = "kitty";
+    EDITOR = "nvim";
+    MANPAGER = "nvim +Man!";
   };
   home.pointerCursor = {
     package = pkgs.gnome.adwaita-icon-theme;
@@ -175,7 +173,17 @@
   };
 
   services = {
-    xsettingsd.enable = true;
+    xsettingsd = {
+      enable = true;
+      settings = {
+        "Xft/DPI" = 98304;
+        "Xft/Antialias" = true;
+        "Xft/HintStyle" = "hintfull";
+        "Xft/Hinting" = true;
+        "Xft/RGBA" = "none";
+      };
+    };
+
     gpg-agent.enable = true;
     unclutter.enable = true;
 

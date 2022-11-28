@@ -1,8 +1,7 @@
 {lib, ...}: {
   nix.settings = {
-
-      auto-optimise-store = lib.mkDefault true;
-      experimental-features = ["nix-command" "flakes" "repl-flake"];
+    auto-optimise-store = lib.mkDefault true;
+    experimental-features = ["nix-command" "flakes" "repl-flake"];
     substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"

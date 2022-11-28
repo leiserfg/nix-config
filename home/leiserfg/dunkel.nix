@@ -7,4 +7,8 @@
   };
   home.keyboard.options = ["ctrl:nocaps"];
   home.packages = with pkgs; [slack];
+  xresources.extraConfig = ''
+    Xft.dpi:       128
+    *dpi:          128
+  '';
 }
