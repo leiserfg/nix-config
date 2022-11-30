@@ -93,10 +93,15 @@
     mupdf
     quickemu
     rsync
+
+    sshuttle
+    autossh
+    openssh
+
     # git stuff
     delta
-    sshuttle
-    openssh
+
+
     gh
     git
     git-standup
@@ -208,10 +213,10 @@
 
     pasystray.enable = true;
     flameshot.enable = true;
-    screen-locker = with pkgs; {
-      enable = true;
-      lockCmd = "${i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 pixel";
-    };
+    # screen-locker = with pkgs; {
+    #   enable = true;
+    #   lockCmd = "${i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 pixel";
+    # };
   };
   # Force Rewrite
 
