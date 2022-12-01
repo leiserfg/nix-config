@@ -28,6 +28,7 @@
         python-lsp-black
         pyls-isort
       ]))
+    util-linux
     podman
     cni-plugins
 
