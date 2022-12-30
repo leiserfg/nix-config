@@ -51,6 +51,7 @@
     pcmanfm
     spaceFM
     xarchiver
+    calibre
     # krita
     pinentry.qt
     (iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
