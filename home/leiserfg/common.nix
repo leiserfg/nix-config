@@ -1,5 +1,6 @@
 {
   inputs,
+  unstablePkgs,
   lib,
   pkgs,
   config,
@@ -31,7 +32,7 @@
     util-linux
     podman
     cni-plugins
-
+(unstablePkgs.tdesktop)
     fish
     neovim-unwrapped
     sumneko-lua-language-server
@@ -75,7 +76,7 @@
     dfeet
 
     pavucontrol
-    tdesktop
+    # tdesktop
     firefox
     zathura
     nsxiv

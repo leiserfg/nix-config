@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -23,6 +24,15 @@
       # "aarch64-darwin"
       # "x86_64-darwin"
     ];
+
+    unstablePackages = forAllSystems (
+      system:
+        import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        }
+    );
+
   in rec {
     overlays = {
       default = import ./overlay {inherit inputs;};
@@ -80,7 +90,7 @@
     homeConfigurations = {
       "leiserfg@shiralad" = home-manager.lib.homeManagerConfiguration {
         pkgs = legacyPackages.x86_64-linux;
-        extraSpecialArgs = {inherit inputs;};
+        extraSpecialArgs = {inherit inputs; unstablePkgs = unstablePackages.x86_64-linux;};
         modules =
           (builtins.attrValues homeManagerModules)
           ++ [
@@ -90,7 +100,7 @@
 
       "leiserfg@dunkel" = home-manager.lib.homeManagerConfiguration {
         pkgs = legacyPackages.x86_64-linux;
-        extraSpecialArgs = {inherit inputs;};
+        extraSpecialArgs = {inherit inputs; unstablePkgs = unstablePackages.x86_64-linux;};
         modules =
           (builtins.attrValues homeManagerModules)
           ++ [
