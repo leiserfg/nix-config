@@ -42,6 +42,7 @@
     clang-tools
     # llvmPackages.clang
     bc
+    zk
     ffmpeg_5-full
     jq
     gcc
