@@ -33,7 +33,6 @@
     podman
     cni-plugins
 (unstablePkgs.tdesktop)
-    fish
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
