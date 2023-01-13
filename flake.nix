@@ -68,9 +68,9 @@
               inputs.leiserfg-overlay.overlays.default
             ];
           config.allowUnfree = true;
-          config.permittedInsecurePackages = [
-                "python3.10-poetry-1.2.2"
-              ];
+          # config.permittedInsecurePackages = [
+          #       "python3.10-poetry-1.2.2"
+          #     ];
         }
     );
 

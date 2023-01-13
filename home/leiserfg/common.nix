@@ -29,10 +29,12 @@
         python-lsp-black
         pyls-isort
       ]))
+
     util-linux
     podman
     cni-plugins
 (unstablePkgs.tdesktop)
+(unstablePkgs.fish)
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv

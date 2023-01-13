@@ -11,7 +11,7 @@ in {
   users.users.leiserfg = {
     isNormalUser = true;
     initialPassword = "password";
-    shell = pkgs.fish;
+    shell = pkgs.bash;
     extraGroups =
       [
         "wheel"
