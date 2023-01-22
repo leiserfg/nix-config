@@ -33,8 +33,8 @@
     util-linux
     podman
     cni-plugins
-(unstablePkgs.tdesktop)
-(unstablePkgs.fish)
+    (unstablePkgs.tdesktop)
+    (unstablePkgs.fish)
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
@@ -105,7 +105,6 @@
 
     # git stuff
     delta
-
 
     gh
     git

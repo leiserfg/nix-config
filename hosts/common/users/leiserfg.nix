@@ -30,6 +30,8 @@ in {
         "git"
         "libvirtd"
         "deluge"
+        "scanner"
+        "lp"
       ];
 
     #   openssh.authorizedKeys.keys = [

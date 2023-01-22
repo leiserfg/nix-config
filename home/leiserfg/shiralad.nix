@@ -1,8 +1,8 @@
-{pkgs, ...}:
-{
+{pkgs, ...}: {
   imports = [./common.nix ./features/games.nix];
-  home.packages  = [pkgs.steam-run
-    ( pkgs.luajit.withPackages (ps: with ps; [fennel]) )
-
+  home.packages = with pkgs; [
+    steam-run
+    (luajit.withPackages (ps: with ps; [fennel]))
+    # gnome.simple-scan
   ];
 }
