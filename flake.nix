@@ -16,6 +16,7 @@
     };
 
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
+    blender.url = "github:edolstra/nix-warez?dir=blender";
   };
 
   outputs = {
@@ -64,6 +65,7 @@
             (builtins.attrValues overlays)
             ++ [
               inputs.neovim-nightly.overlay
+              inputs.blender.overlays.default
               inputs.leiserfg-overlay.overlays.default
             ];
           config.allowUnfree = true;
