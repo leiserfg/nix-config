@@ -7,6 +7,8 @@
     ventoy-bin
     blender_3_4
     (luajit.withPackages (ps: with ps; [fennel]))
-    # gnome.simple-scan
+    gource
+    davinci-resolve
+   audacity
   ];
   }
