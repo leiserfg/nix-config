@@ -24,11 +24,11 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-    (python310.withPackages (ps:
-      with ps; [
-        python-lsp-black
-        pyls-isort
-      ]))
+    /* (python310.withPackages (ps: */
+    /*   with ps; [ */
+    /*     python-lsp-black  */
+    /*     pyls-isort */
+    /*   ])) */
 
     util-linux
     podman
@@ -36,6 +36,8 @@
     (unstablePkgs.tdesktop)
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
+    (unstablePkgs.black)
+    (unstablePkgs.nodePackages.pyright)
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
