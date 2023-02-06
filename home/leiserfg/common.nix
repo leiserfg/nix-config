@@ -35,6 +35,7 @@
     cni-plugins
     (unstablePkgs.tdesktop)
     (unstablePkgs.fish)
+    (unstablePkgs.ruff)
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
