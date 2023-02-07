@@ -38,6 +38,7 @@
     (unstablePkgs.ruff)
     (unstablePkgs.black)
     (unstablePkgs.nodePackages.pyright)
+
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
@@ -61,11 +62,11 @@
     # krita
     pinentry.qt
     (iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
-    (nerdfonts.override {fonts = ["Agave"];})
+    (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
     lm_sensors
     darktable
     gimp
-    kitty
+    (unstablePkgs.kitty)
     rofi
     picom
     awesome
