@@ -63,6 +63,7 @@
     pinentry.qt
     (iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+    noto-fonts-emoji
     lm_sensors
     darktable
     gimp
