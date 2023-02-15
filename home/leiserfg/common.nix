@@ -64,6 +64,8 @@
     (iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
     noto-fonts-emoji
+    noto-fonts-cjk-sans
+    noto-fonts
     lm_sensors
     darktable
     gimp
