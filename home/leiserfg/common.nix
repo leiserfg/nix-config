@@ -24,12 +24,6 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-    /* (python310.withPackages (ps: */
-    /*   with ps; [ */
-    /*     python-lsp-black  */
-    /*     pyls-isort */
-    /*   ])) */
-
     util-linux
     podman
     cni-plugins
@@ -56,16 +50,17 @@
     nodePackages.npm
     blueman
     pcmanfm
-    spaceFM
     xarchiver
     calibre
     # krita
     pinentry.qt
-    (iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
+    (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";}) 
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+
     noto-fonts-emoji
     noto-fonts-cjk-sans
     noto-fonts
+
     lm_sensors
     darktable
     gimp
