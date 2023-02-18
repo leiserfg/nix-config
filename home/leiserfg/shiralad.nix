@@ -10,5 +10,6 @@
     gource
     davinci-resolve
    audacity
+   abiword
   ];
   }
