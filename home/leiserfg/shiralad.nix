@@ -11,5 +11,6 @@
     davinci-resolve
    audacity
    abiword
+   tree-sitter
   ];
   }
