@@ -32,7 +32,7 @@
     (unstablePkgs.ruff)
     (unstablePkgs.black)
     (unstablePkgs.nodePackages.pyright)
-
+    luajit
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
