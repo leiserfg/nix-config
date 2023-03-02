@@ -31,7 +31,13 @@
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
     (unstablePkgs.black)
+    (unstablePkgs.bun)
     (unstablePkgs.nodePackages.pyright)
+    /* (unstablePkgs.nushell) */
+    /* (unstablePkgs.zoxide) */
+    nodePackages.typescript-language-server
+    vokoscreen-ng
+    zoxide
     luajit
     neovim-unwrapped
     sumneko-lua-language-server
@@ -92,7 +98,6 @@
     lf
     fzf
     bat
-    zoxide
     ripgrep
     rustup
     rust-analyzer-unwrapped
