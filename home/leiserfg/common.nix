@@ -33,12 +33,20 @@
     (unstablePkgs.black)
     (unstablePkgs.bun)
     (unstablePkgs.nodePackages.pyright)
-    /* (unstablePkgs.nushell) */
-    /* (unstablePkgs.zoxide) */
+    /*
+    (unstablePkgs.nushell)
+    */
+    /*
+    (unstablePkgs.zoxide)
+    */
     nodePackages.typescript-language-server
     vokoscreen-ng
     zoxide
+    iredis
+    /*
     luajit
+    */
+    doggo
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
@@ -60,7 +68,7 @@
     calibre
     # krita
     pinentry.qt
-    (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";}) 
+    (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
 
     noto-fonts-emoji

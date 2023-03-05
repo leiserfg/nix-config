@@ -15,8 +15,6 @@
   hardware.video.hidpi.enable = lib.mkDefault true;
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
-
-
   hardware.sane.enable = true;
   # hardware.sane.extraBackends = [ pkgs.epkowa ];
 

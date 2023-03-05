@@ -16,8 +16,6 @@
 
     fuse-overlayfs
     dwarfs
-    godot
-
     glslviewer
   ];
 }

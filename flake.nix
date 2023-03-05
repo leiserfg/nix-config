@@ -69,7 +69,7 @@
               inputs.leiserfg-overlay.overlays.default
             ];
           config.allowUnfree = true;
-          config.permittedInsecurePackages = [ ];
+          config.permittedInsecurePackages = [];
         }
     );
 

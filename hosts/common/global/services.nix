@@ -8,7 +8,9 @@
   services = {
     fstrim.enable = true;
     fwupd.enable = true;
-    /* chrony.enable = true; */
+    /*
+    chrony.enable = true;
+    */
 
     gvfs.enable = true;
     ananicy.enable = true;

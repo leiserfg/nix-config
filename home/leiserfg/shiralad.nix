@@ -1,16 +1,26 @@
-{pkgs, ...}: {
-  imports = [./common.nix ./features/games.nix];
+{
+  pkgs,
+  unstablePkgs,
+  ...
+}: {
+  imports = [
+    ./common.nix
+    ./features/games.nix
+    /*
+    ./features/daw.nix
+    */
+  ];
   home.packages = with pkgs; [
     steam-run
     steam
     ansel
     ventoy-bin
     blender_3_4
-    (luajit.withPackages (ps: with ps; [fennel]))
-    gource
+    unstablePkgs.godot_4
+    rink
     davinci-resolve
-   audacity
-   abiword
-   tree-sitter
+    audacity
+    abiword
+    tree-sitter
   ];
-  }
+}
