@@ -20,7 +20,9 @@
     rink
     davinci-resolve
     audacity
-    abiword
+    /* abiword */
     tree-sitter
+    nmap
+
   ];
 }
