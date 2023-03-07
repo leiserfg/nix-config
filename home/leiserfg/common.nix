@@ -133,6 +133,7 @@
     git
     git-standup
     git-absorb
+    git-bug
     xsel
     patool
     stylua
