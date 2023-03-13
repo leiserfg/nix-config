@@ -11,8 +11,8 @@
     */
   ];
   home.packages = with pkgs; [
-    steam-run
-    steam
+ unstablePkgs.steam-run
+    unstablePkgs.steam
     ansel
     ventoy-bin
     blender_3_4
