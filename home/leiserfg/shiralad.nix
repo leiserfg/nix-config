@@ -23,6 +23,6 @@
     /* abiword */
     tree-sitter
     nmap
-
+    libclang
   ];
 }

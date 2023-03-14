@@ -51,8 +51,9 @@
     sumneko-lua-language-server
     pipenv
     sqlitebrowser
+    alejandra
     # clangd
-    clang-tools
+    /* clang-tools */
     # llvmPackages.clang
     bc
     zk
