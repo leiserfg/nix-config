@@ -18,8 +18,8 @@
     blender_3_4
     unstablePkgs.godot_4
     rink
-    davinci-resolve
-    audacity
+    /* davinci-resolve */
+    /* audacity */
     /* abiword */
     tree-sitter
     nmap

@@ -82,7 +82,8 @@
     (unstablePkgs.kitty)
     rofi
     picom
-    awesome
+    /* awesome */
+    qtile
     polkit_gnome
 
     sumneko-lua-language-server
@@ -194,7 +195,8 @@
   };
   xsession = {
     enable = true;
-    windowManager.command = "awesome";
+    /* windowManager.command = "awesome"; */
+    windowManager.command = "qtile start";
   };
 
   services = {
@@ -211,7 +213,7 @@
 
     gpg-agent.enable = true;
     unclutter.enable = true;
-
+    cbatticon.enable = true;
     caffeine.enable = true;
     udiskie = {
       enable = true;
