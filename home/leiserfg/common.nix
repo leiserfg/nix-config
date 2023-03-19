@@ -224,7 +224,7 @@
       lowLevelPercent = 50;
       criticalLevelPercent = 30;
     };
-    caffeine.enable = true;
+    /* caffeine.enable = true; */
     udiskie = {
       enable = true;
       automount = true;
