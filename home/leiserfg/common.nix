@@ -101,7 +101,7 @@
 
     pavucontrol
     # tdesktop
-    firefox
+    /* firefox */
     zathura
     nsxiv
     xdragon
@@ -162,6 +162,14 @@
       enable = true;
       scripts = [pkgs.mpvScripts.mpris];
     };
+    firefox = {
+    enable =true;
+    package = pkgs.firefox.override {
+      cfg = {
+        enableTridactylNative = true;
+      };
+    };
+  };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
   };
