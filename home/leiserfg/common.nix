@@ -213,7 +213,11 @@
 
     gpg-agent.enable = true;
     unclutter.enable = true;
-    cbatticon.enable = true;
+    cbatticon= {
+      enable = true;
+      lowLevelPercent = 50;
+      criticalLevelPercent = 30;
+    };
     caffeine.enable = true;
     udiskie = {
       enable = true;
