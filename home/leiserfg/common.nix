@@ -101,7 +101,9 @@
 
     pavucontrol
     # tdesktop
-    /* firefox */
+    /*
+    firefox
+    */
     zathura
     nsxiv
     xdragon
@@ -163,13 +165,13 @@
       scripts = [pkgs.mpvScripts.mpris];
     };
     firefox = {
-    enable =true;
-    package = pkgs.firefox.override {
-      cfg = {
-        enableTridactylNative = true;
+      enable = true;
+      package = pkgs.firefox.override {
+        cfg = {
+          enableTridactylNative = true;
+        };
       };
     };
-  };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
   };
@@ -232,7 +234,9 @@
       lowLevelPercent = 50;
       criticalLevelPercent = 30;
     };
-    /* caffeine.enable = true; */
+    /*
+    caffeine.enable = true;
+    */
     udiskie = {
       enable = true;
       automount = true;
@@ -244,8 +248,8 @@
         global = {
           frame_color = "#8CAAEE";
           font = "Droid Sans 9";
-frame_width=2;
-show_indicators=true;
+          frame_width = 2;
+          show_indicators = true;
         };
         urgency_normal = {
           background = "#303446";
