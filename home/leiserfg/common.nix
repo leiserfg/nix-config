@@ -53,7 +53,9 @@
     sqlitebrowser
     alejandra
     # clangd
-    /* clang-tools */
+    /*
+    clang-tools
+    */
     # llvmPackages.clang
     bc
     zk
@@ -82,7 +84,9 @@
     (unstablePkgs.kitty)
     rofi
     picom
-    /* awesome */
+    /*
+    awesome
+    */
     qtile
     polkit_gnome
 
@@ -195,7 +199,9 @@
   };
   xsession = {
     enable = true;
-    /* windowManager.command = "awesome"; */
+    /*
+    windowManager.command = "awesome";
+    */
     windowManager.command = "qtile start";
   };
 
@@ -213,7 +219,7 @@
 
     gpg-agent.enable = true;
     unclutter.enable = true;
-    cbatticon= {
+    cbatticon = {
       enable = true;
       lowLevelPercent = 50;
       criticalLevelPercent = 30;
@@ -224,6 +230,32 @@
       automount = true;
     };
     mpris-proxy.enable = true;
+    dunst = {
+      enable = true;
+      settings = {
+        global = {
+          frame_color = "#8CAAEE";
+          font = "Droid Sans 9";
+frame_width=2;
+show_indicators=true;
+        };
+        urgency_normal = {
+          background = "#303446";
+          foreground = "#C6D0F5";
+        };
+
+        urgency_low = {
+          background = "#303446";
+          foreground = "#C6D0F5";
+        };
+
+        urgency_critical = {
+          background = "#303446";
+          foreground = "#C6D0F5";
+          frame_color = "#EF9F76";
+        };
+      };
+    };
 
     picom = {
       enable = true;
