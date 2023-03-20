@@ -200,6 +200,7 @@
     TERMCMD = "kitty";
     EDITOR = "nvim";
     MANPAGER = "nvim +Man!";
+    MOZ_USE_XINPUT2="1";
   };
   home.pointerCursor = {
     package = pkgs.gnome.adwaita-icon-theme;
