@@ -167,11 +167,11 @@
     };
     firefox = {
       enable = true;
-      package = pkgs.firefox.override {
-        cfg = {
-          enableTridactylNative = true;
-        };
-      };
+      /* package = pkgs.firefox.override { */
+      /*   cfg = { */
+      /*     enableTridactylNative = true; */
+      /*   }; */
+      /* }; */
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
