@@ -272,7 +272,7 @@
     };
 
     picom = {
-      enable = true;
+      enable = false;
       vSync = true;
       backend = "xr_glx_hybrid";
       settings = {
