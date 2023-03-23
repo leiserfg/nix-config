@@ -27,6 +27,7 @@
     util-linux
     podman
     cni-plugins
+    sioyek
     (unstablePkgs.tdesktop)
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
