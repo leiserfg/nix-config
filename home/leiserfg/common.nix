@@ -167,6 +167,10 @@
       enable = true;
       scripts = [pkgs.mpvScripts.mpris];
     };
+    bat = {
+      enable = true;
+      config.theme = "base16";
+    };
     firefox = {
       enable = true;
       /*
