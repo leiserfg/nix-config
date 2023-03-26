@@ -27,7 +27,8 @@
     util-linux
     podman
     cni-plugins
-    sioyek
+    /* sioyek */
+    gnumake
     (unstablePkgs.tdesktop)
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
@@ -168,11 +169,21 @@
     };
     firefox = {
       enable = true;
-      /* package = pkgs.firefox.override { */
-      /*   cfg = { */
-      /*     enableTridactylNative = true; */
-      /*   }; */
-      /* }; */
+      /*
+      package = pkgs.firefox.override {
+      */
+      /*
+      cfg = {
+      */
+      /*
+      enableTridactylNative = true;
+      */
+      /*
+      };
+      */
+      /*
+      };
+      */
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
@@ -201,7 +212,7 @@
     TERMCMD = "kitty";
     EDITOR = "nvim";
     MANPAGER = "nvim +Man!";
-    MOZ_USE_XINPUT2="1";
+    MOZ_USE_XINPUT2 = "1";
   };
   home.pointerCursor = {
     package = pkgs.gnome.adwaita-icon-theme;
