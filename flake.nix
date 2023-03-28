@@ -2,7 +2,10 @@
   description = "My nix config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    /* nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11"; */
+    # Use this until the pr gets merged
+    nixpkgs.url = "github:lilyinstarlight/nixpkgs/backport-220450-to-release-22.11";
+
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     hardware.url = "github:nixos/nixos-hardware";
 
