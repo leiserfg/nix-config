@@ -115,7 +115,6 @@
     htop
     lf
     fzf
-    bat
     ripgrep
     rustup
     rust-analyzer-unwrapped
