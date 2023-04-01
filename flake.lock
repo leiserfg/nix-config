@@ -6,11 +6,11 @@
       },
       "locked": {
         "dir": "blender",
-        "lastModified": 1672481321,
-        "narHash": "sha256-jEsTHCUtRxBgm5aAHg9itT3aBIvYf14LmXc5maX3b88=",
+        "lastModified": 1680119682,
+        "narHash": "sha256-Rh/TsMmvnMPVwBGxKnCba5NhBxFCj9IZTzzeCj5YM4c=",
         "owner": "edolstra",
         "repo": "nix-warez",
-        "rev": "048fb146cc637729bc7de7807f0fe4849876de23",
+        "rev": "62de96845e25cccd5ae8452252b9f570053b9a9e",
         "type": "github"
       },
       "original": {
