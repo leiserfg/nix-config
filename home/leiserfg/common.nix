@@ -86,9 +86,7 @@
     (unstablePkgs.kitty)
     rofi
     picom
-    /*
     awesome
-    */
     qtile
     polkit_gnome
 
@@ -226,9 +224,7 @@
   };
   xsession = {
     enable = true;
-    /*
-    windowManager.command = "awesome";
-    */
+    # windowManager.command = "awesome";
     windowManager.command = "qtile start";
   };
 
