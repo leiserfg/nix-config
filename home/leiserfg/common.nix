@@ -45,6 +45,7 @@
     vokoscreen-ng
     zoxide
     iredis
+    dua
     /*
     luajit
     */
@@ -139,7 +140,6 @@
     yadm
     cachix
     android-tools
-    ncdu
     git-lfs
     clinfo
 
