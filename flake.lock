@@ -313,11 +313,11 @@
       },
       "locked": {
         "dir": "contrib",
-        "lastModified": 1682060951,
-        "narHash": "sha256-HazmolDak2bJRcTALHyBSXXy/QkHTYZavG08QgCOHR0=",
+        "lastModified": 1682213005,
+        "narHash": "sha256-b6Fx9z9Uxpc8ARCOWHf0SX8bpaRpzURvqbmlX1y+iZE=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "05928fe29814516be5537ffa23e8ba7a1f86e0be",
+        "rev": "3ac952d4e27f4e2454332a730310316fe13fd4a3",
         "type": "github"
       },
       "original": {
@@ -334,16 +334,34 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1682064815,
-        "narHash": "sha256-+QhhKixvs9ofjlrpFcXHG58v1clClhBAjihTHnQG4bY=",
+        "lastModified": 1682237548,
+        "narHash": "sha256-7bXfvT8S2O+aqIfLsDk7eTQjX4JrchHh7TyqGCA5zPI=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "e64e462ec6c68f870f9f22677834ca98907a967d",
+        "rev": "3594ebd0f70ebc4553bb9e16accb1fd868dc3125",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
+        "type": "github"
+      }
+    },
+    "nix-gaming": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_6"
+      },
+      "locked": {
+        "lastModified": 1682730158,
+        "narHash": "sha256-8CPkVMnqnp7WIzHDvfAIuKXkMI42Iw7wh0tHWEreOSs=",
+        "owner": "fufexan",
+        "repo": "nix-gaming",
+        "rev": "19744a7857c960cfc18b6d95a55e36cb28c47371",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fufexan",
+        "repo": "nix-gaming",
         "type": "github"
       }
     },
@@ -458,11 +476,11 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1681956304,
-        "narHash": "sha256-unQAkIwasSPc51R+CHF+r+58WM4bU/lEnXPSpi6yAxg=",
+        "lastModified": 1682109806,
+        "narHash": "sha256-d9g7RKNShMLboTWwukM+RObDWWpHKaqTYXB48clBWXI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5b7bbca14c3627153bd305bec9a71f98b56c140c",
+        "rev": "2362848adf8def2866fabbffc50462e929d7fffb",
         "type": "github"
       },
       "original": {
@@ -473,6 +491,22 @@
       }
     },
     "nixpkgs_6": {
+      "locked": {
+        "lastModified": 1681753173,
+        "narHash": "sha256-MrGmzZWLUqh2VstoikKLFFIELXm/lsf/G9U9zR96VD4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0a4206a51b386e5cda731e8ac78d76ad924c7125",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_7": {
       "locked": {
         "lastModified": 1681932375,
         "narHash": "sha256-tSXbYmpnKSSWpzOrs27ie8X3I0yqKA6AuCzCYNtwbCU=",
@@ -495,7 +529,8 @@
         "home-manager": "home-manager",
         "leiserfg-overlay": "leiserfg-overlay",
         "neovim-nightly": "neovim-nightly",
-        "nixpkgs": "nixpkgs_6",
+        "nix-gaming": "nix-gaming",
+        "nixpkgs": "nixpkgs_7",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },

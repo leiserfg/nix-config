@@ -35,6 +35,7 @@
     (unstablePkgs.black)
     (unstablePkgs.bun)
     (unstablePkgs.nodePackages.pyright)
+    pmenu
     /*
     (unstablePkgs.nushell)
     */
@@ -87,7 +88,7 @@
     (unstablePkgs.kitty)
     rofi
     picom
-    awesome
+    /* awesome */
     qtile
     polkit_gnome
 

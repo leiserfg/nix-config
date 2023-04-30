@@ -9,6 +9,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+    nix-gaming.url = "github:fufexan/nix-gaming";
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
       # Pin to a nixpkgs revision that doesn't have NixOS/nixpkgs#208103 yet
@@ -39,6 +40,7 @@
           config.allowUnfree = true;
         }
     );
+
   in rec {
     overlays = {
       default = import ./overlay {inherit inputs;};
@@ -101,6 +103,7 @@
         extraSpecialArgs = {
           inherit inputs;
           unstablePkgs = unstablePackages.x86_64-linux;
+          gamingPks = inputs.nix-gaming.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
@@ -114,6 +117,7 @@
         extraSpecialArgs = {
           inherit inputs;
           unstablePkgs = unstablePackages.x86_64-linux;
+          gamingPks = inputs.nix-gaming.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
