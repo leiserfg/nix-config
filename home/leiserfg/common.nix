@@ -89,6 +89,7 @@
     rofi
     picom
     /* awesome */
+    xorg.xkill
     qtile
     polkit_gnome
 
