@@ -4,7 +4,7 @@
   pkgs,
   config,
   outputs,
-  gamingPks,
+  gamingPkgs,
   ...
 }: rec {
   home.packages = with pkgs;
@@ -18,6 +18,6 @@
     fuse-overlayfs
     dwarfs
     glslviewer
-    gamingPks.wine-tkg
+    gamingPkgs.wine-ge
   ];
 }

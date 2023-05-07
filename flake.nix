@@ -12,8 +12,6 @@
     nix-gaming.url = "github:fufexan/nix-gaming";
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
-      # Pin to a nixpkgs revision that doesn't have NixOS/nixpkgs#208103 yet
-      # inputs.nixpkgs.url = "github:nixos/nixpkgs?rev=fad51abd42ca17a60fc1d4cb9382e2d79ae31836";
     };
 
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
@@ -66,9 +64,7 @@
           overlays =
             (builtins.attrValues overlays)
             ++ [
-              inputs.neovim-nightly.overlay
               inputs.blender.overlays.default
-              inputs.leiserfg-overlay.overlays.default
             ];
           config.allowUnfree = true;
           config.permittedInsecurePackages = [];
@@ -102,8 +98,9 @@
         pkgs = legacyPackages.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs;
+          gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
+          myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
-          gamingPks = inputs.nix-gaming.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
@@ -117,7 +114,8 @@
         extraSpecialArgs = {
           inherit inputs;
           unstablePkgs = unstablePackages.x86_64-linux;
-          gamingPks = inputs.nix-gaming.packages.x86_64-linux;
+          gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
+          myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)

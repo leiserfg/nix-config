@@ -1,6 +1,7 @@
 {
   pkgs,
   unstablePkgs,
+  myPkgs,
   ...
 }: {
   imports = [
@@ -13,7 +14,7 @@
   home.packages = with pkgs; [
     unstablePkgs.steam-run
     unstablePkgs.steam
-    ansel
+    myPkgs.ansel
     ventoy-bin
     blender_3_5
     unstablePkgs.godot_4
