@@ -164,7 +164,7 @@
     lf.enable = true;
     mpv = {
       enable = true;
-      scripts = [pkgs.mpvScripts.mpris];
+      scripts = [pkgs.mpvScripts.mpris  pkgs.mpvScripts.sponsorblock];
     };
     bat = {
       enable = true;
