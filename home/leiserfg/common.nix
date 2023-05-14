@@ -47,6 +47,7 @@
     zoxide
     iredis
     dua
+    picocom
     /*
     luajit
     */

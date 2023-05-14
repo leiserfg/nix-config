@@ -5,6 +5,7 @@
   config,
   outputs,
   gamingPkgs,
+  unstablePkgs,
   ...
 }: rec {
   home.packages = with pkgs;
@@ -13,7 +14,7 @@
     /* wineWowPackages.staging */
     # wine-ge
     winetricks
-    yuzu-early-access
+    unstablePkgs.yuzu-early-access
 
     fuse-overlayfs
     dwarfs
