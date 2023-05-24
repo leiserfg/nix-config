@@ -6,6 +6,7 @@
   outputs,
   gamingPkgs,
   unstablePkgs,
+  myPkgs,
   ...
 }: rec {
   home.packages = with pkgs;
@@ -15,7 +16,6 @@
     # wine-ge
     winetricks
     unstablePkgs.yuzu-early-access
-
     fuse-overlayfs
     dwarfs
     glslviewer

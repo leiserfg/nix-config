@@ -27,6 +27,9 @@
         - JOB: ""
           DEVICE:
             NAME: .*[Ff]erris.*
+        - JOB: ""
+          DEVICE:
+            NAME: .*WeAct.*
         - JOB: "${intercept} -g $DEVNODE | ${caps2esc} -m 2 | ${uinput} -d $DEVNODE"
           DEVICE:
             EVENTS:
