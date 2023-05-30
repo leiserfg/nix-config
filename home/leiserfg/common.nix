@@ -24,6 +24,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+  easyeffects
     util-linux
     podman
     cni-plugins
