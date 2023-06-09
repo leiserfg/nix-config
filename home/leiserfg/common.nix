@@ -58,6 +58,8 @@
     pipenv
     sqlitebrowser
     alejandra
+    nix-prefetch-git
+    appimage-run
     # clangd
     /*
     clang-tools
@@ -120,7 +122,7 @@
     fzf
     ripgrep
     rustup
-    rust-analyzer-unwrapped
+    /* rust-analyzer-unwrapped */
     gnome.gnome-disk-utility
     mupdf
     quickemu
