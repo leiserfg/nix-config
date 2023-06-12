@@ -122,6 +122,7 @@
     fzf
     ripgrep
     rustup
+simple-http-server
     /* rust-analyzer-unwrapped */
     gnome.gnome-disk-utility
     mupdf
