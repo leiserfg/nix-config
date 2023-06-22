@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, unstablePkgs, ...}: {
   imports = [./common.nix ./features/intel_gl.nix];
   targets.genericLinux.enable = true;
   services.xcape = {
@@ -6,7 +6,7 @@
     mapExpression = {Control_L = "Escape";};
   };
   home.keyboard.options = ["ctrl:nocaps"];
-  home.packages = with pkgs; [slack pgcli pre-commit poetry terraform terraform-ls insomnia awscli2 csvkit libreoffice];
+  home.packages = with pkgs; [slack pgcli pre-commit poetry terraform terraform-ls insomnia awscli2 csvkit libreoffice unstablePkgs.mockoon];
   xresources.extraConfig = ''
     Xft.dpi:       128
     *dpi:          128
