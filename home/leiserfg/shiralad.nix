@@ -16,7 +16,8 @@
     unstablePkgs.steam
     /* myPkgs.ansel */
     ventoy-bin
-    blender_3_5
+    blender_3_6
+    vkdt
     unstablePkgs.godot_4
     rink
     /*

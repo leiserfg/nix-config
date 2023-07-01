@@ -12,8 +12,8 @@
     username = lib.mkDefault "leiserfg";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
     stateVersion = lib.mkDefault "22.05";
+    enableNixpkgsReleaseCheck = false;
   };
-
   nix = {
     package = pkgs.nix;
     settings = {
