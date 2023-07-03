@@ -37,6 +37,7 @@
     (unstablePkgs.black)
     (unstablePkgs.bun)
     (unstablePkgs.nodePackages.pyright)
+    nil
     pmenu
     /*
     (unstablePkgs.nushell)
@@ -85,6 +86,7 @@
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
 
     noto-fonts-emoji
+    /* twemoji-color-font */
     noto-fonts-cjk-sans
     noto-fonts
 
