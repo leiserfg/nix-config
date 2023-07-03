@@ -24,7 +24,8 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-  easyeffects
+    easyeffects
+    autorandr
     util-linux
     podman
     cni-plugins
@@ -73,6 +74,7 @@
     usbutils
     wget
     nodePackages.npm
+    light
     blueman
     pcmanfm
     xarchiver
@@ -115,6 +117,7 @@
     nsxiv
     xdragon
     arandr
+    xorg.xrandr
     xcwd
     moreutils
     htop
@@ -195,6 +198,8 @@ simple-http-server
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
+
+
   };
 
   fonts.fontconfig.enable = true;
@@ -286,7 +291,6 @@ simple-http-server
         };
       };
     };
-
     picom = {
       enable = false;
       vSync = true;
@@ -301,10 +305,10 @@ simple-http-server
 
     pasystray.enable = true;
     flameshot.enable = true;
-    # screen-locker = with pkgs; {
-    #   enable = true;
-    #   lockCmd = "${i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 pixel";
-    # };
+    /* screen-locker = with pkgs; { */
+    /*   enable = true; */
+    /*   lockCmd = "${i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 pixel"; */
+    /* }; */
   };
   # Force Rewrite
 
