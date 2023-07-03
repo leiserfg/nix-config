@@ -1,5 +1,5 @@
 {pkgs, unstablePkgs, ...}: {
-  imports = [./common.nix ./features/intel_gl.nix];
+  imports = [./common.nix ./features/mesa.nix];
   targets.genericLinux.enable = true;
   services.xcape = {
     enable = true;
