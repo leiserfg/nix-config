@@ -101,7 +101,7 @@
     qtile
     polkit_gnome
 
-    sumneko-lua-language-server
+    lua-language-server
     lsof
     file
     unrar
