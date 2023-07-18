@@ -28,6 +28,7 @@
     autorandr
     util-linux
     podman
+    nix-update
     cni-plugins
     /* sioyek */
     gnumake
