@@ -71,6 +71,7 @@
     zk
     ffmpeg_5-full
     jq
+    graphviz
     gcc
     usbutils
     wget
@@ -84,7 +85,7 @@
     pinentry.qt
     (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
-
+    (writeShellScriptBin "xdg-open" "exec -a $0 ${mimeo}/bin/mimeo $@")
     noto-fonts-emoji
     /* twemoji-color-font */
     noto-fonts-cjk-sans
