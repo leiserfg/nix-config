@@ -102,7 +102,7 @@
     darktable
     gimp
     (unstablePkgs.kitty)
-    rofi
+    # rofi
     picom
     /*
     awesome
@@ -182,6 +182,7 @@
     yt-dlp
     helvum
   ];
+
   programs = {
     home-manager.enable = true;
 
@@ -256,7 +257,7 @@
 
   services = {
     xsettingsd = {
-      enable = true;
+      enable = false;
       settings = {
         "Xft/DPI" = 98304;
         "Xft/Antialias" = true;
@@ -267,9 +268,9 @@
     };
 
     gpg-agent.enable = true;
-    unclutter.enable = true;
+    unclutter.enable = false;
     cbatticon = {
-      enable = true;
+      enable = false;
       lowLevelPercent = 50;
       criticalLevelPercent = 30;
     };
@@ -317,7 +318,7 @@
     blueman-applet.enable = true;
     network-manager-applet.enable = true;
 
-    pasystray.enable = true;
+    pasystray.enable = false;
     flameshot.enable = true;
     /*
     screen-locker = with pkgs; {

@@ -16,9 +16,17 @@
   # high-resolution display
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
+  #SCANNER
   /* hardware.sane.enable = true; */
   # hardware.sane.extraBackends = [ pkgs.epkowa ];
-
   # hardware.sane.extraBackends = [ pkgs.utsushi  pkgs.epkowa ];
   # services.udev.packages = [ pkgs.utsushi ];
+
+  hardware.nvidia = {
+    # Modesetting is needed for most wayland compositors
+    modesetting.enable = true;
+    powerManagement.enable = true;
+  };
+
+
 }
