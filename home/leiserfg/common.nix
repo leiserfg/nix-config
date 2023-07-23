@@ -296,7 +296,7 @@ simple-http-server
       };
     };
     picom = {
-      enable = false;
+      enable = true;
       vSync = true;
       backend = "xr_glx_hybrid";
       settings = {

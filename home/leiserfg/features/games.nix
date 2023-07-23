@@ -7,6 +7,7 @@
   gamingPkgs,
   unstablePkgs,
   myPkgs,
+  chaoticPkgs,
   ...
 }: rec {
   home.packages = with pkgs;
@@ -16,10 +17,11 @@
     # wine-ge
     winetricks
     /* unstablePkgs.yuzu-early-access */
-    myPkgs.yuzu
+    /* myPkgs.yuzu */
     fuse-overlayfs
     dwarfs
     glslviewer
     gamingPkgs.wine-ge
+    chaoticPkgs.yuzu-early-access_git
   ];
 }
