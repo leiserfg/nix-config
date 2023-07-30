@@ -36,18 +36,18 @@
     tree-sitter
     nmap
     # brave
-    gparted
-    love
 
 
-
+    hyprpicker
     rofi-wayland
 
     /* xdg-desktop-portal */
     /* xdg-desktop-portal-hyprland */
-    inputs.hyprland.packages.${system}.xdg-desktop-portal-hyprland
     wev
     wl-clipboard
+    swaybg
+    gamescope
+
   ];
   programs.waybar = {
     enable = true;
@@ -166,6 +166,12 @@
         workspace_back_and_forth = true
       }
 
+    # ScreenSharing
+    exec-once=${inputs.hyprland.packages.x86_64-linux.xdg-desktop-portal-hyprland}/libexec/xdg-desktop-portal-hyprland --verbose
+    exec-once=${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal --verbose
+
+    #Wallpaper
+    exec-once=swaybg -i ~/wall.png
     '';
   };
 }
