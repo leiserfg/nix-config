@@ -9,6 +9,7 @@
 
     ../common/global
     ../common/users/leiserfg.nix
+    ../common/features/nvidia.nix
   ];
 
   services.xserver.videoDrivers = ["nvidia"];

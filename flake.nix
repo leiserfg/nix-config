@@ -39,7 +39,6 @@
           config.allowUnfree = true;
         }
     );
-
   in rec {
     overlays = {
       default = import ./overlay {inherit inputs;};
@@ -75,7 +74,10 @@
     nixosConfigurations = {
       shiralad = nixpkgs.lib.nixosSystem {
         pkgs = legacyPackages.x86_64-linux;
-        specialArgs = {inherit inputs;};
+        specialArgs = {
+          inherit inputs;
+          unstablePkgs = unstablePackages.x86_64-linux;
+        };
         modules =
           (builtins.attrValues nixosModules)
           ++ [
@@ -85,7 +87,10 @@
 
       dunkel = nixpkgs.lib.nixosSystem {
         pkgs = legacyPackages.x86_64-linux;
-        specialArgs = {inherit inputs;};
+        specialArgs = {
+          inherit inputs;
+          unstablePkgs = unstablePackages.x86_64-linux;
+        };
         modules =
           (builtins.attrValues nixosModules)
           ++ [
