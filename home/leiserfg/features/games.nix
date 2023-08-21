@@ -16,12 +16,11 @@
     /* wineWowPackages.staging */
     # wine-ge
     winetricks
-    /* unstablePkgs.yuzu-early-access */
+    unstablePkgs.yuzu-early-access
     /* myPkgs.yuzu */
     fuse-overlayfs
     dwarfs
     glslviewer
     gamingPkgs.wine-ge
-    chaoticPkgs.yuzu-early-access_git
   ];
 }

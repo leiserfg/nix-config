@@ -30,7 +30,9 @@
     podman
     nix-update
     cni-plugins
-    /* sioyek */
+    /*
+    sioyek
+    */
     gnumake
     (unstablePkgs.tdesktop)
     (unstablePkgs.fish)
@@ -88,7 +90,9 @@
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
     (writeShellScriptBin "xdg-open" "exec -a $0 ${mimeo}/bin/mimeo $@")
     noto-fonts-emoji
-    /* twemoji-color-font */
+    /*
+    twemoji-color-font
+    */
     noto-fonts-cjk-sans
     noto-fonts
 
@@ -98,7 +102,9 @@
     (unstablePkgs.kitty)
     rofi
     picom
-    /* awesome */
+    /*
+    awesome
+    */
     xorg.xkill
     qtile
     polkit_gnome
@@ -129,12 +135,14 @@
     fzf
     ripgrep
     rustup
-simple-http-server
-    /* rust-analyzer-unwrapped */
+    simple-http-server
+    /*
+    rust-analyzer-unwrapped
+    */
     gnome.gnome-disk-utility
     mupdf
-    quickemu
     rsync
+    # appimage-run
 
     sshuttle
     autossh
@@ -167,7 +175,11 @@ simple-http-server
     # armourpaint
     # nsxiv-extras
     # material-maker
+    nix-du
     yt-dlp
+
+    openal
+    helvum
   ];
   programs = {
     home-manager.enable = true;
@@ -176,7 +188,7 @@ simple-http-server
     lf.enable = true;
     mpv = {
       enable = true;
-      scripts = [pkgs.mpvScripts.mpris  pkgs.mpvScripts.sponsorblock];
+      scripts = [pkgs.mpvScripts.mpris pkgs.mpvScripts.sponsorblock];
     };
     bat = {
       enable = true;
@@ -202,8 +214,6 @@ simple-http-server
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
-
-
   };
 
   fonts.fontconfig.enable = true;
@@ -230,6 +240,9 @@ simple-http-server
     EDITOR = "nvim";
     MANPAGER = "nvim +Man!";
     MOZ_USE_XINPUT2 = "1";
+
+    # Fix telegram input
+    ALSOFT_DRIVERS = "pulse";
   };
   home.pointerCursor = {
     package = pkgs.gnome.adwaita-icon-theme;
@@ -309,10 +322,18 @@ simple-http-server
 
     pasystray.enable = true;
     flameshot.enable = true;
-    /* screen-locker = with pkgs; { */
-    /*   enable = true; */
-    /*   lockCmd = "${i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 pixel"; */
-    /* }; */
+    /*
+    screen-locker = with pkgs; {
+    */
+    /*
+    enable = true;
+    */
+    /*
+    lockCmd = "${i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 pixel";
+    */
+    /*
+    };
+    */
   };
   # Force Rewrite
 

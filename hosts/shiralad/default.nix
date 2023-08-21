@@ -10,6 +10,7 @@
     ../common/global
     ../common/users/leiserfg.nix
     ../common/features/nvidia.nix
+    ../common/features/8bitdo.nix
   ];
 
   services.xserver.videoDrivers = ["nvidia"];
