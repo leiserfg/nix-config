@@ -348,6 +348,7 @@
       "x-scheme-handler/tg" = "telegram.desktop";
       "inode/directory" = "pcmanfm.desktop";
       "text/plain" = "neovim.desktop";
+      "application/zip" = "xarchiver.desktop";
     };
   };
 }

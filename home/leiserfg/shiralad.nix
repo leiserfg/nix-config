@@ -15,6 +15,7 @@
     unstablePkgs.steam-run
     # unstablePkgs.steam
 
+    unstablePkgs.quickemu
 
     /* myPkgs.ansel */
     ventoy-bin
