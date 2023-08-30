@@ -7,7 +7,6 @@
   gamingPkgs,
   unstablePkgs,
   myPkgs,
-  chaoticPkgs,
   ...
 }: rec {
   home.packages = with pkgs;

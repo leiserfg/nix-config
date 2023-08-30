@@ -16,7 +16,6 @@
 
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
     blender.url = "github:edolstra/nix-warez?dir=blender";
-    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
   };
 
   outputs = {
@@ -107,7 +106,6 @@
           gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
-          chaoticPkgs = inputs.chaotic.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
