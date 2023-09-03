@@ -114,7 +114,8 @@
           (builtins.attrValues homeManagerModules)
           ++ [
             ./home/leiserfg/shiralad.nix
-            hyprland.homeManagerModules.default
+          hyprland.homeManagerModules.default
+          {wayland.windowManager.hyprland.enable = true;}
           ];
       };
 
