@@ -177,8 +177,6 @@
           env = XDG_SESSION_DESKTOP=Hyprland
           env = XDG_SESSION_TYPE,wayland
 
-          exec-once=waybar
-
           bind = SUPER,Return,exec,kitty
           bind = SUPER,slash,exec,firefox
           bind = , Print, exec, grimblast copy area

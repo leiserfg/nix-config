@@ -108,7 +108,7 @@
     awesome
     */
     xorg.xkill
-    unstablePkgs.qtile
+    # unstablePkgs.qtile
     polkit_gnome
 
     lua-language-server
