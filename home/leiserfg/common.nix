@@ -177,8 +177,6 @@
     # material-maker
     nix-du
     yt-dlp
-
-    openal
     helvum
   ];
   programs = {
