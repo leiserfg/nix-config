@@ -21,8 +21,6 @@
     awscli2
     csvkit
     libreoffice
-    unstablePkgs.mockoon
-    wineWowPackages.staging
   ];
   xresources.extraConfig = ''
     Xft.dpi:       128
