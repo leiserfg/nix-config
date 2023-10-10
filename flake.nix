@@ -16,6 +16,10 @@
 
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
     blender.url = "github:edolstra/nix-warez?dir=blender";
+    codeium = {
+      url = "github:Exafunction/codeium.nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
@@ -106,6 +110,7 @@
           gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
+          codeium = inputs.codeium.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
@@ -121,6 +126,7 @@
           unstablePkgs = unstablePackages.x86_64-linux;
           gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
+          codeium = inputs.codeium.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)

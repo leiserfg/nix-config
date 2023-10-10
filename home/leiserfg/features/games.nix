@@ -15,8 +15,10 @@
     /* wineWowPackages.staging */
     # wine-ge
     winetricks
-    # unstablePkgs.yuzu-early-access
-    myPkgs.yuzu
+    unstablePkgs.yuzu-early-access
+    # myPkgs.yuzu
+    mgba
+    aseprite
     fuse-overlayfs
     dwarfs
     glslviewer

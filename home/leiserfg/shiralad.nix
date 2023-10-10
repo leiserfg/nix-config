@@ -22,6 +22,8 @@
     blender_3_6
     /* unstablePkgs.godot_4 */
     rink
+    sunvox
+    unstablePkgs.uiua
     /*
     davinci-resolve
     */
@@ -34,5 +36,7 @@
     tree-sitter
     nmap
     # brave
+    gparted
+    love
   ];
 }

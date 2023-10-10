@@ -36,6 +36,7 @@
   hardware.enableRedistributableFirmware = true;
 
   programs.fish.enable = true;
+  programs.adb.enable = true;
 
   environment.systemPackages = with pkgs; [
     vim

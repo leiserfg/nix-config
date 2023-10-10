@@ -1,6 +1,7 @@
 {
   inputs,
   unstablePkgs,
+  codeium,
   lib,
   pkgs,
   config,
@@ -37,10 +38,9 @@
     (unstablePkgs.tdesktop)
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
-    (unstablePkgs.black)
-    (unstablePkgs.bun)
     (unstablePkgs.nodePackages.pyright)
     nil
+    (codeium.codeium-lsp)
     pmenu
     /*
     (unstablePkgs.nushell)
@@ -345,7 +345,7 @@
       "application/pdf" = "org.pwmt.zathura.desktop";
       "x-scheme-handler/tg" = "telegram.desktop";
       "inode/directory" = "pcmanfm.desktop";
-      "text/plain" = "neovim.desktop";
+      "text/x-python" = "neovim.desktop";
       "application/zip" = "xarchiver.desktop";
     };
   };
