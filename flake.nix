@@ -16,10 +16,6 @@
 
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
     blender.url = "github:edolstra/nix-warez?dir=blender";
-    codeium = {
-      url = "github:Exafunction/codeium.nvim";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {

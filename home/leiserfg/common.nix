@@ -1,7 +1,6 @@
 {
   inputs,
   unstablePkgs,
-  codeium,
   lib,
   pkgs,
   config,
@@ -40,7 +39,6 @@
     (unstablePkgs.ruff)
     (unstablePkgs.nodePackages.pyright)
     nil
-    (codeium.codeium-lsp)
     pmenu
     /*
     (unstablePkgs.nushell)
