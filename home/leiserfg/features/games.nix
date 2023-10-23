@@ -18,11 +18,11 @@
     # unstablePkgs.yuzu-early-access
     # unstablePkgs.ryujinx
     myPkgs.yuzu
-    mgba
-    aseprite
-    fuse-overlayfs
-    dwarfs
-    glslviewer
+    # mgba
+    # aseprite
+    # fuse-overlayfs
+    # dwarfs
+    # glslviewer
     gamingPkgs.wine-ge
   ];
 }
