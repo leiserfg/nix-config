@@ -166,6 +166,7 @@
     clinfo
 
     docker-compose
+    xorg.xev
 
     # My overlay
     git-branchless

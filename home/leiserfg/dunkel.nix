@@ -21,6 +21,8 @@
     awscli2
     csvkit
     libreoffice
+    pandoc
+    poedit
   ];
   xresources.extraConfig = ''
     Xft.dpi:       128
