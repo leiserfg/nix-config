@@ -135,6 +135,24 @@
           ];
       };
 
+    homeConfigurations = {
+      "leiserfg@rahmen" = home-manager.lib.homeManagerConfiguration {
+        pkgs = legacyPackages.x86_64-linux;
+        extraSpecialArgs = {
+          inherit inputs;
+          gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
+          myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
+          unstablePkgs = unstablePackages.x86_64-linux;
+          codeium = inputs.codeium.packages.x86_64-linux;
+        };
+        modules =
+          (builtins.attrValues homeManagerModules)
+          ++ [
+            ./home/leiserfg/rahmen.nix
+            hyprland.homeManagerModules.default
+            {wayland.windowManager.hyprland.enable = true;}
+          ];
+      };
       "leiserfg@dunkel" = home-manager.lib.homeManagerConfiguration {
         pkgs = legacyPackages.x86_64-linux;
         extraSpecialArgs = {
