@@ -52,7 +52,7 @@
     wev
     wl-clipboard
     swaybg
-    gamescope
+    # gamescope
   ];
   programs.waybar = {
     enable = true;
@@ -201,8 +201,7 @@
           bindm=SUPER,mouse:272,movewindow
           bindm=SUPER,mouse:273,resizewindow
 
-
-
+          bind = SUPER,g,exec,~/bin/game_pick
           bind = SUPER,0,exec,rofi_power
           # workspaces
           # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}

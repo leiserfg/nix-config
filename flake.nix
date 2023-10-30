@@ -19,6 +19,7 @@
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
     blender.url = "github:edolstra/nix-warez?dir=blender";
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {

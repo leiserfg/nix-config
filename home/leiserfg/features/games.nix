@@ -21,8 +21,11 @@
     # mgba
     # aseprite
     # fuse-overlayfs
-    # dwarfs
+    dwarfs
     # glslviewer
-    gamingPkgs.wine-ge
+    gamingPkgs.wine-tkg  # This one has the wayland patches
+    dxvk
+    # gamingPkgs.wine-ge
+    # wineWowPackages.waylandFull
   ];
 }

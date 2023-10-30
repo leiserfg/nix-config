@@ -40,6 +40,8 @@
     (unstablePkgs.nodePackages.pyright)
     nil
     pmenu
+    glxinfo
+    unzip
     /*
     (unstablePkgs.nushell)
     */
