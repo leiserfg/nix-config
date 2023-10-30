@@ -8,12 +8,9 @@
   services = {
     fstrim.enable = true;
     fwupd.enable = true;
-    /*
-    chrony.enable = true;
-    */
-
     gvfs.enable = true;
     ananicy.enable = true;
+    openssh.enable = true;
     udev.packages = [
       pkgs.android-udev-rules
     ];

@@ -101,6 +101,19 @@
             ./hosts/dunkel
           ];
       };
+
+      rahmen = nixpkgs.lib.nixosSystem {
+        pkgs = legacyPackages.x86_64-linux;
+        specialArgs = {
+          inherit inputs;
+          unstablePkgs = unstablePackages.x86_64-linux;
+        };
+        modules =
+          (builtins.attrValues nixosModules)
+          ++ [
+            ./hosts/rahmen
+          ];
+      };
     };
 
     homeConfigurations = {
@@ -117,8 +130,8 @@
           (builtins.attrValues homeManagerModules)
           ++ [
             ./home/leiserfg/shiralad.nix
-          hyprland.homeManagerModules.default
-          {wayland.windowManager.hyprland.enable = true;}
+            hyprland.homeManagerModules.default
+            {wayland.windowManager.hyprland.enable = true;}
           ];
       };
 

@@ -29,6 +29,8 @@
     enableAllTerminfo = true;
   };
 
+  system.stateVersion = "22.05";
+
   # Allows users to allow others on their binds
   programs.fuse.userAllowOther = true;
 
