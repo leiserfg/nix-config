@@ -29,7 +29,7 @@
     util-linux
     podman
     nix-update
-    cni-plugins
+    python311Packages.ipython
     /*
     sioyek
     */
