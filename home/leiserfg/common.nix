@@ -88,7 +88,11 @@
     pinentry.qt
     (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
-    (writeShellScriptBin "xdg-open" "exec -a $0 ${mimeo}/bin/mimeo $@")
+    # This is a HACK to make telegram from unstable work with firefox from stable
+    (writeShellScriptBin "xdg-open" ''
+      export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
+      exec -a $0 ${mimeo}/bin/mimeo $@
+    '')
     noto-fonts-emoji
     /*
     twemoji-color-font
@@ -106,7 +110,7 @@
     awesome
     */
     xorg.xkill
-    qtile
+    unstablePkgs.qtile
     polkit_gnome
 
     lua-language-server
@@ -226,10 +230,6 @@
       package = pkgs.lato;
       name = "Lato";
     };
-    # cursorTheme = {
-    #     package = pkgs.gnome.adwaita-icon-theme;
-    #     name = "Adwaita";
-    # };
   };
 
   qt.enable = true;
