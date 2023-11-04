@@ -35,6 +35,7 @@
     */
     gnumake
     (unstablePkgs.tdesktop)
+    (firefox)
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
     (unstablePkgs.nodePackages.pyright)
@@ -123,10 +124,6 @@
     dfeet
 
     pavucontrol
-    # tdesktop
-    /*
-    firefox
-    */
     zathura
     nsxiv
     xdragon
@@ -199,7 +196,7 @@
       config.theme = "base16";
     };
     firefox = {
-      enable = true;
+      enable = false;
 
       /*
       package = pkgs.firefox.override {

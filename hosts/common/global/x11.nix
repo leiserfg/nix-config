@@ -13,7 +13,7 @@
     vt = 7;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland --user-menu --remember";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway --user-menu --remember";
         user = "greeter";
       };
     };

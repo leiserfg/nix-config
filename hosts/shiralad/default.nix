@@ -21,6 +21,10 @@
   services.openssh.enable = true;
   system.stateVersion = "22.05";
 
-
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  };
 
 }

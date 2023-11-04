@@ -131,7 +131,6 @@
           ++ [
             ./home/leiserfg/shiralad.nix
             hyprland.homeManagerModules.default
-            {wayland.windowManager.hyprland.enable = true;}
           ];
       };
 
@@ -148,8 +147,6 @@
           (builtins.attrValues homeManagerModules)
           ++ [
             ./home/leiserfg/rahmen.nix
-            hyprland.homeManagerModules.default
-            {wayland.windowManager.hyprland.enable = true;}
           ];
       };
 

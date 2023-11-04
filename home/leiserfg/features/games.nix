@@ -13,7 +13,6 @@
   with builtins;
   with lib; [
     /* wineWowPackages.staging */
-    # wine-ge
     winetricks
     # unstablePkgs.yuzu-early-access
     # unstablePkgs.ryujinx
@@ -24,7 +23,7 @@
     dwarfs
     # glslviewer
     gamingPkgs.wine-tkg  # This one has the wayland patches
-    dxvk
+    # dxvk
     # gamingPkgs.wine-ge
     # wineWowPackages.waylandFull
   ];
