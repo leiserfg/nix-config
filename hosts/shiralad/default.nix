@@ -8,6 +8,7 @@
     ./hardware-configuration.nix
 
     ../common/global
+    ../common/global/fs.nix
     ../common/users/leiserfg.nix
     ../common/features/nvidia.nix
     ../common/features/8bitdo.nix
