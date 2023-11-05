@@ -1,13 +1,12 @@
 {
-  inputs,
   unstablePkgs,
   lib,
   pkgs,
   config,
-  outputs,
   ...
-}: rec {
+}: {
   imports = [../../shared/nix.nix];
+
   home = {
     username = lib.mkDefault "leiserfg";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";
@@ -21,21 +20,16 @@
       warn-dirty = false;
     };
   };
+
   home.packages = with pkgs;
   with builtins;
   with lib; [
     easyeffects
-    autorandr
     util-linux
-    podman
     nix-update
     python311Packages.ipython
-    /*
-    sioyek
-    */
-    gnumake
     (unstablePkgs.tdesktop)
-    (firefox)
+    firefox
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
     (unstablePkgs.nodePackages.pyright)
@@ -43,47 +37,31 @@
     pmenu
     glxinfo
     unzip
-    /*
-    (unstablePkgs.nushell)
-    */
-    /*
-    (unstablePkgs.zoxide)
-    */
     nodePackages.typescript-language-server
+
     vokoscreen-ng
     zoxide
     iredis
     dua
-    picocom
-    /*
-    luajit
-    */
+    picocom # run as:  sudo picocom /dev/ttyACM0
+
     doggo
     neovim-unwrapped
     sumneko-lua-language-server
     pipenv
-    sqlitebrowser
     alejandra
     nix-prefetch-git
-    appimage-run
-    # clangd
-    /*
-    clang-tools
-    */
-    # llvmPackages.clang
     bc
-    zk
     ffmpeg_5-full
     jq
     graphviz
     gcc
     usbutils
     wget
-    nodePackages.npm
-    light
     blueman
     pcmanfm
     xarchiver
+
     # krita
     pinentry.qt
     (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
@@ -105,7 +83,6 @@
     gimp
     (unstablePkgs.kitty)
     # rofi
-    picom
     /*
     awesome
     */
@@ -126,9 +103,6 @@
     zathura
     nsxiv
     xdragon
-    arandr
-    xorg.xrandr
-    xcwd
     moreutils
     htop
     lf
@@ -140,7 +114,6 @@
     rust-analyzer-unwrapped
     */
     gnome.gnome-disk-utility
-    mupdf
     rsync
     # appimage-run
 
@@ -156,7 +129,7 @@
     git-standup
     git-absorb
     git-bug
-    xsel
+
     patool
     stylua
     yadm
@@ -166,15 +139,9 @@
     clinfo
 
     docker-compose
-    xorg.xev
 
     # My overlay
     git-branchless
-    # wasm2luajit
-    # godot4
-    # glslviewer
-    # armourpaint
-    # nsxiv-extras
     # material-maker
     nix-du
     yt-dlp
@@ -185,39 +152,25 @@
     home-manager.enable = true;
 
     fzf.enable = true;
-    lf.enable = true;
+
     mpv = {
       enable = true;
-      scripts = [pkgs.mpvScripts.mpris pkgs.mpvScripts.sponsorblock];
+      scripts = [
+        pkgs.mpvScripts.mpris
+        pkgs.mpvScripts.sponsorblock
+      ];
     };
+
     bat = {
       enable = true;
       config.theme = "base16";
-    };
-    firefox = {
-      enable = false;
-
-      /*
-      package = pkgs.firefox.override {
-      */
-      /*
-      cfg = {
-      */
-      /*
-      enableTridactylNative = true;
-      */
-      /*
-      };
-      */
-      /*
-      };
-      */
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
   };
 
   fonts.fontconfig.enable = true;
+
   gtk = {
     enable = true;
     iconTheme = {
@@ -231,6 +184,7 @@
   };
 
   qt.enable = true;
+
   home.sessionVariables = {
     BROWSER = "firefox";
     TERMCMD = "kitty";
@@ -245,35 +199,18 @@
     package = pkgs.gnome.adwaita-icon-theme;
     name = "Adwaita";
     size = 16;
-    x11.enable = true;
+    x11.enable = true; # This is used also by Xwayland
     gtk.enable = true;
-  };
-  xsession = {
-    enable = true;
-    # windowManager.command = "awesome";
-    windowManager.command = "qtile start";
   };
 
   services = {
-    xsettingsd = {
-      enable = false;
-      settings = {
-        "Xft/DPI" = 98304;
-        "Xft/Antialias" = true;
-        "Xft/HintStyle" = "hintfull";
-        "Xft/Hinting" = true;
-        "Xft/RGBA" = "none";
-      };
-    };
-
     gpg-agent.enable = true;
-    unclutter.enable = false;
     cbatticon = {
       enable = false;
       lowLevelPercent = 50;
       criticalLevelPercent = 30;
     };
-    caffeine.enable = true;
+
     udiskie = {
       enable = true;
       automount = true;
@@ -305,32 +242,9 @@
         };
       };
     };
-    picom = {
-      enable = true;
-      vSync = true;
-      backend = "xr_glx_hybrid";
-      settings = {
-        # xrender-sync-fence = true;
-      };
-    };
 
     blueman-applet.enable = true;
     network-manager-applet.enable = true;
-
-    pasystray.enable = false;
-    flameshot.enable = true;
-    /*
-    screen-locker = with pkgs; {
-    */
-    /*
-    enable = true;
-    */
-    /*
-    lockCmd = "${i3lock-fancy-rapid}/bin/i3lock-fancy-rapid 5 pixel";
-    */
-    /*
-    };
-    */
   };
   # Force Rewrite
 

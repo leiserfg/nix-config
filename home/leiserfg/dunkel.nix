@@ -3,7 +3,7 @@
   unstablePkgs,
   ...
 }: {
-  imports = [./common.nix ./features/mesa.nix];
+  imports = [./common.nix ./features/mesa.nix  ./features/x11.nix];
   targets.genericLinux.enable = true;
   services.xcape = {
     enable = true;
