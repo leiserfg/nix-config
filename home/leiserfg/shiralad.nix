@@ -14,10 +14,6 @@
   ];
   home.packages = with pkgs; [
     unstablePkgs.steam-run
-    # unstablePkgs.steam
-    /*
-    myPkgs.ansel
-    */
     ventoy-bin
     blender_3_6
     /*
@@ -27,15 +23,6 @@
     sunvox
     unstablePkgs.uiua
     krita
-    /*
-    davinci-resolve
-    */
-    /*
-    audacity
-    */
-    /*
-    abiword
-    */
     tree-sitter
     nmap
     # brave
@@ -43,16 +30,8 @@
     hyprpicker
     rofi-wayland
 
-    /*
-    xdg-desktop-portal
-    */
-    /*
-    xdg-desktop-portal-hyprland
-    */
     wev
     wl-clipboard
-    swaybg
-    unstablePkgs.gamescope
 
     (writeShellScriptBin "rofi-launch" ''
       exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
@@ -74,18 +53,15 @@
         printf %s\n\n $state
       ''
     )
-    ( writeShellScriptBin "game-picker" ''
-      exec  gamemoderun sh -c " ls ~/Games/*/*start.sh  --quoting-style=escape \
-      |xargs -n 1 -d '\n' dirname \
-      |xargs -d '\n' -n 1 basename \
-      |rofi -dmenu -i  \
-      |xargs  -d '\n'  -I__  bash -c  '$HOME/Games/__/*start.sh'"
-    ''
-)
-
-
-
-
+    (
+      writeShellScriptBin "game-picker" ''
+        exec  gamemoderun sh -c " ls ~/Games/*/*start.sh  --quoting-style=escape \
+        |xargs -n 1 -d '\n' dirname \
+        |xargs -d '\n' -n 1 basename \
+        |rofi -dmenu -i  \
+        |xargs  -d '\n'  -I__  bash -c  '$HOME/Games/__/*start.sh'"
+      ''
+    )
   ];
   programs.waybar = {
     enable = true;
@@ -230,8 +206,16 @@
     package = unstablePkgs.sway.override {
       extraSessionCommands = ''
         export WLR_RENDERER=vulkan
-        export WLR_NO_HARDWARE_CURSORS=1
         export XWAYLAND_NO_GLAMOR=1
+        export MOZ_ENABLE_WAYLAND=1
+        export XDG_SESSION_TYPE=wayland
+
+        # nvidia stuff
+        export WLR_NO_HARDWARE_CURSORS=1
+        export LIBVA_DRIVER_NAME=nvidia
+        export GBM_BACKEND=nvidia-drm
+        export __GLX_VENDOR_LIBRARY_NAME=nvidia
+        export WLR_NO_HARDWARE_CURSORS=1
       '';
 
       extraOptions = ["--unsupported-gpu"];
@@ -329,7 +313,15 @@
 
       floating = {
         titlebar = false;
-        criteria = [{class = "feh";} {title = "Mpv";} {class = "meh";}];
+        criteria = [
+          {window_role = "pop-up";}
+          {window_role = "bubble";}
+          {window_role = "task_dialog";}
+          {window_role = "Preferences";}
+
+          {window_type = "dialog";}
+          {window_type = "menu";}
+        ];
         modifier = "Mod4";
       };
       fonts = {};
@@ -354,7 +346,7 @@
         }
       ];
       menu = "rofi-pp";
-      bars = []; # Using waybar
+      bars = [];
       input = {
         "type:keyboard" = {
           xkb_layout = "us";
@@ -375,94 +367,6 @@
         [app_id="dragon"] sticky enable
         [title="Picture-in-Picture"] sticky enable
       }
-    '';
-  };
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    enableNvidiaPatches = true;
-    systemdIntegration = true;
-    extraConfig = ''
-
-          env = LIBVA_DRIVER_NAME,nvidia
-          env = GBM_BACKEND,nvidia-drm
-          env = __GLX_VENDOR_LIBRARY_NAME,nvidia
-          env = WLR_NO_HARDWARE_CURSORS,1
-
-
-          env = MOZ_ENABLE_WAYLAND,1
-          env = XDG_CURRENT_DESKTOP=Hyprland
-          env = XDG_SESSION_DESKTOP=Hyprland
-          env = XDG_SESSION_TYPE,wayland
-
-          bind = SUPER,Return,exec,kitty
-          bind = SUPER,slash,exec,firefox
-          bind = , Print, exec, grimblast copy area
-          bind = SUPER,F,fullscreen
-          bind = SUPER,d,exec,rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
-
-          bind = SUPER,j,movefocus,d
-          bind = SUPER,k,movefocus,u
-          bind = SUPER,h,movefocus,l
-          bind = SUPER,l,movefocus,r
-
-
-          bind = SUPER SHIFT,j,swapwindow,d
-          bind = SUPER SHIFT,k,swapwindow,u
-          bind = SUPER SHIFT,h,swapwindow,l
-          bind = SUPER SHIFT,l,swapwindow,r
-
-
-
-          bind = SUPER,a,killactive
-
-          bindm=SUPER,mouse:272,movewindow
-          bindm=SUPER,mouse:273,resizewindow
-
-          bind = SUPER,g,exec,~/bin/game_pick
-          bind = SUPER,0,exec,rofi_power
-          # workspaces
-          # binds $mod + [shift +] {1..9} to [move to] workspace {1..9}
-          ${builtins.concatStringsSep "\n" (builtins.genList (
-          x: let
-            ws = let
-              c = (x + 1) / 10;
-            in
-              builtins.toString (x + 1 - (c * 10));
-          in ''
-            bind = SUPER, ${ws}, workspace, ${toString (x + 1)}
-            bind = SUPER SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
-          ''
-        )
-        9)}
-        input {
-          # 2 means mouse is detached from keyboard and clicking a windows attaches it, kinda like x11
-          follow_mouse = 2
-
-          kb_layout = us
-          kb_variant = altgr-intl
-
-        }
-        general {
-         layout = master
-          gaps_in = 4
-          gaps_out = 8
-          cursor_inactive_timeout = 3
-        }
-        master {
-          no_gaps_when_only = true
-        }
-
-        binds {
-          workspace_back_and_forth = true
-        }
-
-      # ScreenSharing
-      exec-once=${inputs.hyprland.packages.x86_64-linux.xdg-desktop-portal-hyprland}/libexec/xdg-desktop-portal-hyprland --verbose
-      exec-once=${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal --verbose
-
-      #Wallpaper
-      exec-once=swaybg -i ~/wall.png
     '';
   };
 }
