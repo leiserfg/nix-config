@@ -1,7 +1,6 @@
-{pkgs, ...}: {
+{pkgs, unstablePkgs, ...}: {
   boot = {
-    # BOOT partition is defined in fs.nix
-    kernelPackages = pkgs.linuxPackages_xanmod_latest;
+    kernelPackages = unstablePkgs.linuxPackages_6_6;
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     blacklistedKernelModules = ["hid-nintendo"];

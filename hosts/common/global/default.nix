@@ -4,21 +4,23 @@
   lib,
   inputs,
   outputs,
+  config,
   ...
 }: {
-  imports = [
-    ./audio.nix
-    ./boot.nix
-    ./games.nix
-    ./gl.nix
-    ./locale.nix
-    ./netowork.nix
-    ./nfs.nix
-    ./nix.nix
-    ./services.nix
-    ./x11.nix
-  ];
-  # ++ (builtins.attrValues outputs.nixosModules);
+  imports =
+    [
+      ./audio.nix
+      ./fs.nix
+      ./boot.nix
+      ./games.nix
+      ./gl.nix
+      ./locale.nix
+      ./netowork.nix
+      ./nfs.nix
+      ./nix.nix
+      ./services.nix
+    ];
+    # ++ [lib.mkIf (lib.versionOlder config.boot.kernelPackages.kernel.version "6.5.7") ../common/features/8bitdo.nix];
   environment = {
     loginShellInit = ''
       # Activate home-manager environment, if not already

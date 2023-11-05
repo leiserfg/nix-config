@@ -14,17 +14,16 @@
   with lib; [
     /* wineWowPackages.staging */
     winetricks
-    # unstablePkgs.yuzu-early-access
+    unstablePkgs.yuzu-early-access
     # unstablePkgs.ryujinx
-    myPkgs.yuzu
     # mgba
     # aseprite
-    # fuse-overlayfs
+    fuse-overlayfs
     dwarfs
     # glslviewer
-    gamingPkgs.wine-tkg  # This one has the wayland patches
+    # gamingPkgs.wine-tkg  # This one has the wayland patches
     # dxvk
-    # gamingPkgs.wine-ge
+    gamingPkgs.wine-ge
     # wineWowPackages.waylandFull
   ];
 }

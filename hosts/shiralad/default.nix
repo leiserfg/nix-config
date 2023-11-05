@@ -11,7 +11,8 @@
     ../common/global/fs.nix
     ../common/users/leiserfg.nix
     ../common/features/nvidia.nix
-    ../common/features/8bitdo.nix
+    # ../common/features/8bitdo.nix    # now builtin in linux 6.6
+    ../common/features/sway.nix
   ];
 
   services.xserver.videoDrivers = ["nvidia"];

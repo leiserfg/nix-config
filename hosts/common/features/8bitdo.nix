@@ -5,6 +5,7 @@
   unstablePkgs,
   ...
 }: {
+
   boot = {
     extraModulePackages = [
       (config.boot.kernelPackages.callPackage ./xpad {})

@@ -52,7 +52,7 @@
     wev
     wl-clipboard
     swaybg
-    # gamescope
+    unstablePkgs.gamescope
 
     (writeShellScriptBin "rofi-launch" ''
       exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
@@ -74,6 +74,18 @@
         printf %s\n\n $state
       ''
     )
+    ( writeShellScriptBin "game-picker" ''
+      exec  gamemoderun sh -c " ls ~/Games/*/*start.sh  --quoting-style=escape \
+      |xargs -n 1 -d '\n' dirname \
+      |xargs -d '\n' -n 1 basename \
+      |rofi -dmenu -i  \
+      |xargs  -d '\n'  -I__  bash -c  '$HOME/Games/__/*start.sh'"
+    ''
+)
+
+
+
+
   ];
   programs.waybar = {
     enable = true;
@@ -195,8 +207,8 @@
         "custom/pp" = {
           exec = "pp-state";
           on-click = "rofi-pp && pkill -SIGRTMIN+9 waybar";
-          signal=9;
-          interval="once";
+          signal = 9;
+          interval = "once";
         };
 
         "hyprland/window" = {
@@ -231,9 +243,13 @@
       modifier = "Mod4";
       # Use kitty as default terminal
       terminal = "kitty";
-      assigns = {"2: web" = [{class = "^firefox$";}];};
+      assigns = {
+        "1" = [{class = "^firefox$";}];
+        "4" = [{class = "^telegram-desktop$";}];
+      };
+
       focus = {
-        followMouse = "always";
+        followMouse = "no";
         newWindow = "smart";
       };
       defaultWorkspace = "workspace number 1";
@@ -245,12 +261,12 @@
       gaps = {
         top = 1;
         bottom = 1;
-        horizontal = 5;
-        vertical = 5;
-        inner = 5;
-        outer = 5;
-        left = 5;
-        right = 5;
+        horizontal = 3;
+        vertical = 3;
+        inner = 3;
+        outer = 3;
+        left = 3;
+        right = 3;
         smartBorders = "on";
         smartGaps = true;
       };
@@ -294,6 +310,7 @@
         "Mod4+space" = "focus mode_toggle";
         "Mod4+slash" = "exec firefox";
         "Mod4+d" = "exec --no-startup-id rofi-launch";
+        "Mod4+g" = "exec game-picker";
         "Mod4+0" = "exec rofi_power";
 
         "Print" = "exec ${pkgs.wayshot}/bin/wayshot -f /tmp/foo.png; exec sleep 1; exec ${pkgs.wl-clipboard}/bin/wl-copy -t image/png < /tmp/foo.png"; # TODO: would like to change the program for screenshots
@@ -309,6 +326,7 @@
       down = "j";
       right = "l";
       left = "h";
+
       floating = {
         titlebar = false;
         criteria = [{class = "feh";} {title = "Mpv";} {class = "meh";}];
@@ -335,8 +353,8 @@
           always = true;
         }
       ];
-      menu = "${pkgs.wofi}/bin/wofi --insensitive --show drun,run";
-      bars = [];
+      menu = "rofi-pp";
+      bars = []; # Using waybar
       input = {
         "type:keyboard" = {
           xkb_layout = "us";
@@ -348,7 +366,16 @@
           hide_cursor = "when-typing enable";
         };
       };
+      output = {
+        "*" = {bg = "~/wall.png fill";};
+      };
     };
+    extraConfig = ''
+      for_window {
+        [app_id="dragon"] sticky enable
+        [title="Picture-in-Picture"] sticky enable
+      }
+    '';
   };
 
   wayland.windowManager.hyprland = {

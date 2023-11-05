@@ -84,7 +84,6 @@
     blueman
     pcmanfm
     xarchiver
-    calibre
     # krita
     pinentry.qt
     (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
@@ -342,11 +341,13 @@
     enable = true;
     defaultApplications = {
       "text/html" = "firefox.desktop";
-      "application/pdf" = "org.pwmt.zathura.desktop";
       "x-scheme-handler/tg" = "telegram.desktop";
       "inode/directory" = "pcmanfm.desktop";
       "text/x-python" = "neovim.desktop";
+      "text/plain" = "neovim.desktop";
       "application/zip" = "xarchiver.desktop";
+      "application/pdf" = "org.pwmt.zathura.desktop";
+      "application/epub+zip" = "org.pwmt.zathura.desktop.desktop";
     };
   };
 }
