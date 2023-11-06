@@ -7,13 +7,13 @@
 }: {
   imports = [];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod"];
+  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "thunderbolt" ];
   boot.kernelModules = ["kvm-amd"];
 
   boot.kernel.sysctl."vm.max_map_count" = 544288;
 
   hardware.cpu.amd.updateMicrocode = true;
-  # high-resolution display
+
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
   boot.initrd.luks.devices."luks-464cbf68-943f-4202-a078-da58d76a4219".device = "/dev/disk/by-uuid/464cbf68-943f-4202-a078-da58d76a4219";

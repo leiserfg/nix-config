@@ -7,4 +7,5 @@
     jack.enable = true;
   };
   sound.enable = true;
+  security.rtkit.enable = true;
 }
