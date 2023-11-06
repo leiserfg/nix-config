@@ -28,7 +28,9 @@ with pkgs; (let
 in {
   home.sessionVariables = with pkgs; {
     LIBGL_DRIVERS_PATH = lib.makeSearchPathOutput "lib" "lib/dri" mesa-drivers;
-    /* LIBVA_DRIVERS_PATH = lib.makeSearchPathOutput "out" "lib/dri" intel-driver; */
+    /*
+    LIBVA_DRIVERS_PATH = lib.makeSearchPathOutput "out" "lib/dri" intel-driver;
+    */
     LIBVA_DRIVERS_PATH = lib.makeSearchPathOutput "out" "lib/dri" mesa-drivers;
     LD_LIBRARY_PATH = ''${lib.makeLibraryPath mesa-drivers}:${lib.makeSearchPathOutput "lib"
         "lib/vdpau"
@@ -36,6 +38,6 @@ in {
     VK_LAYER_PATH = ''${vulkan-validation-layers}/share/vulkan/explicit_layer.d'';
     VK_ICD_FILENAMES = "$(cat ${icd})";
     OCL_ICD_VENDORS = "${mesa.opencl}/etc/OpenCL/vendors/";
-    __EGL_VENDOR_LIBRARY_FILENAMES = "${mesa-drivers}/share/glvnd/egl_vendor.d/";
+    "__EGL_VENDOR_LIBRARY_FILENAMES" = "${mesa-drivers}/share/glvnd/egl_vendor.d/";
   };
 })
