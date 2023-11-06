@@ -191,7 +191,7 @@
 
   programs = {
     home-manager.enable = true;
-
+    # bash.enable = true;
     fzf.enable = true;
 
     mpv = {
