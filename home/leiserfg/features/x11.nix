@@ -109,8 +109,8 @@
     };
   };
 
-  xsession.windowManager.i3 = lib.attrsets.mergeAttrsList [
-    {
+  xsession.windowManager.i3 =
+    lib.attrsets.recursiveUpdate {
       config = {
         assigns = {
           "1" = [
@@ -120,15 +120,12 @@
             {class = "^telegram-desktop$";}
           ];
         };
-
-        extraConfig = ''
-          for_window [class="dragon"] sticky enable
-          for_window [title="Picture-in-Picture"] sticky enable
-        '';
       };
+      extraConfig = ''
+        for_window [class="dragon"] sticky enable
+        for_window [title="Picture-in-Picture"] sticky enable
+      '';
     }
-
     # Common stuff
-    (import ./i3-sway.nix inputs)
-  ];
+    (import ./i3-sway.nix inputs);
 }
