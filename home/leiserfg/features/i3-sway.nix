@@ -51,8 +51,8 @@
       "${modifier}+Shift+9" = "move container to workspace number 9";
 
       "${modifier}+h" = "focus left";
-      "${modifier}+k" = "focus down";
-      "${modifier}+j" = "focus up";
+      "${modifier}+j" = "focus down";
+      "${modifier}+k" = "focus up";
       "${modifier}+l" = "focus right";
       "${modifier}+Return" = "exec kitty";
 

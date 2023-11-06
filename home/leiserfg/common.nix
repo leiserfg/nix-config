@@ -187,6 +187,36 @@
         |xargs  -d '\n'  -I__  bash -c  '$HOME/Games/__/*start.sh'"
       ''
     )
+    (
+      writeShellScriptBin "rofi_power" ''
+        enumerate () {
+            awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
+        }
+        question=$(printf "||||"| enumerate|rofi -dmenu -markup-rows)
+
+        case $question in
+            **)
+                loginctl lock-session $XDG_SESSION_ID
+                ;;
+            **)
+                systemctl suspend
+                ;;
+            **)
+                # bspc quit || qtile cmd-obj -o cmd -f shutdown
+                hyprctl dispatch exit || loginctl terminate-session $XDG_SESSION_ID
+                ;;
+            **)
+                systemctl reboot
+                ;;
+            **)
+                systemctl poweroff
+                ;;
+            *)
+                exit 0  # do nothing on wrong response
+                ;;
+        esac
+      ''
+    )
   ];
 
   programs = {

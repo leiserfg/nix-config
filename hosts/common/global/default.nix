@@ -35,6 +35,7 @@
   # Allows users to allow others on their binds
   programs.fuse.userAllowOther = true;
 
+  programs.dconf.enable = true;
   hardware.enableRedistributableFirmware = true;
 
   programs.fish.enable = true;
