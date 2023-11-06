@@ -15,11 +15,8 @@
   };
 
   home.packages = with pkgs; [
-    /*
-    zrythm
-    */
     ardour
     x42-avldrums
-    helvum
+    sunvox
   ];
 }

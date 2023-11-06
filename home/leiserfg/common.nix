@@ -24,6 +24,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    unstablePkgs.steam-run
     easyeffects
     util-linux
     nix-update
@@ -62,6 +63,12 @@
     pcmanfm
     xarchiver
 
+    ventoy-bin
+    rink
+    unstablePkgs.uiua
+    krita
+    tree-sitter
+    nmap
     # krita
     pinentry.qt
     (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
@@ -146,6 +153,40 @@
     nix-du
     yt-dlp
     helvum
+
+    #scripts
+    # here we don't use the nix binaries to allow rewriting ruff with the correct one
+    # see x11 and wayland
+
+    (writeShellScriptBin "rofi-launch" ''
+      exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
+    '')
+
+    (
+      writeShellScriptBin "rofi-pp" ''
+        printf " Performance\n Balanced\n Power Saver" \
+        | rofi -dmenu -i \
+        | tr -cd '[:print:]' \
+        | xargs|tr " " "-" \
+        | tr '[:upper:]' '[:lower:]' \
+        | xargs powerprofilesctl set
+      ''
+    )
+    (
+      writeShellScriptBin "pp-state" ''
+        state=$(powerprofilesctl get | sed -e "s/.*string//" -e "s/.*save.*/ /"  -e "s/.*perf.*/ /"  -e "s/.*balanced.*/ /")
+        printf %s\n\n $state
+      ''
+    )
+    (
+      writeShellScriptBin "game-picker" ''
+        exec  gamemoderun sh -c " ls ~/Games/*/*start.sh  --quoting-style=escape \
+        |xargs -n 1 -d '\n' dirname \
+        |xargs -d '\n' -n 1 basename \
+        |rofi -dmenu -i  \
+        |xargs  -d '\n'  -I__  bash -c  '$HOME/Games/__/*start.sh'"
+      ''
+    )
   ];
 
   programs = {
