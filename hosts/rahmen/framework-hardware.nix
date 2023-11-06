@@ -12,15 +12,14 @@
     "nvme.noacpi=1"
   ];
 
- # This enables the brightness and airplane mode keys to work
+  # This enables the brightness and airplane mode keys to work
   # https://community.frame.work/t/12th-gen-not-sending-xf86monbrightnessup-down/20605/11
-  boot.blacklistedKernelModules = [ "hid-sensor-hub" ];
-
+  boot.blacklistedKernelModules = ["hid-sensor-hub"];
 
   systemd.services.bind-keys-driver = {
     description = "Bind brightness and airplane mode keys to their driver";
-    wantedBy = [ "default.target" ];
-    after = [ "network.target" ];
+    wantedBy = ["default.target"];
+    after = ["network.target"];
     serviceConfig = {
       Type = "oneshot";
       User = "root";
@@ -38,15 +37,14 @@
     '';
   };
 
-
- # Fix TRRS headphones missing a mic
+  # Fix TRRS headphones missing a mic
   # https://community.frame.work/t/headset-microphone-on-linux/12387/3
   boot.extraModprobeConfig = ''
     options snd-hda-intel model=dell-headset-multi
   '';
 
   # For fingerprint support
-  services.fprintd.enable = lib.mkDefault true;
+  services.fprintd.enable = true;
 
   # Custom udev rules
   services.udev.extraRules = ''
@@ -60,6 +58,5 @@
   # Mis-detected by nixos-generate-config
   # https://github.com/NixOS/nixpkgs/issues/171093
   # https://wiki.archlinux.org/title/Framework_Laptop#Changing_the_brightness_of_the_monitor_does_not_work
-  hardware.acpilight.enable = lib.mkDefault true;
-
+  hardware.acpilight.enable = true;
 }

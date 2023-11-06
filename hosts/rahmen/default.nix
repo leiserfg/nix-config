@@ -12,6 +12,7 @@
       ./framework-hardware.nix
       ../common/global
       ../common/users/leiserfg.nix
+      ../common/features/sway.nix
     ];
 
   hardware.cpu.amd.updateMicrocode = true;
