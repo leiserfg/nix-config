@@ -142,12 +142,13 @@
     {
       package = unstablePkgs.sway.override {
         extraSessionCommands = ''
-          export WLR_RENDERER=vulkan
+          source ~/.profile
           export XWAYLAND_NO_GLAMOR=1
           export MOZ_ENABLE_WAYLAND=1
           export XDG_SESSION_TYPE=wayland
 
           if command -v nvidia-smi >/dev/null 2>&1; then
+            export WLR_RENDERER=vulkan
             export WLR_NO_HARDWARE_CURSORS=1
             export LIBVA_DRIVER_NAME=nvidia
             export GBM_BACKEND=nvidia-drm
@@ -162,36 +163,38 @@
         withGtkWrapper = true;
       };
 
-      input = {
-        "type:keyboard" = {
-          xkb_layout = "us";
-          xkb_variant = "altgr-intl";
+      config = {
+        input = {
+          "type:keyboard" = {
+            xkb_layout = "us";
+            xkb_variant = "altgr-intl";
+          };
         };
-      };
 
-      seat = {
-        "*" = {
-          hide_cursor = "when-typing enable";
+        seat = {
+          "*" = {
+            hide_cursor = "when-typing enable";
+          };
         };
-      };
-      output = {
-        "*" = {bg = "~/wall.png fill";};
-      };
+        output = {
+          "*" = {bg = "~/wall.png fill";};
+        };
 
-      assigns = {
-        "1" = [
-          {app_id = "^firefox$";}
-        ];
-        "4" = [
-          {app_id = "^org.telegram.desktop$";}
-        ];
-      };
+        assigns = {
+          "1" = [
+            {app_id = "^firefox$";}
+          ];
+          "4" = [
+            {app_id = "^org.telegram.desktop$";}
+          ];
+        };
 
-      extraConfig = ''
-        for_window [app_id="dragon"] sticky enable
-        for_window [class="dragon"] sticky enable
-        for_window [title="Picture-in-Picture"] sticky enable
-      '';
+        extraConfig = ''
+          for_window [app_id="dragon"] sticky enable
+          for_window [class="dragon"] sticky enable
+          for_window [title="Picture-in-Picture"] sticky enable
+        '';
+      };
     }
 
     # Common stuff
