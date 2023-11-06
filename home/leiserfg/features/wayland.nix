@@ -142,7 +142,9 @@
     {
       package = unstablePkgs.sway.override {
         extraSessionCommands = ''
-          source ~/.profile
+          # home-manager on non nixos stuff
+          source ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+
           export XWAYLAND_NO_GLAMOR=1
           export MOZ_ENABLE_WAYLAND=1
           export XDG_SESSION_TYPE=wayland
