@@ -104,17 +104,7 @@
           */
         ];
         layer = "top";
-        network = {
-          format = "{ifname}";
-          format-wifi = "{essid} ({signalStrength}%) ";
-          format-ethernet = "{ifname} ";
-          format-disconnected = "";
-          tooltip-format = "{ifname}";
-          tooltip-format-wifi = "{essid} ({signalStrength}%) ";
-          tooltip-format-ethernet = "{ifname} ";
-          tooltip-format-disconnected = "Disconnected";
-          max-length = 50;
-        };
+
         "sway/workspaces" = {
           format = "{name} {icon}";
           format-icons = {
@@ -171,8 +161,38 @@
         withBaseWrapper = true;
         withGtkWrapper = true;
       };
-    }
 
+      input = {
+        "type:keyboard" = {
+          xkb_layout = "us";
+          xkb_variant = "altgr-intl";
+        };
+      };
+
+      seat = {
+        "*" = {
+          hide_cursor = "when-typing enable";
+        };
+      };
+      output = {
+        "*" = {bg = "~/wall.png fill";};
+      };
+
+      assigns = {
+        "1" = [
+          {app_id = "^firefox$";}
+        ];
+        "4" = [
+          {app_id = "^org.telegram.desktop$";}
+        ];
+      };
+
+      extraConfig = ''
+        for_window [app_id="dragon"] sticky enable
+        for_window [class="dragon"] sticky enable
+        for_window [title="Picture-in-Picture"] sticky enable
+      '';
+    }
 
     # Common stuff
     (import ./i3-sway.nix inputs)

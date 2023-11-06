@@ -5,19 +5,9 @@
     modifier = "Mod4";
     # Use kitty as default terminal
     terminal = "kitty";
-    assigns = {
-      "1" = [
-        {app_id = "^firefox$";}
-        {class = "^firefox$";}
-      ];
-      "4" = [
-        {class = "^telegram-desktop$";}
-        {app_id = "^org.telegram.desktop$";}
-      ];
-    };
 
     focus = {
-      followMouse = "no";
+      followMouse = false;
       newWindow = "smart";
     };
 
@@ -60,10 +50,10 @@
       "${modifier}+Shift+8" = "move container to workspace number 8";
       "${modifier}+Shift+9" = "move container to workspace number 9";
 
-      "${modifier}+${left}" = "focus left";
-      "${modifier}+${down}" = "focus down";
-      "${modifier}+${up}" = "focus up";
-      "${modifier}+${right}" = "focus right";
+      "${modifier}+h" = "focus left";
+      "${modifier}+k" = "focus down";
+      "${modifier}+j" = "focus up";
+      "${modifier}+l" = "focus right";
       "${modifier}+Return" = "exec kitty";
 
       "${modifier}+q" = "kill";
@@ -91,10 +81,6 @@
       "Mod4+Shift+i" = "move scratchpad";
       "Mod4+i" = "scratchpad show";
     };
-    up = "k";
-    down = "j";
-    right = "l";
-    left = "h";
 
     floating = {
       titlebar = false;
@@ -121,10 +107,10 @@
       };
     };
     startup = [
-      {
-        command = "swayidle -w timeout 60 'swaylock -f -c 000000' timeout 75 swaymsg output * dpms off resume swaymsg output * dpms on before-sleep swaylock -f -c 000000";
-        always = true;
-      }
+      # {
+      #   command = "swayidle -w timeout 60 'swaylock -f -c 000000' timeout 75 swaymsg output * dpms off resume swaymsg output * dpms on before-sleep swaylock -f -c 000000";
+      #   always = true;
+      # }
       {
         command = "${pkgs.autotiling}/bin/autotiling";
         always = true;
@@ -132,26 +118,5 @@
     ];
     menu = "rofi-pp";
     bars = [];
-    input = {
-      "type:keyboard" = {
-        xkb_layout = "us";
-        xkb_variant = "altgr-intl";
-      };
-    };
-    seat = {
-      "*" = {
-        hide_cursor = "when-typing enable";
-      };
-    };
-    output = {
-      "*" = {bg = "~/wall.png fill";};
-    };
   };
-  extraConfig = ''
-    for_window {
-      [app_id="dragon"] sticky enable
-      [class="dragon"] sticky enable
-      [title="Picture-in-Picture"] sticky enable
-    }
-  '';
 }

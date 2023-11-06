@@ -8,7 +8,8 @@
   imports = [
     ./common.nix
     ./features/games.nix
-    ./features/wayland.nix
+    ./features/x11.nix
   ];
+
   # home.packages = with pkgs; [];
 }
