@@ -36,6 +36,6 @@ in {
     VK_LAYER_PATH = ''${vulkan-validation-layers}/share/vulkan/explicit_layer.d'';
     VK_ICD_FILENAMES = "$(cat ${icd})";
     OCL_ICD_VENDORS = "${mesa.opencl}/etc/OpenCL/vendors/";
-    __EGL_VENDOR_LIBRARY_FILENAMES = "${mesa-drivers}}/share/glvnd/egl_vendor.d/";
+    __EGL_VENDOR_LIBRARY_FILENAMES = "${mesa-drivers}/share/glvnd/egl_vendor.d/";
   };
 })
