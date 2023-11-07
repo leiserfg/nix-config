@@ -47,7 +47,7 @@
 
       package = pkgs.polybar.override {
         i3Support = true;
-        pulseSupport = true;
+        # pulseSupport = true;
       };
 
       script = "polybar top&";
@@ -59,7 +59,7 @@
 
           modules-left = "i3";
           modules-center = "xwindow";
-          modules-right = "pulseaudio date";
+          modules-right = "date";
 
           tray-position = "right";
           tray-padding = 2;
@@ -96,15 +96,15 @@
           type = "internal/xwindow";
           label = "%title:0:50:…%";
         };
-        "module/pulseaudio" = {
-          type = "internal/pulseaudio";
-          format-volume = "%{A3:pavucontrol:} <ramp-volume> <label-volume> %{A}";
-          label-muted = "🔇";
-          label-muted-foreground = "#666";
-          ramp-volume-0 = "🔈";
-          ramp-volume-1 = "🔉";
-          ramp-volume-2 = "🔊";
-        };
+        # "module/pulseaudio" = {
+        #   type = "internal/pulseaudio";
+        #   format-volume = "%{A3:pavucontrol:} <ramp-volume> <label-volume> %{A}";
+        #   label-muted = "🔇";
+        #   label-muted-foreground = "#666";
+        #   ramp-volume-0 = "🔈";
+        #   ramp-volume-1 = "🔉";
+        #   ramp-volume-2 = "🔊";
+        # };
       };
     };
   };

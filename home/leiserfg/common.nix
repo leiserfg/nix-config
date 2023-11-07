@@ -276,6 +276,7 @@
 
   services = {
     gpg-agent.enable = true;
+    pasystray.enable = true;
     cbatticon = {
       enable = false;
       lowLevelPercent = 50;
@@ -335,4 +336,21 @@
       "application/epub+zip" = "org.pwmt.zathura.desktop.desktop";
     };
   };
+
+  # systemd.user.services.polkit-authentication-agent = {
+  #   Unit = {
+  #     Description = "Polkit authentication agent";
+  #     Documentation = "https://gitlab.freedesktop.org/polkit/polkit/";
+  #     After = ["graphical-session-pre.target"];
+  #     PartOf = ["graphical-session.target"];
+  #   };
+  #
+  #   Service = {
+  #     ExecStart = "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
+  #     Restart = "always";
+  #     BusName = "org.freedesktop.PolicyKit1.Authority";
+  #   };
+  #
+  #   Install.WantedBy = ["graphical-session.target"];
+  # };
 }

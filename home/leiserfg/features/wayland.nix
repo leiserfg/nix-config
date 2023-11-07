@@ -85,16 +85,12 @@
 
     settings = {
       mainbar = {
-        # modules-left = ["hyprland/workspaces"];
-        # modules-center = ["hyprland/window"];
-
         modules-left = ["sway/workspaces"];
         modules-center = ["sway/window"];
 
         modules-right = [
           "battery"
           "tray"
-          "wireplumber"
           "custom/pp"
           "clock"
           #  currently using applets
