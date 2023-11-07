@@ -104,8 +104,8 @@
         "sway/workspaces" = {
           format = "{name} {icon}";
           format-icons = {
-            "1" = "";
-            "2" = "";
+            "1" = "";
+            "2" = "";
             "3" = "";
             "4" = "";
             "urgent" = "";
@@ -165,6 +165,10 @@
         "type:keyboard" = {
           xkb_layout = "us";
           xkb_variant = "altgr-intl";
+        };
+
+        "type:touchpad" = {
+          tap = "enabled";
         };
       };
 

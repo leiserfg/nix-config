@@ -9,6 +9,7 @@
 
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "thunderbolt" ];
   boot.kernelModules = ["kvm-amd"];
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
   boot.kernel.sysctl."vm.max_map_count" = 544288;
 
@@ -33,4 +34,5 @@
   swapDevices = [
     {device = "/dev/disk/by-uuid/3c74134f-280b-4f0f-8020-fe0107783c96";}
   ];
+
 }
