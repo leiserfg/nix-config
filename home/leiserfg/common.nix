@@ -144,7 +144,7 @@
     android-tools
     git-lfs
     clinfo
-
+    powertop
     docker-compose
 
     # My overlay
