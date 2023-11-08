@@ -190,10 +190,13 @@
         ];
       };
     };
+
+    # exec_always ${pkgs.swayidle}/bin/swayidle -w timeout 60 'swaylock -f -c 000000' timeout 75 swaymsg output * dpms off resume swaymsg output * dpms on before-sleep swaylock -f -c 000000
     extraConfig = ''
       for_window [app_id="dragon"] sticky enable
       for_window [class="dragon"] sticky enable
       for_window [title="Picture-in-Picture"] sticky enable
+
     '';
   } (import ./i3-sway.nix inputs);
 }
