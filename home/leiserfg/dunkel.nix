@@ -6,12 +6,6 @@
   imports = [./common.nix ./features/mesa.nix ./features/wayland.nix];
   targets.genericLinux.enable = true;
 
-  # services.xcape = {
-  #   enable = true;
-  #   mapExpression = {Control_L = "Escape";};
-  # };
-
-  # home.keyboard.options = ["ctrl:nocaps"];
   home.packages = with pkgs; [
     pgcli
     pre-commit
@@ -25,8 +19,34 @@
     pandoc
 
   ];
-  # xresources.extraConfig = ''
-  #   Xft.dpi:       128
-  #   *dpi:          128
-  # '';
+
+services = {
+    kanshi = {
+      enable = true;
+
+      profiles = {
+        undocked = {
+          outputs = [
+            {
+              criteria = "eDP-1";
+              scale=1.0;
+            }
+          ];
+        };
+
+        docked = {
+          outputs = [
+            {
+              criteria = "DP-1";
+            }
+            {
+              criteria = "eDP-1";
+              status = "disable";
+            }
+          ];
+        };
+      };
+    };
+  };
+
 }
