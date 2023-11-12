@@ -9,6 +9,10 @@
     pgcli
     pre-commit
     poetry
+    blender-hip
+    unstablePkgs.gamescope
+    unstablePkgs.godot_4
+    nix-ld
   ];
 
   services = {
