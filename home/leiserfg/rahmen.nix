@@ -3,7 +3,7 @@
   unstablePkgs,
   ...
 }: {
-  imports = [./common.nix ./features/wayland.nix];
+  imports = [./common.nix ./features/x11.nix];
 
   home.packages = with pkgs; [
     pgcli
@@ -16,15 +16,45 @@
   ];
 
   services = {
-    kanshi = {
+    grobi = {
       enable = true;
+      rules = [
+        {
+          name = "Home";
+          outputs_connected = ["DP-2"];
+          configure_single = "DP-2";
+          primary = true;
+          atomic = true;
+          execute_after = [
+            ''
+              echo "Xft.dpi: 96" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
+            ''
+          ];
+        }
+        {
+          name = "Mobile";
+          outputs_disconnected = ["DP-2"];
+          configure_single = "eDP-1";
+          primary = true;
+          atomic = true;
+          execute_after = [
+            ''
+              echo "Xft.dpi: 144" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
+            ''
+          ];
+        }
+      ];
+    };
+
+    kanshi = {
+      enable = false;
 
       profiles = {
         undocked = {
           outputs = [
             {
               criteria = "eDP-1";
-              scale=1.5;
+              scale = 1.5;
             }
           ];
         };

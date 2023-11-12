@@ -63,8 +63,10 @@
         };
       in {
         "bar/top" = {
+          dpi = "\${xrdb:Xft.dpi:-1}";
+
           width = "100%";
-          height = "1.5%";
+          height = "1.8%";
           radius = 0;
 
           modules-left = "i3";
@@ -78,7 +80,7 @@
           background = colors.background;
           foreground = colors.foreground;
 
-          font-0 = "Iosevka Term SS07:style=SemiBold";
+          font-0 = "Iosevka Term SS07:style=SemiBold;2";
           font-1 = "Symbols Nerd Font:style=Regular";
           font-2 = "EmojiOne:style=Regular:scale=10";
 

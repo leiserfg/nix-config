@@ -13,6 +13,9 @@
       lightdm.enable = true;
     };
     windowManager.tinywm.enable = true;
-    libinput.enable = true;
+    libinput = {
+      enable = true;
+      touchpad.disableWhileTyping = true;
+    };
   };
 }
