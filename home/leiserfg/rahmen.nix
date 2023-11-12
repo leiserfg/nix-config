@@ -39,7 +39,7 @@
           atomic = true;
           execute_after = [
             ''
-              echo "Xft.dpi: 144" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
+             echo "Xft.dpi: 144" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
             ''
           ];
         }

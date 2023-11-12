@@ -15,18 +15,8 @@
   ];
 
   xsession.enable = true;
-  services = {
-    xsettingsd = {
-      enable = false;
-      settings = {
-        "Xft/DPI" = 98304;
-        "Xft/Antialias" = true;
-        "Xft/HintStyle" = "hintfull";
-        "Xft/Hinting" = true;
-        "Xft/RGBA" = "none";
-      };
-    };
 
+  services = {
     picom = {
       enable = true;
       vSync = true;
@@ -37,10 +27,6 @@
     };
     caffeine.enable = true;
     unclutter.enable = true;
-
-    # home.services = {
-    #   flameshot.enable = false;
-    # };
 
     polybar = {
       enable = true;
