@@ -51,10 +51,20 @@
       };
 
       script = "polybar top&";
-      config = {
+      config = let
+        colors = {
+          background = "#2f343f";
+          background-alt = "#2f343f";
+          foreground = "#dfdfdf";
+          foreground-alt = "#555";
+          primary = "#afcfee";
+          secondary = "#e60053";
+          alert = "#bd2c40";
+        };
+      in {
         "bar/top" = {
           width = "100%";
-          height = "2%";
+          height = "1.5%";
           radius = 0;
 
           modules-left = "i3";
@@ -65,17 +75,32 @@
           tray-padding = 2;
           tray-maxsize = 100;
 
+          background = colors.background;
+          foreground = colors.foreground;
+
           font-0 = "Iosevka Term SS07:style=SemiBold";
           font-1 = "Symbols Nerd Font:style=Regular";
           font-2 = "EmojiOne:style=Regular:scale=10";
+
+          line-size = 3;
+          line-color = "#f00";
+
+          border-size = 0;
+          border-color = "#00000000";
+
+          padding-left = 0;
+          padding-right = 0;
+
+          module-margin-left = 0;
+          module-margin-right = 1;
         };
 
         "module/date" = {
           type = "internal/date";
           internal = 5;
-          date = "%d.%m.%y";
-          time = "%H:%M";
-          label = "%time%  %date%";
+          date = "%d-%m-%y %a";
+          time = "%I:%M";
+          label = "%time% %date%";
         };
 
         "module/i3" = {
@@ -84,12 +109,17 @@
           pin-workspaces = true;
           enable-scroll = false;
 
-          # label-focused-background = ${colors.primary}
-          # label-focused-foreground = ${colors.background}
-          #
-          # label-urgent-background = ${colors.alert}
+          label-focused-background = colors.primary;
+          label-focused-foreground = colors.background;
+          label-urgent-background = colors.alert;
           # ; hide empty workspaces
           # label-empty = "";
+
+          # ws-icon-0 = "1; ";
+          # ws-icon-1 = "2; ";
+          # ws-icon-2 = "3; ";
+          # ws-icon-3 = "4; ";
+          # ws-icon-default = "";
         };
 
         "module/xwindow" = {
@@ -105,6 +135,9 @@
         #   ramp-volume-1 = "🔉";
         #   ramp-volume-2 = "🔊";
         # };
+        settings = {
+          screenchange-reload = true;
+        };
       };
     };
   };

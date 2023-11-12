@@ -296,6 +296,7 @@
           font = "Droid Sans 9";
           frame_width = 2;
           show_indicators = true;
+          dmenu= "rofi -dmenu -p dunst";
         };
         urgency_normal = {
           background = "#303446";
