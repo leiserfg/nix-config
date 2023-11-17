@@ -17,10 +17,12 @@
   xsession.enable = true;
 
   services = {
+    flameshot.enable = true;
     picom = {
       enable = true;
       vSync = true;
-      backend = "xr_glx_hybrid";
+      backend = "xrender";
+      # backend = "xr_glx_hybrid";
       settings = {
         # xrender-sync-fence = true;
       };
@@ -145,6 +147,7 @@
       extraConfig = ''
         for_window [class="dragon"] sticky enable
         for_window [title="Picture-in-Picture"] sticky enable
+        exec_once ${pkgs.feh}/bin/feh --bg-center ~/wall.png
       '';
     }
     # Common stuff

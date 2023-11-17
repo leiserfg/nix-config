@@ -20,9 +20,10 @@
     # aseprite
     fuse-overlayfs
     dwarfs
+    bubblewrap
     # glslviewer
-    # gamingPkgs.wine-tkg  # This one has the wayland patches
     # dxvk
+    # gamingPkgs.wine-tkg  # This one has the wayland patches
     gamingPkgs.wine-ge
     # wineWowPackages.waylandFull
   ];

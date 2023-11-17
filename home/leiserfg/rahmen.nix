@@ -3,13 +3,13 @@
   unstablePkgs,
   ...
 }: {
-  imports = [./common.nix ./features/x11.nix];
+  imports = [./common.nix ./features/x11.nix  ./features/laptop.nix];
 
   home.packages = with pkgs; [
     pgcli
     pre-commit
     poetry
-    blender-hip
+    unstablePkgs.blender-hip
     unstablePkgs.gamescope
     unstablePkgs.godot_4
     nix-ld
@@ -28,6 +28,7 @@
           execute_after = [
             ''
               echo "Xft.dpi: 96" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
+
             ''
           ];
         }

@@ -121,7 +121,7 @@
           interval = "once";
         };
 
-        "hyprland/window" = {
+        "sway/window" = {
           "rewrite" = {
             "(.*) — Mozilla Firefox" = "🌎 $1";
             "(.*) - fish" = "  [$1]";
