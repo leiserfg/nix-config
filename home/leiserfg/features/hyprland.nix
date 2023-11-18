@@ -10,21 +10,22 @@
     ./_waybar.nix
   ];
 
+  assertions = [
+    {
+      assertion = builtins.compareVersions "0.32.3" unstablePkgs.hyprland.version > 0;
+      message = "We can remove hyprland override already";
+    }
+  ];
+
+  # This is for wayland
   _module.args.wm = "hyprland";
 
   services.kanshi.systemdTarget = "hyprland-session.target";
 
-  systemd.user.targets.tray = {
-    Unit = {
-      Description = "Home Manager System Tray";
-      Requires = ["graphical-session-pre.target"];
-    };
-  };
-
   wayland.windowManager.hyprland = {
     enable = true;
-    systemdIntegration = true;
-    # recommendedEnvironment = true;
+    systemd.enable = true;
+
     package = unstablePkgs.hyprland.overrideAttrs (finalAttrs: previousAttrs: {
       version = "0.32.3-patched";
       src = pkgs.fetchFromGitHub {

@@ -15,8 +15,6 @@
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
-    # hyprland.url = "github:hyprwm/Hyprland";
-    # hyprland.inputs.nixpkgs.follows = "nixpkgs";
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
     blender.url = "github:edolstra/nix-warez?dir=blender";
   };
@@ -24,7 +22,6 @@
   outputs = {
     nixpkgs,
     home-manager,
-    hyprland,
     ...
   } @ inputs: let
     forAllSystems = nixpkgs.lib.genAttrs [
@@ -145,7 +142,6 @@
         modules =
           (builtins.attrValues homeManagerModules)
           ++ [
-          # hyprland.homeManagerModules.default
             ./home/leiserfg/rahmen.nix
           ];
       };
