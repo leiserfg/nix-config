@@ -60,6 +60,8 @@
            bind = $mod SHIFT, K, movewindow, u
            bind = $mod SHIFT, J, movewindow, d
 
+           bind = $mod, Q, killactive
+
 
           # fn buttons
           binde=,XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
@@ -111,6 +113,7 @@
 
         master {
           no_gaps_when_only = 3
+          new_is_master = false
         }
 
         binds {
@@ -137,6 +140,7 @@
 
       windowrule = center,pavucontrol
       windowrule = float,pavucontrol
+      windowrule = pin,dragon
     '';
   };
 }
