@@ -1,9 +1,15 @@
 {
   pkgs,
   unstablePkgs,
+  config,
   ...
 }: {
-  imports = [./common.nix ./features/x11.nix  ./features/laptop.nix];
+  imports = [
+    ./common.nix
+    # ./features/x11.nix
+    ./features/hyprland.nix
+    ./features/laptop.nix
+  ];
 
   home.packages = with pkgs; [
     pgcli
@@ -17,7 +23,7 @@
 
   services = {
     grobi = {
-      enable = true;
+      enable = config.xsession.enable;
       rules = [
         {
           name = "Home";
@@ -40,7 +46,7 @@
           atomic = true;
           execute_after = [
             ''
-             echo "Xft.dpi: 144" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
+              echo "Xft.dpi: 144" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
             ''
           ];
         }
@@ -48,13 +54,14 @@
     };
 
     kanshi = {
-      enable = false;
-
+      enable = !config.xsession.enable;
+      systemdTarget = "hyprland-session.target";
       profiles = {
         undocked = {
           outputs = [
             {
               criteria = "eDP-1";
+              status = "enable";
               scale = 1.5;
             }
           ];
