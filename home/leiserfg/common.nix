@@ -73,11 +73,10 @@
     pinentry.qt
     (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
-    # This is a HACK to make telegram from unstable work with firefox from stable
-    # (writeShellScriptBin "xdg-open" ''
-    #   export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
-    #   exec -a $0 ${mimeo}/bin/mimeo $@
-    # '')
+    (writeShellScriptBin "xdg-open" ''
+      # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
+      exec -a $0 ${mimeo}/bin/mimeo "$@"
+    '')
     noto-fonts-emoji
     /*
     twemoji-color-font
@@ -180,11 +179,11 @@
     )
     (
       writeShellScriptBin "game-picker" ''
-        exec  gamemoderun sh -c " ls ~/Games/*/*start.sh  --quoting-style=escape \
+        exec  gamemoderun sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
         |xargs -n 1 -d '\n' dirname \
         |xargs -d '\n' -n 1 basename \
         |rofi -dmenu -i  \
-        |xargs  -d '\n'  -I__  bash -c  '$HOME/Games/__/*start.sh'"
+        |xargs  -d '\n'  -I__  bash -c 'cd $HOME/Games/__/  && source *start*.sh'"
       ''
     )
     (

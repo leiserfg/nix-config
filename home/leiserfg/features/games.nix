@@ -23,8 +23,8 @@
     bubblewrap
     # glslviewer
     # dxvk
-    # gamingPkgs.wine-tkg  # This one has the wayland patches
-    gamingPkgs.wine-ge
+    gamingPkgs.wine-tkg  # This one has the wayland patches
+    # gamingPkgs.wine-ge
     # wineWowPackages.waylandFull
   ];
 }

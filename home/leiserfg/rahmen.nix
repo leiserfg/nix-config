@@ -9,6 +9,7 @@
     # ./features/x11.nix
     ./features/hyprland.nix
     ./features/laptop.nix
+    ./features/games.nix
   ];
 
   home.packages = with pkgs; [

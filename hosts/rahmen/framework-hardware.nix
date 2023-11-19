@@ -16,7 +16,6 @@
   # https://community.frame.work/t/12th-gen-not-sending-xf86monbrightnessup-down/20605/11
   # boot.blacklistedKernelModules = ["hid-sensor-hub"];
 
-
   # For fingerprint support
   services.fprintd.enable = true;
 
@@ -34,4 +33,7 @@
 
   # https://wiki.archlinux.org/title/Framework_Laptop#Changing_the_brightness_of_the_monitor_does_not_work
   hardware.acpilight.enable = true;
+
+  # https://community.frame.work/t/resolved-graphical-artifacts-when-waking-up-from-hibernation-or-hybrid-sleep/39154
+  boot.kernelParams = ["amdgpu.sg_display=0"];
 }
