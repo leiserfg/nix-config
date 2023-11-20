@@ -26,5 +26,6 @@
     gamingPkgs.wine-tkg  # This one has the wayland patches
     # gamingPkgs.wine-ge
     # wineWowPackages.waylandFull
+    myPkgs.glslviewer
   ];
 }
