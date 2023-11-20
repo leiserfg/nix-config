@@ -37,6 +37,7 @@
     nil
     pmenu
     glxinfo
+    imv
     unzip
     nodePackages.typescript-language-server
 
@@ -107,7 +108,6 @@
 
     pavucontrol
     zathura
-    nsxiv
     xdragon
     moreutils
     htop
@@ -332,6 +332,7 @@
       "application/zip" = "xarchiver.desktop";
       "application/pdf" = "org.pwmt.zathura.desktop";
       "application/epub+zip" = "org.pwmt.zathura.desktop.desktop";
+      "image/*" = "imv.desktop";
     };
   };
 

@@ -84,7 +84,10 @@
            bind = $mod, Slash, exec, firefox
            bind = $mod, Return, exec, kitty
 
-           # bind = , Print, exec, grimblast copy area
+           bind = $mod,Print, exec, ${pkgs.grimblast}/bin/grimblast save output
+           bind = $mod+SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast save area
+           bind = ,Print, exec, ${pkgs.grimblast}/bin/grimblast copy output
+           bind = SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast copy area
 
            bind = $mod, G, exec, game-picker
            bind = $mod, 0, exec, rofi_power
