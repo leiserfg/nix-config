@@ -251,8 +251,8 @@
       name = "Papirus-Dark";
     };
     font = {
-      package = pkgs.lato;
-      name = "Lato";
+      package = pkgs.inter;
+      name = "Inter";
     };
   };
 

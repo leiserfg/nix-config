@@ -111,6 +111,16 @@
             gaps_out = 4
         }
 
+        # misc {
+        #     enable_swallow = true
+        #     swallow_regex = ^(kitty)$
+        # }
+
+        gestures {
+            workspace_swipe = true
+            workspace_swipe_fingers = 4
+        }
+
         master {
           no_gaps_when_only = 3
           new_is_master = false

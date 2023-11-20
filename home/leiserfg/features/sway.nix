@@ -5,9 +5,9 @@
   ...
 } @ inputs:
 {
-  imports = [./wayland_common.nix   ./_waybar.nix ];
+  imports = [./_wayland_common.nix   ./_waybar.nix ];
 
-  _modules.args.wm = "sway";
+  _module.args.wm = "sway";
   wayland.windowManager.sway = lib.attrsets.recursiveUpdate {
     package = unstablePkgs.sway.override {
       extraSessionCommands = ''

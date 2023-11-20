@@ -3,7 +3,7 @@
   unstablePkgs,
   ...
 }: {
-  imports = [./common.nix ./features/mesa.nix ./features/wayland.nix];
+  imports = [./common.nix ./features/mesa.nix ./features/hyprland.nix];
   targets.genericLinux.enable = true;
 
   home.packages = with pkgs; [
@@ -17,10 +17,17 @@
     csvkit
     libreoffice
     pandoc
+    unstablePkgs.godot_4
+
+    # This is so we don't have to change the config in debian
+    (writeShellScriptBin "sway" ''
+    .  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+    exec Hyprland
+    '')
 
   ];
 
-services = {
+  services = {
     kanshi = {
       enable = true;
 
@@ -29,8 +36,8 @@ services = {
           outputs = [
             {
               criteria = "eDP-1";
-              scale=1.0;
-              status="enable";
+              scale = 1.0;
+              status = "enable";
             }
           ];
         };
@@ -49,5 +56,4 @@ services = {
       };
     };
   };
-
 }
