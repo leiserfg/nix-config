@@ -77,6 +77,8 @@
 
     settings = {
       mainbar = {
+        margin-left = 2;
+        margin-right = 2;
         modules-left = ["${wm}/workspaces"];
         modules-center = ["${wm}/window"];
 
