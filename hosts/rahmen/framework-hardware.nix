@@ -36,4 +36,10 @@
 
   # https://community.frame.work/t/resolved-graphical-artifacts-when-waking-up-from-hibernation-or-hybrid-sleep/39154
   boot.kernelParams = ["amdgpu.sg_display=0"];
+
+  services.udev.extraRules = ''
+      # Prevent wake when plugging in AC during suspend. Trade-off: keyboard wake disabled. See:
+      # https://community.frame.work/t/tracking-framework-amd-ryzen-7040-series-lid-wakeup-behavior-feedback/39128/45
+      ACTION=="add", SUBSYSTEM=="serio", DRIVERS=="atkbd", ATTR{power/wakeup}="disabled"
+  '';
 }

@@ -30,7 +30,7 @@
     nix-update
     python311Packages.ipython
     (unstablePkgs.tdesktop)
-    firefox
+    # firefox
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
     (unstablePkgs.nodePackages.pyright)
@@ -105,6 +105,7 @@
     zpaq
     p7zip
     dfeet
+    gparted
 
     pavucontrol
     zathura
@@ -222,7 +223,17 @@
     home-manager.enable = true;
     # bash.enable = true;
     fzf.enable = true;
-
+    firefox = {
+      enable = true;
+      profiles = {
+        yolo = {
+          settings = {
+            "media.ffmpeg.vaapi.enabled" = true;
+            "browser.compactmode.show" = true;
+          };
+        };
+      };
+    };
     mpv = {
       enable = true;
       scripts = with pkgs.mpvScripts; [
