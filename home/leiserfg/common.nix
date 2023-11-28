@@ -152,8 +152,9 @@
     # material-maker
     nix-du
     yt-dlp
-    helvum
+    qpwgraph
 
+    libva-utils
     #scripts
     # here we don't use the nix binaries to allow rewriting ruff with the correct one
     # see x11 and wayland
@@ -228,8 +229,9 @@
       profiles = {
         yolo = {
           settings = {
-            "media.ffmpeg.vaapi.enabled" = true;
             "browser.compactmode.show" = true;
+            "media.ffmpeg.vaapi.enabled" = true;
+            "media.ffvpx.enabled" = false;
           };
         };
       };
