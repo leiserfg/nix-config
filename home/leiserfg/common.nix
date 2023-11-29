@@ -232,6 +232,7 @@
             "browser.compactmode.show" = true;
             "media.ffmpeg.vaapi.enabled" = true;
             "media.ffvpx.enabled" = false;
+            "dom.webgpu.enabled" = true;
           };
         };
       };
