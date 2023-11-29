@@ -245,6 +245,11 @@
         sponsorblock
         autocrop
       ];
+      scriptOpts = {
+        uosc = {
+          top_bar = "always"; # This makes uosc work fine in wayland
+        };
+      };
     };
 
     bat = {
