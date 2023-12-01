@@ -17,6 +17,7 @@
     };
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
     blender.url = "github:edolstra/nix-warez?dir=blender";
+    blender.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -137,7 +138,6 @@
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
           codeium = inputs.codeium.packages.x86_64-linux;
-
         };
         modules =
           (builtins.attrValues homeManagerModules)
