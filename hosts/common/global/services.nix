@@ -9,7 +9,11 @@
     fstrim.enable = true;
     fwupd.enable = true;
     gvfs.enable = true;
-    ananicy.enable = true;
+    ananicy = {
+      enable = true;
+      package = pkgs.ananicy-cpp;
+      rulesProvider= pkgs.ananicy-rules-cachyos;
+    };
     openssh.enable = true;
     udev.packages = [
       pkgs.android-udev-rules
@@ -35,5 +39,4 @@
       '';
     };
   };
-
 }

@@ -181,7 +181,7 @@
     )
     (
       writeShellScriptBin "game-picker" ''
-        exec  gamemoderun sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
+        exec  sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
         |xargs -n 1 -d '\n' dirname \
         |xargs -d '\n' -n 1 basename \
         |rofi -dmenu -i  \
