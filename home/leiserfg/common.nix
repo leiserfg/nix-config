@@ -244,7 +244,6 @@
         thumbfast
         mpris
         sponsorblock
-        autocrop
       ];
       scriptOpts = {
         uosc = {
