@@ -231,6 +231,8 @@
           settings = {
             "browser.compactmode.show" = true;
             "media.ffmpeg.vaapi.enabled" = true;
+            # Delete this after https://gitlab.freedesktop.org/mesa/mesa/-/issues/8044
+            "media.mediasource.vp9.enabled" = false;
             "media.ffvpx.enabled" = false;
             "dom.webgpu.enabled" = true;
           };

@@ -68,8 +68,18 @@
             }
           ];
         };
-
-        docked = {
+        docked-left = {
+          outputs = [
+            {
+              criteria = "DP-3";
+            }
+            {
+              criteria = "eDP-1";
+              status = "disable";
+            }
+          ];
+        };
+        docked-right = {
           outputs = [
             {
               criteria = "DP-2";
