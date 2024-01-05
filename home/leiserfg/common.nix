@@ -151,7 +151,6 @@
     git-branchless
     # material-maker
     nix-du
-    yt-dlp
     qpwgraph
 
     libva-utils
@@ -222,7 +221,22 @@
 
   programs = {
     home-manager.enable = true;
-    # bash.enable = true;
+    bash = {
+      enable = true;
+      bashrcExtra = ''
+
+        case $- in
+            *i*) ;;
+              *) return;;
+        esac
+
+        if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z $BASH_EXECUTION_STRING ]] && which fish > /dev/null
+        then
+            exec fish
+        fi
+
+      '';
+    };
     fzf.enable = true;
     firefox = {
       enable = true;
@@ -237,6 +251,14 @@
             "dom.webgpu.enabled" = true;
           };
         };
+      };
+    };
+
+    yt-dlp = {
+      enable = true;
+      settings = {
+        cookies-from-browser = "firefox";
+        downloader = "aria2c";
       };
     };
     mpv = {
