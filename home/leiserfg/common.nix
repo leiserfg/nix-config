@@ -40,6 +40,9 @@
     imv
     unzip
     nodePackages.typescript-language-server
+    
+    iw
+
 
     vokoscreen-ng
     zoxide

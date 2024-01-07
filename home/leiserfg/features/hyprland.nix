@@ -26,7 +26,16 @@
     enable = true;
     systemd.enable = true;
 
-    package = unstablePkgs.hyprland;
+    package = unstablePkgs.hyprland.overrideAttrs (finalAttrs: previousAttrs: {
+      version = "0.34.0";
+      src = pkgs.fetchFromGitHub {
+        owner = "hyprwm";
+        repo = previousAttrs.pname;
+        rev = "483302a";
+        hash = "sha256-WSrjBI3k2dM/kGF20At0E6NlrJSB4+pE+WGJ6dFzWEs=";
+      };
+      buildInputs = previousAttrs.buildInputs ++ [unstablePkgs.tomlplusplus];
+    });
 
     extraConfig = let
       env_vars = {
