@@ -178,7 +178,7 @@
     (
       writeShellScriptBin "pp-state" ''
         state=$(powerprofilesctl get | sed -e "s/.*string//" -e "s/.*save.*/ /"  -e "s/.*perf.*/ /"  -e "s/.*balanced.*/ /")
-        printf %s\n\n $state
+        echo $state
       ''
     )
     (
