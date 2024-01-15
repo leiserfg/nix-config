@@ -155,6 +155,7 @@
     # material-maker
     nix-du
     qpwgraph
+    piper-tts
 
     libva-utils
     #scripts
@@ -206,6 +207,7 @@
                 ;;
             **)
                 # bspc quit || qtile cmd-obj -o cmd -f shutdown
+                systemctl --user  stop graphical-session.target
                 hyprctl dispatch exit || loginctl terminate-session $XDG_SESSION_ID
                 ;;
             **)

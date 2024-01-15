@@ -150,8 +150,8 @@
         }
 
       #RULES
-      windowrule = workspace 1 silent,firefox
-      windowrule = workspace 4 silent,org.telegram.desktop
+      windowrule = workspace 1,firefox
+      windowrule = workspace 4,org.telegram.desktop
 
       windowrule = center,pavucontrol
       windowrule = float,pavucontrol
