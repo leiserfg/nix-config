@@ -98,7 +98,6 @@
     */
     xorg.xkill
     # unstablePkgs.qtile
-    polkit_gnome
 
     lua-language-server
     lsof

@@ -9,7 +9,7 @@
 
   _module.args.wm = "sway";
   wayland.windowManager.sway = lib.attrsets.recursiveUpdate {
-    package = unstablePkgs.sway.override {
+    package = pkgs.sway.override {
       extraSessionCommands = ''
         # home-manager on non nixos stuff
         .  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
