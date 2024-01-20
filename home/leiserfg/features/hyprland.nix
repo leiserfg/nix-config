@@ -10,12 +10,12 @@
     ./_waybar.nix
   ];
 
-  assertions = [
-    {
-      assertion = builtins.compareVersions "0.34.4" unstablePkgs.hyprland.version >= 0;
-      message = "We can remove hyprland override already";
-    }
-  ];
+  # assertions = [
+  #   {
+  #     assertion = builtins.compareVersions "0.34.4" unstablePkgs.hyprland.version >= 0;
+  #     message = "We can remove hyprland override already";
+  #   }
+  # ];
 
   # This is for wayland
   _module.args.wm = "hyprland";
@@ -26,17 +26,18 @@
     enable = true;
     systemd.enable = true;
 
-    package = unstablePkgs.hyprland.overrideAttrs (finalAttrs: previousAttrs: {
-      version = "0.34.0";
-      src = pkgs.fetchFromGitHub {
-        owner = "hyprwm";
-        repo = previousAttrs.pname;
-        rev = "483302a";
-        hash = "sha256-WSrjBI3k2dM/kGF20At0E6NlrJSB4+pE+WGJ6dFzWEs=";
-      };
-      buildInputs = previousAttrs.buildInputs ++ [unstablePkgs.tomlplusplus];
-    });
-
+    package = unstablePkgs.hyprland;
+    # .overrideAttrs (finalAttrs: previousAttrs: {
+    #   version = "0.34.0";
+    #   src = pkgs.fetchFromGitHub {
+    #     owner = "hyprwm";
+    #     repo = previousAttrs.pname;
+    #     rev = "483302a";
+    #     hash = "sha256-WSrjBI3k2dM/kGF20At0E6NlrJSB4+pE+WGJ6dFzWEs=";
+    #   };
+    #   buildInputs = previousAttrs.buildInputs ++ [unstablePkgs.tomlplusplus];
+    # });
+    #
     extraConfig = let
       env_vars = {
         XDG_CURRENT_DESKTOP = "Hyprland";
