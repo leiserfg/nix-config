@@ -28,7 +28,10 @@
     easyeffects
     util-linux
     nix-update
+    # inferno
+    flamegraph
     python311Packages.ipython
+    ollama
     (unstablePkgs.tdesktop)
     # firefox
     (unstablePkgs.fish)
@@ -40,9 +43,8 @@
     imv
     unzip
     nodePackages.typescript-language-server
-    
-    iw
 
+    iw
 
     vokoscreen-ng
     zoxide
