@@ -40,6 +40,7 @@
     nil
     pmenu
     glxinfo
+    pciutils
     imv
     unzip
     nodePackages.typescript-language-server
