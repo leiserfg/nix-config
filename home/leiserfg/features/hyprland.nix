@@ -11,12 +11,12 @@
     ./_waybar.nix
   ];
 
-  # assertions = [
-  #   {
-  #     assertion = builtins.compareVersions "0.34.4" unstablePkgs.hyprland.version >= 0;
-  #     message = "We can remove hyprland override already";
-  #   }
-  # ];
+  assertions = [
+    {
+      assertion = builtins.compareVersions "0.35.1" unstablePkgs.hyprland.version >= 0;
+      message = "We can remove hyprland override already";
+    }
+  ];
 
   # This is for wayland
   _module.args.wm = "hyprland";
