@@ -140,7 +140,6 @@
     git
     git-standup
     git-absorb
-    git-bug
 
     patool
     stylua
@@ -151,6 +150,8 @@
     clinfo
     powertop
     docker-compose
+
+    xh
 
     # My overlay
     git-branchless
