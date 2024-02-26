@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-hypr.url = "github:nixos/nixpkgs/f8e2ebd66d097614d51a56a755450d4ae1632df1";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -36,6 +37,16 @@
     unstablePackages = forAllSystems (
       system:
         import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        }
+    );
+
+
+
+    nixpkgsHypr = forAllSystems (
+      system:
+        import inputs.nixpkgs-hypr {
           inherit system;
           config.allowUnfree = true;
         }
@@ -137,7 +148,7 @@
           gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
-          codeium = inputs.codeium.packages.x86_64-linux;
+          nixpkgsHypr = nixpkgsHypr.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
@@ -153,7 +164,7 @@
           unstablePkgs = unstablePackages.x86_64-linux;
           gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
-          codeium = inputs.codeium.packages.x86_64-linux;
+          nixpkgsHypr = nixpkgsHypr.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)

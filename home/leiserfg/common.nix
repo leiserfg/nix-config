@@ -49,7 +49,7 @@
     dmidecode
     vokoscreen-ng
     zoxide
-    iredis
+    # iredis
     dua
     picocom # run as:  sudo picocom /dev/ttyACM0
 

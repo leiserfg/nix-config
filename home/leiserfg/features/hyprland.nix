@@ -3,6 +3,7 @@
   unstablePkgs,
   lib,
   hyprland,
+  nixpkgsHypr,
   ...
 } @ inputs: {
   imports = [
@@ -26,7 +27,7 @@
     enable = true;
     systemd.enable = true;
 
-    package = unstablePkgs.hyprland;
+    package = nixpkgsHypr.hyprland;
     # .overrideAttrs (finalAttrs: previousAttrs: {
     #   version = "0.34.0";
     #   src = pkgs.fetchFromGitHub {

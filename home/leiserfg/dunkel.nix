@@ -3,7 +3,12 @@
   unstablePkgs,
   ...
 }: {
-  imports = [./common.nix ./features/mesa.nix ./features/hyprland.nix ./features/daw.nix];
+  imports = [
+    ./common.nix
+    ./features/mesa.nix
+    ./features/hyprland.nix
+    #./features/daw.nix
+  ];
   targets.genericLinux.enable = true;
 
   home.packages = with pkgs; [
@@ -28,7 +33,7 @@
   ];
 
   home.sessionVariables = {
-      GIO_EXTRA_MODULES = "${pkgs.gvfs}/lib/gio/modules";
+    GIO_EXTRA_MODULES = "${pkgs.gvfs}/lib/gio/modules";
   };
 
   services = {
