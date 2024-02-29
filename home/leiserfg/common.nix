@@ -24,6 +24,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    ddcutil
     unstablePkgs.steam-run
     easyeffects
     util-linux
@@ -253,16 +254,14 @@
           settings = {
             "browser.compactmode.show" = true;
             "dom.webgpu.enabled" = true;
-            
 
             # VP9 fails to work with vaapi in framework so we have to disable it until this gets fixed
             # # Delete this after https://gitlab.freedesktop.org/mesa/mesa/-/issues/8044
             # This was a workaround but makes it vp9 only videos not to show in youtube
-            # "media.mediasource.vp9.enabled" = false;
+            "media.mediasource.vp9.enabled" = false;
 
-            # "media.ffmpeg.vaapi.enabled" = true;
-            # "media.ffvpx.enabled" = false;
-
+            "media.ffmpeg.vaapi.enabled" = true;
+            "media.ffvpx.enabled" = false;
           };
         };
       };

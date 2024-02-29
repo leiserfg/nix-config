@@ -46,8 +46,9 @@
         XDG_SESSION_DESKTOP = "Hyprland";
       };
     in ''
+
           ${builtins.concatStringsSep "\n" (
-        lib.attrsets.mapAttrsToList (name: val: "env,${name},${val}") env_vars
+        lib.attrsets.mapAttrsToList (name: val: "env = ${name},${val}") env_vars
       )}
 
 
