@@ -75,6 +75,7 @@
     rink
     unstablePkgs.uiua
     krita
+    inkscape
     tree-sitter
     nmap
     # krita

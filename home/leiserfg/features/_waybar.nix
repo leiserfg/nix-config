@@ -108,6 +108,15 @@
           };
         };
 
+        "battery" = {
+          "states" = {
+            "warning" = 30;
+            "critical" = 15;
+          };
+          "format" = "{capacity}% {icon}";
+          "format-icons" = ["" "" "" "" ""];
+        };
+
         "custom/pp" = {
           exec = "pp-state";
           on-click = "rofi-pp && pkill -SIGRTMIN+9 waybar";
