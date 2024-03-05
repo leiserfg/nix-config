@@ -13,8 +13,8 @@
 
   assertions = [
     {
-      assertion = builtins.compareVersions "0.35.1" unstablePkgs.hyprland.version >= 0;
-      message = "We can remove hyprland override already";
+      assertion = builtins.compareVersions nixpkgsHypr.hyprland.version unstablePkgs.hyprland.version >= 0;
+      message = "We can remove hyprland override already ${nixpkgsHypr.hyprland.version} ${unstablePkgs.hyprland.version}";
     }
   ];
 
