@@ -66,6 +66,7 @@
            bind = $mod SHIFT, J, movewindow, d
 
            bind = $mod, Q, killactive
+           bind = $mod SHIFT, Q, exec, hyprctl kill
 
 
           # fn buttons
@@ -160,6 +161,27 @@
       windowrule = float,pavucontrol
       windowrule = pin,dragon
     '';
+  };
+
+  services.hypridle = {
+    enable = true;
+    package = unstablePkgs.hypridle; # it's not in stable yet
+    lockCmd = "pidof swaylock || swaylock -i ~/wall.png";
+    beforeSleepCmd = "loginctl lock-session"; # lock before suspend.
+    afterSleepCmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
+
+    listeners = [
+      {
+        timeout = 5 * 60; # 5min
+        onTimeout = "loginctl lock-session"; # lock screen when timeout has passed
+      }
+
+      {
+        timeout = builtins.floor (5.5 * 60); # 5.5min
+        onTimeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
+        onResume = "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
+      }
+    ];
   };
 
   xdg.portal = {

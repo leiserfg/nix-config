@@ -24,7 +24,6 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-    ddcutil
     unstablePkgs.steam-run
     easyeffects
     util-linux

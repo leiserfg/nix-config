@@ -21,6 +21,7 @@
     unstablePkgs.gamescope
     unstablePkgs.godot_4
     nix-ld
+    swaylock
   ];
 
   services = {
