@@ -14,7 +14,7 @@
   with lib; [
     /* wineWowPackages.staging */
     winetricks
-    unstablePkgs.yuzu-early-access
+    myPkgs.yuzu-early-access
     # unstablePkgs.ryujinx
     # mgba
     # aseprite

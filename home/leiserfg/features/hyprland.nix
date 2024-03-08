@@ -25,20 +25,12 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    systemd.enable = true;
+    systemd = {
+      enable = true;
+    };
 
     package = nixpkgsHypr.hyprland;
-    # .overrideAttrs (finalAttrs: previousAttrs: {
-    #   version = "0.34.0";
-    #   src = pkgs.fetchFromGitHub {
-    #     owner = "hyprwm";
-    #     repo = previousAttrs.pname;
-    #     rev = "483302a";
-    #     hash = "sha256-WSrjBI3k2dM/kGF20At0E6NlrJSB4+pE+WGJ6dFzWEs=";
-    #   };
-    #   buildInputs = previousAttrs.buildInputs ++ [unstablePkgs.tomlplusplus];
-    # });
-    #
+
     extraConfig = let
       env_vars = {
         XDG_CURRENT_DESKTOP = "Hyprland";
@@ -160,10 +152,16 @@
       windowrule = center,pavucontrol
       windowrule = float,pavucontrol
       windowrule = pin,dragon
+
+
+
+    # here and not as a systemd unit so it inherits PATH
+     exec-once = hypridle
+
     '';
   };
 
-  services.hypridle = {
+  programs.hypridle = {
     enable = true;
     package = unstablePkgs.hypridle; # it's not in stable yet
     lockCmd = "pidof swaylock || swaylock -i ~/wall.png";

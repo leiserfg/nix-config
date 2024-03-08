@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-hypr.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    #last revision with yuzu   b8697e57f10292a6165a20f03d2f42920dfaf973
+    #last revision with yuzu b8697e57f10292a6165a20f03d2f42920dfaf973
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     hardware.url = "github:nixos/nixos-hardware";

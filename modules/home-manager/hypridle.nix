@@ -10,9 +10,9 @@
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.meta) getExe;
 
-  cfg = config.services.hypridle;
+  cfg = config.programs.hypridle;
 in {
-  options.services.hypridle = {
+  options.programs.hypridle = {
     enable = mkEnableOption "Hypridle, Hyprland's idle daemon";
 
     package = mkOption {
@@ -79,6 +79,7 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.packages = [cfg.package];
     xdg.configFile."hypr/hypridle.conf".text = ''
       general {
         lock_cmd = ${cfg.lockCmd}
@@ -101,20 +102,5 @@ in {
         '')
         cfg.listeners)}
     '';
-
-    systemd.user.services.hypridle = {
-      Unit = {
-        Description = "Hypridle";
-        After = ["graphical-session.target"];
-      };
-
-      Service = {
-        ExecStart = "${getExe cfg.package}";
-        Restart = "always";
-        RestartSec = "10";
-      };
-
-      Install.WantedBy = ["default.target"];
-    };
   };
 }
