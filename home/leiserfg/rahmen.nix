@@ -22,7 +22,8 @@
     unstablePkgs.godot_4
     nix-ld
     swaylock
-
+    audacity
+    ddcutil
   ];
 
   services = {

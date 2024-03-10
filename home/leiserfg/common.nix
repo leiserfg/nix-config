@@ -391,6 +391,10 @@
     };
   };
 
+  home.sessionVariables = {
+    GIO_EXTRA_MODULES = "${pkgs.gvfs}/lib/gio/modules";
+  };
+
   # systemd.user.services.polkit-authentication-agent = {
   #   Unit = {
   #     Description = "Polkit authentication agent";

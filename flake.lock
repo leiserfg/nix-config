@@ -103,6 +103,24 @@
         "systems": "systems"
       },
       "locked": {
+        "lastModified": 1709126324,
+        "narHash": "sha256-q6EQdSeUZOG26WelxqkmR7kArjgWCdw5sfJVHPH/7j8=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "d465f4819400de7c8d874d50b982301f28a84605",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
+      "inputs": {
+        "systems": "systems_2"
+      },
+      "locked": {
         "lastModified": 1701680307,
         "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
         "owner": "numtide",
@@ -175,14 +193,15 @@
     },
     "leiserfg-overlay": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "suyu-flake": "suyu-flake"
       },
       "locked": {
-        "lastModified": 1709839751,
-        "narHash": "sha256-G3x6gGb1+Wkj/mZjw26RiYJgdihi24UoATunkisoB/o=",
+        "lastModified": 1710085978,
+        "narHash": "sha256-VBTnos0EXRe4uCfR7T5U39snmKJ9HX098P1YLIA+Jjs=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "60bc588216bf92cb8c4f52143dfc51fd2ad6f1bc",
+        "rev": "f2f8947444318d10fc46a2c4a62d7c58d14a3d39",
         "type": "github"
       },
       "original": {
@@ -193,7 +212,7 @@
     },
     "neovim-flake": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "neovim-nightly",
           "nixpkgs"
@@ -383,7 +402,45 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },
+    "suyu-flake": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "leiserfg-overlay",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1710078239,
+        "narHash": "sha256-flZQ37dG6ZaSfFNm7+psNpR25ZgXpfaWkHcjZ/j0eSA=",
+        "owner": "leiserfg",
+        "repo": "suyu-flake",
+        "rev": "da0d8cab7b9d022558c5250a583402d9c7e97624",
+        "type": "github"
+      },
+      "original": {
+        "owner": "leiserfg",
+        "ref": "rebrand",
+        "repo": "suyu-flake",
+        "type": "github"
+      }
+    },
     "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
