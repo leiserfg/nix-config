@@ -164,7 +164,7 @@
   programs.hypridle = {
     enable = true;
     package = unstablePkgs.hypridle; # it's not in stable yet
-    lockCmd = "pidof swaylock || swaylock -i ~/wall.png";
+    lockCmd = "pidof swaylock || swaylock -i ~/wall.png -f && sleep 3";
     beforeSleepCmd = "loginctl lock-session"; # lock before suspend.
     afterSleepCmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
 
