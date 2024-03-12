@@ -78,7 +78,8 @@
     tree-sitter
     nmap
     # krita
-    pinentry.qt
+    # pinentry.qt
+    # unstablePkgs.cinnamon.warpinator
     # SGr-IosevkaTermSS07
     (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
