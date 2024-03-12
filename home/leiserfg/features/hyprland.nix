@@ -153,7 +153,9 @@
       windowrule = float,pavucontrol
       windowrule = pin,dragon
 
+      windowrule = idleinhibit fullscreen,firefox
 
+      layerrule = noanim,rofi
 
     # here and not as a systemd unit so it inherits PATH
      exec-once = hypridle
