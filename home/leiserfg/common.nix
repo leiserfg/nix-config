@@ -80,8 +80,7 @@
     # krita
     # pinentry.qt
     # unstablePkgs.cinnamon.warpinator
-    # SGr-IosevkaTermSS07
-    (unstablePkgs.iosevka-bin.override {variant = "sgr-iosevka-term-ss07";})
+    (unstablePkgs.iosevka-bin.override {variant = "SGr-IosevkaTermSS07";})
     (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
     (writeShellScriptBin "xdg-open" ''
       # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
