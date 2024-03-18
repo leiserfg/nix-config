@@ -10,8 +10,6 @@
     xorg.xrandr
     xorg.xev
     xcwd
-
-    rofi
   ];
 
   xsession.enable = true;

@@ -6,7 +6,7 @@
   config,
   ...
 }: {
-  imports = [../../shared/nix.nix];
+  imports = [../../shared/nix.nix ./features/rofi.nix];
 
   home = {
     username = lib.mkDefault "leiserfg";
@@ -99,7 +99,6 @@
     gimp
     (myPkgs.kitty)
     # foot
-    # rofi
     /*
     awesome
     */
@@ -250,6 +249,7 @@
       '';
     };
     fzf.enable = true;
+
     firefox = {
       enable = true;
       profiles = {
