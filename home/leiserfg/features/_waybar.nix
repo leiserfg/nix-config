@@ -85,7 +85,7 @@
         modules-right = [
           "battery"
           "tray"
-          "custom/pp"
+          "power-profiles-daemon"
           "clock"
           #  currently using applets
           # "network"
@@ -107,21 +107,24 @@
             "default" = "";
           };
         };
-
-        "battery" = {
+        power-profiles-daemon = {
+          "format" = "{icon}";
+          "tooltip-format" = "Power profile= {profile}\nDriver= {driver}";
+          "tooltip" = true;
+          "format-icons" = {
+            "default" = "";
+            "performance" = "";
+            "balanced" = "";
+            "power-saver" = "";
+          };
+        };
+        battery = {
           "states" = {
             "warning" = 30;
             "critical" = 15;
           };
           "format" = "{capacity}% {icon}";
           "format-icons" = ["" "" "" "" ""];
-        };
-
-        "custom/pp" = {
-          exec = "pp-state";
-          on-click = "rofi-pp && pkill -SIGRTMIN+9 waybar";
-          signal = 9;
-          interval = "once";
         };
 
         "${wm}/window" = {
