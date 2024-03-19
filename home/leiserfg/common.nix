@@ -37,7 +37,7 @@
     # firefox
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
-    (unstablePkgs.nodePackages.pyright)
+    (myPkgs.basedpyright)
     nil
     pmenu
     glxinfo

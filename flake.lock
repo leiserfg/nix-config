@@ -197,11 +197,11 @@
         "suyu-flake": "suyu-flake"
       },
       "locked": {
-        "lastModified": 1710370665,
-        "narHash": "sha256-+bxIfDjq7PkKaTy6HjsAXPPiEg30tHjvPde19zo0hFI=",
+        "lastModified": 1710889225,
+        "narHash": "sha256-Wkb629gnotxbhotKRrS3f1keIQfv+UVTqBWa+N4F5Ms=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "e8040b30d4959f4791fae9221c2aea852bc15f41",
+        "rev": "6fc5af2f07fdb695a0320eb6884878a50e91d93f",
         "type": "github"
       },
       "original": {
