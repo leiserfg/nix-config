@@ -3,6 +3,7 @@
   lib,
   pkgs,
   myPkgs,
+  neovimPkgs,
   config,
   ...
 }: {
@@ -55,7 +56,8 @@
     picocom # run as:  sudo picocom /dev/ttyACM0
 
     doggo
-    neovim-unwrapped
+    (neovimPkgs.neovim)
+
     sumneko-lua-language-server
     pipenv
     alejandra

@@ -43,8 +43,6 @@
         }
     );
 
-
-
     nixpkgsHypr = forAllSystems (
       system:
         import inputs.nixpkgs-hypr {
@@ -134,6 +132,7 @@
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
           codeium = inputs.codeium.packages.x86_64-linux;
+          neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
@@ -150,6 +149,7 @@
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
           nixpkgsHypr = nixpkgsHypr.x86_64-linux;
+          neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
@@ -166,6 +166,7 @@
           gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           nixpkgsHypr = nixpkgsHypr.x86_64-linux;
+          neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
