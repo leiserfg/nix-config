@@ -13,6 +13,7 @@
     ../common/users/leiserfg.nix
     # ../common/features/sway.nix
     ../common/features/hyprland.nix
+    ../common/features/docker.nix
     # ../common/features/x11.nix
   ];
 

@@ -119,7 +119,7 @@
         modules =
           (builtins.attrValues nixosModules)
           ++ [
-            nixos-hardware.framework-13-7040-amd
+            nixos-hardware.nixosModules.framework-13-7040-amd
             ./hosts/rahmen
           ];
       };
