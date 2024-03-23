@@ -1,13 +1,13 @@
 {lib, ...}: {
   nix.settings = {
-    auto-optimise-store = lib.mkDefault true;
+    auto-optimise-store = true;
     experimental-features = ["nix-command" "flakes" "repl-flake"];
     substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
       "https://leiserfg.cachix.org"
       "https://nix-gaming.cachix.org"
-      "https://nyx.chaotic.cx"  # yuzu-ea
+      "https://nyx.chaotic.cx" # yuzu-ea
       "https://hyprland.cachix.org"
     ];
     trusted-public-keys = [
