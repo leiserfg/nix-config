@@ -8,8 +8,6 @@
     #last revision with yuzu b8697e57f10292a6165a20f03d2f42920dfaf973
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    hardware.url = "github:nixos/nixos-hardware";
-
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
@@ -20,9 +18,12 @@
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
     blender.url = "github:edolstra/nix-warez?dir=blender";
     blender.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
   outputs = {
+    nixos-hardware,
     nixpkgs,
     home-manager,
     ...
@@ -118,6 +119,7 @@
         modules =
           (builtins.attrValues nixosModules)
           ++ [
+            nixos-hardware.framework-13-7040-amd
             ./hosts/rahmen
           ];
       };
