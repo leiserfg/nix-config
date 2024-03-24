@@ -19,6 +19,8 @@
 
   hardware.cpu.amd.updateMicrocode = true;
 
+  services.fprintd.enable = true;
+
   services.udev.extraRules = ''
     # USB SWITCH as kvm
     # Bus 001 Device 071: ID 05e3:0610 Genesys Logic, Inc. Hub

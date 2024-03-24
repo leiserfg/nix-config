@@ -41,7 +41,6 @@
     (myPkgs.basedpyright)
     nil
     pmenu
-    glxinfo
     pciutils
     imv
     unzip
@@ -63,7 +62,7 @@
     alejandra
     nix-prefetch-git
     bc
-    ffmpeg_5-full
+    ffmpeg-full
     jq
     graphviz
     gcc
