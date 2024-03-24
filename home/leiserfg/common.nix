@@ -115,8 +115,11 @@
     p7zip
     dfeet
     gparted
-    
-    agebox
+   
+    # age
+    # agebox
+    # age-kegen-deterministic
+
     pavucontrol
     zathura
     xdragon
