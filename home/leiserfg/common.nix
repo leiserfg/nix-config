@@ -115,7 +115,8 @@
     p7zip
     dfeet
     gparted
-
+    
+    agebox
     pavucontrol
     zathura
     xdragon
