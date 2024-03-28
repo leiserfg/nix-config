@@ -152,8 +152,10 @@
       windowrule = center,pavucontrol
       windowrule = float,pavucontrol
       windowrule = pin,dragon
-
       windowrule = idleinhibit fullscreen,firefox
+
+      windowrulev2 = noborder, onworkspace:1
+
 
       layerrule = noanim,rofi
 

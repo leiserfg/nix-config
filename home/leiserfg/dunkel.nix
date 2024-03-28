@@ -15,8 +15,6 @@
     pgcli
     pre-commit
     poetry
-    terraform
-    terraform-ls
     insomnia
     awscli2
     csvkit

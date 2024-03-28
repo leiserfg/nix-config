@@ -33,6 +33,10 @@
     # inferno
     flamegraph
     python311Packages.ipython
+    python312
+
+
+    neovide
     ollama
     (unstablePkgs.tdesktop)
     # firefox
@@ -119,6 +123,10 @@
     # age
     # agebox
     # age-kegen-deterministic
+
+    terraform
+    terraform-ls
+    awscli2
 
     pavucontrol
     zathura
