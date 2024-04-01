@@ -35,7 +35,7 @@
     python311Packages.ipython
     python312
 
-
+    teip
     neovide
     ollama
     (unstablePkgs.tdesktop)
