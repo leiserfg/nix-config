@@ -182,11 +182,11 @@
         "suyu-flake": "suyu-flake"
       },
       "locked": {
-        "lastModified": 1710889225,
-        "narHash": "sha256-Wkb629gnotxbhotKRrS3f1keIQfv+UVTqBWa+N4F5Ms=",
+        "lastModified": 1712091896,
+        "narHash": "sha256-34RcwgqmQdVDkHBgKYGIzNpQhb6iqWrTU7nqLsqU8uA=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "6fc5af2f07fdb695a0320eb6884878a50e91d93f",
+        "rev": "9aa7443df8303360d97eddc921d3533b32c0e9ad",
         "type": "github"
       },
       "original": {
@@ -411,16 +411,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1710078239,
-        "narHash": "sha256-flZQ37dG6ZaSfFNm7+psNpR25ZgXpfaWkHcjZ/j0eSA=",
-        "owner": "leiserfg",
+        "lastModified": 1710784381,
+        "narHash": "sha256-w5u2lJp3OFkOroJipTbS9jYz7NSZLxIhwADlQFnM9bQ=",
+        "owner": "Noodlez1232",
         "repo": "suyu-flake",
-        "rev": "da0d8cab7b9d022558c5250a583402d9c7e97624",
+        "rev": "be46dc59d08af15b7100659d52462f342dd8d916",
         "type": "github"
       },
       "original": {
-        "owner": "leiserfg",
-        "ref": "rebrand",
+        "owner": "Noodlez1232",
         "repo": "suyu-flake",
         "type": "github"
       }
