@@ -30,7 +30,6 @@
     '')
   ];
 
-
   services = {
     kanshi = {
       enable = true;
@@ -46,10 +45,25 @@
           ];
         };
 
-        docked = {
+        office = {
+          outputs = [
+            {
+              criteria = "Dell Inc. DELL S2721QS 4N2CM43";
+              mode = "2560x1440@59.95100";
+              scale = 1.6;
+            }
+            {
+              criteria = "eDP-1";
+              status = "disable";
+            }
+          ];
+        };
+
+        home = {
           outputs = [
             {
               criteria = "DP-1";
+              mode = "3840x2160";
             }
             {
               criteria = "eDP-1";
