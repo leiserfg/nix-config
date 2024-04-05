@@ -20,6 +20,12 @@
     csvkit
     libreoffice
     pandoc
+
+    wabt # wasm-decompile 
+    luajit
+    wasynth # wasm2luajit
+    unstablePkgs.emscripten # emcc 
+
     unstablePkgs.godot_4
 
     (gnome3.gvfs)
@@ -64,6 +70,7 @@
             {
               criteria = "DP-1";
               mode = "3840x2160";
+              scale = 1.333333;
             }
             {
               criteria = "eDP-1";
