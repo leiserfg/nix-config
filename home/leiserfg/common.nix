@@ -7,7 +7,7 @@
   config,
   ...
 }: {
-  imports = [../../shared/nix.nix ./features/rofi.nix];
+  imports = [../../shared/nix.nix ./features/rofi.nix ./features/audio.nix];
 
   home = {
     username = lib.mkDefault "leiserfg";
