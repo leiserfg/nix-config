@@ -32,8 +32,9 @@
     nix-update
     # inferno
     flamegraph
+    proximity-sort
     python311Packages.ipython
-    python312
+    fend
 
     teip
     neovide
@@ -341,6 +342,10 @@
 
     # Fix telegram input
     ALSOFT_DRIVERS = "pulse";
+
+    # Disable qt decoration for telegram
+    QT_WAYLAND_DISABLE_WINDOWDECORATION="1";
+
   };
   home.pointerCursor = {
     package = pkgs.gnome.adwaita-icon-theme;
