@@ -7,7 +7,7 @@
   config,
   ...
 }: {
-  imports = [../../shared/nix.nix ./features/rofi.nix ./features/audio.nix];
+  imports = [../../shared/nix.nix ./features/rofi.nix ./features/audio.nix ./features/fish.nix ./features/cmds.nix ];
 
   home = {
     username = lib.mkDefault "leiserfg";
@@ -37,7 +37,6 @@
     fend
 
     teip
-    neovide
     ollama
     (unstablePkgs.tdesktop)
     # firefox
@@ -54,7 +53,6 @@
     iw
     dmidecode
     vokoscreen-ng
-    zoxide
     # iredis
     dua
     picocom # run as:  sudo picocom /dev/ttyACM0
@@ -311,7 +309,7 @@
 
     bat = {
       enable = true;
-      config.theme = "base16";
+      # config.theme = "base16";
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;

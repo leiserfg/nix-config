@@ -7,20 +7,19 @@
   config,
   ...
 }: {
-  imports =
-    [
-      ./audio.nix
-      ./boot.nix
-      ./games.nix
-      ./gl.nix
-      ./locale.nix
-      ./netowork.nix
-      ./nfs.nix
-      ./nix.nix
-      ./services.nix
-      ./security.nix
-    ];
-    # ++ [lib.mkIf (lib.versionOlder config.boot.kernelPackages.kernel.version "6.5.7") ../common/features/8bitdo.nix];
+  imports = [
+    ./audio.nix
+    ./boot.nix
+    ./games.nix
+    ./gl.nix
+    ./locale.nix
+    ./netowork.nix
+    ./nfs.nix
+    ./nix.nix
+    ./services.nix
+    ./security.nix
+  ];
+  # ++ [lib.mkIf (lib.versionOlder config.boot.kernelPackages.kernel.version "6.5.7") ../common/features/8bitdo.nix];
   environment = {
     loginShellInit = ''
       # Activate home-manager environment, if not already
@@ -46,5 +45,6 @@
 
   environment.systemPackages = with pkgs; [
     vim
+    cntr
   ];
 }
