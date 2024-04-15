@@ -14,6 +14,7 @@
     ./features/fish.nix
     ./features/cmds.nix
     ./features/mpv.nix
+    ./features/git.nix
   ];
 
   home = {
