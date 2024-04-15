@@ -5,6 +5,7 @@
     interactiveShellInit = ''
     '';
     shellAliases = {
+        "open" = "command xdg-open";
     };
   };
   programs.zoxide = {

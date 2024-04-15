@@ -44,7 +44,7 @@ in {
       };
       from-720-to-1080 = {
         profile-cond = "p['video-params/h'] >= 720 and p['video-params/h'] < 1080";
-        glsl-shader = "${shaders_dir}/FSRCNN_x2_r2_16-0-2.glsl";
+        glsl-shader = "${shaders_dir}/FSR.glsl";
         profile-restore = "copy";
       };
     };
