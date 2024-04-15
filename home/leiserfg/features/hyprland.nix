@@ -81,7 +81,7 @@
            bind=$mod,f,fullscreen
 
            bind = $mod, Slash, exec, firefox
-           bind = $mod, Return, exec, kitty
+           bind = $mod, Return, exec, kitty -1
 
            bind = $mod,Print, exec, ${pkgs.grimblast}/bin/grimblast save output
            bind = $mod+SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast save area

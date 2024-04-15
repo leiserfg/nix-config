@@ -7,7 +7,14 @@
   config,
   ...
 }: {
-  imports = [../../shared/nix.nix ./features/rofi.nix ./features/audio.nix ./features/fish.nix ./features/cmds.nix ];
+  imports = [
+    ../../shared/nix.nix
+    ./features/rofi.nix
+    ./features/audio.nix
+    ./features/fish.nix
+    ./features/cmds.nix
+    ./features/mpv.nix
+  ];
 
   home = {
     username = lib.mkDefault "leiserfg";
@@ -120,7 +127,7 @@
     p7zip
     dfeet
     gparted
-   
+
     # age
     # agebox
     # age-kegen-deterministic
@@ -279,7 +286,7 @@
             #
             "media.ffmpeg.vaapi.enabled" = true;
             "media.ffvpx.enabled" = true;
-            
+
             # HACK to make slack huddle work
             "general.useragent.override" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${pkgs.firefox.version}) Gecko/20100101 Firefox/${pkgs.firefox.version}";
           };
@@ -292,20 +299,6 @@
       settings = {
         cookies-from-browser = "firefox";
         downloader = "aria2c";
-      };
-    };
-    mpv = {
-      enable = true;
-      scripts = with pkgs.mpvScripts; [
-        uosc
-        thumbfast
-        mpris
-        sponsorblock
-      ];
-      scriptOpts = {
-        uosc = {
-          top_bar = "always"; # This makes uosc work fine in wayland
-        };
       };
     };
 
@@ -344,8 +337,7 @@
     ALSOFT_DRIVERS = "pulse";
 
     # Disable qt decoration for telegram
-    QT_WAYLAND_DISABLE_WINDOWDECORATION="1";
-
+    QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
   };
   home.pointerCursor = {
     package = pkgs.gnome.adwaita-icon-theme;

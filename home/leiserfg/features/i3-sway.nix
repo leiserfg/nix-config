@@ -4,7 +4,7 @@
   config = rec {
     modifier = "Mod4";
     # Use kitty as default terminal
-    terminal = "kitty";
+    terminal = "kitty -1";
 
     focus = {
       followMouse = false;
