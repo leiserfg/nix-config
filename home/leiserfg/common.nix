@@ -36,6 +36,8 @@
     python311Packages.ipython
     fend
 
+    python312
+    (unstablePkgs.libjxl)
     teip
     ollama
     (unstablePkgs.tdesktop)
