@@ -42,11 +42,11 @@ in {
         profile-cond = "video_codec and (not p['video-params/pixelformat']:match'p10$')";
         vo = "dmabuf-wayland";
       };
-      from-720-to-1080 = {
-        profile-cond = "p['video-params/h'] >= 720 and p['video-params/h'] < 1080";
-        glsl-shader = "${shaders_dir}/FSR.glsl";
-        profile-restore = "copy";
-      };
+      # from-720-to-1080 = {
+      #   profile-cond = "p['video-params/h'] >= 720 and p['video-params/h'] < 1080";
+      #   glsl-shader = "${shaders_dir}/FSR.glsl";
+      #   profile-restore = "copy";
+      # };
     };
     scriptOpts = {
       uosc = {
@@ -63,7 +63,7 @@ in {
 
       "Shift+RIGHT" = "seek 20";
       "Shift+LEFT" = "seek -20";
-
+      "CTRL+1" = "show-text 'Shaders: \${glsl-shaders}'";
       "UP" = "add volume +5";
       "DOWN" = "add volume -5";
 
