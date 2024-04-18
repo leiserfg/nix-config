@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   programs.git = {
     enable = true;
     delta.enable = true;
@@ -19,25 +19,25 @@
       co = ''checkout'';
       br = ''branch'';
       down = ''clone --depth=1'';
-      delouse = ''"!f() { curr_sha=`git sha`; git reset HEAD~1;git commit --allow-empty --no-verify -C \"$curr_sha\"; }; f"'';
+      delouse = "!f() { curr_sha=`git sha`; git reset HEAD~1;git commit --allow-empty --no-verify -C \"$curr_sha\"; }; f";
       cp = ''cherry-pick'';
       cps = ''cherry-pick -s'';
       today = ''diff @{yesterday}.. --stat'';
       meh = ''commit --amend'';
       wdiff = ''diff --word-diff=color'';
       wshow = ''show --word-diff=color'';
-      lasttag = ''"!git tag --sort=-creatordate|head -n 1"'';
+      lasttag = "!git tag --sort=-creatordate|head -n 1";
       branches = ''branch -vv'';
-      comerge = ''"!x() { target=`git symbolic-ref HEAD`; git co $1; git merge $target; }; x"'';
-      ours = ''"!f() { git checkout --ours -- $@ && git add -- $@; }; f"'';
-      theirs = ''"!f() { git checkout --theirs -- $@ && git add -- $@; }; f"'';
-      ignore = ''"!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi"'';
+      comerge = "!x() { target=`git symbolic-ref HEAD`; git co $1; git merge $target; }; x";
+      ours = "!f() { git checkout --ours -- $@ && git add -- $@; }; f";
+      theirs = "!f() { git checkout --theirs -- $@ && git add -- $@; }; f";
+      ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ ;}; gi";
       yolo = ''!git add -A && git commit -m \"$(curl --silent --fail https://raw.githubusercontent.com/ngerakines/commitment/master/commit_messages.txt| shuf -n 1 -)\"'';
       origin = ''config --get remote.origin.url'';
       current = ''rev-parse --abbrev-ref HEAD'';
       out = ''!git log origin/$(git current)..'';
       fixup = ''!git commit --amend --no-edit --no-verify --allow-empty\n'';
-      fixit = ''"!f() { git commit --fixup=$1; GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash $1~1; }; f"'';
+      fixit = "!f() { git commit --fixup=$1; GIT_SEQUENCE_EDITOR=: git rebase -i --autosquash $1~1; }; f";
       wip = "!git add --all . && git commit -m 'WIP'";
       root = "!pwd";
       upstream = "!git branch --set-upstream-to=origin/$(git current) $(git current)";
@@ -68,8 +68,8 @@
       push = {default = "current";};
       pull = {rebase = true;};
       gpg = {format = "ssh";};
-      commit = {gpgSign = true;};
-      tag = {gpgSign = true;};
+      commit = {gpgsign = true;};
+      tag = {gpgsign = true;};
       feature = {manyFiles = true;};
       url = {
         "ssh://git@github.com/" = {

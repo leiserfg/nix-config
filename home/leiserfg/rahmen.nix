@@ -17,9 +17,9 @@
     pgcli
     pre-commit
     poetry
-    unstablePkgs.blender-hip
+    # unstablePkgs.blender-hip
     unstablePkgs.gamescope
-    unstablePkgs.godot_4
+    # unstablePkgs.godot_4
     nix-ld
     swaylock
     audacity
