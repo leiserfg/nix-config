@@ -82,7 +82,7 @@
     usbutils
     wget
     blueman
-    pcmanfm
+    xfce.thunar
     xarchiver
 
     ventoy-bin
@@ -398,7 +398,7 @@
     defaultApplications = {
       "text/html" = "firefox.desktop";
       "x-scheme-handler/tg" = "telegram.desktop";
-      "inode/directory" = "pcmanfm.desktop";
+      "inode/directory" = "thunar.desktop";
       "text/x-python" = "neovim.desktop";
       "text/plain" = "neovim.desktop";
       "application/zip" = "xarchiver.desktop";
