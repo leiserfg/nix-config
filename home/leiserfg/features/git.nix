@@ -67,6 +67,7 @@
       };
       push = {default = "current";};
       pull = {rebase = true;};
+      rebase = {autoStash = true;};
       gpg = {format = "ssh";};
       commit = {gpgsign = true;};
       tag = {gpgsign = true;};
@@ -76,8 +77,6 @@
           insteadOf = "https://github.com/";
         };
       };
-
-
     };
   };
 

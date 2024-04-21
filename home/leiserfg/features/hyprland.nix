@@ -170,14 +170,17 @@
     enable = true;
     package = unstablePkgs.hypridle; # it's not in stable yet
     lockCmd = "pidof swaylock || swaylock -i ~/wall.png -f && sleep 3";
-    beforeSleepCmd = "loginctl lock-session"; # lock before suspend.
+
+    # Stop automatic locking, I'm home-alone
+
+    # beforeSleepCmd = "loginctl lock-session"; # lock before suspend.
     afterSleepCmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
 
     listeners = [
-      {
-        timeout = 5 * 60; # 5min
-        onTimeout = "loginctl lock-session"; # lock screen when timeout has passed
-      }
+      # {
+      #   timeout = 5 * 60; # 5min
+      #   onTimeout = "loginctl lock-session"; # lock screen when timeout has passed
+      # }
 
       {
         timeout = builtins.floor (5.5 * 60); # 5.5min

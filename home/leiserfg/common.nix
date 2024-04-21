@@ -56,7 +56,7 @@
     nil
     pmenu
     pciutils
-    imv
+    image-roll
     unzip
     nodePackages.typescript-language-server
 
@@ -251,7 +251,25 @@
       ''
     )
   ];
-
+  xdg.configFile."Thunar/uca.xml" = {
+    executable = false;
+    text = ''
+      <?xml version="1.0" encoding="UTF-8"?>
+      <actions>
+          <action>
+              <icon>kitty</icon>
+              <name>Open In Kitty</name>
+              <submenu></submenu>
+              <unique-id>1713512577329704-1</unique-id>
+              <command>kitty -1 --directory %f</command>
+              <description></description>
+              <range>*</range>
+              <patterns>*</patterns>
+              <directories/>
+          </action>
+      </actions>
+    '';
+  };
   programs = {
     home-manager.enable = true;
     bash = {
@@ -404,7 +422,7 @@
       "application/zip" = "xarchiver.desktop";
       "application/pdf" = "org.pwmt.zathura.desktop";
       "application/epub+zip" = "org.pwmt.zathura.desktop.desktop";
-      "image/*" = "imv.desktop";
+      "image/*" = "com.github.weclaw1.ImageRoll.desktop";
     };
   };
 
