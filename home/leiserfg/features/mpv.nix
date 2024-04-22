@@ -27,6 +27,7 @@ in {
       hwdec = "auto-safe";
       gpu-api = "vulkan";
       hdr-compute-peak = "no";
+      vo = "gpu-next";
     };
     profiles = {
       audio-only = {
