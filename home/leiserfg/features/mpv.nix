@@ -26,7 +26,6 @@ in {
 
       hwdec = "auto-safe";
       gpu-api = "vulkan";
-      gpu-context = "waylandvk";
       hdr-compute-peak = "no";
     };
     profiles = {
@@ -34,14 +33,14 @@ in {
         profile-cond = "audio_codec and (container_fps == nil or container_fps == 1)";
         lavfi-complex = "'[aid1]asplit[ao][a1];[a1]avectorscope=draw=line:s=1920x1080,format=yuv420p[vo]'";
       };
-      hdr-p10 = {
-        profile-cond = "p['video-params/pixelformat']:match'p10$'";
-        vo = "gpu-next";
-      };
-      no-hdr-p10 = {
-        profile-cond = "video_codec and (not p['video-params/pixelformat']:match'p10$')";
-        vo = "dmabuf-wayland";
-      };
+      # hdr-p10 = {
+      #   profile-cond = "p['video-params/pixelformat']:match'p10$'";
+      #   vo = "gpu-next";
+      # };
+      # no-hdr-p10 = {
+      #   profile-cond = "video_codec and (not p['video-params/pixelformat']:match'p10$')";
+      #   vo = "dmabuf-wayland";
+      # };
       # from-720-to-1080 = {
       #   profile-cond = "p['video-params/h'] >= 720 and p['video-params/h'] < 1080";
       #   glsl-shader = "${shaders_dir}/FSR.glsl";
