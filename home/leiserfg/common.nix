@@ -84,7 +84,7 @@
     blueman
     xfce.thunar
     xarchiver
-
+    # gdb
     ventoy-bin
     rink
     unstablePkgs.uiua
@@ -126,7 +126,7 @@
     aria2
     zpaq
     p7zip
-    dfeet
+    d-spy
     gparted
 
     # age

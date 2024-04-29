@@ -36,65 +36,64 @@
         XDG_CURRENT_DESKTOP = "Hyprland";
         XDG_SESSION_TYPE = "wayland";
         XDG_SESSION_DESKTOP = "Hyprland";
-
       };
     in ''
 
-          ${builtins.concatStringsSep "\n" (
+            ${builtins.concatStringsSep "\n" (
         lib.attrsets.mapAttrsToList (name: val: "env = ${name},${val}") env_vars
       )}
 
 
-           $mod = SUPER
+             $mod = SUPER
 
-           # Move focus
-           bind = $mod, H, movefocus, l
-           bind = $mod, L, movefocus, r
-           bind = $mod, K, movefocus, u
-           bind = $mod, J, movefocus, d
+             # Move focus
+             bind = $mod, H, movefocus, l
+             bind = $mod, L, movefocus, r
+             bind = $mod, K, movefocus, u
+             bind = $mod, J, movefocus, d
 
-           bind = $mod SHIFT, H, movewindow, l
-           bind = $mod SHIFT, L, movewindow, r
-           bind = $mod SHIFT, K, movewindow, u
-           bind = $mod SHIFT, J, movewindow, d
+             bind = $mod SHIFT, H, movewindow, l
+             bind = $mod SHIFT, L, movewindow, r
+             bind = $mod SHIFT, K, movewindow, u
+             bind = $mod SHIFT, J, movewindow, d
 
-           bind = $mod, Q, killactive
-           bind = $mod SHIFT, Q, exec, hyprctl kill
-
-
-          # fn buttons
-          binde=,XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-          binde=,XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-          bind =,XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-          bind =,XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-          binde=,XF86MonBrightnessUp,   exec, ${pkgs.light}/bin/light -A 10
-          binde=,XF86MonBrightnessDown, exec, ${pkgs.light}/bin/light -U 10
-          # bind =,XF86AudioPlay,         exec, playerctl play-pause
-          # bind =,XF86AudioPrev,         exec, playerctl previous
-          # bind =,XF86AudioNext,         exec, playerctl next
-
-          # Move/resize windows with mod + LMB/RMB and dragging
-          bindm = $mod, mouse:272, movewindow
-          bindm = $mod, mouse:273, resizewindow
+             bind = $mod, Q, killactive
+             bind = $mod SHIFT, Q, exec, hyprctl kill
 
 
-           bind=$mod,f,fullscreen
+            # fn buttons
+            binde=,XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+            binde=,XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+            bind =,XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+            bind =,XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+            binde=,XF86MonBrightnessUp,   exec, ${pkgs.light}/bin/light -A 10
+            binde=,XF86MonBrightnessDown, exec, ${pkgs.light}/bin/light -U 10
+            # bind =,XF86AudioPlay,         exec, playerctl play-pause
+            # bind =,XF86AudioPrev,         exec, playerctl previous
+            # bind =,XF86AudioNext,         exec, playerctl next
 
-           bind = $mod, Slash, exec, firefox
-           bind = $mod, Return, exec, kitty -1
+            # Move/resize windows with mod + LMB/RMB and dragging
+            bindm = $mod, mouse:272, movewindow
+            bindm = $mod, mouse:273, resizewindow
 
-           bind = $mod,Print, exec, ${pkgs.grimblast}/bin/grimblast save output
-           bind = $mod+SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast save area
-           bind = ,Print, exec, ${pkgs.grimblast}/bin/grimblast copy output
-           bind = SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast copy area
 
-           bind = $mod, G, exec, game-picker
-           bind = $mod, 0, exec, rofi_power
-           bind = $mod, D, exec, rofi-launch
+             bind=$mod,f,fullscreen
 
-           # workspaces
-           # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-           ${builtins.concatStringsSep "\n" (builtins.genList (
+             bind = $mod, Slash, exec, firefox
+             bind = $mod, Return, exec, kitty -1
+
+             bind = $mod,Print, exec, ${pkgs.grimblast}/bin/grimblast save output
+             bind = $mod+SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast save area
+             bind = ,Print, exec, ${pkgs.grimblast}/bin/grimblast copy output
+             bind = SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast copy area
+
+             bind = $mod, G, exec, game-picker
+             bind = $mod, 0, exec, rofi_power
+             bind = $mod, D, exec, rofi-launch
+
+             # workspaces
+             # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+             ${builtins.concatStringsSep "\n" (builtins.genList (
           x: let
             ws = let
               c = (x + 1) / 10;
@@ -107,65 +106,67 @@
         )
         9)}
 
-        general {
-            layout = master
-            cursor_inactive_timeout = 10
-            gaps_out = 4
-        }
+          general {
+              layout = master
+              cursor_inactive_timeout = 10
+              gaps_out = 4
+          }
 
-        # misc {
-        #     enable_swallow = true
-        #     swallow_regex = ^(kitty)$
-        # }
+          # misc {
+          #     enable_swallow = true
+          #     swallow_regex = ^(kitty)$
+          # }
 
-        gestures {
-            workspace_swipe = true
-            workspace_swipe_fingers = 4
-        }
+          gestures {
+              workspace_swipe = true
+              workspace_swipe_fingers = 4
+          }
 
-        master {
-          no_gaps_when_only = 3
-          new_is_master = false
-        }
+          master {
+            no_gaps_when_only = 3
+            new_is_master = false
+          }
 
-        binds {
-          workspace_back_and_forth = true
-        }
+          binds {
+            workspace_back_and_forth = true
+          }
 
-        xwayland {
-             force_zero_scaling = true
-        }
-        input {
-            kb_layout = us
-            kb_variant = altgr-intl
-            follow_mouse = 2
+          xwayland {
+               force_zero_scaling = true
+          }
+          input {
+              kb_layout = us
+              kb_variant = altgr-intl
+              follow_mouse = 2
 
-            touchpad {
-              disable_while_typing = true
-            }
+              touchpad {
+                disable_while_typing = true
+              }
 
-        }
+          }
 
-      #RULES
-      windowrule = workspace 1,firefox
-      windowrule = workspace 4,org.telegram.desktop
+        #RULES
+        windowrule = workspace 1,firefox
+        windowrule = workspace 4,org.telegram.desktop
 
-      windowrule = center,pavucontrol
-      windowrule = float,pavucontrol
-      windowrule = pin,dragon
-      windowrule = idleinhibit fullscreen,firefox
-
-      windowrulev2 = noborder, onworkspace:1
+        windowrule = center,pavucontrol
+        windowrule = float,pavucontrol
+        windowrule = pin,dragon
+        windowrule = idleinhibit fullscreen,firefox
 
 
-      layerrule = noanim,rofi
 
-    # here and not as a systemd unit so it inherits PATH
-     exec-once = hypridle
+        layerrule = noanim,rofi
+        layerrule = dimaround,rofi
+
+      # here and not as a systemd unit so it inherits PATH
+       exec-once = hypridle
+       exec-once = swaybg -i ~/wall.png
 
     '';
   };
 
+  home.packages = [pkgs.swaybg];
   programs.hypridle = {
     enable = true;
     package = unstablePkgs.hypridle; # it's not in stable yet
