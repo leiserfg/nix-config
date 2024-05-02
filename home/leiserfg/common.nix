@@ -43,7 +43,7 @@
     proximity-sort
     python311Packages.ipython
     fend
-
+    nvme-cli
     python312
     (unstablePkgs.libjxl)
     teip

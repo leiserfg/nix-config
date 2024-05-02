@@ -148,7 +148,6 @@
         #RULES
         windowrule = workspace 1,firefox
         windowrule = workspace 4,org.telegram.desktop
-
         windowrule = center,pavucontrol
         windowrule = float,pavucontrol
         windowrule = pin,dragon
@@ -161,7 +160,7 @@
 
       # here and not as a systemd unit so it inherits PATH
        exec-once = hypridle
-       exec-once = swaybg -i ~/wall.png
+       exec-once = swaybg -i ~/wall.png -m fill
 
     '';
   };
