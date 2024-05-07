@@ -34,7 +34,8 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-    unstablePkgs.steam-run
+    steam-run
+    # unstablePkgs.steam-run
     easyeffects
     util-linux
     nix-update
