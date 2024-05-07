@@ -32,7 +32,7 @@
             NAME: .*[Ff]erris.*
         - JOB: ""
           DEVICE:
-            NAME: .*WeAct.*
+            NAME: .*KMK.*
         - JOB: "${intercept} -g $DEVNODE | ${caps2esc} -m 2 | ${uinput} -d $DEVNODE"
           DEVICE:
             NAME: .*Akko.*

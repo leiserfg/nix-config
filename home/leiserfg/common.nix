@@ -35,7 +35,6 @@
   with builtins;
   with lib; [
     steam-run
-    # unstablePkgs.steam-run
     easyeffects
     util-linux
     nix-update
