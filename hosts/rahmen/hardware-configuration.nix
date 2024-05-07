@@ -7,9 +7,9 @@
 }: {
   imports = [];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "thunderbolt" ];
+  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "thunderbolt"];
   boot.kernelModules = ["kvm-amd" "i2c-dev"];
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.initrd.kernelModules = ["amdgpu"];
 
   boot.kernel.sysctl."vm.max_map_count" = 544288;
 
@@ -35,4 +35,9 @@
     {device = "/dev/disk/by-uuid/3c74134f-280b-4f0f-8020-fe0107783c96";}
   ];
 
+  boot = {
+    extraModulePackages = [
+      config.boot.kernelPackages.framework-laptop-kmod
+    ];
+  };
 }

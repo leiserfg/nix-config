@@ -24,7 +24,7 @@
     swaylock
     audacity
     ddcutil
-    anki
+    # anki
   ];
 
   services = {

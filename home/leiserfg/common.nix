@@ -48,6 +48,7 @@
     (unstablePkgs.libjxl)
     teip
     ollama
+    typst
     (unstablePkgs.tdesktop)
     # firefox
     (unstablePkgs.fish)
@@ -82,7 +83,8 @@
     usbutils
     wget
     blueman
-    xfce.thunar
+    # xfce.thunar
+    pcmanfm
     xarchiver
     # gdb
     ventoy-bin
@@ -251,25 +253,25 @@
       ''
     )
   ];
-  xdg.configFile."Thunar/uca.xml" = {
-    executable = false;
-    text = ''
-      <?xml version="1.0" encoding="UTF-8"?>
-      <actions>
-          <action>
-              <icon>kitty</icon>
-              <name>Open In Kitty</name>
-              <submenu></submenu>
-              <unique-id>1713512577329704-1</unique-id>
-              <command>kitty -1 --directory %f</command>
-              <description></description>
-              <range>*</range>
-              <patterns>*</patterns>
-              <directories/>
-          </action>
-      </actions>
-    '';
-  };
+  # xdg.configFile."Thunar/uca.xml" = {
+  #   executable = false;
+  #   text = ''
+  #     <?xml version="1.0" encoding="UTF-8"?>
+  #     <actions>
+  #         <action>
+  #             <icon>kitty</icon>
+  #             <name>Open In Kitty</name>
+  #             <submenu></submenu>
+  #             <unique-id>1713512577329704-1</unique-id>
+  #             <command>kitty -1 --directory %f</command>
+  #             <description></description>
+  #             <range>*</range>
+  #             <patterns>*</patterns>
+  #             <directories/>
+  #         </action>
+  #     </actions>
+  #   '';
+  # };
   programs = {
     home-manager.enable = true;
     bash = {
@@ -416,7 +418,8 @@
     defaultApplications = {
       "text/html" = "firefox.desktop";
       "x-scheme-handler/tg" = "telegram.desktop";
-      "inode/directory" = "thunar.desktop";
+      # "inode/directory" = "thunar.desktop";
+      "inode/directory" = "pcmanfm.desktop";
       "text/x-python" = "neovim.desktop";
       "text/plain" = "neovim.desktop";
       "application/zip" = "xarchiver.desktop";
@@ -425,6 +428,13 @@
       "image/*" = "com.github.weclaw1.ImageRoll.desktop";
     };
   };
+
+  xdg.configFile."mimeo/associations.txt".text = ''
+    mpv %U
+      ^https?://(www.)?youtube.com/watch\?v=.*$
+    mpv --loop %U
+      ^.*.gif$
+  '';
 
   systemd.user.services = {
     shit_collector = {
