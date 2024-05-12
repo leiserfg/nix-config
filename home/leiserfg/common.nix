@@ -57,7 +57,9 @@
     nil
     pmenu
     pciutils
-    image-roll
+    # image-roll
+    unstablePkgs.imv
+    swayimg 
     unzip
     nodePackages.typescript-language-server
 
@@ -425,7 +427,7 @@
       "application/zip" = "xarchiver.desktop";
       "application/pdf" = "org.pwmt.zathura.desktop";
       "application/epub+zip" = "org.pwmt.zathura.desktop.desktop";
-      "image/*" = "com.github.weclaw1.ImageRoll.desktop";
+      # "image/*" = "com.github.weclaw1.ImageRoll.desktop";
     };
   };
 

@@ -19,6 +19,7 @@
     poetry
     # unstablePkgs.blender-hip
     unstablePkgs.gamescope
+
     # unstablePkgs.godot_4
     nix-ld
     swaylock
@@ -62,18 +63,20 @@
     kanshi = {
       enable = !config.xsession.enable;
       systemdTarget = "hyprland-session.target";
-      profiles = {
-        undocked = {
-          outputs = [
+      settings = [
+        {
+          profile.name = "undocked";
+          profile.outputs = [
             {
               criteria = "eDP-1";
               status = "enable";
               scale = 1.175000;
             }
           ];
-        };
-        docked-left = {
-          outputs = [
+        }
+        {
+          profile.name = "docked-left";
+          profile.outputs = [
             {
               criteria = "DP-3";
             }
@@ -82,9 +85,10 @@
               status = "disable";
             }
           ];
-        };
-        docked-right = {
-          outputs = [
+        }
+        {
+          profile.name = "docked-right";
+          profile.outputs = [
             {
               criteria = "DP-2";
             }
@@ -93,8 +97,8 @@
               status = "disable";
             }
           ];
-        };
-      };
+        }
+      ];
     };
   };
 }

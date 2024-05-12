@@ -12,7 +12,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-    # unstablePkgs.wineWowPackages.staging
+    unstablePkgs.wineWowPackages.staging
     winetricks
     myPkgs.yuzu-early-access
     # unstablePkgs.ryujinx
@@ -24,7 +24,7 @@
     # glslviewer
     # unstablePkgs.dxvk.bin
     # gamingPkgs.wine-tkg  # This one has the wayland patches
-    gamingPkgs.wine-ge
+    # gamingPkgs.wine-ge
     # unstablePkgs.wineWowPackages.waylandFull
     myPkgs.glslviewer
   ];
