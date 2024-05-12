@@ -151,7 +151,9 @@
         windowrule = center,pavucontrol
         windowrule = float,pavucontrol
         windowrule = pin,dragon
-        windowrule = idleinhibit fullscreen,firefox
+        
+
+        windowrulev2 = idleinhibit fullscreen, fullscreen:1
 
 
 
