@@ -154,7 +154,7 @@
         
 
         windowrulev2 = idleinhibit fullscreen, fullscreen:1
-
+        
 
 
         layerrule = noanim,rofi
