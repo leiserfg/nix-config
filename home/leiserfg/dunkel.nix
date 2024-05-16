@@ -70,7 +70,7 @@
             {
               criteria = "DP-1";
               mode = "3840x2160";
-              scale = 1.333333;
+              scale = 1.66666666;
             }
             {
               criteria = "eDP-1";
