@@ -32,7 +32,9 @@
             NAME: .*[Ff]erris.*
         - JOB: ""
           DEVICE:
-            NAME: .*KMK.*
+            NAME: .*Leiser.*
+            EVENTS:
+              EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
         - JOB: "${intercept} -g $DEVNODE | ${caps2esc} -m 2 | ${uinput} -d $DEVNODE"
           DEVICE:
             NAME: .*Akko.*

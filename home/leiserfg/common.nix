@@ -15,6 +15,7 @@
     ./features/cmds.nix
     ./features/mpv.nix
     ./features/git.nix
+    ./features/kitty.nix
   ];
 
   home = {
@@ -45,6 +46,7 @@
     fend
     nvme-cli
     python312
+    wtype
     (unstablePkgs.libjxl)
     teip
     ollama
@@ -59,7 +61,7 @@
     pciutils
     # image-roll
     unstablePkgs.imv
-    swayimg 
+    swayimg
     unzip
     nodePackages.typescript-language-server
 
@@ -115,7 +117,6 @@
     lm_sensors
     darktable
     gimp
-    (myPkgs.kitty)
     # foot
     /*
     awesome

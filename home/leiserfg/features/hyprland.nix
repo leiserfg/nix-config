@@ -57,8 +57,8 @@
              bind = $mod SHIFT, K, movewindow, u
              bind = $mod SHIFT, J, movewindow, d
 
-             bind = $mod, Q, killactive
-             bind = $mod SHIFT, Q, exec, hyprctl kill
+             bind = $mod, Escape, killactive
+             bind = $mod SHIFT, Escape, exec, hyprctl kill
 
 
             # fn buttons
@@ -89,22 +89,22 @@
 
              bind = $mod, G, exec, game-picker
              bind = $mod, 0, exec, rofi_power
+             bind = $mod, P, exec, rofi_power
              bind = $mod, D, exec, rofi-launch
 
              # workspaces
-             # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-             ${builtins.concatStringsSep "\n" (builtins.genList (
-          x: let
-            ws = let
-              c = (x + 1) / 10;
-            in
-              builtins.toString (x + 1 - (c * 10));
-          in ''
-            bind = $mod, ${ws}, workspace, ${toString (x + 1)}
-            bind = $mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
+             ${builtins.concatStringsSep "\n" (
+        lib.lists.imap1 (
+          ws: code: ''
+            bind = $mod, ${code}, workspace, ${toString ws}
+            bind = $mod SHIFT, ${code}, movetoworkspace, ${toString ws}
+
+            bind = $mod, ${toString ws}, workspace, ${toString ws}
+            bind = $mod SHIFT, ${toString ws}, movetoworkspace, ${toString ws}
           ''
         )
-        9)}
+        (lib.strings.stringToCharacters "QWERTYUIO")
+      )}
 
           general {
               layout = master
@@ -151,10 +151,10 @@
         windowrule = center,pavucontrol
         windowrule = float,pavucontrol
         windowrule = pin,dragon
-        
+
 
         windowrulev2 = idleinhibit fullscreen, fullscreen:1
-        
+
 
 
         layerrule = noanim,rofi

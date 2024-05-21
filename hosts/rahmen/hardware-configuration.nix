@@ -34,10 +34,4 @@
   swapDevices = [
     {device = "/dev/disk/by-uuid/3c74134f-280b-4f0f-8020-fe0107783c96";}
   ];
-
-  boot = {
-    extraModulePackages = [
-      config.boot.kernelPackages.framework-laptop-kmod
-    ];
-  };
 }
