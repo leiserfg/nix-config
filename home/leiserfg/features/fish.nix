@@ -1,16 +1,18 @@
 {
   unstablePkgs,
   pkgs,
+  lib,
   ...
 }: {
   programs.fish = {
     enable = true;
     package = unstablePkgs.fish;
-    interactiveShellInit = ''
-    '';
+    # interactiveShellInit = '''';
     shellAliases = {
       "open" = "command xdg-open";
+      "vi" = "command nvim";
     };
+
     plugins = [
       rec {
         name = "puffer-fish";
@@ -21,23 +23,38 @@
           sha256 = "sha256-2niYj0NLfmVIQguuGTA7RrPIcorJEPkxhH6Dhcy+6Bk=";
         };
       }
-
-      {
-        name = "fish-async-prompt";
-        src = pkgs.fetchFromGitHub {
-          owner = "acomagu";
-          repo = "fish-async-prompt";
-          rev = "316aa03";
-          sha256 = "sha256-J7y3BjqwuEH4zDQe4cWylLn+Vn2Q5pv0XwOSPwhw/Z0=";
-        };
-      }
     ];
   };
   programs.zoxide = {
     enable = true;
   };
-  # programs.starship = {
-  #   enable = true;
-  #   enableTransience = true;
-  # };
+
+  programs.starship = {
+    enable = true;
+    settings = {
+      add_newline = false;
+      format = lib.concatStrings [
+        "$directory"
+        "$character"
+      ];
+      git_branch.format = "[$symbol$branch(:$remote_branch)]($style)";
+      python.format = "\${symbol}\${version} ";
+      python.symbol = " ";
+
+      directory = {
+        truncation_symbol = "…/";
+        truncate_to_repo=false;
+      };
+
+      right_format = lib.concatStrings [
+        "$python"
+        "$aws"
+        "$git_branch"
+        "$git_commit"
+        "$git_state"
+        "$git_metrics"
+        "$git_status"
+      ];
+    };
+  };
 }
