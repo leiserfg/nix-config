@@ -43,7 +43,6 @@
 
       directory = {
         truncation_symbol = "…/";
-        truncate_to_repo=false;
       };
 
       right_format = lib.concatStrings [
