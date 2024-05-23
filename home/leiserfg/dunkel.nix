@@ -7,7 +7,7 @@
     ./common.nix
     ./features/mesa.nix
     ./features/hyprland.nix
-    #./features/daw.nix
+    ./features/daw.nix
   ];
   targets.genericLinux.enable = true;
 
@@ -21,10 +21,10 @@
     libreoffice
     pandoc
 
-    wabt # wasm-decompile 
+    wabt # wasm-decompile
     luajit
     wasynth # wasm2luajit
-    unstablePkgs.emscripten # emcc 
+    unstablePkgs.emscripten # emcc
 
     unstablePkgs.godot_4
 
@@ -39,20 +39,22 @@
   services = {
     kanshi = {
       enable = true;
-
-      profiles = {
-        undocked = {
-          outputs = [
+      systemdTarget = "hyprland-session.target";
+      settings = [
+        {
+          profile.name = "undocked";
+          profile.outputs = [
             {
               criteria = "eDP-1";
               scale = 1.0;
               status = "enable";
             }
           ];
-        };
+        }
 
-        office = {
-          outputs = [
+        {
+          profile.name = "office";
+          profile.outputs = [
             {
               criteria = "Dell Inc. DELL S2721QS 4N2CM43";
               mode = "2560x1440@59.95100";
@@ -63,10 +65,11 @@
               status = "disable";
             }
           ];
-        };
+        }
 
-        home = {
-          outputs = [
+        {
+          profile.name = "home";
+          profile.outputs = [
             {
               criteria = "DP-1";
               mode = "3840x2160";
@@ -77,8 +80,8 @@
               status = "disable";
             }
           ];
-        };
-      };
+        }
+      ];
     };
   };
 }

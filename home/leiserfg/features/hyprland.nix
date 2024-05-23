@@ -58,7 +58,7 @@
              bind = $mod SHIFT, J, movewindow, d
 
              bind = $mod, Escape, killactive
-             bind = $mod SHIFT, Escape, exec, hyprctl kill
+             bind = $mod , X, exec, hyprctl kill
 
 
             # fn buttons
