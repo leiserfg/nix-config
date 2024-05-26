@@ -5,17 +5,19 @@
   outputs,
   ...
 }: {
+  services.libinput = {
+    enable = true;
+    touchpad.disableWhileTyping = true;
+  };
   services.xserver = {
     enable = true;
-    layout = "us";
-    xkbVariant = "altgr-intl";
+    xkb = {
+      layout = "us";
+      xkbvariant = "altgr-intl";
+    };
     displayManager = {
       lightdm.enable = true;
     };
     windowManager.tinywm.enable = true;
-    libinput = {
-      enable = true;
-      touchpad.disableWhileTyping = true;
-    };
   };
 }

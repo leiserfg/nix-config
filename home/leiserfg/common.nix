@@ -362,6 +362,9 @@
 
     # Disable qt decoration for telegram
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
+
+    # Make cargo use git to pull from github
+    CARGO_NET_GIT_FETCH_WITH_CLI = "true";
   };
   home.pointerCursor = {
     package = pkgs.gnome.adwaita-icon-theme;
