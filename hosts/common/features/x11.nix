@@ -13,7 +13,7 @@
     enable = true;
     xkb = {
       layout = "us";
-      xkbvariant = "altgr-intl";
+      variant = "altgr-intl";
     };
     displayManager = {
       lightdm.enable = true;
