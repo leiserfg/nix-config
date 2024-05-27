@@ -12,7 +12,11 @@
       "open" = "command xdg-open";
       "vi" = "command nvim";
     };
-
+    functions = {
+      aws_profile = ''
+        commandline (aws configure list-profiles | fzf | xargs -I {} echo export AWS_PROFILE={})
+      '';
+    };
     plugins = [
       rec {
         name = "puffer-fish";
