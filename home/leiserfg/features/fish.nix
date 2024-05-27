@@ -40,13 +40,14 @@
       git_branch.format = "[$symbol$branch(:$remote_branch)]($style)";
       python.format = "\${symbol}\${version} ";
       python.symbol = " ";
-
+      hostname.format = "@$hostname";
       directory = {
         truncation_symbol = "…/";
       };
 
       right_format = lib.concatStrings [
         "$python"
+        "$hostname"
         "$aws"
         "$git_branch"
         "$git_commit"
