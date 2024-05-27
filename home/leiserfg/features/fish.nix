@@ -40,7 +40,7 @@
       git_branch.format = "[$symbol$branch(:$remote_branch)]($style)";
       python.format = "\${symbol}\${version} ";
       python.symbol = " ";
-      hostname.format = "@$hostname";
+      hostname.format = "@$hostname ";
       directory = {
         truncation_symbol = "…/";
       };
