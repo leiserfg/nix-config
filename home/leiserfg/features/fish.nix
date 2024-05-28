@@ -14,7 +14,7 @@
     };
     functions = {
       aws_profile = ''
-        commandline (aws configure list-profiles | fzf | xargs -I {} echo export AWS_PROFILE={})
+        commandline (aws configure list-profiles | fzf --reverse | xargs -I {} echo export AWS_PROFILE={})
       '';
     };
     plugins = [
@@ -25,6 +25,7 @@
           repo = name;
           rev = "12d062e";
           sha256 = "sha256-2niYj0NLfmVIQguuGTA7RrPIcorJEPkxhH6Dhcy+6Bk=";
+          fetchSubmodules = true;
         };
       }
     ];

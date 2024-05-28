@@ -17,16 +17,17 @@
     poetry
     insomnia
     awscli2
+    postman
     csvkit
     libreoffice
     pandoc
 
-    wabt # wasm-decompile
-    luajit
-    wasynth # wasm2luajit
-    unstablePkgs.emscripten # emcc
+    # wabt # wasm-decompile
+    # luajit
+    # wasynth # wasm2luajit
+    # unstablePkgs.emscripten # emcc
 
-    unstablePkgs.godot_4
+    # unstablePkgs.godot_4
 
     (gnome3.gvfs)
     # This is so we don't have to change the config in debian
