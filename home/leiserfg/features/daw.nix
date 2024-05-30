@@ -26,6 +26,6 @@
     #   };
     # }))
     # orca-c
-    unstablePkgs.zrythm
+    # zrythm
   ];
 }

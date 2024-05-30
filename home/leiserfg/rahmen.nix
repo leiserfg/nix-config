@@ -18,7 +18,7 @@
     pre-commit
     poetry
     # unstablePkgs.blender-hip
-    unstablePkgs.gamescope
+    gamescope
 
     # unstablePkgs.godot_4
     nix-ld

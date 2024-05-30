@@ -55,12 +55,12 @@
     # firefox
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
-    (myPkgs.basedpyright)
+    (unstablePkgs.basedpyright)
     nil
     pmenu
     pciutils
     # image-roll
-    unstablePkgs.imv
+    imv
     swayimg
     unzip
     nodePackages.typescript-language-server

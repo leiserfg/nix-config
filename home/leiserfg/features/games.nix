@@ -14,7 +14,7 @@
   with lib; [
     unstablePkgs.wineWowPackages.staging
     winetricks
-    myPkgs.yuzu-early-access
+    myPkgs.torzu
     # unstablePkgs.ryujinx
     # mgba
     # aseprite
@@ -26,6 +26,6 @@
     # gamingPkgs.wine-tkg  # This one has the wayland patches
     # gamingPkgs.wine-ge
     # unstablePkgs.wineWowPackages.waylandFull
-    myPkgs.glslviewer
+    # myPkgs.glslviewer
   ];
 }

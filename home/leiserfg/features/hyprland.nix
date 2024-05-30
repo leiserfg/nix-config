@@ -3,7 +3,6 @@
   unstablePkgs,
   lib,
   hyprland,
-  nixpkgsHypr,
   ...
 } @ inputs: {
   imports = [
@@ -28,8 +27,6 @@
     systemd = {
       enable = true;
     };
-
-    package = nixpkgsHypr.hyprland;
 
     extraConfig = let
       env_vars = {
