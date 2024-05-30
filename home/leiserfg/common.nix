@@ -302,7 +302,7 @@
           settings = {
             "browser.compactmode.show" = true;
             "dom.webgpu.enabled" = true;
-
+            "browser.uidensity" = 1;
             # VP9 fails to work with vaapi in framework so we have to disable it until this gets fixed
             # # Delete this after https://gitlab.freedesktop.org/mesa/mesa/-/issues/8044
             # This was a workaround but makes it vp9 only videos not to show in youtube

@@ -57,10 +57,11 @@
           profile.name = "office";
           profile.outputs = [
             {
-              criteria = "Dell Inc. DELL S2721QS 4N2CM43";
+              criteria = "Dell Inc. DELL S2721QS GT2CM43";
               mode = "2560x1440@59.95100";
-              scale = 1.6;
+              scale = 1.333333333333;
             }
+
             {
               criteria = "eDP-1";
               status = "disable";
