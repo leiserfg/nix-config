@@ -24,7 +24,7 @@
     # glslviewer
     # unstablePkgs.dxvk.bin
     # gamingPkgs.wine-tkg  # This one has the wayland patches
-    # gamingPkgs.wine-ge
+     # gamingPkgs.wine-ge
     # unstablePkgs.wineWowPackages.waylandFull
     # myPkgs.glslviewer
   ];

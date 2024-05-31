@@ -28,6 +28,17 @@
       enable = true;
     };
 
+    # Fix for the monitor issue, input in gamescope still broken
+    package = pkgs.hyprland.overrideAttrs (oldAttrs: {
+      src = pkgs.fetchFromGitHub {
+        owner = "hyprwm";
+        repo = oldAttrs.pname;
+        fetchSubmodules = true;
+        rev = "eea0a6a";
+        hash = "sha256-aaF2FYy152AvdYvqn7kj+VNgp07DF/p8cLmhXD68i3A=";
+      };
+    });
+
     extraConfig = let
       env_vars = {
         XDG_CURRENT_DESKTOP = "Hyprland";
@@ -105,8 +116,11 @@
 
           general {
               layout = master
-              cursor_inactive_timeout = 10
               gaps_out = 4
+          }
+
+          cursor {
+              inactive_timeout = 10
           }
 
           # misc {
