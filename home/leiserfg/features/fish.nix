@@ -43,7 +43,7 @@
         "$character"
       ];
       git_branch.format = "[$symbol$branch(:$remote_branch)]($style)";
-      python.format = "\${symbol}\${version} ";
+      python.format = "[\${symbol}\${version} ](style)";
       python.symbol = " ";
       hostname.format = "@$hostname ";
       directory = {

@@ -361,9 +361,18 @@
     # Make cargo use git to pull from github
     CARGO_NET_GIT_FETCH_WITH_CLI = "true";
   };
+  # home.pointerCursor = {
+  #   package = pkgs.gnome.adwaita-icon-theme;
+  #   name = "Adwaita";
+  #   size = 16;
+  #   x11.enable = true; # This is used also by Xwayland
+  #   gtk.enable = true;
+  # };
+
+
   home.pointerCursor = {
-    package = pkgs.gnome.adwaita-icon-theme;
-    name = "Adwaita";
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Original-Classic";
     size = 16;
     x11.enable = true; # This is used also by Xwayland
     gtk.enable = true;
