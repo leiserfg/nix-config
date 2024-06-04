@@ -6,7 +6,6 @@
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     #last revision with yuzu b8697e57f10292a6165a20f03d2f42920dfaf973
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -18,6 +17,9 @@
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
     blender.url = "github:edolstra/nix-warez?dir=blender";
     blender.inputs.nixpkgs.follows = "nixpkgs";
+
+    hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    hypr.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
@@ -43,7 +45,6 @@
           config.allowUnfree = true;
         }
     );
-
   in rec {
     overlays = {
       default = import ./overlay {inherit inputs;};
@@ -144,6 +145,7 @@
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
           neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
+          hyprPkgs = inputs.hypr.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
@@ -160,6 +162,7 @@
           gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
+          hyprPkgs = inputs.hypr.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)

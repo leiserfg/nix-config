@@ -36,6 +36,7 @@
   with builtins;
   with lib; [
     steam-run
+ myPkgs.glslviewer
     easyeffects
     util-linux
     nix-update
