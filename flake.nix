@@ -91,19 +91,6 @@
           ];
       };
 
-      dunkel = nixpkgs.lib.nixosSystem {
-        pkgs = legacyPackages.x86_64-linux;
-        specialArgs = {
-          inherit inputs;
-          unstablePkgs = unstablePackages.x86_64-linux;
-        };
-        modules =
-          (builtins.attrValues nixosModules)
-          ++ [
-            ./hosts/dunkel
-          ];
-      };
-
       rahmen = nixpkgs.lib.nixosSystem {
         pkgs = legacyPackages.x86_64-linux;
         specialArgs = {

@@ -58,6 +58,7 @@
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
     (unstablePkgs.basedpyright)
+    nodePackages.cspell
     nil
     pmenu
     pciutils
