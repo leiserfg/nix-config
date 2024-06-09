@@ -41,6 +41,8 @@
     #   };
     # });
 
+    systemd.variables = ["--all"];
+
     extraConfig = let
       env_vars = {
         XDG_CURRENT_DESKTOP = "Hyprland";

@@ -16,7 +16,6 @@
     ./features/mpv.nix
     ./features/git.nix
     ./features/kitty.nix
-    ./features/wireplumber.nix
   ];
 
   home = {
@@ -37,7 +36,8 @@
   with builtins;
   with lib; [
     steam-run
- myPkgs.glslviewer
+    glsl_analyzer
+    myPkgs.glslviewer
     easyeffects
     util-linux
     nix-update
@@ -372,7 +372,6 @@
   #   gtk.enable = true;
   # };
 
-
   home.pointerCursor = {
     package = pkgs.bibata-cursors;
     name = "Bibata-Original-Classic";
@@ -383,7 +382,7 @@
 
   services = {
     gpg-agent.enable = true;
-    pasystray.enable = true;
+    # pasystray.enable = true;
 
     udiskie = {
       enable = true;

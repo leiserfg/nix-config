@@ -65,6 +65,7 @@
       #mpd {
           padding: 0 0 0 .5rem;
           color: #ffffff;
+          font-family: 'monospace';
       }
       #tray > widget {
         padding-left: 2px;
@@ -83,6 +84,7 @@
         modules-center = ["${wm}/window"];
 
         modules-right = [
+          "wireplumber"
           "battery"
           "tray"
           "power-profiles-daemon"
@@ -112,18 +114,27 @@
           "tooltip-format" = "Power profile= {profile}\nDriver= {driver}";
           "tooltip" = true;
           "format-icons" = {
-            "default" = "";
+            "default" = "";
             "performance" = "";
             "balanced" = "";
             "power-saver" = "";
           };
         };
+
+        wireplumber = {
+          "format" = "󰕿 {volume}%";
+          "format-muted" = " ";
+          on-click="pavucontrol";
+          on-click-right="qpwgraph";
+          on-click-middle="wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        };
+
         battery = {
           "states" = {
             "warning" = 30;
             "critical" = 15;
           };
-          "format" = "{capacity}% {icon}";
+          "format" = "{icon} {capacity}%";
           "format-icons" = ["" "" "" "" ""];
         };
 
