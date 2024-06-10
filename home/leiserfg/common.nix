@@ -151,7 +151,6 @@
     moreutils
     htop
     lf
-    fzf
     ripgrep
     rustup
     simple-http-server
@@ -296,7 +295,10 @@
 
       '';
     };
-    fzf.enable = true;
+    fzf = {
+      enable = true;
+      package = unstablePkgs.fzf;
+    };
 
     firefox = {
       enable = true;

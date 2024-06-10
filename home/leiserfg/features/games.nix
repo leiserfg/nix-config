@@ -12,7 +12,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-    unstablePkgs.wineWowPackages.staging
+    wineWowPackages.staging
     winetricks
     myPkgs.torzu
     # unstablePkgs.ryujinx

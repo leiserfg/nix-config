@@ -41,7 +41,7 @@
     #   };
     # });
 
-    systemd.variables = ["--all"];
+    # systemd.variables = ["--all"];
 
     extraConfig = let
       env_vars = {
@@ -170,7 +170,9 @@
 
         windowrulev2 = idleinhibit fullscreen, fullscreen:1
 
-
+         # debug {
+         #     disable_logs = false
+         # }
 
         layerrule = noanim,rofi
         layerrule = dimaround,rofi
@@ -182,7 +184,7 @@
     '';
   };
 
-  home.packages = [pkgs.swaybg];
+  home.packages = [pkgs.swaybg pkgs.xwayland];
   programs.hypridle = {
     enable = true;
     package = unstablePkgs.hypridle; # it's not in stable yet
