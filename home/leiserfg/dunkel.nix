@@ -28,7 +28,7 @@
     # unstablePkgs.emscripten # emcc
 
     # unstablePkgs.godot_4
-
+    spotify
     (gnome3.gvfs)
     # This is so we don't have to change the config in debian
     (writeShellScriptBin "sway" ''
