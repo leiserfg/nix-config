@@ -24,17 +24,23 @@
     stateVersion = lib.mkDefault "22.05";
     enableNixpkgsReleaseCheck = false;
   };
+
   nix = {
+    enable = true;
     package = pkgs.nix;
     settings = {
       experimental-features = ["nix-command" "flakes" "repl-flake"];
       warn-dirty = false;
+    };
+    gc = {
+      automatic = true;
     };
   };
 
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    nix
     steam-run
     glsl_analyzer
     myPkgs.glslviewer
@@ -54,7 +60,7 @@
     ollama
     typst
     (unstablePkgs.tdesktop)
-    # firefox
+    # firefoxnix
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
     (unstablePkgs.basedpyright)
@@ -449,31 +455,6 @@
     mpv --loop %U
       ^.*.gif$
   '';
-
-  systemd.user.services = {
-    shit_collector = {
-      Unit = {
-        Description = "Remove nix shit";
-      };
-      Service = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.nix}/bin/nix-collect-garbage --delete-older-than 10d";
-      };
-      Install.WantedBy = ["default.target"];
-    };
-  };
-
-  systemd.user.timers = {
-    shit_collector_chron = {
-      Unit.Description = "Remove nix shit";
-      Timer = {
-        Unit = "shit_collector";
-        OnBootSec = "15m";
-        OnUnitActiveSec = "1w";
-      };
-      Install.WantedBy = ["timers.target"];
-    };
-  };
 
   home.sessionVariables = {
     GIO_EXTRA_MODULES = "${pkgs.gvfs}/lib/gio/modules";
