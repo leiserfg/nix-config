@@ -18,6 +18,13 @@
     ./features/kitty.nix
   ];
 
+  # disable news, they don't work well with flakes and message is anoying
+  news = {
+    display = "silent";
+    json = lib.mkForce {};
+    entries = lib.mkForce [];
+  };
+
   home = {
     username = lib.mkDefault "leiserfg";
     homeDirectory = lib.mkDefault "/home/${config.home.username}";

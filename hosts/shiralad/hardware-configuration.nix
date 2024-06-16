@@ -17,7 +17,9 @@
   nixpkgs.hostPlatform.system = "x86_64-linux";
 
   #SCANNER
-  /* hardware.sane.enable = true; */
+  /*
+  hardware.sane.enable = true;
+  */
   # hardware.sane.extraBackends = [ pkgs.epkowa ];
   # hardware.sane.extraBackends = [ pkgs.utsushi  pkgs.epkowa ];
   # services.udev.packages = [ pkgs.utsushi ];
@@ -28,7 +30,6 @@
     powerManagement.enable = true;
   };
 
-
   services.udev.extraRules = ''
     # USB SWITCH as kvm
     # Bus 001 Device 071: ID 05e3:0610 Genesys Logic, Inc. Hub
@@ -36,5 +37,4 @@
 
     ACTION=="add", SUBSYSTEM=="usb", ENV{ID_VENDOR_ID}=="05e3", ENV{ID_MODEL_ID}=="0610", RUN+="${pkgs.ddcutil}/bin/ddcutil setvcp 60 0x0f"
   '';
-
 }

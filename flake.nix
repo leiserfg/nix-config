@@ -10,7 +10,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-    nix-gaming.url = "github:fufexan/nix-gaming";
+    # nix-gaming.url = "github:fufexan/nix-gaming";
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
@@ -111,10 +111,9 @@
         pkgs = legacyPackages.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs;
-          gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
+          # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
-          codeium = inputs.codeium.packages.x86_64-linux;
           neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
         };
         modules =
@@ -128,7 +127,7 @@
         pkgs = legacyPackages.x86_64-linux;
         extraSpecialArgs = {
           inherit inputs;
-          gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
+          # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
           neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
@@ -146,7 +145,7 @@
         extraSpecialArgs = {
           inherit inputs;
           unstablePkgs = unstablePackages.x86_64-linux;
-          gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
+          # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
           hyprPkgs = inputs.hypr.packages.x86_64-linux;

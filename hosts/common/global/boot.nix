@@ -1,4 +1,8 @@
-{pkgs, unstablePkgs, ...}: {
+{
+  pkgs,
+  unstablePkgs,
+  ...
+}: {
   boot = {
     kernelPackages = unstablePkgs.linuxPackages_latest;
     # kernelPackages = unstablePkgs.linuxPackages_xanmod_latest;

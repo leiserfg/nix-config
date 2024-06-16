@@ -5,14 +5,11 @@
 
   networking = {
     networkmanager = {
-        enable = true;
-        insertNameservers= ["100.100.100.100"];
+      enable = true;
+      insertNameservers = ["100.100.100.100"];
     };
-
 
     useDHCP = false;
     firewall.enable = false;
   };
-
-
 }

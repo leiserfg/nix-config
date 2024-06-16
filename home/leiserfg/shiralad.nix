@@ -11,9 +11,8 @@
     ./features/x11.nix
   ];
 
-   home.packages = with pkgs; [
-tmux
-docker
-
-   ];
+  home.packages = with pkgs; [
+    tmux
+    docker
+  ];
 }

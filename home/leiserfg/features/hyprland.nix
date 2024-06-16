@@ -139,7 +139,6 @@
 
           master {
             no_gaps_when_only = 3
-            new_is_master = false
           }
 
           binds {

@@ -31,6 +31,5 @@
 
   networking.hostName = "rahmen";
 
-
   # virtualisation.waydroid.enable = true;
 }
