@@ -50,7 +50,7 @@
     nix
     steam-run
     glsl_analyzer
-    myPkgs.glslviewer
+    unstablePkgs.glslviewer
     easyeffects
     util-linux
     nix-update
