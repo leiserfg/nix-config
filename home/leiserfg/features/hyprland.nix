@@ -146,7 +146,7 @@
           }
 
           xwayland {
-               # force_zero_scaling = true
+               force_zero_scaling = true
           }
           input {
               kb_layout = us
@@ -183,7 +183,7 @@
     '';
   };
 
-  home.packages = [pkgs.swaybg pkgs.xwayland];
+  home.packages = [pkgs.swaybg];
   programs.hypridle = {
     enable = true;
     package = unstablePkgs.hypridle; # it's not in stable yet

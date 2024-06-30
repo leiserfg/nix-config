@@ -47,6 +47,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+      anki
     nix
     steam-run
     glsl_analyzer
