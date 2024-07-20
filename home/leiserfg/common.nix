@@ -52,7 +52,7 @@
     steam-run
     glsl_analyzer
     unstablePkgs.glslviewer
-    easyeffects
+    # easyeffects
     util-linux
     nix-update
     # inferno

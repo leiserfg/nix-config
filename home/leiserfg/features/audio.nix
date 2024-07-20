@@ -3,10 +3,10 @@
   config,
   ...
 }: {
-  services.easyeffects = {
-    enable = true;
-    preset = "loudneseq";
-  };
+  # services.easyeffects = {
+  #   enable = true;
+  #   preset = "loudneseq";
+  # };
   xdg.configFile."/easyeffects/output/loudneseq.json".text = ''
     {
         "output": {
