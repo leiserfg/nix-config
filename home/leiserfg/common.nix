@@ -47,7 +47,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-      anki
+    anki
     nix
     steam-run
     glsl_analyzer
@@ -61,6 +61,7 @@
     python311Packages.ipython
     fend
     nvme-cli
+    yazi
     python312
     wtype
     (unstablePkgs.libjxl)
@@ -163,7 +164,6 @@
     zathura
     xdragon
     moreutils
-    htop
     lf
     ripgrep
     rustup
@@ -313,7 +313,12 @@
       enable = true;
       package = unstablePkgs.fzf;
     };
-
+    btop = {
+      enable = true;
+      settings = {
+        vim_keys = true;
+      };
+    };
     firefox = {
       enable = true;
       profiles = {
