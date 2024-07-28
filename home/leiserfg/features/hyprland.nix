@@ -3,13 +3,19 @@
   unstablePkgs,
   lib,
   hyprPkgs,
+  config,
   ...
-} @ inputs: {
+}: let
+  cursor = "Hypr-Bibata-Original-Classic";
+  cursorPackage = pkgs.bibata-hyprcursor;
+in {
   imports = [
     ./_wayland_common.nix
     ./_waybar.nix
   ];
 
+  home.file.".icons/${cursor}".source = "${cursorPackage}/share/icons/${cursor}";
+  xdg.dataFile."icons/${cursor}".source = "${cursorPackage}/share/icons/${cursor}";
   # assertions = [
   #   {
   #     assertion = builtins.compareVersions nixpkgsHypr.hyprland.version unstablePkgs.hyprland.version >= 0;
@@ -48,6 +54,8 @@
         XDG_CURRENT_DESKTOP = "Hyprland";
         XDG_SESSION_TYPE = "wayland";
         XDG_SESSION_DESKTOP = "Hyprland";
+        "HYPRCURSOR_THEME" = cursor;
+        "HYPRCURSOR_SIZE" = toString (config.home.pointerCursor.size);
       };
     in ''
 

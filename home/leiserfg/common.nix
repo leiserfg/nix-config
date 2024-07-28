@@ -47,6 +47,8 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    (unstablePkgs.shikane)
+
     anki
     nix
     steam-run
