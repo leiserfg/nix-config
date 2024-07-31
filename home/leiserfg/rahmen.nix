@@ -25,6 +25,8 @@
     swaylock
     audacity
     ddcutil
+    moonlight-qt
+    sunshine
     # anki
   ];
 

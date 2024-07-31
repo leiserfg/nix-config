@@ -4,12 +4,15 @@
     package = unstablePkgs.kitty;
     theme = "Liquid Carbon Transparent";
     font = {
-      name = "Iosevka Term SS07";
+      name = "Iosevka Term SS15 Light";
       size = 14.0;
     };
     settings = {
+      bold_font = "Iosevka Term SS15 Medium";
+      italic_font = "Iosevka Term SS15 Light Italic";
+
       cursor = "none";
-      font_features = "Iosevka-Term-SS07 +THND";
+      font_features = "Iosevka-Term-SS15 +THND";
       tab_separator = "│";
       enabled_layouts = "tall";
       enable_audio_bell = false;
