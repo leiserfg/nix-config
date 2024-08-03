@@ -4,8 +4,7 @@
   ...
 }: {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-    # kernelPackages = unstablePkgs.linuxPackages_xanmod_latest;
+    kernelPackages = pkgs.linuxPackages_6_9; # amdgpu in 6.10 is brocken
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     blacklistedKernelModules = ["hid-nintendo"];

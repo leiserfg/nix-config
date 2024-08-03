@@ -16,7 +16,6 @@
     gc = {
       automatic = true;
       dates = "weekly";
-      options = "--delete-older-than 7d";
     };
     # Add each flake input as a registry
     # To make nix3 commands consistent with the flake
