@@ -47,9 +47,6 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-    (unstablePkgs.shikane)
-
-    anki
     nix
     steam-run
     glsl_analyzer
@@ -59,7 +56,7 @@
     nix-update
     # inferno
     flamegraph
-    proximity-sort
+    psmisc
     python311Packages.ipython
     fend
     nvme-cli
@@ -68,7 +65,7 @@
     wtype
     (unstablePkgs.libjxl)
     teip
-    ollama
+    (unstablePkgs.ollama)
     typst
     (unstablePkgs.tdesktop)
     # firefoxnix
@@ -475,6 +472,14 @@
   home.sessionVariables = {
     GIO_EXTRA_MODULES = "${pkgs.gvfs}/lib/gio/modules";
   };
+
+  xdg.configFile."wireplumber/wireplumber.conf.d/10-disable-camera.conf".text = ''
+    wireplumber.profiles = {
+      main = {
+        monitor.libcamera = disabled
+      }
+    }
+  '';
 
   # systemd.user.services.polkit-authentication-agent = {
   #   Unit = {

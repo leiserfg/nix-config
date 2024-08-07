@@ -187,10 +187,10 @@ in {
       # here and not as a systemd unit so it inherits PATH
        exec-once = hypridle
        exec-once = swaybg -i ~/wall.png -m fill
-
     '';
   };
 
+  # exec-once = sleep 6 && shikane
   home.packages = [pkgs.swaybg];
   programs.hypridle = {
     enable = true;

@@ -4,7 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs?rev=e17a38ddc27fc9c7a81b986c5866f83238d8b23e";
     #last revision with yuzu b8697e57f10292a6165a20f03d2f42920dfaf973
 
     home-manager.url = "github:nix-community/home-manager";
@@ -18,8 +19,29 @@
     blender.url = "github:edolstra/nix-warez?dir=blender";
     blender.inputs.nixpkgs.follows = "nixpkgs";
 
-    # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=aquamarine";
-    hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+
+    # good
+     hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=f642fb97df5c69267a03452533de383ff8023570";
+    
+
+
+
+    # hypr.url = "git+https://github.com/leiserfg/Hyprland?submodules=1";
+
+
+
+
+    # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=648b7b3b6d58caa472c76d3f7e99d332b92df0eb";
+
+
+
+    # monitor stuff
+    # 016da234d0e852de3ef20eb2e89ac58d2a85f6e7 #bad cursor but good monitor disable
+
+
+    # 648b7b3b6d58caa472c76d3f7e99d332b92df0eb # broken cursor double keys
+    # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+
     hypr.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
