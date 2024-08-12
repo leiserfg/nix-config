@@ -21,7 +21,7 @@
 
 
     # good
-     hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=f642fb97df5c69267a03452533de383ff8023570";
+      hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=f642fb97df5c69267a03452533de383ff8023570";
     
 
 
