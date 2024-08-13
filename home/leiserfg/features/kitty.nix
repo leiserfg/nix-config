@@ -12,7 +12,7 @@
       italic_font = "Iosevka Term SS15 Light Italic";
 
       cursor = "none";
-      font_features = "Iosevka-Term-SS15 +THND";
+      font_features = "Iosevka-Term-SS15-Light +THND";
       tab_separator = "│";
       enabled_layouts = "tall";
       enable_audio_bell = false;

@@ -165,6 +165,7 @@ in {
 
               touchpad {
                 disable_while_typing = true
+                natural_scroll = true
               }
 
           }
@@ -187,7 +188,7 @@ in {
         layerrule = dimaround,rofi
 
       # here and not as a systemd unit so it inherits PATH
-       exec-once = hypridle
+       # exec-once = hypridle
        exec-once = swaybg -i ~/wall.png -m fill
     '';
   };
@@ -195,7 +196,7 @@ in {
   # exec-once = sleep 6 && shikane
   home.packages = [pkgs.swaybg];
   programs.hypridle = {
-    enable = true;
+    enable = false;
     package = unstablePkgs.hypridle; # it's not in stable yet
     lockCmd = "pidof swaylock || swaylock -i ~/wall.png -f && sleep 3";
 

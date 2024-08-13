@@ -47,6 +47,8 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    (unstablePkgs.shikane)
+    brillo
     nix
     steam-run
     glsl_analyzer
@@ -64,6 +66,7 @@
     python312
     wtype
     (unstablePkgs.libjxl)
+    (unstablePkgs.numbat)
     teip
     (unstablePkgs.ollama)
     typst
@@ -72,6 +75,7 @@
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
     (unstablePkgs.basedpyright)
+    (unstablePkgs.pyright)
     nodePackages.cspell
     nil
     pmenu
@@ -130,7 +134,7 @@
     twemoji-color-font
     */
     noto-fonts-cjk-sans
-    noto-fonts
+    inter
 
     lm_sensors
     darktable
@@ -497,4 +501,5 @@
   #
   #   Install.WantedBy = ["graphical-session.target"];
   # };
+
 }

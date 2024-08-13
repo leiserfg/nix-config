@@ -1,4 +1,5 @@
 {pkgs, ...}: {
+  home.packages = [pkgs.git-filter-repo];
   programs.git = {
     enable = true;
     delta.enable = true;

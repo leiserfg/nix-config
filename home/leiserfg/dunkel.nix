@@ -22,6 +22,7 @@
     libreoffice
     pandoc
 
+    # unstablePkgs.gamescope
     # wabt # wasm-decompile
     # luajit
     # wasynth # wasm2luajit
@@ -47,7 +48,7 @@
           profile.outputs = [
             {
               criteria = "eDP-1";
-              scale = 1.0;
+              scale = 1.2;
               status = "enable";
             }
           ];
