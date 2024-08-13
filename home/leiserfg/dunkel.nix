@@ -50,6 +50,7 @@
               criteria = "eDP-1";
               scale = 1.2;
               status = "enable";
+              mode = "1920x1200@60.00300";
             }
           ];
         }

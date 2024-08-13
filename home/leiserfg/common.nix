@@ -333,7 +333,7 @@
             "browser.uidensity" = 1;
             "media.ffmpeg.vaapi.enabled" = true;
             "media.ffvpx.enabled" = true;
-
+            "browser.tabs.cardPreview.enabled" = true;
             # HACK to make slack huddle work
             "general.useragent.override" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${pkgs.firefox.version}) Gecko/20100101 Firefox/${pkgs.firefox.version}";
           };
@@ -501,5 +501,4 @@
   #
   #   Install.WantedBy = ["graphical-session.target"];
   # };
-
 }
