@@ -24,8 +24,9 @@
     hypr.inputs.aquamarine.url ="github:hyprwm/aquamarine";
     # hypr.inputs = "git+https://github.com/leiserfg/Hyprland?submodules=1";
 
-    hypr.inputs.nixpkgs.follows = "nixpkgs";
+    hypr.inputs.aquamarine.inputs.nixpkgs.follows = "nixpkgs";
 
+    hypr.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
