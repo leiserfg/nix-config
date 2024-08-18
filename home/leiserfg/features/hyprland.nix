@@ -37,16 +37,6 @@ in {
     # Fix for the monitor issue, input in gamescope still broken
     package = hyprPkgs.hyprland;
 
-    # package = pkgs.hyprland.overrideAttrs (oldAttrs: {
-    #   src = pkgs.fetchFromGitHub {
-    #     owner = "hyprwm";
-    #     repo = oldAttrs.pname;
-    #     fetchSubmodules = true;
-    #     rev = "eea0a6a";
-    #     hash = "sha256-aaF2FYy152AvdYvqn7kj+VNgp07DF/p8cLmhXD68i3A=";
-    #   };
-    # });
-
     # systemd.variables = ["--all"];
 
     extraConfig = let
@@ -98,9 +88,10 @@ in {
 
 
              bind=$mod,f,fullscreen
-
              bind = $mod, Slash, exec, firefox
              bind = $mod, Return, exec, kitty -1
+
+             bind = $mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"
 
              bind = $mod,Print, exec, ${pkgs.grimblast}/bin/grimblast save output
              bind = $mod+SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast save area
@@ -138,8 +129,8 @@ in {
           misc {
               # enable_swallow = true
               # swallow_regex = ^(kitty)$
-              disable_hyprland_logo = true
-              background_color=rgb(000000)
+              # disable_hyprland_logo = true
+              # background_color=rgb(000000)
           }
 
           gestures {
@@ -222,7 +213,6 @@ in {
   xdg.portal = {
     enable = true;
     config.common.default = "*";
-    # wlr.enable = true;
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
       unstablePkgs.xdg-desktop-portal-hyprland

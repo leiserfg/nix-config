@@ -40,7 +40,7 @@
 
   services = {
     kanshi = {
-      enable = true;
+      # enable = true;
       systemdTarget = "hyprland-session.target";
       settings = [
         {
