@@ -25,8 +25,8 @@
     swaylock
     audacity
     ddcutil
-    moonlight-qt
-    sunshine
+    # moonlight-qt
+    gnome-network-displays
     # anki
   ];
 

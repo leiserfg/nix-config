@@ -175,7 +175,7 @@
     /*
     rust-analyzer-unwrapped
     */
-    gnome.gnome-disk-utility
+    gnome-disk-utility
     rsync
     # appimage-run
 
