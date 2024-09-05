@@ -14,6 +14,7 @@
   ];
 
   home.packages = with pkgs; [
+    rpi-imager
     pgcli
     pre-commit
     poetry
@@ -64,7 +65,7 @@
 
     kanshi = {
       # enable = !config.xsession.enable;
-      enable = false;
+      # enable = true;
       systemdTarget = "hyprland-session.target";
       settings = [
         {

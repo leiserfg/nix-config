@@ -117,6 +117,10 @@ in {
         (lib.strings.stringToCharacters "QWERTYUIO")
       )}
 
+          # debug {
+          #    disable_logs = false
+          # }
+
           general {
               layout = master
               gaps_out = 4
@@ -181,6 +185,7 @@ in {
       # here and not as a systemd unit so it inherits PATH
        # exec-once = hypridle
        exec-once = swaybg -i ~/wall.png -m fill
+       # exec-once = env WAYLAND_DEBUG=1 shikane 2> /tmp/shikane.log
     '';
   };
 

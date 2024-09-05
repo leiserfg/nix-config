@@ -59,7 +59,11 @@
     # inferno
     flamegraph
     psmisc
-    python311Packages.ipython
+    python312Packages.ipython
+    mitmproxy
+    uv
+    cmake
+    gnumake
     fend
     nvme-cli
     yazi
