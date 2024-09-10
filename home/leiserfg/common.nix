@@ -98,7 +98,8 @@
     picocom # run as:  sudo picocom /dev/ttyACM0
 
     doggo
-    (neovimPkgs.neovim)
+    # (neovimPkgs.neovim)
+    (neovim)
 
     sumneko-lua-language-server
     pipenv
@@ -208,7 +209,7 @@
     xh
 
     # My overlay
-    git-branchless
+    # git-branchless
     # material-maker
     nix-du
     qpwgraph

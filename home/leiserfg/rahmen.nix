@@ -24,10 +24,10 @@
     # unstablePkgs.godot_4
     nix-ld
     swaylock
-    audacity
+    # audacity
     ddcutil
-    # moonlight-qt
-    gnome-network-displays
+    moonlight-qt
+    # gnome-network-displays
     # anki
   ];
 

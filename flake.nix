@@ -9,8 +9,6 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-    # nix-gaming.url = "github:fufexan/nix-gaming";
     neovim-nightly = {
       url = "github:nix-community/neovim-nightly-overlay";
     };
@@ -18,18 +16,7 @@
     blender.url = "github:edolstra/nix-warez?dir=blender";
     blender.inputs.nixpkgs.follows = "nixpkgs";
 
-    # good 
-        # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=f642fb97df5c69267a03452533de383ff8023570";
     hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-
-
-    # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=improve-output-configuration";
-    # hypr.url = "git+https://github.com/leiserfg/Hyprland?submodules=1";
-
-
-
-    # hypr.inputs.aquamarine.url = "github:hyprwm/aquamarine";
-    # hypr.inputs.aquamarine.inputs.nixpkgs.follows = "nixpkgs";
 
     hypr.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";

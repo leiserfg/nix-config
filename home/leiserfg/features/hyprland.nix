@@ -93,10 +93,9 @@ in {
 
              bind = $mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"
 
-             bind = $mod,Print, exec, ${pkgs.grimblast}/bin/grimblast save output
-             bind = $mod+SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast save area
-             bind = ,Print, exec, ${pkgs.grimblast}/bin/grimblast copy output
-             bind = SHIFT,Print, exec, ${pkgs.grimblast}/bin/grimblast copy area
+             bind = ,Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -
+             bind = SHIFT,Print, exec, ${lib.getExe pkgs.grimblast} save active - | ${lib.getExe pkgs.swappy} -f -
+             bind = $mod+SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -
 
              bind = $mod, G, exec, game-picker
              bind = $mod, 0, exec, rofi_power
