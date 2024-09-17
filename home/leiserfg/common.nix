@@ -124,7 +124,6 @@
     inkscape
     tree-sitter
     nmap
-    socat
     # krita
     # pinentry.qt
     # unstablePkgs.cinnamon.warpinator

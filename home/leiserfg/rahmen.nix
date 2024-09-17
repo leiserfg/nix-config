@@ -65,7 +65,7 @@
 
     kanshi = {
       # enable = !config.xsession.enable;
-      # enable = true;
+      enable = true;
       systemdTarget = "hyprland-session.target";
       settings = [
         {

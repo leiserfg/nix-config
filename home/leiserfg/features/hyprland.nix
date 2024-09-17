@@ -8,6 +8,13 @@
 }: let
   cursor = "Hypr-Bibata-Original-Classic";
   cursorPackage = pkgs.bibata-hyprcursor;
+  restartHyprland = lib.getExe (pkgs.writeShellScriptBin "restartHyprland" ''
+    function handle {
+        hyprctl monitors | grep eDP-1 || hyprctl keyword monitor "eDP-1,enable"
+    }
+
+    ${lib.getExe pkgs.socat} - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" |grep monitorremoved| while read -r line; do handle ; done
+  '');
 in {
   imports = [
     ./_wayland_common.nix
@@ -94,8 +101,7 @@ in {
              bind = $mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"
 
              bind = ,Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -
-             bind = SHIFT,Print, exec, ${lib.getExe pkgs.grimblast} save active - | ${lib.getExe pkgs.swappy} -f -
-             bind = $mod+SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -
+             bind = SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -
 
              bind = $mod, G, exec, game-picker
              bind = $mod, 0, exec, rofi_power
@@ -183,6 +189,7 @@ in {
 
       # here and not as a systemd unit so it inherits PATH
        # exec-once = hypridle
+       exec-once = ${restartHyprland}
        exec-once = swaybg -i ~/wall.png -m fill
        # exec-once = env WAYLAND_DEBUG=1 shikane 2> /tmp/shikane.log
     '';
