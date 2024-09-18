@@ -9,11 +9,14 @@
   cursor = "Hypr-Bibata-Original-Classic";
   cursorPackage = pkgs.bibata-hyprcursor;
   restartHyprland = lib.getExe (pkgs.writeShellScriptBin "restartHyprland" ''
-    function handle {
-        hyprctl monitors | grep eDP-1 || hyprctl keyword monitor "eDP-1,enable"
-    }
+       function handle {
+           # Command failed or no entries found, enable the monitor
+           if ! output=$(hyprctl monitors -j ) || [ "$output" = "[]" ]; then
+                hyprctl keyword monitor "eDP-1,preferred,auto,auto"
+           fi
+       }
 
-    ${lib.getExe pkgs.socat} - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" |grep monitorremoved| while read -r line; do handle ; done
+       ${lib.getExe pkgs.socat} - "UNIX-CONNECT:$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" |grep --line-buffered  monitorremoved| while read -r line; do handle ; done
   '');
 in {
   imports = [

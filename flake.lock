@@ -234,19 +234,19 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1726430622,
-        "narHash": "sha256-50vt1snpVwS5lqvvH4p6DHiEWspJUZuJ1kYy1DKtrfM=",
+        "lastModified": 1726645405,
+        "narHash": "sha256-1mQd94Subw73R9VP9zM3jbfwdrjo9QSJJw2b0SGJHgU=",
         "ref": "refs/heads/main",
-        "rev": "9e356562446f44c471ae38a80506a9df039305d6",
-        "revCount": 5224,
+        "rev": "86a432219e1235248741c89f0067f0845bc54c58",
+        "revCount": 5225,
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/hyprwm/Hyprland"
+        "url": "https://github.com/leiserfg/Hyprland"
       },
       "original": {
         "submodules": true,
         "type": "git",
-        "url": "https://github.com/hyprwm/Hyprland"
+        "url": "https://github.com/leiserfg/Hyprland"
       }
     },
     "hyprcursor": {
