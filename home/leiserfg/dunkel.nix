@@ -17,7 +17,7 @@
     poetry
     insomnia
     awscli2
-    postman
+    # postman
     csvkit
     libreoffice
     pandoc
@@ -29,7 +29,7 @@
     # unstablePkgs.emscripten # emcc
 
     # unstablePkgs.godot_4
-    spotify
+    # spotify
     (gnome3.gvfs)
     # This is so we don't have to change the config in debian
     (writeShellScriptBin "sway" ''
