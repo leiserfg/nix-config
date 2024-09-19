@@ -11,6 +11,7 @@
   restartHyprland = lib.getExe (pkgs.writeShellScriptBin "restartHyprland" ''
        function handle {
            # Command failed or no entries found, enable the monitor
+           sleep 0.5
            if ! output=$(hyprctl monitors -j ) || [ "$output" = "[]" ]; then
                 hyprctl keyword monitor "eDP-1,preferred,auto,auto"
            fi
