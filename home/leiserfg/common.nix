@@ -76,10 +76,12 @@
     typst
     (unstablePkgs.tdesktop)
     # firefoxnix
+    shfmt
+    shellcheck
     (unstablePkgs.fish)
     (unstablePkgs.ruff)
     (unstablePkgs.basedpyright)
-    (unstablePkgs.pyright)
+    (unstablePkgs.typescript-language-server)
     nodePackages.cspell
     nil
     pmenu
@@ -99,7 +101,7 @@
 
     doggo
     # (neovimPkgs.neovim)
-    (neovim)
+    neovim
 
     sumneko-lua-language-server
     pipenv
@@ -331,7 +333,21 @@
       enable = true;
       profiles = {
         yolo = {
+          userContent = "";
+          userChrome = ''
+            #TabsToolbar {
+              visibility: collapse;
+            }
+          '';
+
+          # #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
+          #   visibility: collapse !important;
+          # }
+
           settings = {
+            # Enable user chrome
+            "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
             "browser.compactmode.show" = true;
             "dom.webgpu.enabled" = true;
             "browser.uidensity" = 1;
