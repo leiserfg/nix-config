@@ -338,15 +338,15 @@
             #TabsToolbar {
               visibility: collapse;
             }
+            #sidebar-box #sidebar-header {
+                display: none !important;
+            }
           '';
-
-          # #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
-          #   visibility: collapse !important;
-          # }
 
           settings = {
             # Enable user chrome
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+            "sidebar.position_start" = false; #Sideberry in the right side
 
             "browser.compactmode.show" = true;
             "dom.webgpu.enabled" = true;
