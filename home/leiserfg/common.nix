@@ -426,6 +426,7 @@
   };
 
   services = {
+    trayscale.enable = true;
     gpg-agent.enable = true;
     # pasystray.enable = true;
 
