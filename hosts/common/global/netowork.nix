@@ -7,7 +7,8 @@
     wireless.iwd.enable = true;
     networkmanager = {
       enable = true;
-      insertNameservers = ["100.100.100.100"];
+      insertNameservers = ["1.1.1.1"];
+      appendNameservers = ["100.100.100.100"];
       wifi.backend = "iwd";
     };
 
