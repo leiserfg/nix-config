@@ -113,7 +113,11 @@ in {
              bind = $mod, P, exec, rofi_power
              bind = $mod, D, exec, rofi-launch
 
+             bind = CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l
+             bind = CTRL ALT $mod , period, movecurrentworkspacetomonitor, r 
+
              # workspaces
+
              ${builtins.concatStringsSep "\n" (
         lib.lists.imap1 (
           ws: code: ''
@@ -194,7 +198,7 @@ in {
 
       # here and not as a systemd unit so it inherits PATH
        # exec-once = hypridle
-       exec-once = ${restartHyprland}
+       # exec-once = ${restartHyprland}
        exec-once = swaybg -i ~/wall.png -m fill
        # exec-once = env WAYLAND_DEBUG=1 shikane 2> /tmp/shikane.log
     '';

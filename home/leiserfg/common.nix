@@ -82,7 +82,8 @@
     (unstablePkgs.ruff)
     (unstablePkgs.basedpyright)
     (unstablePkgs.typescript-language-server)
-    nodePackages.cspell
+
+    wlr-randr
     nil
     pmenu
     pciutils
