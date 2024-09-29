@@ -157,7 +157,6 @@
     lsof
     file
     unrar
-    aria2
     zpaq
     p7zip
     d-spy
@@ -304,6 +303,7 @@
   # };
   programs = {
     home-manager.enable = true;
+    aria2.enable = true;
     bash = {
       enable = true;
       bashrcExtra = ''
@@ -367,6 +367,7 @@
       settings = {
         cookies-from-browser = "firefox";
         downloader = "aria2c";
+        downloader-args = "aria2c:'-c -x8 -s8 -k1M'";
       };
     };
 

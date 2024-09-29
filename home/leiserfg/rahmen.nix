@@ -63,46 +63,77 @@
       ];
     };
 
-    kanshi = {
-      # enable = !config.xsession.enable;
+    shikane = {
       enable = true;
-      systemdTarget = "hyprland-session.target";
-      settings = [
-        {
-          profile.name = "undocked";
-          profile.outputs = [
-            {
-              criteria = "eDP-1";
-              status = "enable";
-              scale = 1.175000;
-            }
-          ];
-        }
-        {
-          profile.name = "docked-left";
-          profile.outputs = [
-            {
-              criteria = "DP-3";
-            }
-            {
-              criteria = "eDP-1";
-              status = "disable";
-            }
-          ];
-        }
-        {
-          profile.name = "docked-right";
-          profile.outputs = [
-            {
-              criteria = "DP-2";
-            }
-            {
-              criteria = "eDP-1";
-              status = "disable";
-            }
-          ];
-        }
-      ];
+      settings = {
+        profile = [
+          {
+            name = "left-docket";
+            output = [
+              {
+                match = "eDP-1";
+                enable = false;
+              }
+              {
+                search = "/.*";
+                enable = true;
+              }
+            ];
+          }
+          {
+            name = "lonly";
+            output = [
+              {
+                match = "eDP-1";
+                enable = true;
+                scale = 1.6;
+              }
+            ];
+          }
+        ];
+      };
     };
+
+    # kanshi = {
+    #   # enable = !config.xsession.enable;
+    #   enable = true;
+    #   systemdTarget = "hyprland-session.target";
+    #   settings = [
+    #     {
+    #       profile.name = "undocked";
+    #       profile.outputs = [
+    #         {
+    #           criteria = "eDP-1";
+    #           status = "enable";
+    #           scale = 1.6;
+    #         }
+    #       ];
+    #     }
+    #     {
+    #       profile.name = "docked-left";
+    #       profile.outputs = [
+    #         {
+    #           criteria = "DP-3";
+    #         }
+    #         {
+    #           criteria = "eDP-1";
+    #           status = "disable";
+    #         }
+    #       ];
+    #     }
+    #     {
+    #       profile.name = "docked-right";
+    #       profile.outputs = [
+    #         {
+    #           criteria = "DP-2";
+    #         }
+    #         {
+    #           criteria = "eDP-1";
+    #           status = "disable";
+    #         }
+    #       ];
+    #     }
+    #   ];
+    # };
   };
 }

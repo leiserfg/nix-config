@@ -13,7 +13,7 @@
     ./games.nix
     ./gl.nix
     ./locale.nix
-    ./netowork.nix
+    ./network.nix
     ./nfs.nix
     ./nix.nix
     ./services.nix
