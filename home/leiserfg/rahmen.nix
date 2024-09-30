@@ -68,7 +68,7 @@
       settings = {
         profile = [
           {
-            name = "left-docket";
+            name = "left-docked";
             output = [
               {
                 match = "eDP-1";
@@ -77,9 +77,28 @@
               {
                 search = "/.*";
                 enable = true;
+                scale = 1.5;
+                mode = "3840x2160@60.00Hz";
               }
             ];
           }
+
+          {
+            name = "game-mode";
+            output = [
+              {
+                match = "eDP-1";
+                enable = false;
+              }
+              {
+                search = "/.*";
+                enable = true;
+                mode = "1920x1080@60.00Hz";
+                scale = 1;
+              }
+            ];
+          }
+
           {
             name = "lonly";
             output = [
@@ -93,47 +112,5 @@
         ];
       };
     };
-
-    # kanshi = {
-    #   # enable = !config.xsession.enable;
-    #   enable = true;
-    #   systemdTarget = "hyprland-session.target";
-    #   settings = [
-    #     {
-    #       profile.name = "undocked";
-    #       profile.outputs = [
-    #         {
-    #           criteria = "eDP-1";
-    #           status = "enable";
-    #           scale = 1.6;
-    #         }
-    #       ];
-    #     }
-    #     {
-    #       profile.name = "docked-left";
-    #       profile.outputs = [
-    #         {
-    #           criteria = "DP-3";
-    #         }
-    #         {
-    #           criteria = "eDP-1";
-    #           status = "disable";
-    #         }
-    #       ];
-    #     }
-    #     {
-    #       profile.name = "docked-right";
-    #       profile.outputs = [
-    #         {
-    #           criteria = "DP-2";
-    #         }
-    #         {
-    #           criteria = "eDP-1";
-    #           status = "disable";
-    #         }
-    #       ];
-    #     }
-    #   ];
-    # };
   };
 }
