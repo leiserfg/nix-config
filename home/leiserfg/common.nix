@@ -47,6 +47,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    smartmontools
     (unstablePkgs.shikane)
     brillo
     nix
@@ -358,6 +359,39 @@
             # HACK to make slack huddle work
             "general.useragent.override" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:${pkgs.firefox.version}) Gecko/20100101 Firefox/${pkgs.firefox.version}";
           };
+
+          search.engines = {
+            "Nix Packages" = {
+              urls = [
+                {
+                  template = "https://search.nixos.org/packages";
+                  params = [
+                    {
+                      name = "type";
+                      value = "packages";
+                    }
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+
+              icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+              definedAliases = ["@np"];
+            };
+
+            "NixOS Wiki" = {
+              urls = [{template = "https://wiki.nixos.org/index.php?search={searchTerms}";}];
+              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              updateInterval = 24 * 60 * 60 * 1000; # every day
+              definedAliases = ["@nw"];
+            };
+
+            "Bing".metaData.hidden = true;
+            "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+          };
         };
       };
     };
@@ -407,9 +441,10 @@
 
     # Disable qt decoration for telegram
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-
     # Make cargo use git to pull from github
     CARGO_NET_GIT_FETCH_WITH_CLI = "true";
+
+    FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
   };
   # home.pointerCursor = {
   #   package = pkgs.gnome.adwaita-icon-theme;
