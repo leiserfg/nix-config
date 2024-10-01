@@ -60,65 +60,65 @@ in {
       };
     in ''
 
-            ${builtins.concatStringsSep "\n" (
+                ${builtins.concatStringsSep "\n" (
         lib.attrsets.mapAttrsToList (name: val: "env = ${name},${val}") env_vars
       )}
 
 
-             $mod = SUPER
+                 $mod = SUPER
 
-             # Move focus
-             bind = $mod, H, movefocus, l
-             bind = $mod, L, movefocus, r
-             bind = $mod, K, movefocus, u
-             bind = $mod, J, movefocus, d
+                 # Move focus
+                 bind = $mod, H, movefocus, l
+                 bind = $mod, L, movefocus, r
+                 bind = $mod, K, movefocus, u
+                 bind = $mod, J, movefocus, d
 
-             bind = $mod SHIFT, H, movewindow, l
-             bind = $mod SHIFT, L, movewindow, r
-             bind = $mod SHIFT, K, movewindow, u
-             bind = $mod SHIFT, J, movewindow, d
+                 bind = $mod SHIFT, H, movewindow, l
+                 bind = $mod SHIFT, L, movewindow, r
+                 bind = $mod SHIFT, K, movewindow, u
+                 bind = $mod SHIFT, J, movewindow, d
 
-             bind = $mod, Escape, killactive
-             bind = $mod , X, exec, hyprctl kill
-
-
-            # fn buttons
-            binde=,XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-            binde=,XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-            bind =,XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-            bind =,XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-            binde=,XF86MonBrightnessUp,   exec, ${pkgs.light}/bin/light -A 10
-            binde=,XF86MonBrightnessDown, exec, ${pkgs.light}/bin/light -U 10
-            # bind =,XF86AudioPlay,         exec, playerctl play-pause
-            # bind =,XF86AudioPrev,         exec, playerctl previous
-            # bind =,XF86AudioNext,         exec, playerctl next
-
-            # Move/resize windows with mod + LMB/RMB and dragging
-            bindm = $mod, mouse:272, movewindow
-            bindm = $mod, mouse:273, resizewindow
+                 bind = $mod, Escape, killactive
+                 bind = $mod , X, exec, hyprctl kill
 
 
-             bind=$mod,f,fullscreen
-             bind = $mod, Slash, exec, firefox
-             bind = $mod, Return, exec, kitty -1
+                # fn buttons
+                binde=,XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+                binde=,XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+                bind =,XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+                bind =,XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+                binde=,XF86MonBrightnessUp,   exec, ${pkgs.light}/bin/light -A 10
+                binde=,XF86MonBrightnessDown, exec, ${pkgs.light}/bin/light -U 10
+                # bind =,XF86AudioPlay,         exec, playerctl play-pause
+                # bind =,XF86AudioPrev,         exec, playerctl previous
+                # bind =,XF86AudioNext,         exec, playerctl next
 
-             bind = $mod, S, exec, sh -c "(hyprctl monitors -j | grep eDP-1) &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"
+                # Move/resize windows with mod + LMB/RMB and dragging
+                bindm = $mod, mouse:272, movewindow
+                bindm = $mod, mouse:273, resizewindow
 
 
-             bind = ,Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -
-             bind = SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -
+                 bind=$mod,f,fullscreen
+                 bind = $mod, Slash, exec, firefox
+                 bind = $mod, Return, exec, kitty -1
 
-             bind = $mod, G, exec, game-picker
-             bind = $mod, 0, exec, rofi_power
-             bind = $mod, P, exec, rofi_power
-             bind = $mod, D, exec, rofi-launch
+                 bind = $mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | rofi -dmenu -i  | xargs shikanectl switch"
 
-             bind = CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l
-             bind = CTRL ALT $mod , period, movecurrentworkspacetomonitor, r 
 
-             # workspaces
+                 bind = ,Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -
+                 bind = SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -
 
-             ${builtins.concatStringsSep "\n" (
+                 bind = $mod, G, exec, game-picker
+                 bind = $mod, 0, exec, rofi_power
+                 bind = $mod, P, exec, rofi_power
+                 bind = $mod, D, exec, rofi-launch
+
+                 bind = CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l
+                 bind = CTRL ALT $mod , period, movecurrentworkspacetomonitor, r
+
+                 # workspaces
+
+                 ${builtins.concatStringsSep "\n" (
         lib.lists.imap1 (
           ws: code: ''
             bind = $mod, ${code}, workspace, ${toString ws}
@@ -131,76 +131,76 @@ in {
         (lib.strings.stringToCharacters "QWERTYUIO")
       )}
 
-          # debug {
-          #    disable_logs = false
-          # }
+              # debug {
+              #    disable_logs = false
+              # }
 
-          general {
-              layout = master
-              gaps_out = 4
-          }
-
-          cursor {
-              inactive_timeout = 10
-          }
-
-          misc {
-              # enable_swallow = true
-              # swallow_regex = ^(kitty)$
-              # disable_hyprland_logo = true
-              # background_color=rgb(000000)
-          }
-
-          gestures {
-              workspace_swipe = true
-              workspace_swipe_fingers = 4
-          }
-
-          master {
-            no_gaps_when_only = 3
-          }
-
-          binds {
-            workspace_back_and_forth = true
-          }
-
-          xwayland {
-               force_zero_scaling = true
-          }
-          input {
-              kb_layout = us
-              kb_variant = altgr-intl
-              follow_mouse = 2
-
-              touchpad {
-                disable_while_typing = true
-                natural_scroll = true
+              general {
+                  layout = master
+                  gaps_out = 4
               }
 
-          }
+              cursor {
+                  inactive_timeout = 10
+              }
 
-        #RULES
-        windowrule = workspace 1,firefox
-        windowrule = workspace 4,org.telegram.desktop
-        windowrule = center,pavucontrol
-        windowrule = float,pavucontrol
-        windowrule = pin,dragon
+              misc {
+                  # enable_swallow = true
+                  # swallow_regex = ^(kitty)$
+                  # disable_hyprland_logo = true
+                  # background_color=rgb(000000)
+              }
+
+              gestures {
+                  workspace_swipe = true
+                  workspace_swipe_fingers = 4
+              }
+
+              master {
+                no_gaps_when_only = 3
+              }
+
+              binds {
+                workspace_back_and_forth = true
+              }
+
+              xwayland {
+                   force_zero_scaling = true
+              }
+              input {
+                  kb_layout = us
+                  kb_variant = altgr-intl
+                  follow_mouse = 2
+
+                  touchpad {
+                    disable_while_typing = true
+                    natural_scroll = true
+                  }
+
+              }
+
+            #RULES
+            windowrule = workspace 1,firefox
+            windowrule = workspace 4,org.telegram.desktop
+            windowrule = center,pavucontrol
+            windowrule = float,pavucontrol
+            windowrule = pin,dragon
 
 
-        windowrulev2 = idleinhibit fullscreen, fullscreen:1
+            windowrulev2 = idleinhibit fullscreen, fullscreen:1
 
-         # debug {
-         #     disable_logs = false
-         # }
+             # debug {
+             #     disable_logs = false
+             # }
 
-        layerrule = noanim,rofi
-        layerrule = dimaround,rofi
+            layerrule = noanim,rofi
+            layerrule = dimaround,rofi
 
-      # here and not as a systemd unit so it inherits PATH
-       # exec-once = hypridle
-       # exec-once = ${restartHyprland}
-       exec-once = swaybg -i ~/wall.png -m fill
-       # exec-once = env WAYLAND_DEBUG=1 shikane 2> /tmp/shikane.log
+          # here and not as a systemd unit so it inherits PATH
+           # exec-once = hypridle
+           # exec-once = ${restartHyprland}
+           exec-once = swaybg -i ~/wall.png -m fill
+           # exec-once = env WAYLAND_DEBUG=1 shikane 2> /tmp/shikane.log
     '';
   };
 
