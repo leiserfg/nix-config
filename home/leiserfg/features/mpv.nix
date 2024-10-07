@@ -27,6 +27,10 @@ in {
       hwdec = "auto-safe";
       gpu-api = "vulkan";
       hdr-compute-peak = "no";
+
+      # Waiting for proper tone-mapping
+      # vo="dmabuf-wayland";
+
       vo = "gpu-next";
     };
     profiles = {
@@ -47,6 +51,16 @@ in {
       #   glsl-shader = "${shaders_dir}/FSR.glsl";
       #   profile-restore = "copy";
       # };
+      #   hdr = {
+      #     profile-cond = "p['video-params/primaries'] == 'bt.2020'";
+      #     profile-restore = "copy";
+      #
+      #     # hwdec="no";
+      #     # target-prim = "bt.2020";
+      #     # tone-mapping = "bt.2390";
+      #     # gamut-mapping-mode="auto";
+      #
+      #   };
     };
     scriptOpts = {
       uosc = {

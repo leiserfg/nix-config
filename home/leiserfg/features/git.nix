@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = [pkgs.git-filter-repo];
+  home.packages = [pkgs.git-filter-repo pkgs.glab];
   programs.git = {
     enable = true;
     delta.enable = true;
