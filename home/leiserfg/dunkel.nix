@@ -31,7 +31,7 @@
     # unstablePkgs.godot_4
     # spotify
     (gnome3.gvfs)
-jmtpfs
+    jmtpfs
     # This is so we don't have to change the config in debian
     (writeShellScriptBin "sway" ''
       .  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
@@ -39,9 +39,44 @@ jmtpfs
     '')
   ];
 
+  services.shikane = {
+    enable = true;
+    settings = {
+      profile = [
+        {
+          name = "left-docked";
+          output = [
+            {
+              match = "eDP-1";
+              enable = false;
+            }
+            {
+              search = "/.*";
+              enable = true;
+              scale = 1.5;
+              mode = "3840x2160@60.00Hz";
+            }
+          ];
+        }
+
+        {
+          name = "lonly";
+          output = [
+            {
+              match = "eDP-1";
+              enable = true;
+              scale = 1.2;
+              mode = "1920x1200@60.00Hz";
+            }
+          ];
+        }
+      ];
+    };
+  };
+
   services = {
     kanshi = {
-      enable = true;
+      enable = false;
       systemdTarget = "hyprland-session.target";
       settings = [
         {

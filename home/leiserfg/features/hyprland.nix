@@ -156,10 +156,6 @@ in {
                   workspace_swipe_fingers = 4
               }
 
-              master {
-                no_gaps_when_only = 3
-              }
-
               binds {
                 workspace_back_and_forth = true
               }
@@ -179,7 +175,12 @@ in {
 
               }
 
-            #RULES
+            # workspace rules
+
+            # No gaps for single window
+            workspace = w[t1], gapsin:0, gapsout:0, border:0
+
+            #WINDOW RULES
             windowrule = workspace 1,firefox
             windowrule = workspace 4,org.telegram.desktop
             windowrule = center,pavucontrol
