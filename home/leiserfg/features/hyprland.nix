@@ -12,7 +12,7 @@
     name = "xdg-hypr";
     paths = [
       (
-        pkgs.writeTextDir "lib/systemd/user/xdg-desktop-portal-hyprland.service" ''
+        pkgs.writeTextDir "share/systemd/user/xdg-desktop-portal-hyprland.service" ''
           [Unit]
           Description=Portal service (Hyprland implementation)
           PartOf=graphical-session.target
