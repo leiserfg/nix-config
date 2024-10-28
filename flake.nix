@@ -17,7 +17,9 @@
     blender.inputs.nixpkgs.follows = "nixpkgs";
 
      # hypr.url = "git+https://github.com/leiserfg/Hyprland?submodules=1";
-     hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=v0.44.0";
+
+     hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+     # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=v0.44.0";
 
     hypr.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
