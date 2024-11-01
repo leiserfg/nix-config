@@ -21,7 +21,6 @@
     poetry
     # unstablePkgs.blender-hip
     gamescope
-    myPkgs.quartz
     # unstablePkgs.godot_4
     nix-ld
     swaylock

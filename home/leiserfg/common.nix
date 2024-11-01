@@ -43,6 +43,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+            htop
     smartmontools
     (unstablePkgs.shikane)
     brillo

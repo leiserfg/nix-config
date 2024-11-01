@@ -18,7 +18,8 @@
 
      # hypr.url = "git+https://github.com/leiserfg/Hyprland?submodules=1";
 
-     hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+     hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=a3d3b4fd64a51a8c1663b450bd2a408f1f0fa9b3";
+     # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
      # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=v0.44.0";
 
     hypr.inputs.nixpkgs.follows = "nixpkgs";
