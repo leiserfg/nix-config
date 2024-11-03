@@ -164,7 +164,7 @@
     # agebox
     # age-kegen-deterministic
 
-    terraform
+   # terraform
     terraform-ls
     awscli2
 

@@ -119,8 +119,22 @@
             ./hosts/rahmen
           ];
       };
+
+    dunkel = nixpkgs.lib.nixosSystem {
+        pkgs = legacyPackages.x86_64-linux;
+        specialArgs = {
+          inherit inputs;
+          unstablePkgs = unstablePackages.x86_64-linux;
+        };
+        modules =
+          (builtins.attrValues nixosModules)
+          ++ [
+nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
+            ./hosts/dunkel
+          ];
     };
 
+    };
     homeConfigurations = {
       "leiserfg@shiralad" = home-manager.lib.homeManagerConfiguration {
         pkgs = legacyPackages.x86_64-linux;
