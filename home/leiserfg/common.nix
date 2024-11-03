@@ -43,7 +43,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-            htop
+    htop
     smartmontools
     (unstablePkgs.shikane)
     brillo
@@ -306,16 +306,11 @@
       enable = true;
       bashrcExtra = ''
 
-        case $- in
-            *i*) ;;
-              *) return;;
-        esac
-
-        if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z $BASH_EXECUTION_STRING ]] && which fish > /dev/null
+        if [[ $(ps --no-header --pid=$PPID --format=comm|head -1) != "fish" && -z $BASH_EXECUTION_STRING && $SHLVL == 1 ]]
         then
-            exec fish
+        	shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+        	exec fish $LOGIN_OPTION
         fi
-
       '';
     };
     fzf = {
