@@ -12,6 +12,7 @@
     ../common/features/docker.nix
   ];
   hardware.cpu.intel.updateMicrocode = true;
+  services.fprintd.enable = true;
 
   networking.hostName = "dunkel";
 }

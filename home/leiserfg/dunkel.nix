@@ -5,37 +5,20 @@
 }: {
   imports = [
     ./common.nix
-    ./features/mesa.nix
+    # ./features/mesa.nix
     ./features/hyprland.nix
     ./features/daw.nix
   ];
-  targets.genericLinux.enable = true;
-
   home.packages = with pkgs; [
     pgcli
     pre-commit
     poetry
     insomnia
     awscli2
-    # postman
     csvkit
     libreoffice
     pandoc
-
-    # unstablePkgs.gamescope
-    # wabt # wasm-decompile
-    # luajit
-    # wasynth # wasm2luajit
-    # unstablePkgs.emscripten # emcc
-
-    # unstablePkgs.godot_4
-    # spotify
     jmtpfs
-    # This is so we don't have to change the config in debian
-    (writeShellScriptBin "sway" ''
-      .  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-      exec Hyprland
-    '')
   ];
 
   services.shikane = {

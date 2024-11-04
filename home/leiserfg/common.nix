@@ -164,7 +164,7 @@
     # agebox
     # age-kegen-deterministic
 
-   # terraform
+    # terraform
     terraform-ls
     awscli2
 
@@ -280,25 +280,25 @@
       ''
     )
   ];
-  # xdg.configFile."Thunar/uca.xml" = {
-  #   executable = false;
-  #   text = ''
-  #     <?xml version="1.0" encoding="UTF-8"?>
-  #     <actions>
-  #         <action>
-  #             <icon>kitty</icon>
-  #             <name>Open In Kitty</name>
-  #             <submenu></submenu>
-  #             <unique-id>1713512577329704-1</unique-id>
-  #             <command>kitty -1 --directory %f</command>
-  #             <description></description>
-  #             <range>*</range>
-  #             <patterns>*</patterns>
-  #             <directories/>
-  #         </action>
-  #     </actions>
-  #   '';
-  # };
+  xdg.configFile."Thunar/uca.xml" = {
+    executable = false;
+    text = ''
+      <?xml version="1.0" encoding="UTF-8"?>
+      <actions>
+          <action>
+              <icon>kitty</icon>
+              <name>Open In Kitty</name>
+              <submenu></submenu>
+              <unique-id>1713512577329704-1</unique-id>
+              <command>kitty -1 --directory %f</command>
+              <description></description>
+              <range>*</range>
+              <patterns>*</patterns>
+              <directories/>
+          </action>
+      </actions>
+    '';
+  };
   programs = {
     home-manager.enable = true;
     aria2.enable = true;
@@ -308,8 +308,8 @@
 
         if [[ $(ps --no-header --pid=$PPID --format=comm|head -1) != "fish" && -z $BASH_EXECUTION_STRING && $SHLVL == 1 ]]
         then
-        	shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-        	exec fish $LOGIN_OPTION
+            shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+            exec fish $LOGIN_OPTION
         fi
       '';
     };

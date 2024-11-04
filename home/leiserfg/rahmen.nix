@@ -7,7 +7,6 @@
 }: {
   imports = [
     ./common.nix
-    # ./features/x11.nix
     ./features/hyprland.nix
     ./features/laptop.nix
     ./features/games.nix
