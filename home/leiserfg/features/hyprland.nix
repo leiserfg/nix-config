@@ -8,28 +8,6 @@
 }: let
   cursor = "Hypr-Bibata-Original-Classic";
   cursorPackage = pkgs.bibata-hyprcursor;
-  xdg-hypr = pkgs.symlinkJoin {
-    name = "xdg-hypr";
-    paths = [
-      (
-        pkgs.writeTextDir "share/systemd/user/xdg-desktop-portal-hyprland.service" ''
-          [Unit]
-          Description=Portal service (Hyprland implementation)
-          PartOf=graphical-session.target
-          After=graphical-session.target
-          ConditionEnvironment=WAYLAND_DISPLAY
-
-          [Service]
-          Type=dbus
-          BusName=org.freedesktop.impl.portal.desktop.hyprland
-          ExecStart=${pkgs.xdg-desktop-portal-hyprland}/libexec/xdg-desktop-portal-hyprland -v
-          Restart=on-failure
-          Slice=session.slice
-        ''
-      )
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-  };
 in {
   imports = [
     ./_wayland_common.nix
@@ -38,14 +16,6 @@ in {
 
   home.file.".icons/${cursor}".source = "${cursorPackage}/share/icons/${cursor}";
   xdg.dataFile."icons/${cursor}".source = "${cursorPackage}/share/icons/${cursor}";
-  # assertions = [
-  #   {
-  #     assertion = builtins.compareVersions nixpkgsHypr.hyprland.version unstablePkgs.hyprland.version >= 0;
-  #     message = "We can remove hyprland override already ${nixpkgsHypr.hyprland.version} ${unstablePkgs.hyprland.version}";
-  #   }
-  # ];
-
-  # This is for wayland
   _module.args.wm = "hyprland";
 
   services.kanshi.systemdTarget = "hyprland-session.target";
@@ -57,6 +27,7 @@ in {
     };
 
     # Fix for the monitor issue, input in gamescope still broken
+    # package = hyprPkgs.hyprland-debug;
     package = hyprPkgs.hyprland;
 
     # systemd.variables = ["--all"];

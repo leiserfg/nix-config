@@ -16,24 +16,12 @@
     blender.url = "github:edolstra/nix-warez?dir=blender";
     blender.inputs.nixpkgs.follows = "nixpkgs";
 
-     # hypr.url = "git+https://github.com/leiserfg/Hyprland?submodules=1";
-
-    # MASTER
-     # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=3c0605c68e50416819fea471a8fbef05e4a18684";
-
-     hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=b6e226c3200276978e487a68a16fd696fcb7e7c8";
-
-# d8b865366af9d5ed30d2ee0a437b9a3ed43c10bd
-# 3852418d2446555509738bf1486940042107afe7    factorio works
-
-# c4d214c42d743a69f606ff476b7266b3ace7d70e     factorio works
-# a0b2169ed600b71627188dcd208b26911da8d583     factorio works
-# 7188ee4f992966c5793efebd6dc70ab377820066     Multimonitor fails, factorio works
-# 5d4b54b01286c10d4b6bf402a772b5938b054ce6  # BORKED Multimonitor
-# b6e226c3200276978e487a68a16fd696fcb7e7c8      OK
-
     # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-     # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=v0.44.0";
+    # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=keepDebugInfo";
+
+    hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=b6e226c3200276978e487a68a16fd696fcb7e7c8";
+
+    # 5d4b54b01286c10d4b6bf402a772b5938b054ce6  # BORKED Multimonitor
 
     hypr.inputs.nixpkgs.follows = "nixpkgs";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
@@ -120,7 +108,7 @@
           ];
       };
 
-    dunkel = nixpkgs.lib.nixosSystem {
+      dunkel = nixpkgs.lib.nixosSystem {
         pkgs = legacyPackages.x86_64-linux;
         specialArgs = {
           inherit inputs;
@@ -129,11 +117,10 @@
         modules =
           (builtins.attrValues nixosModules)
           ++ [
-nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
+            nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
             ./hosts/dunkel
           ];
-    };
-
+      };
     };
     homeConfigurations = {
       "leiserfg@shiralad" = home-manager.lib.homeManagerConfiguration {
