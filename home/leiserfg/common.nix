@@ -12,6 +12,7 @@
     ./features/rofi.nix
     ./features/audio.nix
     ./features/fish.nix
+    ./features/nu.nix
     ./features/cmds.nix
     ./features/mpv.nix
     ./features/git.nix

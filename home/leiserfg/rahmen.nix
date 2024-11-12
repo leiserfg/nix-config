@@ -22,10 +22,11 @@
     gamescope
     # unstablePkgs.godot_4
     nix-ld
+    nushell
     swaylock
     # audacity
     ddcutil
-    moonlight-qt
+    # moonlight-qt
     # gnome-network-displays
     # anki
   ];
