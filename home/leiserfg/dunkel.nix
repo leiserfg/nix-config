@@ -17,8 +17,6 @@
     awscli2
     csvkit
     libreoffice
-    pandoc
-    jmtpfs
   ];
 
   services.shikane = {
@@ -33,6 +31,22 @@
               enable = false;
             }
             {
+              search = ["m=DELL U3421WE"];
+              enable = true;
+              scale = 1.6;
+              mode = "3440x1440@59.97Hz";
+            }
+          ];
+        }
+
+        {
+          name = "UltraWide";
+          output = [
+            {
+              match = "eDP-1";
+              enable = false;
+            }
+            {
               search = "/.*";
               enable = true;
               scale = 1.5;
@@ -40,7 +54,6 @@
             }
           ];
         }
-
         {
           name = "lonly";
           output = [

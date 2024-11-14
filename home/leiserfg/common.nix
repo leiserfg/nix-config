@@ -420,6 +420,7 @@
   };
 
   qt.enable = true;
+  qt.platformTheme.name = "gtk3";
 
   home.sessionVariables = {
     BROWSER = "firefox";
