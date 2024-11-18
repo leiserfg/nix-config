@@ -78,7 +78,7 @@
                 search = "/.*";
                 enable = true;
                 scale = 1.5;
-                mode = "3840x2160@60.00Hz";
+                mode = "preferred";
               }
             ];
           }

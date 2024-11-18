@@ -28,7 +28,7 @@ in {
 
     # Fix for the monitor issue, input in gamescope still broken
     # package = hyprPkgs.hyprland-debug;
-    package = hyprPkgs.hyprland;
+    # package = hyprPkgs.hyprland;
 
     # systemd.variables = ["--all"];
 
