@@ -24,7 +24,7 @@
     settings = {
       profile = [
         {
-          name = "left-docked";
+          name = "ultra-wide";
           output = [
             {
               match = "eDP-1";
@@ -33,14 +33,14 @@
             {
               search = ["m=DELL U3421WE"];
               enable = true;
-              scale = 1.6;
+              scale = 1.6666;
               mode = "3440x1440@59.97Hz";
             }
           ];
         }
 
         {
-          name = "UltraWide";
+          name = "left-docked";
           output = [
             {
               match = "eDP-1";
