@@ -20,6 +20,8 @@
     poetry
     # unstablePkgs.blender-hip
     gamescope
+    love
+        nsz
     # unstablePkgs.godot_4
     nix-ld
     nushell

@@ -37,7 +37,7 @@
     enable = true;
     package = pkgs.nix;
     gc = {
-      automatic = true;
+      # automatic = true;
     };
   };
 
@@ -52,7 +52,7 @@
     nix
     steam-run
     glsl_analyzer
-    unstablePkgs.glslviewer
+    glslviewer
     # easyeffects
     util-linux
     nix-update
@@ -60,17 +60,11 @@
     flamegraph
     psmisc
     python312Packages.ipython
-    mitmproxy
     uv
     cmake
     gnumake
-    fend
-    nvme-cli
     yazi
     python312
-    wtype
-    (unstablePkgs.libjxl)
-    (unstablePkgs.numbat)
     teip
     (unstablePkgs.ollama)
     typst
@@ -78,20 +72,20 @@
     # firefoxnix
     shfmt
     shellcheck
-    (unstablePkgs.fish)
+    fish
     (unstablePkgs.ruff)
     (unstablePkgs.basedpyright)
-    (unstablePkgs.typescript-language-server)
+    # (unstablePkgs.typescript-language-server)
+
 
     wlr-randr
-    nil
+    nixd
     pmenu
     pciutils
     # image-roll
     imv
     swayimg
     unzip
-    nodePackages.typescript-language-server
 
     iw
     dmidecode
@@ -104,10 +98,8 @@
     # (neovimPkgs.neovim)
     neovim
 
-    sumneko-lua-language-server
     pipenv
     alejandra
-    nix-prefetch-git
     bc
     ffmpeg-full
     jq
@@ -116,42 +108,30 @@
     usbutils
     wget
     blueman
-    # xfce.thunar
     pcmanfm
     xarchiver
     # gdb
     ventoy-bin
     rink
-    unstablePkgs.uiua
+    uiua
     krita
     inkscape
     tree-sitter
     nmap
-    # krita
-    # pinentry.qt
-    # unstablePkgs.cinnamon.warpinator
     (unstablePkgs.iosevka-bin.override {variant = "SGr-IosevkaTermSS15";})
-    (unstablePkgs.nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+    (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
     (writeShellScriptBin "xdg-open" ''
       # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
       exec -a $0 ${mimeo}/bin/mimeo "$@"
     '')
     noto-fonts-emoji
-    /*
-    twemoji-color-font
-    */
     noto-fonts-cjk-sans
     inter
 
     lm_sensors
     darktable
     gimp
-    # foot
-    /*
-    awesome
-    */
     xorg.xkill
-    # unstablePkgs.qtile
 
     lua-language-server
     lsof
@@ -178,9 +158,7 @@
     ripgrep
     rustup
     simple-http-server
-    /*
-    rust-analyzer-unwrapped
-    */
+
     gnome-disk-utility
     rsync
     # appimage-run
@@ -536,20 +514,9 @@
     }
   '';
 
-  # systemd.user.services.polkit-authentication-agent = {
-  #   Unit = {
-  #     Description = "Polkit authentication agent";
-  #     Documentation = "https://gitlab.freedesktop.org/polkit/polkit/";
-  #     After = ["graphical-session-pre.target"];
-  #     PartOf = ["graphical-session.target"];
-  #   };
-  #
-  #   Service = {
-  #     ExecStart = "${pkgs.mate.mate-polkit}/libexec/polkit-mate-authentication-agent-1";
-  #     Restart = "always";
-  #     BusName = "org.freedesktop.PolicyKit1.Authority";
-  #   };
-  #
-  #   Install.WantedBy = ["graphical-session.target"];
-  # };
+  xdg.configFile."yt-dlp/config".text = ''
+    --cookies-from-browser firefox
+    --downloader aria2c
+    --downloader-args aria2c:'-c -x8 -s8 -k1M'
+  '';
 }

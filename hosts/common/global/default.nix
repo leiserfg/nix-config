@@ -50,4 +50,9 @@
     vim
     cntr
   ];
+  hardware.logitech.wireless.enable = true;
+  hardware.logitech.wireless.enableGraphical = true;
+
+  # services.scx.enable = true;
+  # security.scx.scheduler = "scx_bpfland";
 }

@@ -13,7 +13,7 @@
       warn-dirty = false;
     };
     gc = {
-      automatic = true;
+      # automatic = true;
       dates = "weekly";
     };
     # Add each flake input as a registry

@@ -6,7 +6,7 @@
 }: {
   programs.fish = {
     enable = true;
-    package = unstablePkgs.fish;
+    package = pkgs.fish;
     # interactiveShellInit = '''';
     shellAliases = {
       "open" = "command xdg-open";
