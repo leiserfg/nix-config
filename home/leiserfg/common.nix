@@ -47,6 +47,7 @@
     gdb
     htop
     smartmontools
+    devenv
     (unstablePkgs.shikane)
     brillo
     nix
@@ -512,6 +513,7 @@
         monitor.libcamera = disabled
       }
     }
+    wireplumber.settings = { bluetooth.autoswitch-to-headset-profile = false }
   '';
 
   xdg.configFile."yt-dlp/config".text = ''
