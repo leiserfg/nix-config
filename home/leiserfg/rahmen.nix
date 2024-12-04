@@ -21,7 +21,7 @@
     # unstablePkgs.blender-hip
     gamescope
     love
-        nsz
+    nsz
     # unstablePkgs.godot_4
     nix-ld
     nushell
@@ -31,6 +31,7 @@
     # moonlight-qt
     # gnome-network-displays
     # anki
+    sunvox
   ];
 
   services = {

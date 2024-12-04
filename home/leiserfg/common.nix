@@ -64,7 +64,6 @@
     uv
     cmake
     gnumake
-    yazi
     python312
     teip
     (unstablePkgs.ollama)
@@ -77,7 +76,6 @@
     (unstablePkgs.ruff)
     (unstablePkgs.basedpyright)
     # (unstablePkgs.typescript-language-server)
-
 
     wlr-randr
     nixd
@@ -119,6 +117,7 @@
     inkscape
     tree-sitter
     nmap
+    glib
     (unstablePkgs.iosevka-bin.override {variant = "SGr-IosevkaTermSS15";})
     (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
     (writeShellScriptBin "xdg-open" ''
@@ -382,6 +381,11 @@
     };
     direnv.enable = true;
     direnv.nix-direnv.enable = true;
+
+    yazi = {
+      enable = true;
+      shellWrapperName = "y";
+    };
   };
 
   fonts.fontconfig.enable = true;
@@ -496,16 +500,12 @@
     };
   };
 
+    # mpv %U
+    #     ^https?://(www.)?youtube.com/watch\?v=.*$
   xdg.configFile."mimeo/associations.txt".text = ''
-    mpv %U
-      ^https?://(www.)?youtube.com/watch\?v=.*$
     mpv --loop %U
       ^.*.gif$
   '';
-
-  home.sessionVariables = {
-    GIO_EXTRA_MODULES = "${pkgs.gvfs}/lib/gio/modules";
-  };
 
   xdg.configFile."wireplumber/wireplumber.conf.d/10-disable-camera.conf".text = ''
     wireplumber.profiles = {

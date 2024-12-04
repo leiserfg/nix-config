@@ -7,7 +7,7 @@
     ./common.nix
     # ./features/mesa.nix
     ./features/hyprland.nix
-    ./features/daw.nix
+    # ./features/daw.nix
   ];
   home.packages = with pkgs; [
     pgcli
