@@ -177,6 +177,7 @@
 
     patool
     stylua
+    taplo
     yadm
     cachix
     android-tools
