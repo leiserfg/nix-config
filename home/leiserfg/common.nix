@@ -385,6 +385,27 @@
     yazi = {
       enable = true;
       shellWrapperName = "y";
+
+      keymap = {
+        manager.prepend_keymap = [
+          {
+            on = ["<C-n>"];
+            run = ''shell 'dragon -x -i -T "$1"' --confirm'';
+          }
+          {
+            on = "y";
+            run = [
+              ''shell 'echo "$@" | xclip -i -selection clipboard -t text/uri-list' --confirm''
+              "yank"
+            ];
+          }
+
+          {
+            on = ["g" "r"];
+            run = ''shell 'ya pub dds-cd --str "$(git rev-parse --show-toplevel)"' --confirm'';
+          }
+        ];
+      };
     };
   };
 
@@ -500,8 +521,8 @@
     };
   };
 
-    # mpv %U
-    #     ^https?://(www.)?youtube.com/watch\?v=.*$
+  # mpv %U
+  #     ^https?://(www.)?youtube.com/watch\?v=.*$
   xdg.configFile."mimeo/associations.txt".text = ''
     mpv --loop %U
       ^.*.gif$
