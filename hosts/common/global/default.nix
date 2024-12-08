@@ -53,6 +53,7 @@
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
 
+  hardware.brillo.enable = true;
   # services.scx.enable = true;
   # security.scx.scheduler = "scx_bpfland";
 }

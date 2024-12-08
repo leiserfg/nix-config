@@ -15,5 +15,19 @@
 
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "rahmen";
+  hardware.framework.laptop13.audioEnhancement.enable = true;
 
+  systemd.services.set-charge-limit = {
+    description = "Set battery charge limit";
+    after = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 100 > /sys/class/power_supply/BAT1/charge_control_end_threshold'";
+      RemainAfterExit = true;
+    };
+
+    # This ensures the service runs at startup
+    wantedBy = ["multi-user.target"];
+  };
 }

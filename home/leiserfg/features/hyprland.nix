@@ -69,8 +69,8 @@ in {
             binde=,XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
             bind =,XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
             bind =,XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-            binde=,XF86MonBrightnessUp,   exec, ${pkgs.light}/bin/light -A 10
-            binde=,XF86MonBrightnessDown, exec, ${pkgs.light}/bin/light -U 10
+            binde=,XF86MonBrightnessUp,   exec, brillo -A 10
+            binde=,XF86MonBrightnessDown, exec, brillo -U 10
             # bind =,XF86AudioPlay,         exec, playerctl play-pause
             # bind =,XF86AudioPrev,         exec, playerctl previous
             # bind =,XF86AudioNext,         exec, playerctl next
@@ -180,7 +180,7 @@ in {
         layerrule = dimaround,rofi
 
       # here and not as a systemd unit so it inherits PATH
-       # exec-once = hypridle
+       exec-once = hypridle
        exec-once = swaybg -i ~/wall.png -m fill
        # exec-once = env WAYLAND_DEBUG=1 shikane 2> /tmp/shikane.log
     '';
@@ -188,26 +188,66 @@ in {
 
   # exec-once = sleep 6 && shikane
   home.packages = [pkgs.swaybg];
+
+  programs.hyprlock = {
+    enable = true;
+
+    settings = {
+      general = {
+        # disable_loading_bar = true;
+        grace = 300;
+        hide_cursor = true;
+        no_fade_in = false;
+      };
+
+      background = [
+        {
+          path = "screenshot";
+          blur_passes = 3;
+          blur_size = 8;
+        }
+      ];
+
+      input-field = [
+        {
+          size = "200, 50";
+          position = "0, -80";
+          monitor = "";
+          dots_center = true;
+          fade_on_empty = false;
+          font_color = "rgb(202,211,245)";
+          inner_color = "rgb(91, 96, 120)";
+          outer_color = "rgb(24, 25, 38)";
+          outline_thickness = 5;
+          placeholder_text = ''<span foreground="##cad3f5">Password...</span>'';
+          shadow_passes = 2;
+        }
+      ];
+    };
+  };
+
   programs.hypridle = {
-    enable = false;
-    package = unstablePkgs.hypridle; # it's not in stable yet
-    lockCmd = "pidof swaylock || swaylock -i ~/wall.png -f && sleep 3";
+    enable = true;
+    package = pkgs.hypridle; # it's not in stable yet
+    lockCmd = "pidof hyprlock || hyprlock";
 
-    # Stop automatic locking, I'm home-alone
-
-    # beforeSleepCmd = "loginctl lock-session"; # lock before suspend.
+    beforeSleepCmd = "loginctl lock-session"; # lock before suspend.
     afterSleepCmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
 
     listeners = [
-      # {
-      #   timeout = 5 * 60; # 5min
-      #   onTimeout = "loginctl lock-session"; # lock screen when timeout has passed
-      # }
+      {
+        timeout = 5 * 60; # 5min
+        onTimeout = "loginctl lock-session"; # lock screen when timeout has passed
+      }
 
       {
         timeout = builtins.floor (5.5 * 60); # 5.5min
         onTimeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
         onResume = "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
+      }
+      {
+        timeout = 30 * 60;
+        onTimeout = "systemctl suspend"; # suspend pc
       }
     ];
   };

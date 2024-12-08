@@ -21,17 +21,16 @@
     # unstablePkgs.blender-hip
     gamescope
     love
-    nsz
     # unstablePkgs.godot_4
-    nix-ld
     nushell
     swaylock
-    # audacity
+    audacity
     ddcutil
     # moonlight-qt
     # gnome-network-displays
     # anki
     sunvox
+    orca-c
   ];
 
   services = {

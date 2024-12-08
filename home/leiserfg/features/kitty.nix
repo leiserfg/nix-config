@@ -2,7 +2,8 @@
   programs.kitty = {
     enable = true;
     package = unstablePkgs.kitty;
-    themeFile = "LiquidCarbonTransparent";
+    # themeFile = "LiquidCarbonTransparent";
+    themeFile = "Aquarium_Dark";
     font = {
       name = "Iosevka Term SS15 Light";
       size = 14.0;

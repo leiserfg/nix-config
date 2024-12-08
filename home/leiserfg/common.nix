@@ -49,7 +49,6 @@
     smartmontools
     devenv
     (unstablePkgs.shikane)
-    brillo
     nix
     steam-run
     glsl_analyzer
