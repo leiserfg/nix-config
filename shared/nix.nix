@@ -1,5 +1,8 @@
 {...}: {
-  nix.gc.options = "--delete-older-than 14d";
+  nix.gc = {
+    options = "--delete-older-than 14d";
+    automatic = true;
+  };
   nix.settings = {
     auto-optimise-store = true;
     warn-dirty = false;

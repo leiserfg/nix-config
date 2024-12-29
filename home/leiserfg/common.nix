@@ -37,7 +37,7 @@
     enable = true;
     package = pkgs.nix;
     gc = {
-      # automatic = true;
+      automatic = true;
     };
   };
 
@@ -526,6 +526,8 @@
   xdg.configFile."mimeo/associations.txt".text = ''
     mpv --loop %U
       ^.*.gif$
+    sunvox %f
+      ^.*.sunvox$
   '';
 
   xdg.configFile."wireplumber/wireplumber.conf.d/10-disable-camera.conf".text = ''
