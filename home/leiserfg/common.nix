@@ -68,7 +68,6 @@
     (unstablePkgs.ollama)
     typst
     (unstablePkgs.tdesktop)
-    # firefoxnix
     shfmt
     shellcheck
     fish
@@ -385,8 +384,27 @@
     yazi = {
       enable = true;
       shellWrapperName = "y";
+      package = unstablePkgs.yazi;
 
       keymap = {
+        input.prepend_keymap = [
+          {
+            run = "close";
+            on = ["<C-q>"];
+          }
+          {
+            run = "close --submit";
+            on = ["<Enter>"];
+          }
+          {
+            run = "escape";
+            on = ["<Esc>"];
+          }
+          {
+            run = "backspace";
+            on = ["<Backspace>"];
+          }
+        ];
         manager.prepend_keymap = [
           {
             on = ["<C-n>"];
@@ -403,6 +421,18 @@
           {
             on = ["g" "r"];
             run = ''shell 'ya pub dds-cd --str "$(git rev-parse --show-toplevel)"' --confirm'';
+          }
+          {
+            run = "escape";
+            on = ["<Esc>"];
+          }
+          {
+            run = "quit";
+            on = ["q"];
+          }
+          {
+            run = "close";
+            on = ["<C-q>"];
           }
         ];
       };
