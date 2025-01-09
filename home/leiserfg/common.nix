@@ -566,8 +566,10 @@
         monitor.libcamera = disabled
       }
     }
-    wireplumber.settings = { bluetooth.autoswitch-to-headset-profile = false }
   '';
+  home.file.".local/state/wireplumber/sm-settings".text = lib.generators.toINI {} {
+    sm-settings = {"bluetooth.autoswitch-to-headset-profile" = "true";};
+  };
 
   xdg.configFile."yt-dlp/config".text = ''
     --cookies-from-browser firefox

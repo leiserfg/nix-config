@@ -64,6 +64,11 @@
   programs.starship = {
     enable = true;
     settings = {
+      character = {
+        success_symbol = "[❱](green)";
+        error_symbol = "[✗](bold red)";
+      };
+      #
       add_newline = false;
       format = lib.concatStrings [
         "$directory"
