@@ -10,15 +10,10 @@
     ../common/users/leiserfg.nix
     ../common/features/hyprland.nix
     ../common/features/docker.nix
+    ../common/features/zswap.nix
   ];
   hardware.cpu.amd.updateMicrocode = true;
   services.fprintd.enable = true;
-
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 30;
-  };
 
   networking.hostName = "dunkel";
 }
