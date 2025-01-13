@@ -14,16 +14,13 @@
   ];
 
   home.packages = with pkgs; [
-    rpi-imager
     pgcli
-    pre-commit
     poetry
     # unstablePkgs.blender-hip
     gamescope
     love
     # unstablePkgs.godot_4
     nushell
-    swaylock
     audacity
     ddcutil
     # moonlight-qt
@@ -31,6 +28,8 @@
     # anki
     sunvox
     orca-c
+
+    steam
   ];
 
   services = {

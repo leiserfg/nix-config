@@ -43,6 +43,7 @@
       aws_profile = ''
         commandline (aws configure list-profiles | fzf --reverse | xargs -I {} echo export AWS_PROFILE={})
       '';
+      fish_greeting = "";
     };
     plugins = [
       rec {
