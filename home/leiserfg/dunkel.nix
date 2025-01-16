@@ -17,6 +17,7 @@
     awscli2
     csvkit
     libreoffice
+    terraform
   ];
 
   services.shikane = {

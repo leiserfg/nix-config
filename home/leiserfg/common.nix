@@ -44,6 +44,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    v4l-utils
     gdb
     htop
     smartmontools
@@ -561,13 +562,14 @@
       ^.*.sunvox$
   '';
 
-  xdg.configFile."wireplumber/wireplumber.conf.d/10-disable-camera.conf".text = ''
-    wireplumber.profiles = {
-      main = {
-        monitor.libcamera = disabled
-      }
-    }
-  '';
+  # xdg.configFile."wireplumber/wireplumber.conf.d/10-disable-camera.conf".text = ''
+  #   wireplumber.profiles = {
+  #     main = {
+  #       monitor.libcamera = disabled
+  #     }
+  #   }
+  # '';
+
   home.file.".local/state/wireplumber/sm-settings".text = lib.generators.toINI {} {
     sm-settings = {"bluetooth.autoswitch-to-headset-profile" = "true";};
   };
