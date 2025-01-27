@@ -30,6 +30,7 @@
     orca-c
 
     steam
+    scrcpy
   ];
 
   services = {

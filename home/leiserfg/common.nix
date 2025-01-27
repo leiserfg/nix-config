@@ -93,8 +93,8 @@
     picocom # run as:  sudo picocom /dev/ttyACM0
 
     doggo
-    # (neovimPkgs.neovim)
-    neovim
+    (neovimPkgs.neovim)
+    # neovim
 
     pipenv
     alejandra

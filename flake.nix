@@ -9,9 +9,9 @@
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    # neovim-nightly = {
-    #   url = "github:nix-community/neovim-nightly-overlay";
-    # };
+    neovim-nightly = {
+      url = "github:nix-community/neovim-nightly-overlay";
+    };
     leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
     blender.url = "github:edolstra/nix-warez?dir=blender";
     blender.inputs.nixpkgs.follows = "nixpkgs";
@@ -130,7 +130,7 @@
           # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
-          # neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
+          neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
@@ -146,7 +146,7 @@
           # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
-          # neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
+          neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
           hyprPkgs = inputs.hypr.packages.x86_64-linux;
         };
         modules =
@@ -163,7 +163,7 @@
           unstablePkgs = unstablePackages.x86_64-linux;
           # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
-          # neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
+          neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
           hyprPkgs = inputs.hypr.packages.x86_64-linux;
         };
         modules =
