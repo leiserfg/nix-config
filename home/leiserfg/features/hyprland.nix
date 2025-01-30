@@ -257,7 +257,7 @@ in {
     config.common.default = "*";
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
-      unstablePkgs.xdg-desktop-portal-hyprland
+      pkgs.xdg-desktop-portal-hyprland
       # xdg-hypr
     ];
   };

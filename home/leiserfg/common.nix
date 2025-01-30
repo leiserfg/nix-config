@@ -91,7 +91,7 @@
     # iredis
     dua
     picocom # run as:  sudo picocom /dev/ttyACM0
-
+    croc
     doggo
     (neovimPkgs.neovim)
     # neovim
@@ -414,7 +414,7 @@
           {
             on = "y";
             run = [
-              ''shell 'echo "$@" | xclip -i -selection clipboard -t text/uri-list' --confirm''
+              ''shell 'echo "$@" |  wl-copy --type text/uri-list' --confirm''
               "yank"
             ];
           }

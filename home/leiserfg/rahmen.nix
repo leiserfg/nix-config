@@ -3,6 +3,7 @@
   unstablePkgs,
   config,
   myPkgs,
+  inputs,
   ...
 }: {
   imports = [
@@ -31,6 +32,8 @@
 
     steam
     scrcpy
+
+    (inputs.quickshell.packages.${pkgs.system}.default)
   ];
 
   services = {

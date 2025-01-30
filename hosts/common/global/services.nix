@@ -19,6 +19,7 @@
       pkgs.android-udev-rules
     ];
     dbus.implementation = "broker";
+    upower.enable = true;
     power-profiles-daemon.enable = true;
     interception-tools = let
       intercept = "${pkgs.interception-tools}/bin/intercept";
