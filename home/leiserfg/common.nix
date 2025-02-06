@@ -44,6 +44,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    localsend
     kitty-img
     v4l-utils
     gdb
