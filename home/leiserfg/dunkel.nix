@@ -18,6 +18,9 @@
     csvkit
     libreoffice
     terraform
+    traceroute
+    (unstablePkgs.teams-for-linux)
+    # slack
   ];
 
   services.shikane = {

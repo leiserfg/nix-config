@@ -44,6 +44,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    kitty-img
     v4l-utils
     gdb
     htop
@@ -149,7 +150,7 @@
     terraform-ls
     awscli2
 
-    pavucontrol
+    pwvucontrol
     zathura
     xdragon
     moreutils
@@ -195,6 +196,20 @@
     piper-tts
 
     libva-utils
+
+    (makeDesktopItem {
+      name = "teams-for-linux-call";
+      exec = "teams-for-linux %U";
+      icon = "teams-for-linux";
+      desktopName = "Microsoft Teams for Linux";
+      categories = [
+        "Network"
+        "InstantMessaging"
+        "Chat"
+      ];
+      mimeTypes = ["x-scheme-handler/msteams"];
+    })
+
     #scripts
     # here we don't use the nix binaries to allow rewriting ruff with the correct one
     # see x11 and wayland
@@ -542,6 +557,7 @@
     defaultApplications = {
       "text/html" = "firefox.desktop";
       "x-scheme-handler/tg" = "telegram.desktop";
+      # "x-scheme-handler/msteams" = "teams-for-linux.desktop";
       # "inode/directory" = "thunar.desktop";
       "inode/directory" = "pcmanfm.desktop";
       "text/x-python" = "neovim.desktop";
@@ -570,9 +586,15 @@
   #   }
   # '';
 
-  home.file.".local/state/wireplumber/sm-settings".text = lib.generators.toINI {} {
-    sm-settings = {"bluetooth.autoswitch-to-headset-profile" = "true";};
-  };
+  xdg.configFile."wireplumber/wireplumber.conf.d/10-bluetooth.conf".text = ''
+    wireplumber.settings = {
+       bluetooth.autoswitch-to-headset-profile = false
+    }
+  '';
+
+  # home.file.".local/state/wireplumber/sm-settings".text = lib.generators.toINI {} {
+  #   sm-settings = {"bluetooth.autoswitch-to-headset-profile" = "true";};
+  # };
 
   xdg.configFile."yt-dlp/config".text = ''
     --cookies-from-browser firefox

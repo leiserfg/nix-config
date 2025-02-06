@@ -8,6 +8,7 @@
     userEmail = "leiserfg@gmail.com";
     userName = "leiserfg";
     signing.key = "/home/leiserfg/.ssh/id_rsa.pub";
+    signing.signByDefault = true;
 
     ignores = [
       ".direnv"
@@ -70,8 +71,6 @@
       pull = {rebase = true;};
       rebase = {autoStash = true;};
       gpg = {format = "ssh";};
-      commit = {gpgsign = true;};
-      tag = {gpgsign = true;};
       feature = {manyFiles = true;};
       url = {
         "ssh://git@github.com/" = {

@@ -165,8 +165,8 @@ in {
         #WINDOW RULES
         windowrule = workspace 1,firefox
         windowrule = workspace 4,org.telegram.desktop
-        windowrule = center,pavucontrol
-        windowrule = float,pavucontrol
+        windowrule = center,pwvucontrol
+        windowrule = float,pwvucontrol
         windowrule = pin,dragon
 
 

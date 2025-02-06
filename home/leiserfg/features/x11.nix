@@ -116,7 +116,7 @@
         };
         # "module/pulseaudio" = {
         #   type = "internal/pulseaudio";
-        #   format-volume = "%{A3:pavucontrol:} <ramp-volume> <label-volume> %{A}";
+        #   format-volume = "%{A3:pwvucontrol:} <ramp-volume> <label-volume> %{A}";
         #   label-muted = "🔇";
         #   label-muted-foreground = "#666";
         #   ramp-volume-0 = "🔈";
