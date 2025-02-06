@@ -13,9 +13,12 @@
     ../common/features/docker.nix
   ];
 
+programs.dconf.enable = true;
+
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "rahmen";
   hardware.framework.laptop13.audioEnhancement.enable = true;
+
 
   systemd.services.set-charge-limit = {
     description = "Set battery charge limit";
