@@ -44,6 +44,8 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
+    (inputs.quickshell.packages.${pkgs.system}.default)
+
     localsend
     kitty-img
     v4l-utils

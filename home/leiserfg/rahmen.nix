@@ -33,7 +33,6 @@
     steam
     scrcpy
 
-    (inputs.quickshell.packages.${pkgs.system}.default)
   ];
 
   services = {
