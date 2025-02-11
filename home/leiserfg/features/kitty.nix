@@ -1,13 +1,19 @@
 {unstablePkgs, ...}: {
-  programs.kitty = {
+  programs.kitty = let
+    themeFile = "Carbonfox";
+  in {
     enable = true;
     package = unstablePkgs.kitty;
     # themeFile = "LiquidCarbonTransparent";
-    themeFile = "Aquarium_Dark";
+    # themeFile = "Aquarium_Dark";
+    # themeFile = "Carbonfox";
     font = {
       name = "Iosevka Term SS15 Light";
       size = 14.0;
     };
+    extraConfig = ''
+      include ${unstablePkgs.kitty-themes}/share/kitty-themes/themes/${themeFile}.conf
+    '';
     settings = {
       bold_font = "Iosevka Term SS15 Medium";
       italic_font = "Iosevka Term SS15 Light Italic";

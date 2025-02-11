@@ -5,6 +5,7 @@
   myPkgs,
   neovimPkgs,
   config,
+  inputs,
   ...
 }: {
   imports = [
