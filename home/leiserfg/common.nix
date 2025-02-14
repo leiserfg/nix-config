@@ -45,8 +45,8 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-    (inputs.quickshell.packages.${pkgs.system}.default)
-
+    (inputs.fabric.packages.${pkgs.system}.run-widget)
+    cava
     localsend
     kitty-img
     v4l-utils
@@ -78,9 +78,10 @@
     shellcheck
     fish
     (unstablePkgs.ruff)
-    (unstablePkgs.basedpyright)
+    basedpyright
+    # (unstablePkgs.basedpyright)
     # (unstablePkgs.typescript-language-server)
-
+    pulseaudio
     wlr-randr
     nixd
     pmenu
