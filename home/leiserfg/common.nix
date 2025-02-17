@@ -58,7 +58,8 @@
     nix
     steam-run
     glsl_analyzer
-    glslviewer
+    myPkgs.glslviewer
+    # glslviewer
     # easyeffects
     util-linux
     nix-update
@@ -82,9 +83,12 @@
     # (unstablePkgs.basedpyright)
     # (unstablePkgs.typescript-language-server)
     pulseaudio
-    wlr-randr
+    # (unstablePkgs.typescript-language-server)
+
+
+    pulseaudio
     nixd
-    pmenu
+    # pmenu
     pciutils
     # image-roll
     imv
@@ -93,7 +97,7 @@
 
     iw
     dmidecode
-    vokoscreen-ng
+    wf-recorder
     # iredis
     dua
     picocom # run as:  sudo picocom /dev/ttyACM0

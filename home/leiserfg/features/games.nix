@@ -14,7 +14,7 @@
   with lib; [
     wineWowPackages.staging
     winetricks
-    myPkgs.torzu
+    torzu
     # unstablePkgs.ryujinx
     # mgba
     # aseprite
