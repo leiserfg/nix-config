@@ -526,7 +526,7 @@
     };
     mpris-proxy.enable = true;
     dunst = {
-      enable = true;
+      enable = false;
       settings = {
         global = {
           frame_color = "#8CAAEE";
