@@ -33,7 +33,6 @@
     steam
     scrcpy
 
-    (inputs.fabric.packages.${pkgs.system}.run-widget)
   ];
 
   services = {

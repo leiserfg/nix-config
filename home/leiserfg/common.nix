@@ -45,7 +45,7 @@
   home.packages = with pkgs;
   with builtins;
   with lib; [
-    (inputs.fabric.packages.${pkgs.system}.run-widget)
+    # (inputs.fabric.packages.${pkgs.system}.run-widget)
     cava
     localsend
     kitty-img
@@ -129,7 +129,10 @@
     nmap
     glib
     (unstablePkgs.iosevka-bin.override {variant = "SGr-IosevkaTermSS15";})
-    (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+
+    # (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+    nerd-fonts.symbols-only
+
     (writeShellScriptBin "xdg-open" ''
       # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
       exec -a $0 ${mimeo}/bin/mimeo "$@"

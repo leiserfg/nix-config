@@ -2,9 +2,9 @@
   description = "My nix config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager.url = "github:nix-community/home-manager";
@@ -16,25 +16,25 @@
     blender.url = "github:edolstra/nix-warez?dir=blender";
     blender.inputs.nixpkgs.follows = "nixpkgs";
 
-    hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=keepDebugInfo";
-
     # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=b6e226c3200276978e487a68a16fd696fcb7e7c8";
-
     # 5d4b54b01286c10d4b6bf402a772b5938b054ce6  # BORKED Multimonitor
+    # hypr.inputs.nixpkgs.follows = "nixpkgs";
 
-    hypr.inputs.nixpkgs.follows = "nixpkgs";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+    };
 
     # quickshell = {
     #   url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
 
-    fabric = {
-      url = "github:Fabric-Development/fabric";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # fabric = {
+    #   url = "github:Fabric-Development/fabric";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs = {
@@ -157,7 +157,6 @@
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           unstablePkgs = unstablePackages.x86_64-linux;
           neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
-          hyprPkgs = inputs.hypr.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
@@ -174,7 +173,6 @@
           # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
           myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
           neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
-          hyprPkgs = inputs.hypr.packages.x86_64-linux;
         };
         modules =
           (builtins.attrValues homeManagerModules)
