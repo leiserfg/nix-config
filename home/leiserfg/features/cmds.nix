@@ -6,5 +6,13 @@
     (writeShellScriptBin "mpvyt" ''
       mpv --no-video --ytdl-format=bestaudio ytdl://ytsearch10:"$@";
     '')
+
+    (writeShellScriptBin "glslViewer_monitor" ''
+      glslViewer -audio $(pactl --format=json list sources | jq 'to_entries|.[]|select(.value.monitor_source == "'$(pactl get-default-sink)'")|.key' ) "$@"
+    '')
+
+    (writeShellScriptBin "wf_rec_monitor" ''
+        wf-recorder --audio=$(pactl --format=json list sources | jq 'to_entries|.[]|select(.value.monitor_source == "'$(pactl get-default-sink)'")|.value.name' -r)  "$@"
+    '')
   ];
 }

@@ -72,9 +72,11 @@
     gnumake
     python312
     teip
-    (unstablePkgs.ollama)
     typst
     (unstablePkgs.tdesktop)
+    (unstablePkgs.llama-cpp.override {vulkanSupport = true;})
+
+    # (unstablePkgs.ags)
     shfmt
     shellcheck
     fish
@@ -84,7 +86,6 @@
     # (unstablePkgs.typescript-language-server)
     pulseaudio
     # (unstablePkgs.typescript-language-server)
-
 
     pulseaudio
     nixd
