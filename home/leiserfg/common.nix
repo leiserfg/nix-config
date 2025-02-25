@@ -74,7 +74,6 @@
     teip
     typst
     (unstablePkgs.tdesktop)
-    (unstablePkgs.llama-cpp.override {vulkanSupport = true;})
 
     # (unstablePkgs.ags)
     shfmt

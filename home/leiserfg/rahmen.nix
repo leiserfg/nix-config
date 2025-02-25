@@ -33,6 +33,7 @@
     steam
     scrcpy
 
+    (unstablePkgs.llama-cpp.override {vulkanSupport = true;})
   ];
 
   services = {

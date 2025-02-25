@@ -61,15 +61,44 @@
     extraConfig = {
       protocol = {version = 2;};
       init = {defaultBranch = "master";};
-      rerere = {enabled = true;};
+      branch = {sort = "-commiterdate";};
+      tag = {sort = "version:refname";};
+      rerere = {
+        enabled = true;
+        autoupdate = true;
+      };
       status = {short = true;};
       diff = {
         algorithm = "histogram";
         indentheuristic = true;
+        colorMoved = "plain";
+        mnemonicPrefix = true;
+        renames = true;
       };
-      push = {default = "current";};
-      pull = {rebase = true;};
-      rebase = {autoStash = true;};
+      merge = {conflictstyle = "zdiff3";};
+      push = {
+        autoSetupRemote = true;
+        followTags = true;
+      };
+      fetch = {
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
+      pull = {
+        rebase = true;
+      };
+      rebase = {
+        autoStash = true;
+        autoSquash = true;
+        updateRefs = true;
+      };
+      help = {
+        autocorrect = "prompt";
+      };
+      commit = {
+        verbose = true;
+      };
       gpg = {format = "ssh";};
       feature = {manyFiles = true;};
       url = {
