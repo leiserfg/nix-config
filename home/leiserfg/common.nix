@@ -46,6 +46,8 @@
   with builtins;
   with lib; [
     # (inputs.fabric.packages.${pkgs.system}.run-widget)
+    # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+    pinentry-qt
     cava
     localsend
     kitty-img
@@ -306,6 +308,7 @@
       </actions>
     '';
   };
+
   programs = {
     home-manager.enable = true;
     aria2.enable = true;
@@ -463,6 +466,17 @@
             on = ["<C-q>"];
           }
         ];
+      };
+    };
+    rbw = {
+      enable = true;
+      settings = rec {
+
+        # A bit of obfuscation doesn't hurt
+        base_url = "https:" + "//bw.nul.mywire.org/";
+        email = "${config.home.username}@gmail.com";
+
+        pinentry = pkgs.pinentry-qt;
       };
     };
   };
