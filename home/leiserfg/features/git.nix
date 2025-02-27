@@ -61,7 +61,7 @@
     extraConfig = {
       protocol = {version = 2;};
       init = {defaultBranch = "master";};
-      branch = {sort = "-commiterdate";};
+      branch = {sort = "-committerdate";};
       tag = {sort = "version:refname";};
       rerere = {
         enabled = true;

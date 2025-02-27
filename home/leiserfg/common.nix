@@ -130,7 +130,7 @@
     nmap
     glib
     (unstablePkgs.iosevka-bin.override {variant = "SGr-IosevkaTermSS15";})
-
+    nix-playground
     # (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
     nerd-fonts.symbols-only
 
@@ -471,7 +471,6 @@
     rbw = {
       enable = true;
       settings = rec {
-
         # A bit of obfuscation doesn't hurt
         base_url = "https:" + "//bw.nul.mywire.org/";
         email = "${config.home.username}@gmail.com";
