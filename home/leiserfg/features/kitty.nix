@@ -1,6 +1,7 @@
 {unstablePkgs, ...}: {
   programs.kitty = let
     themeFile = "Carbonfox";
+    # themeFile = "CLRS";
   in {
     enable = true;
     package = unstablePkgs.kitty;

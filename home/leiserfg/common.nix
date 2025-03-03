@@ -47,6 +47,9 @@
   with lib; [
     # (inputs.fabric.packages.${pkgs.system}.run-widget)
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+    pandoc
+    libreoffice-qt6
+
     pinentry-qt
     cava
     localsend
@@ -130,7 +133,6 @@
     nmap
     glib
     (unstablePkgs.iosevka-bin.override {variant = "SGr-IosevkaTermSS15";})
-    nix-playground
     # (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
     nerd-fonts.symbols-only
 
@@ -156,6 +158,8 @@
     d-spy
     gparted
 
+    cntr
+    pre-commit
     # age
     # agebox
     # age-kegen-deterministic
