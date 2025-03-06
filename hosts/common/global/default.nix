@@ -56,4 +56,6 @@
   hardware.brillo.enable = true;
   # services.scx.enable = true;
   # security.scx.scheduler = "scx_bpfland";
+
+ 
 }

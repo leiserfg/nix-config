@@ -16,7 +16,7 @@
     insomnia
     awscli2
     csvkit
-    libreoffice
+    libreoffice-qt6
     terraform
     traceroute
     (unstablePkgs.teams-for-linux)

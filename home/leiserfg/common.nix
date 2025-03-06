@@ -48,7 +48,6 @@
     # (inputs.fabric.packages.${pkgs.system}.run-widget)
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
     pandoc
-    libreoffice-qt6
 
     pinentry-qt
     cava
@@ -142,12 +141,10 @@
     '')
     noto-fonts-emoji
     noto-fonts-cjk-sans
-    inter
-
+    vulkan-tools
     lm_sensors
     darktable
     gimp
-    xorg.xkill
 
     lua-language-server
     lsof
