@@ -47,7 +47,7 @@
       # Welcome to fzf heaven. xargs hell
       fbr = "!BRANCH=`git recent | fzf` && git checkout $BRANCH";
       ffix = "!HASH=`git log --pretty=oneline | head -n 100 | fzf` && git fixit `echo $HASH | awk '{ print $1 }'`";
-      flog = "!HASH=`git log --pretty=oneline | head -n 100 | fzf` && echo $HASH | awk '{ print $1 }' | xargs echo -n | xsel --clipboard --input";
+      flog = "!HASH=`git log --pretty=oneline | head -n 100 | fzf` && echo $HASH | awk '{ print $1 }' | xargs echo -n | wl-copy";
       frebase = "!HASH=`git log --pretty=oneline | head -n 100 | fzf` && git rebase -i `echo $HASH | awk '{ print $1 }'`^";
 
       fed = "!FILES=`git status -s | awk '{ print $2 }' | fzf -x -m` && $EDITOR $FILES";

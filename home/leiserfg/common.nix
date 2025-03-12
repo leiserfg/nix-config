@@ -7,7 +7,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ../../shared/nix.nix
     ./features/rofi.nix
@@ -23,8 +24,8 @@
   # disable news, they don't work well with flakes and message is anoying
   news = {
     display = "silent";
-    json = lib.mkForce {};
-    entries = lib.mkForce [];
+    json = lib.mkForce { };
+    entries = lib.mkForce [ ];
   };
 
   home = {
@@ -42,224 +43,221 @@
     };
   };
 
-  home.packages = with pkgs;
-  with builtins;
-  with lib; [
-    # (inputs.fabric.packages.${pkgs.system}.run-widget)
-    # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
-    pandoc
+  home.packages =
+    with pkgs;
+    with builtins;
+    with lib;
+    [
+      # (inputs.fabric.packages.${pkgs.system}.run-widget)
+      # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+      pandoc
 
-    pinentry-qt
-    cava
-    localsend
-    kitty-img
-    v4l-utils
-    gdb
-    htop
-    smartmontools
-    devenv
-    (unstablePkgs.shikane)
-    nix
-    steam-run
-    glsl_analyzer
-    myPkgs.glslviewer
-    # glslviewer
-    # easyeffects
-    util-linux
-    nix-update
-    # inferno
-    flamegraph
-    psmisc
-    python312Packages.ipython
-    uv
-    cmake
-    gnumake
-    python312
-    teip
-    typst
-    (unstablePkgs.tdesktop)
+      pinentry-qt
+      cava
+      localsend
+      kitty-img
+      v4l-utils
+      gdb
+      htop
+      smartmontools
+      devenv
+      (unstablePkgs.shikane)
+      nix
+      steam-run
+      glsl_analyzer
+      myPkgs.glslviewer
+      # glslviewer
+      # easyeffects
+      util-linux
+      nix-update
+      # inferno
+      flamegraph
+      psmisc
+      python312Packages.ipython
+      uv
+      cmake
+      gnumake
+      python312
+      teip
+      typst
+      (unstablePkgs.tdesktop)
 
-    # (unstablePkgs.ags)
-    shfmt
-    shellcheck
-    fish
-    (unstablePkgs.ruff)
-    basedpyright
-    # (unstablePkgs.basedpyright)
-    # (unstablePkgs.typescript-language-server)
-    pulseaudio
-    # (unstablePkgs.typescript-language-server)
+      # (unstablePkgs.ags)
+      shfmt
+      shellcheck
+      fish
+      (unstablePkgs.ruff)
+      basedpyright
+      # (unstablePkgs.basedpyright)
+      # (unstablePkgs.typescript-language-server)
+      pulseaudio
+      # (unstablePkgs.typescript-language-server)
 
-    pulseaudio
-    nixd
-    # pmenu
-    pciutils
-    # image-roll
-    imv
-    swayimg
-    unzip
+      pulseaudio
+      nixd
+      # pmenu
+      pciutils
+      # image-roll
+      imv
+      swayimg
+      unzip
 
-    iw
-    dmidecode
-    wf-recorder
-    # iredis
-    dua
-    picocom # run as:  sudo picocom /dev/ttyACM0
-    croc
-    doggo
-    (neovimPkgs.neovim)
-    # neovim
+      iw
+      dmidecode
+      wf-recorder
+      # iredis
+      dua
+      picocom # run as:  sudo picocom /dev/ttyACM0
+      croc
+      doggo
+      (neovimPkgs.neovim)
+      # neovim
 
-    pipenv
-    alejandra
-    bc
-    ffmpeg-full
-    jq
-    graphviz
-    gcc
-    usbutils
-    wget
-    blueman
-    pcmanfm
-    xarchiver
-    # gdb
-    ventoy-bin
-    rink
-    uiua
-    krita
-    inkscape
-    tree-sitter
-    nmap
-    glib
-    (unstablePkgs.iosevka-bin.override {variant = "SGr-IosevkaTermSS15";})
-    # (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
-    nerd-fonts.symbols-only
+      pipenv
+      nixfmt-rfc-style
+      nixpkgs-review
+      jj
+      bc
+      ffmpeg-full
+      jq
+      graphviz
+      gcc
+      usbutils
+      wget
+      blueman
+      pcmanfm
+      xarchiver
+      # gdb
+      ventoy-bin
+      rink
+      uiua
+      krita
+      inkscape
+      tree-sitter
+      nmap
+      glib
+      (unstablePkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
+      # (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+      nerd-fonts.symbols-only
 
-    (writeShellScriptBin "xdg-open" ''
-      # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
-      exec -a $0 ${mimeo}/bin/mimeo "$@"
-    '')
-    noto-fonts-emoji
-    noto-fonts-cjk-sans
-    vulkan-tools
-    lm_sensors
-    darktable
-    gimp
+      (writeShellScriptBin "xdg-open" ''
+        # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
+        exec -a $0 ${mimeo}/bin/mimeo "$@"
+      '')
+      noto-fonts-emoji
+      noto-fonts-cjk-sans
+      vulkan-tools
+      lm_sensors
+      darktable
+      gimp
 
-    lua-language-server
-    lsof
-    file
-    unrar
-    zpaq
-    p7zip
-    d-spy
-    gparted
+      lua-language-server
+      lsof
+      file
+      unrar
+      zpaq
+      p7zip
+      d-spy
+      gparted
 
-    cntr
-    pre-commit
-    # age
-    # agebox
-    # age-kegen-deterministic
+      cntr
+      pre-commit
+      # age
+      # agebox
+      # age-kegen-deterministic
 
-    # terraform
-    terraform-ls
-    awscli2
+      # terraform
+      terraform-ls
+      awscli2
 
-    pwvucontrol
-    zathura
-    xdragon
-    moreutils
-    lf
-    ripgrep
-    rustup
-    simple-http-server
+      pwvucontrol
+      zathura
+      xdragon
+      moreutils
+      lf
+      ripgrep
+      rustup
+      simple-http-server
 
-    gnome-disk-utility
-    rsync
-    # appimage-run
+      gnome-disk-utility
+      rsync
+      # appimage-run
 
-    sshuttle
-    autossh
-    openssh
+      sshuttle
+      autossh
+      openssh
 
-    # git stuff
-    delta
+      # git stuff
+      delta
 
-    gh
-    git
-    git-standup
-    git-absorb
+      gh
+      git
+      git-standup
+      git-absorb
 
-    patool
-    stylua
-    taplo
-    yadm
-    cachix
-    android-tools
-    git-lfs
-    clinfo
-    powertop
-    docker-compose
+      patool
+      stylua
+      taplo
+      yadm
+      cachix
+      android-tools
+      git-lfs
+      clinfo
+      powertop
+      docker-compose
 
-    xh
+      xh
 
-    # My overlay
-    # git-branchless
-    # material-maker
-    nix-du
-    qpwgraph
-    piper-tts
+      # My overlay
+      # git-branchless
+      # material-maker
+      nix-du
+      qpwgraph
+      piper-tts
 
-    libva-utils
+      libva-utils
 
-    (makeDesktopItem {
-      name = "teams-for-linux-call";
-      exec = "teams-for-linux %U";
-      icon = "teams-for-linux";
-      desktopName = "Microsoft Teams for Linux";
-      categories = [
-        "Network"
-        "InstantMessaging"
-        "Chat"
-      ];
-      mimeTypes = ["x-scheme-handler/msteams"];
-    })
+      (makeDesktopItem {
+        name = "teams-for-linux-call";
+        exec = "teams-for-linux %U";
+        icon = "teams-for-linux";
+        desktopName = "Microsoft Teams for Linux";
+        categories = [
+          "Network"
+          "InstantMessaging"
+          "Chat"
+        ];
+        mimeTypes = [ "x-scheme-handler/msteams" ];
+      })
 
-    #scripts
-    # here we don't use the nix binaries to allow rewriting ruff with the correct one
-    # see x11 and wayland
+      #scripts
+      # here we don't use the nix binaries to allow rewriting ruff with the correct one
+      # see x11 and wayland
 
-    (writeShellScriptBin "rofi-launch" ''
-      exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
-    '')
+      (writeShellScriptBin "rofi-launch" ''
+        exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
+      '')
 
-    (
-      writeShellScriptBin "rofi-pp" ''
+      (writeShellScriptBin "rofi-pp" ''
         printf " Performance\n Balanced\n Power Saver" \
         | rofi -dmenu -i \
         | tr -cd '[:print:]' \
         | xargs|tr " " "-" \
         | tr '[:upper:]' '[:lower:]' \
         | xargs powerprofilesctl set
-      ''
-    )
-    (
-      writeShellScriptBin "pp-state" ''
+      '')
+      (writeShellScriptBin "pp-state" ''
         state=$(powerprofilesctl get | sed -e "s/.*string//" -e "s/.*save.*/ /"  -e "s/.*perf.*/ /"  -e "s/.*balanced.*/ /")
         echo $state
-      ''
-    )
-    (
-      writeShellScriptBin "game-picker" ''
+      '')
+      (writeShellScriptBin "game-picker" ''
         exec  sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
         |xargs -n 1 -d '\n' dirname \
         |xargs -d '\n' -n 1 basename \
         |rofi -dmenu -i  \
         |xargs  -d '\n'  -I__  bash -c 'cd $HOME/Games/__/  && source *start*.sh'"
-      ''
-    )
-    (
-      writeShellScriptBin "rofi_power" ''
+      '')
+      (writeShellScriptBin "rofi_power" ''
         enumerate () {
             awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
         }
@@ -287,9 +285,8 @@
                 exit 0  # do nothing on wrong response
                 ;;
         esac
-      ''
-    )
-  ];
+      '')
+    ];
   xdg.configFile."Thunar/uca.xml" = {
     executable = false;
     text = ''
@@ -351,7 +348,7 @@
           settings = {
             # Enable user chrome
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-            "sidebar.position_start" = false; #Sideberry in the right side
+            "sidebar.position_start" = false; # Sideberry in the right side
 
             "browser.compactmode.show" = true;
             "dom.webgpu.enabled" = true;
@@ -380,14 +377,14 @@
               ];
 
               icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-              definedAliases = ["@np"];
+              definedAliases = [ "@np" ];
             };
 
             "NixOS Wiki" = {
-              urls = [{template = "https://wiki.nixos.org/index.php?search={searchTerms}";}];
+              urls = [ { template = "https://wiki.nixos.org/index.php?search={searchTerms}"; } ];
               iconUpdateURL = "https://wiki.nixos.org/favicon.png";
               updateInterval = 24 * 60 * 60 * 1000; # every day
-              definedAliases = ["@nw"];
+              definedAliases = [ "@nw" ];
             };
 
             "Bing".metaData.hidden = true;
@@ -422,24 +419,24 @@
         input.prepend_keymap = [
           {
             run = "close";
-            on = ["<C-q>"];
+            on = [ "<C-q>" ];
           }
           {
             run = "close --submit";
-            on = ["<Enter>"];
+            on = [ "<Enter>" ];
           }
           {
             run = "escape";
-            on = ["<Esc>"];
+            on = [ "<Esc>" ];
           }
           {
             run = "backspace";
-            on = ["<Backspace>"];
+            on = [ "<Backspace>" ];
           }
         ];
         manager.prepend_keymap = [
           {
-            on = ["<C-n>"];
+            on = [ "<C-n>" ];
             run = ''shell 'dragon -x -i -T "$1"' --confirm'';
           }
           {
@@ -451,20 +448,23 @@
           }
 
           {
-            on = ["g" "r"];
+            on = [
+              "g"
+              "r"
+            ];
             run = ''shell 'ya pub dds-cd --str "$(git rev-parse --show-toplevel)"' --confirm'';
           }
           {
             run = "escape";
-            on = ["<Esc>"];
+            on = [ "<Esc>" ];
           }
           {
             run = "quit";
-            on = ["q"];
+            on = [ "q" ];
           }
           {
             run = "close";
-            on = ["<C-q>"];
+            on = [ "<C-q>" ];
           }
         ];
       };
