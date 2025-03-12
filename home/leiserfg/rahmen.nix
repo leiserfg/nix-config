@@ -35,12 +35,12 @@
     scrcpy
 
     ((unstablePkgs.llama-cpp.override { vulkanSupport = true; }).overrideAttrs (old: rec {
-      version = "gemma";
+      version = "4875";
       src = pkgs.fetchFromGitHub {
         owner = "ggml-org";
         repo = "llama.cpp";
-        rev = "7841fc7";
-        hash = "sha256-q7MYtHneg9K3h2aQ3okMPXuFNDypBcCj6qF0OxAh40I=";
+        tag = "b${version}";
+        hash = "sha256-oCduKRXLr4Ej431sHM3vJ248uUO970T50Y+3BpBL9Do=";
         leaveDotGit = true;
         postFetch = ''
           git -C "$out" rev-parse --short HEAD > $out/COMMIT
