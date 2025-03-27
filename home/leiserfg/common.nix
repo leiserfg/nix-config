@@ -177,6 +177,7 @@
       moreutils
       lf
       ripgrep
+      ast-grep
       rustup
       simple-http-server
 
