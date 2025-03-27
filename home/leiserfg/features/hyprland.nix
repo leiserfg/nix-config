@@ -163,14 +163,14 @@ in {
         workspace = w[t1], gapsin:0, gapsout:0, border:0
 
         #WINDOW RULES
-        windowrule = workspace 1,firefox
-        windowrule = workspace 4,org.telegram.desktop
-        windowrule = center,pwvucontrol
-        windowrule = float,pwvucontrol
-        windowrule = pin,dragon
+        windowrule = workspace 1,class:firefox
+        windowrule = workspace 4,class:org.telegram.desktop
+        windowrule = center,class:pavucontrol
+        windowrule = float,class:pavucontrol
+        windowrule = pin,class:dragon
 
 
-        windowrulev2 = idleinhibit fullscreen, fullscreen:1
+        windowrule = idleinhibit fullscreen, fullscreen:1
 
          # debug {
          #     disable_logs = false

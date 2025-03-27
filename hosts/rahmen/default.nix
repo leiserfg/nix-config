@@ -4,7 +4,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ../common/global
@@ -13,16 +14,18 @@
     ../common/features/docker.nix
   ];
 
-programs.dconf.enable = true;
+  programs.dconf.enable = true;
 
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "rahmen";
   hardware.framework.laptop13.audioEnhancement.enable = true;
 
+  # finger cross to this workarounding mesa issues
+  boot.kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
 
   systemd.services.set-charge-limit = {
     description = "Set battery charge limit";
-    after = ["multi-user.target"];
+    after = [ "multi-user.target" ];
 
     serviceConfig = {
       Type = "oneshot";
@@ -31,6 +34,6 @@ programs.dconf.enable = true;
     };
 
     # This ensures the service runs at startup
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
   };
 }

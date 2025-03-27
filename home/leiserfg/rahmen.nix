@@ -20,19 +20,21 @@
     poetry
     # unstablePkgs.blender-hip
     gamescope
-    love
+    # love
     # unstablePkgs.godot_4
-    nushell
-    audacity
+    # nushell
+    ghostty
+    # audacity
     ddcutil
+    # playwright-test
     # moonlight-qt
     # gnome-network-displays
-    # anki
-    sunvox
-    orca-c
+    anki
+    # sunvox
+    # orca-c
 
-    steam
-    scrcpy
+    # steam
+    # scrcpy
 
     ((unstablePkgs.llama-cpp.override { vulkanSupport = true; }).overrideAttrs (old: rec {
       version = "4875";

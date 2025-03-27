@@ -88,10 +88,8 @@
       fish
       (unstablePkgs.ruff)
       basedpyright
-      # (unstablePkgs.basedpyright)
-      # (unstablePkgs.typescript-language-server)
+      typescript-language-server
       pulseaudio
-      # (unstablePkgs.typescript-language-server)
 
       pulseaudio
       nixd
@@ -133,7 +131,10 @@
       uiua
       krita
       inkscape
+
       tree-sitter
+      nodejs
+
       nmap
       glib
       (unstablePkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
@@ -170,7 +171,7 @@
       terraform-ls
       awscli2
 
-      pwvucontrol
+      pavucontrol
       zathura
       xdragon
       moreutils
@@ -382,13 +383,13 @@
 
             "NixOS Wiki" = {
               urls = [ { template = "https://wiki.nixos.org/index.php?search={searchTerms}"; } ];
-              iconUpdateURL = "https://wiki.nixos.org/favicon.png";
+              icon = "https://wiki.nixos.org/favicon.png";
               updateInterval = 24 * 60 * 60 * 1000; # every day
               definedAliases = [ "@nw" ];
             };
 
-            "Bing".metaData.hidden = true;
-            "Google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
+            "bing".metaData.hidden = true;
+            "google".metaData.alias = "@g"; # builtin engines only support specifying one additional alias
           };
         };
       };
@@ -626,5 +627,6 @@
     --cookies-from-browser firefox
     --downloader aria2c
     --downloader-args aria2c:'-c -x8 -s8 -k1M'
+    --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
   '';
 }

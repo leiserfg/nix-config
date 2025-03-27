@@ -125,7 +125,7 @@
         wireplumber = {
           "format" = "󰕿 {volume}%";
           "format-muted" = " ";
-          on-click = "pwvucontrol";
+          on-click = "pavucontrol";
           on-click-right = "qpwgraph";
           on-click-middle = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         };
