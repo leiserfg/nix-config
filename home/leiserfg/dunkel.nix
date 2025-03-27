@@ -19,6 +19,7 @@
     libreoffice-qt6
     terraform
     traceroute
+    poedit
     (unstablePkgs.teams-for-linux)
     # slack
   ];
@@ -35,10 +36,10 @@
               enable = false;
             }
             {
-              search = ["m=DELL U3421WE"];
+              search = ["m=LG HDR WQHD"];
               enable = true;
               scale = 1.6666;
-              mode = "3440x1440@59.97Hz";
+              mode = "3840x1600@59.99300";
             }
           ];
         }

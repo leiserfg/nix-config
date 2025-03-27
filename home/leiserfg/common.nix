@@ -515,14 +515,9 @@
     CARGO_NET_GIT_FETCH_WITH_CLI = "true";
 
     FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
+    # Force wayland for electron
+    NIXOS_OZONE_WL = 1;
   };
-  # home.pointerCursor = {
-  #   package = pkgs.gnome.adwaita-icon-theme;
-  #   name = "Adwaita";
-  #   size = 16;
-  #   x11.enable = true; # This is used also by Xwayland
-  #   gtk.enable = true;
-  # };
 
   home.pointerCursor = {
     package = pkgs.bibata-cursors;
@@ -624,9 +619,14 @@
   # };
 
   xdg.configFile."yt-dlp/config".text = ''
-    --cookies-from-browser firefox
-    --downloader aria2c
-    --downloader-args aria2c:'-c -x8 -s8 -k1M'
-    --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
+        --cookies-from-browser firefox
+        --downloader aria2c
+        --downloader-args aria2c:'-c -x8 -s8 -k1M'
+    <<<<<<< Updated upstream
+    ||||||| Stash base
+    =======
+        # Disable tv extractor to avoid DRM
+    >>>>>>> Stashed changes
+        --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
   '';
 }
