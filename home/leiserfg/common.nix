@@ -623,11 +623,7 @@
         --cookies-from-browser firefox
         --downloader aria2c
         --downloader-args aria2c:'-c -x8 -s8 -k1M'
-    <<<<<<< Updated upstream
-    ||||||| Stash base
-    =======
         # Disable tv extractor to avoid DRM
-    >>>>>>> Stashed changes
         --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
   '';
 }

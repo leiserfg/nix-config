@@ -5,7 +5,8 @@
   myPkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./common.nix
     ./features/hyprland.nix
@@ -34,23 +35,7 @@
 
     # steam
     # scrcpy
-
-    (
-      (unstablePkgs.llama-cpp.override {vulkanSupport = true;}).overrideAttrs (old: rec {
-        version = "4875";
-        src = pkgs.fetchFromGitHub {
-          owner = "ggml-org";
-          repo = "llama.cpp";
-          tag = "b${version}";
-          hash = "sha256-oCduKRXLr4Ej431sHM3vJ248uUO970T50Y+3BpBL9Do=";
-          leaveDotGit = true;
-          postFetch = ''
-            git -C "$out" rev-parse --short HEAD > $out/COMMIT
-            find "$out" -name .git -print0 | xargs -0 rm -rf
-          '';
-        };
-      })
-    )
+    (unstablePkgs.llama-cpp.override { vulkanSupport = true; })
   ];
 
   services = {
@@ -59,7 +44,7 @@
       rules = [
         {
           name = "Home";
-          outputs_connected = ["DP-2"];
+          outputs_connected = [ "DP-2" ];
           configure_single = "DP-2";
           primary = true;
           atomic = true;
@@ -72,7 +57,7 @@
         }
         {
           name = "Mobile";
-          outputs_disconnected = ["DP-2"];
+          outputs_disconnected = [ "DP-2" ];
           configure_single = "eDP-1";
           primary = true;
           atomic = true;
