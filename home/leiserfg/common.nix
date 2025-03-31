@@ -335,6 +335,11 @@
     };
     firefox = {
       enable = true;
+      # package = pkgs.firefox.override {
+      #   nativeMessagingHosts = [
+      #     pkgs.tridactyl-native
+      #   ];
+      # };
       profiles = {
         yolo = {
           userContent = "";
@@ -620,10 +625,10 @@
   # };
 
   xdg.configFile."yt-dlp/config".text = ''
-        --cookies-from-browser firefox
-        --downloader aria2c
-        --downloader-args aria2c:'-c -x8 -s8 -k1M'
-        # Disable tv extractor to avoid DRM
-        --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
+    --cookies-from-browser firefox
+    --downloader aria2c
+    --downloader-args aria2c:'-c -x8 -s8 -k1M'
+    # Disable tv extractor to avoid DRM
+    --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
   '';
 }

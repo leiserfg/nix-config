@@ -167,7 +167,7 @@ in {
         windowrule = workspace 4,class:org.telegram.desktop
         windowrule = center,class:pavucontrol
         windowrule = float,class:pavucontrol
-        windowrule = pin,class:dragon
+        windowrule = pin,class:dragon-drop
 
 
         windowrule = idleinhibit fullscreen, fullscreen:1
