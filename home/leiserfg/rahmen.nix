@@ -17,7 +17,7 @@
 
   home.packages = with pkgs; [
     pgcli
-    poetry
+    # poetry
     # unstablePkgs.blender-hip
     gamescope
     # love
