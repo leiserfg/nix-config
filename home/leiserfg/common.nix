@@ -108,8 +108,8 @@
       picocom # run as:  sudo picocom /dev/ttyACM0
       croc
       doggo
-      (neovimPkgs.neovim)
-      # neovim
+      # (neovimPkgs.neovim)
+      neovim
 
       pipenv
       nixfmt-rfc-style
@@ -482,7 +482,7 @@
         # A bit of obfuscation doesn't hurt
         base_url = "https:" + "//bw.nul.mywire.org/";
         email = "${config.home.username}@gmail.com";
-
+        lock_timeout = 60 * 60 * 8;
         pinentry = pkgs.pinentry-qt;
       };
     };

@@ -1,8 +1,6 @@
-{unstablePkgs, ...}: {
-  programs.kitty = let
-    themeFile = "Carbonfox";
-    # themeFile = "CLRS";
-  in {
+{ unstablePkgs, ... }:
+{
+  programs.kitty = {
     enable = true;
     package = unstablePkgs.kitty;
     # themeFile = "LiquidCarbonTransparent";
@@ -13,7 +11,7 @@
       size = 14.0;
     };
     extraConfig = ''
-      include ${unstablePkgs.kitty-themes}/share/kitty-themes/themes/${themeFile}.conf
+      include ${./kitty_theme.conf}
     '';
     settings = {
       bold_font = "Iosevka Term SS15 Medium";
