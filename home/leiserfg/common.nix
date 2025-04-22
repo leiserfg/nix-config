@@ -326,6 +326,7 @@
     fzf = {
       enable = true;
       package = unstablePkgs.fzf;
+      defaultOptions = [ "--color=light" ];
     };
     btop = {
       enable = true;
@@ -340,6 +341,7 @@
       #     pkgs.tridactyl-native
       #   ];
       # };
+      # package = pkgs.firefox-devedition;
       profiles = {
         yolo = {
           userContent = "";

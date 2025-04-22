@@ -29,7 +29,7 @@
     settings = {
       profile = [
         {
-          name = "ultra-wide";
+          name = "ultra-wide-lg";
           output = [
             {
               match = "eDP-1";
@@ -40,6 +40,22 @@
               enable = true;
               scale = 1.6666;
               mode = "3840x1600@59.99300";
+            }
+          ];
+        }
+
+        {
+          name = "ultra-wide-dell";
+          output = [
+            {
+              match = "eDP-1";
+              enable = false;
+            }
+            {
+              search = ["m=DELL U3421WE"];
+              enable = true;
+              scale = 1.6666;
+              mode = "3440x1440@59.97300";
             }
           ];
         }
