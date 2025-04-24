@@ -3,10 +3,8 @@
   programs.kitty = {
     enable = true;
     package = unstablePkgs.kitty;
-    # themeFile = "LiquidCarbonTransparent";
-    # themeFile = "Aquarium_Dark";
-    # themeFile = "Carbonfox";
     font = {
+      # name = "Iosevka Term SS15 Medium";
       name = "Iosevka Term SS15 Light";
       size = 14.0;
     };
@@ -14,10 +12,13 @@
       include ${./gv_light.conf}
     '';
     settings = {
-      bold_font = "Iosevka Term SS15 Medium";
-      italic_font = "Iosevka Term SS15 Light Italic";
-
+      # bold_font = "Iosevka Term SS15 Medium";
+      # italic_font = "Iosevka Term SS15 Light Italic";
+      bold_font = "auto";
+      italic_font = "auto";
+      text_fg_override_threshold = "4.5 ratio";
       cursor = "none";
+      # font_features = "Iosevka-Term-SS15-Medium +THND";
       font_features = "Iosevka-Term-SS15-Light +THND";
       tab_separator = "│";
       enabled_layouts = "tall";
