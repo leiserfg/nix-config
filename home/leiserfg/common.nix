@@ -43,252 +43,248 @@
     };
   };
 
-  home.packages =
-    with pkgs;
-    with builtins;
-    with lib;
-    [
-      # (inputs.fabric.packages.${pkgs.system}.run-widget)
-      # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
-      pandoc
+  home.packages = with pkgs; [
+    # (inputs.fabric.packages.${pkgs.system}.run-widget)
+    # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+    pandoc
 
-      pinentry-qt
-      cava
-      localsend
-      kitty-img
-      v4l-utils
-      gdb
-      htop
-      smartmontools
-      devenv
-      (unstablePkgs.shikane)
-      nix
-      steam-run
-      glsl_analyzer
-      myPkgs.glslviewer
-      # glslviewer
-      # easyeffects
-      util-linux
-      nix-update
-      # inferno
-      flamegraph
-      psmisc
-      python312Packages.ipython
-      uv
-      cmake
-      gnumake
-      python312
-      teip
-      typst
-      (unstablePkgs.tdesktop)
+    pinentry-qt
+    cava
+    localsend
+    kitty-img
+    v4l-utils
+    gdb
+    htop
+    smartmontools
+    devenv
+    (unstablePkgs.shikane)
+    nix
+    steam-run
+    glsl_analyzer
+    myPkgs.glslviewer
+    # glslviewer
+    # easyeffects
+    util-linux
+    nix-update
+    # inferno
+    flamegraph
+    psmisc
+    python312Packages.ipython
+    uv
+    cmake
+    gnumake
+    python312
+    teip
+    typst
+    (unstablePkgs.tdesktop)
 
-      # (unstablePkgs.ags)
-      shfmt
-      shellcheck
-      fish
-      (unstablePkgs.ruff)
-      basedpyright
-      typescript-language-server
-      pulseaudio
+    # (unstablePkgs.ags)
+    shfmt
+    shellcheck
+    fish
+    (unstablePkgs.ruff)
+    basedpyright
+    typescript-language-server
+    pulseaudio
 
-      pulseaudio
-      nixd
-      # pmenu
-      pciutils
-      # image-roll
-      imv
-      swayimg
-      unzip
+    pulseaudio
+    nixd
+    # pmenu
+    pciutils
+    # image-roll
+    imv
+    swayimg
+    unzip
 
-      iw
-      dmidecode
-      wf-recorder
-      # iredis
-      dua
-      picocom # run as:  sudo picocom /dev/ttyACM0
-      croc
-      doggo
-      # (neovimPkgs.neovim)
-      neovim
+    iw
+    dmidecode
+    wf-recorder
+    # iredis
+    dua
+    picocom # run as:  sudo picocom /dev/ttyACM0
+    croc
+    doggo
+    # (neovimPkgs.neovim)
+    neovim
 
-      pipenv
-      nixfmt-rfc-style
-      nixpkgs-review
-      jj
-      bc
-      ffmpeg-full
-      jq
-      graphviz
-      gcc
-      usbutils
-      wget
-      blueman
-      pcmanfm
-      xarchiver
-      # gdb
-      ventoy-bin
-      rink
-      uiua
-      krita
-      inkscape
+    pipenv
+    nixfmt-rfc-style
+    nixpkgs-review
+    jj
+    bc
+    ffmpeg-full
+    jq
+    graphviz
+    gcc
+    usbutils
+    wget
+    blueman
+    pcmanfm
+    xarchiver
+    # gdb
+    ventoy-bin
+    rink
+    uiua
+    krita
+    inkscape
 
-      tree-sitter
-      nodejs
+    tree-sitter
+    nodejs
 
-      nmap
-      glib
-      (unstablePkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
-      # (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
-      nerd-fonts.symbols-only
+    nmap
+    glib
+    (unstablePkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
+    # (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
+    nerd-fonts.symbols-only
 
-      (writeShellScriptBin "xdg-open" ''
-        # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
-        exec -a $0 ${mimeo}/bin/mimeo "$@"
-      '')
-      noto-fonts-emoji
-      noto-fonts-cjk-sans
-      vulkan-tools
-      lm_sensors
-      darktable
-      gimp
+    (writeShellScriptBin "xdg-open" ''
+      # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
+      exec -a $0 ${mimeo}/bin/mimeo "$@"
+    '')
+    noto-fonts-emoji
+    noto-fonts-cjk-sans
+    vulkan-tools
+    lm_sensors
+    darktable
+    gimp
 
-      lua-language-server
-      lsof
-      file
-      unrar
-      zpaq
-      p7zip
-      d-spy
-      gparted
+    lua-language-server
+    lsof
+    file
+    unrar
+    zpaq
+    p7zip
+    d-spy
+    gparted
+    presenterm
+    cntr
+    pre-commit
+    # age
+    # agebox
+    # age-kegen-deterministic
 
-      cntr
-      pre-commit
-      # age
-      # agebox
-      # age-kegen-deterministic
+    # terraform
+    terraform-ls
+    awscli2
 
-      # terraform
-      terraform-ls
-      awscli2
+    pavucontrol
+    zathura
+    xdragon
+    moreutils
+    lf
+    ripgrep
+    ast-grep
+    rustup
+    simple-http-server
 
-      pavucontrol
-      zathura
-      xdragon
-      moreutils
-      lf
-      ripgrep
-      ast-grep
-      rustup
-      simple-http-server
+    gnome-disk-utility
+    rsync
+    # appimage-run
 
-      gnome-disk-utility
-      rsync
-      # appimage-run
+    sshuttle
+    autossh
+    openssh
 
-      sshuttle
-      autossh
-      openssh
+    # git stuff
+    delta
 
-      # git stuff
-      delta
+    gh
+    git
+    git-standup
+    git-absorb
 
-      gh
-      git
-      git-standup
-      git-absorb
+    patool
+    stylua
+    taplo
+    yadm
+    cachix
+    android-tools
+    git-lfs
+    clinfo
+    powertop
+    docker-compose
 
-      patool
-      stylua
-      taplo
-      yadm
-      cachix
-      android-tools
-      git-lfs
-      clinfo
-      powertop
-      docker-compose
+    xh
 
-      xh
+    # My overlay
+    # git-branchless
+    # material-maker
+    nix-du
+    qpwgraph
+    piper-tts
 
-      # My overlay
-      # git-branchless
-      # material-maker
-      nix-du
-      qpwgraph
-      piper-tts
+    libva-utils
 
-      libva-utils
+    (makeDesktopItem {
+      name = "teams-for-linux-call";
+      exec = "teams-for-linux %U";
+      icon = "teams-for-linux";
+      desktopName = "Microsoft Teams for Linux";
+      categories = [
+        "Network"
+        "InstantMessaging"
+        "Chat"
+      ];
+      mimeTypes = [ "x-scheme-handler/msteams" ];
+    })
 
-      (makeDesktopItem {
-        name = "teams-for-linux-call";
-        exec = "teams-for-linux %U";
-        icon = "teams-for-linux";
-        desktopName = "Microsoft Teams for Linux";
-        categories = [
-          "Network"
-          "InstantMessaging"
-          "Chat"
-        ];
-        mimeTypes = [ "x-scheme-handler/msteams" ];
-      })
+    #scripts
+    # here we don't use the nix binaries to allow rewriting ruff with the correct one
+    # see x11 and wayland
 
-      #scripts
-      # here we don't use the nix binaries to allow rewriting ruff with the correct one
-      # see x11 and wayland
+    (writeShellScriptBin "rofi-launch" ''
+      exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
+    '')
 
-      (writeShellScriptBin "rofi-launch" ''
-        exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
-      '')
+    (writeShellScriptBin "rofi-pp" ''
+      printf " Performance\n Balanced\n Power Saver" \
+      | rofi -dmenu -i \
+      | tr -cd '[:print:]' \
+      | xargs|tr " " "-" \
+      | tr '[:upper:]' '[:lower:]' \
+      | xargs powerprofilesctl set
+    '')
+    (writeShellScriptBin "pp-state" ''
+      state=$(powerprofilesctl get | sed -e "s/.*string//" -e "s/.*save.*/ /"  -e "s/.*perf.*/ /"  -e "s/.*balanced.*/ /")
+      echo $state
+    '')
+    (writeShellScriptBin "game-picker" ''
+      exec  sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
+      |xargs -n 1 -d '\n' dirname \
+      |xargs -d '\n' -n 1 basename \
+      |rofi -dmenu -i  \
+      |xargs  -d '\n'  -I__  bash -c 'cd $HOME/Games/__/  && source *start*.sh'"
+    '')
+    (writeShellScriptBin "rofi_power" ''
+      enumerate () {
+          awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
+      }
+      question=$(printf "||||"| enumerate|rofi -dmenu -markup-rows)
 
-      (writeShellScriptBin "rofi-pp" ''
-        printf " Performance\n Balanced\n Power Saver" \
-        | rofi -dmenu -i \
-        | tr -cd '[:print:]' \
-        | xargs|tr " " "-" \
-        | tr '[:upper:]' '[:lower:]' \
-        | xargs powerprofilesctl set
-      '')
-      (writeShellScriptBin "pp-state" ''
-        state=$(powerprofilesctl get | sed -e "s/.*string//" -e "s/.*save.*/ /"  -e "s/.*perf.*/ /"  -e "s/.*balanced.*/ /")
-        echo $state
-      '')
-      (writeShellScriptBin "game-picker" ''
-        exec  sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
-        |xargs -n 1 -d '\n' dirname \
-        |xargs -d '\n' -n 1 basename \
-        |rofi -dmenu -i  \
-        |xargs  -d '\n'  -I__  bash -c 'cd $HOME/Games/__/  && source *start*.sh'"
-      '')
-      (writeShellScriptBin "rofi_power" ''
-        enumerate () {
-            awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
-        }
-        question=$(printf "||||"| enumerate|rofi -dmenu -markup-rows)
-
-        case $question in
-            **)
-                loginctl lock-session $XDG_SESSION_ID
-                ;;
-            **)
-                systemctl suspend
-                ;;
-            **)
-                # bspc quit || qtile cmd-obj -o cmd -f shutdown
-                systemctl --user  stop graphical-session.target
-                hyprctl dispatch exit || loginctl terminate-session $XDG_SESSION_ID
-                ;;
-            **)
-                systemctl reboot
-                ;;
-            **)
-                systemctl poweroff
-                ;;
-            *)
-                exit 0  # do nothing on wrong response
-                ;;
-        esac
-      '')
-    ];
+      case $question in
+          **)
+              loginctl lock-session $XDG_SESSION_ID
+              ;;
+          **)
+              systemctl suspend
+              ;;
+          **)
+              # bspc quit || qtile cmd-obj -o cmd -f shutdown
+              systemctl --user  stop graphical-session.target
+              hyprctl dispatch exit || loginctl terminate-session $XDG_SESSION_ID
+              ;;
+          **)
+              systemctl reboot
+              ;;
+          **)
+              systemctl poweroff
+              ;;
+          *)
+              exit 0  # do nothing on wrong response
+              ;;
+      esac
+    '')
+  ];
   xdg.configFile."Thunar/uca.xml" = {
     executable = false;
     text = ''

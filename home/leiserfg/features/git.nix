@@ -12,7 +12,7 @@
 
     ignores = [
       ".direnv"
-      ".envrc"
+      # ".envrc"
     ];
 
     aliases = {
