@@ -11,7 +11,7 @@
       size = 14.0;
     };
     extraConfig = ''
-      include ${./kitty_theme.conf}
+      include ${./gv_light.conf}
     '';
     settings = {
       bold_font = "Iosevka Term SS15 Medium";
