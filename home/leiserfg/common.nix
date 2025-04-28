@@ -96,7 +96,6 @@
     swayimg
     unzip
 
-    iw
     dmidecode
     wf-recorder
     # iredis
@@ -106,6 +105,8 @@
     doggo
     # (neovimPkgs.neovim)
     neovim
+
+    # figlet
 
     pipenv
     nixfmt-rfc-style
