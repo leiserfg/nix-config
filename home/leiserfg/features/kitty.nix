@@ -1,11 +1,15 @@
 { unstablePkgs, ... }:
 {
+
   programs.kitty = {
     enable = true;
     package = unstablePkgs.kitty;
+    environment = {
+      FZF_DEFAULT_OPTS = "--color=light";
+    };
     font = {
-      # name = "Iosevka Term SS15 Medium";
-      name = "Iosevka Term SS15 Light";
+      name = "Iosevka Term SS15 Medium";
+      # name = "Iosevka Term SS15 Light";
       size = 14.0;
     };
     extraConfig = ''
@@ -18,8 +22,8 @@
       italic_font = "auto";
       text_fg_override_threshold = "4.5 ratio";
       cursor = "none";
-      # font_features = "Iosevka-Term-SS15-Medium +THND";
-      font_features = "Iosevka-Term-SS15-Light +THND";
+      font_features = "Iosevka-Term-SS15-Medium +THND";
+      # font_features = "Iosevka-Term-SS15-Light +THND";
       tab_separator = "│";
       enabled_layouts = "tall";
       enable_audio_bell = false;
