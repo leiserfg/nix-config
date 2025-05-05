@@ -47,7 +47,7 @@
     # (inputs.fabric.packages.${pkgs.system}.run-widget)
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
     pandoc
-
+    libjxl
     pinentry-qt
     cava
     localsend
@@ -111,7 +111,6 @@
     pipenv
     nixfmt-rfc-style
     nixpkgs-review
-    jj
     bc
     ffmpeg-full
     jq

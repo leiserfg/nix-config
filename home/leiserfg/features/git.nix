@@ -1,12 +1,21 @@
-{pkgs, ...}: {
-  home.packages = [pkgs.git-filter-repo pkgs.glab pkgs.git-branchless];
+{ pkgs, ... }:
+let
+  userEmail = "leiserfg@gmail.com";
+  userName = "leiserfg";
+in
+{
+  home.packages = [
+    pkgs.git-filter-repo
+    pkgs.glab
+    pkgs.git-branchless
+  ];
   programs.git = {
     enable = true;
     delta.enable = true;
     lfs.enable = true;
 
-    userEmail = "leiserfg@gmail.com";
-    userName = "leiserfg";
+    userEmail = userEmail;
+    userName = userName;
     signing.key = "/home/leiserfg/.ssh/id_rsa.pub";
     signing.signByDefault = true;
 
@@ -59,15 +68,25 @@
     };
 
     extraConfig = {
-      protocol = {version = 2;};
-      init = {defaultBranch = "master";};
-      branch = {sort = "-committerdate";};
-      tag = {sort = "version:refname";};
+      protocol = {
+        version = 2;
+      };
+      init = {
+        defaultBranch = "master";
+      };
+      branch = {
+        sort = "-committerdate";
+      };
+      tag = {
+        sort = "version:refname";
+      };
       rerere = {
         enabled = true;
         autoupdate = true;
       };
-      status = {short = true;};
+      status = {
+        short = true;
+      };
       diff = {
         algorithm = "histogram";
         indentheuristic = true;
@@ -75,7 +94,9 @@
         mnemonicPrefix = true;
         renames = true;
       };
-      merge = {conflictstyle = "zdiff3";};
+      merge = {
+        conflictstyle = "zdiff3";
+      };
       push = {
         autoSetupRemote = true;
         followTags = true;
@@ -99,8 +120,12 @@
       commit = {
         verbose = true;
       };
-      gpg = {format = "ssh";};
-      feature = {manyFiles = true;};
+      gpg = {
+        format = "ssh";
+      };
+      feature = {
+        manyFiles = true;
+      };
       url = {
         "ssh://git@github.com/" = {
           insteadOf = "https://github.com/";
@@ -109,5 +134,50 @@
     };
   };
 
-  programs.gh = {enable = true;};
+  programs.gh = {
+    enable = true;
+  };
+
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        name = userName;
+        email = userEmail;
+      };
+      aliases =
+        let
+          sh = cmd: [
+            "util"
+            "exec"
+            "--"
+            "bash"
+            "-c"
+            (
+              (
+                # bash
+                ''
+                  #!/usr/bin/env bash
+                  set -euo pipefail
+                '')
+              + cmd
+            )
+            "" # This will be replaced by bash with $0
+          ];
+        in
+        {
+          pre-commit = sh (
+            # bash
+            ''
+              [ ! -f "$(jj root)/.pre-commit-config.yaml" ] || (jj diff -r @ --name-only --no-pager | xargs pre-commit run --files)
+            '');
+          push = sh (
+            # bash
+            ''
+              jj pre-commit && jj git push -c @-
+            '');
+
+        };
+    };
+  };
 }
