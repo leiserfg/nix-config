@@ -2,6 +2,7 @@
 let
   userEmail = "leiserfg@gmail.com";
   userName = "leiserfg";
+  ssh_key = "/home/leiserfg/.ssh/id_rsa.pub";
 in
 {
   home.packages = [
@@ -16,7 +17,7 @@ in
 
     userEmail = userEmail;
     userName = userName;
-    signing.key = "/home/leiserfg/.ssh/id_rsa.pub";
+    signing.key = ssh_key;
     signing.signByDefault = true;
 
     ignores = [
@@ -144,6 +145,24 @@ in
       user = {
         name = userName;
         email = userEmail;
+
+      };
+
+      signing = {
+        behavior = "own";
+        backend = "ssh";
+        key = ssh_key;
+      };
+      # git = {
+      #   sign-on-push = true;
+      # };
+
+      experimental-advance-branches = {
+        enabled-branches = [ "glob:*" ];
+        disabled-branches = [
+          "main"
+          "master"
+        ];
       };
       aliases =
         let
