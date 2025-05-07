@@ -146,7 +146,7 @@
     vulkan-tools
     lm_sensors
     darktable
-    gimp
+    gimp3-with-plugins
 
     lua-language-server
     lsof
