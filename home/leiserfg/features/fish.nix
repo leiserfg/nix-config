@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   programs.fish = {
     enable = true;
     package = pkgs.fish;
@@ -31,6 +32,9 @@
     ];
   };
   programs.zoxide = {
+    enable = true;
+  };
+  programs.lsd = {
     enable = true;
   };
 

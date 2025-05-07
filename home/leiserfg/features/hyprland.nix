@@ -119,7 +119,10 @@ in {
 
           general {
               layout = master
-              gaps_out = 4
+              gaps_out = 3
+              gaps_in = 4
+              col.active_border = rgb(bb3344) rgb(33bb44) 45deg
+              border_size = 2
           }
 
           cursor {
