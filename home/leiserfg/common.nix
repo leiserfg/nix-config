@@ -629,4 +629,9 @@
     # Disable tv extractor to avoid DRM
     --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
   '';
+
+  home.file."${config.xdg.configHome}/nvim/spell/de.utf-8.spl".source = builtins.fetchurl {
+    url = "https://ftp.nluug.nl/pub/vim/runtime/spell/de.utf-8.spl";
+    sha256 = "sha256:1ld3hgv1kpdrl4fjc1wwxgk4v74k8lmbkpi1x7dnr19rldz11ivk";
+  };
 }
