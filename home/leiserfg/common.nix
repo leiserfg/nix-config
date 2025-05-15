@@ -103,8 +103,8 @@
     picocom # run as:  sudo picocom /dev/ttyACM0
     croc
     doggo
-    # (neovimPkgs.neovim)
-    neovim
+    (neovimPkgs.neovim)
+    # neovim
 
     # figlet
 
@@ -122,7 +122,7 @@
     pcmanfm
     xarchiver
     # gdb
-    ventoy-bin
+    # ventoy-bin
     rink
     uiua
     krita
@@ -285,15 +285,15 @@
       esac
     '')
 
-    (inputs.quickshell.packages.${pkgs.system}.default.override {
-      withJemalloc = true;
-      withQtSvg = true;
-      withWayland = true;
-      withX11 = false;
-      withPipewire = true;
-      withPam = true;
-      withHyprland = true;
-    })
+    # (inputs.quickshell.packages.${pkgs.system}.default.override {
+    #   withJemalloc = true;
+    #   withQtSvg = true;
+    #   withWayland = true;
+    #   withX11 = false;
+    #   withPipewire = true;
+    #   withPam = true;
+    #   withHyprland = true;
+    # })
 
   ];
   xdg.configFile."Thunar/uca.xml" = {
