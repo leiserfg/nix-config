@@ -17,8 +17,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/share/icons
-    cp -r $PWD $out/share/icons
+    mkdir -p $out/share/icons/Bibata-Original-Classic/
+    cp -r ./ $out/share/icons/Bibata-Original-Classic/
 
     runHook postInstall
   '';
