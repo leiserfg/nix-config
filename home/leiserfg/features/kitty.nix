@@ -12,9 +12,10 @@
       # name = "Iosevka Term SS15 Light";
       size = 14.0;
     };
-    extraConfig = ''
-      include ${./gv_light.conf}
-    '';
+    themeFile = "Solarized_Light";
+    # extraConfig = ''
+    #   include ${./gv_light.conf}
+    # '';
     settings = {
       # bold_font = "Iosevka Term SS15 Medium";
       # italic_font = "Iosevka Term SS15 Light Italic";
