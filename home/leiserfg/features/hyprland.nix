@@ -128,12 +128,12 @@ in
                 inactive_timeout = 10
             }
 
-            misc {
-                # enable_swallow = true
-                # swallow_regex = ^(kitty)$
-                # disable_hyprland_logo = true
-                # background_color=rgb(000000)
-            }
+          misc {
+              enable_swallow = true
+              swallow_regex = ^(kitty)$
+              # disable_hyprland_logo = true
+              # background_color=rgb(000000)
+          }
 
             gestures {
                 workspace_swipe = true
