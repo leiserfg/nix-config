@@ -46,10 +46,14 @@
   home.packages = with pkgs; [
     # (inputs.fabric.packages.${pkgs.system}.run-widget)
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+    mosh
+    nmap
     pandoc
     libjxl
     pinentry-qt
     cava
+    exfatprogs
+    matugen
     localsend
     kitty-img
     v4l-utils
@@ -134,8 +138,8 @@
     nmap
     glib
     (unstablePkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
-    # (nerdfonts.override {fonts = ["NerdFontsSymbolsOnly"];})
     nerd-fonts.symbols-only
+    material-symbols
 
     (writeShellScriptBin "xdg-open" ''
       # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
@@ -285,36 +289,32 @@
       esac
     '')
 
-    # (inputs.quickshell.packages.${pkgs.system}.default.override {
-    #   withJemalloc = true;
-    #   withQtSvg = true;
-    #   withWayland = true;
-    #   withX11 = false;
-    #   withPipewire = true;
-    #   withPam = true;
-    #   withHyprland = true;
-    # })
+    (inputs.quickshell.packages.${pkgs.system}.default.override {
+      withX11 = false;
+      withI3 = false;
+    })
 
   ];
-  xdg.configFile."Thunar/uca.xml" = {
-    executable = false;
-    text = ''
-      <?xml version="1.0" encoding="UTF-8"?>
-      <actions>
-          <action>
-              <icon>kitty</icon>
-              <name>Open In Kitty</name>
-              <submenu></submenu>
-              <unique-id>1713512577329704-1</unique-id>
-              <command>kitty -1 --directory %f</command>
-              <description></description>
-              <range>*</range>
-              <patterns>*</patterns>
-              <directories/>
-          </action>
-      </actions>
-    '';
-  };
+
+  # xdg.configFile."Thunar/uca.xml" = {
+  #   executable = false;
+  #   text = ''
+  #     <?xml version="1.0" encoding="UTF-8"?>
+  #     <actions>
+  #         <action>
+  #             <icon>kitty</icon>
+  #             <name>Open In Kitty</name>
+  #             <submenu></submenu>
+  #             <unique-id>1713512577329704-1</unique-id>
+  #             <command>kitty -1 --directory %f</command>
+  #             <description></description>
+  #             <range>*</range>
+  #             <patterns>*</patterns>
+  #             <directories/>
+  #         </action>
+  #     </actions>
+  #   '';
+  # };
 
   programs = {
     home-manager.enable = true;
@@ -365,7 +365,7 @@
             # Enable user chrome
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "sidebar.position_start" = false; # Sideberry in the right side
-
+            "widget.wayland.fractional-scale.enabled" = true;
             "browser.compactmode.show" = true;
             "dom.webgpu.enabled" = true;
             "browser.uidensity" = 1;

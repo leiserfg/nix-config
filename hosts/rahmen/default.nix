@@ -18,7 +18,8 @@
 
   hardware.cpu.amd.updateMicrocode = true;
   networking.hostName = "rahmen";
-  hardware.framework.laptop13.audioEnhancement.enable = true;
+
+  # hardware.framework.laptop13.audioEnhancement.enable = true;
 
   # finger cross to this workarounding mesa issues
   boot.kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
