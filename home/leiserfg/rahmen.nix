@@ -24,7 +24,7 @@
     # unstablePkgs.godot_4
     # nushell
     ghostty
-    # audacity
+    audacity
     ddcutil
     # playwright-test
     # moonlight-qt

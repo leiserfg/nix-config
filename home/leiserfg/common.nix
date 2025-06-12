@@ -414,8 +414,8 @@
       enable = true;
       settings = {
         cookies-from-browser = "firefox";
-        downloader = "aria2c";
-        downloader-args = "aria2c:'-c -x8 -s8 -k1M'";
+        # downloader = "aria2c";
+        # downloader-args = "aria2c:'-c -x8 -s8 -k1M'";
       };
     };
 
@@ -633,13 +633,13 @@
   #   sm-settings = {"bluetooth.autoswitch-to-headset-profile" = "true";};
   # };
 
-  xdg.configFile."yt-dlp/config".text = ''
-    --cookies-from-browser firefox
-    --downloader aria2c
-    --downloader-args aria2c:'-c -x8 -s8 -k1M'
-    # Disable tv extractor to avoid DRM
-    --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
-  '';
+  # xdg.configFile."yt-dlp/config".text = ''
+  #   --cookies-from-browser firefox
+  #   # --downloader aria2c
+  #   # --downloader-args aria2c:'-c -x8 -s8 -k1M'
+  #   # Disable tv extractor to avoid DRM
+  #   --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
+  # '';
 
   home.file."${config.xdg.configHome}/nvim/spell/de.utf-8.spl".source = builtins.fetchurl {
     url = "https://ftp.nluug.nl/pub/vim/runtime/spell/de.utf-8.spl";
