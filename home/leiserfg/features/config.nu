@@ -1,5 +1,20 @@
-let carapace_completer = {|spans|
-  carapace $spans.0 nushell $spans | from json
+let carapace_completer = {|spans: list<string>|
+
+   let expanded_alias = scope aliases
+    | where name == $spans.0
+    | get -i 0.expansion
+
+    let spans = if $expanded_alias != null {
+        $spans
+        | skip 1
+        | prepend ($expanded_alias | split row ' ' | take 1)
+    } else {
+        $spans
+    }
+
+    carapace $spans.0 nushell ...$spans
+    | from json
+    | if ($in | default [] | where value =~ '^-.*ERR$' | is-empty) { $in } else { null }
 }
 
 $env.config = {
@@ -58,7 +73,7 @@ commandline edit --replace (
     }
   ]
 }
-
+    # maybe this one is not needed because of <tab> completion
 {
     name: fzf_files
     modifier: control
@@ -91,6 +106,7 @@ commandline edit --replace (
       }
     ]
 }
+
 ]
 
 
