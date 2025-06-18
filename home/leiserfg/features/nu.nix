@@ -4,7 +4,7 @@
   lib,
   ...
 }:
-{
+rec {
   programs = {
     nushell = {
       enable = true;
@@ -17,4 +17,6 @@
     };
     carapace.enable = true;
   };
+    # Workaround to avoid the gc from removing the plugins until it's fixed in home-manager
+    home.extraDependencies = programs.nushell.plugins;
 }
