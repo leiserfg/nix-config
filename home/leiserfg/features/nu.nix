@@ -13,10 +13,13 @@ rec {
         vi = "nvim";
         vim = "nvim";
       };
-      plugins = [ pkgs.nushellPlugins.formats ];
+      plugins = [
+        pkgs.nushellPlugins.formats
+        pkgs.nushellPlugins.query
+      ];
     };
     carapace.enable = true;
   };
-    # Workaround to avoid the gc from removing the plugins until it's fixed in home-manager
-    home.extraDependencies = programs.nushell.plugins;
+  # Workaround to avoid the gc from removing the plugins until it's fixed in home-manager
+  home.extraDependencies = programs.nushell.plugins;
 }
