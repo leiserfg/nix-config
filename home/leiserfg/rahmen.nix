@@ -16,6 +16,12 @@
   ];
 
   home.packages = with pkgs; [
+
+    (inputs.quickshell.packages.${pkgs.system}.default.override {
+      withX11 = false;
+      withI3 = false;
+    })
+
     pgcli
     # poetry
     unstablePkgs.blender-hip

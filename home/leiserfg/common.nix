@@ -56,8 +56,9 @@
     matugen
     localsend
     kitty-img
-    v4l-utils
-    gdb
+    # v4l-utils
+    dive
+    # gdb
     htop
     smartmontools
     devenv
@@ -73,13 +74,16 @@
     # inferno
     flamegraph
     psmisc
-    python312Packages.ipython
+    python313Packages.ipython
     uv
     cmake
     gnumake
-    python312
     teip
     typst
+
+    tinymist
+    websocat
+    goose-cli
     (unstablePkgs.tdesktop)
 
     # (unstablePkgs.ags)
@@ -289,10 +293,6 @@
       esac
     '')
 
-    (inputs.quickshell.packages.${pkgs.system}.default.override {
-      withX11 = false;
-      withI3 = false;
-    })
 
   ];
 
@@ -365,7 +365,7 @@
             # Enable user chrome
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "sidebar.position_start" = false; # Sideberry in the right side
-            "widget.wayland.fractional-scale.enabled" = true;
+            # "widget.wayland.fractional-scale.enabled" = true;
             "browser.compactmode.show" = true;
             "dom.webgpu.enabled" = true;
             "browser.uidensity" = 1;
