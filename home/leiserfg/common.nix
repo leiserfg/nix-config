@@ -293,7 +293,6 @@
       esac
     '')
 
-
   ];
 
   # xdg.configFile."Thunar/uca.xml" = {
@@ -321,12 +320,11 @@
     aria2.enable = true;
     bash = {
       enable = true;
-      bashrcExtra = ''
-
-        if [[ $(ps --no-header --pid=$PPID --format=comm|head -1) != "fish" && -z $BASH_EXECUTION_STRING && $SHLVL == 1 ]]
+      initExtra = ''
+        if [[ $SHLVL == 1 ]]
         then
             shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-            exec fish $LOGIN_OPTION
+            exec nu $LOGIN_OPTION
         fi
       '';
     };
@@ -371,7 +369,7 @@
             "browser.uidensity" = 1;
             "media.ffmpeg.vaapi.enabled" = true;
             "media.ffvpx.enabled" = true;
-            "browser.tabs.cardPreview.enabled" = true;
+            # "browser.tabs.cardPreview.enabled" = true;
           };
           search.force = true;
           search.engines = {
