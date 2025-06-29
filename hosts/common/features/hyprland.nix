@@ -17,6 +17,7 @@
   # };
 
   security.pam.services.hyprlock = {};
+  security.pam.services.swaylock = {};
   environment.systemPackages = with pkgs; [
     swaylock
   ];

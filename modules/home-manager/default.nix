@@ -3,4 +3,5 @@
 {
   # List your module files here
   hypridle-module = import ./hypridle.nix;
+  niri-module = import ./niri.nix;
 }

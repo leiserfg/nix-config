@@ -9,8 +9,9 @@
 {
   imports = [
     ./common.nix
-    ./features/hyprland.nix
+    # ./features/hyprland.nix
     ./features/laptop.nix
+    ./features/niri.nix
     ./features/games.nix
     # ./features/daw.nix
   ];
@@ -42,37 +43,6 @@
   ];
 
   services = {
-    grobi = {
-      enable = config.xsession.enable;
-      rules = [
-        {
-          name = "Home";
-          outputs_connected = [ "DP-2" ];
-          configure_single = "DP-2";
-          primary = true;
-          atomic = true;
-          execute_after = [
-            ''
-              echo "Xft.dpi: 96" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
-
-            ''
-          ];
-        }
-        {
-          name = "Mobile";
-          outputs_disconnected = [ "DP-2" ];
-          configure_single = "eDP-1";
-          primary = true;
-          atomic = true;
-          execute_after = [
-            ''
-              echo "Xft.dpi: 144" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
-            ''
-          ];
-        }
-      ];
-    };
-
     shikane = {
       enable = true;
       settings = {
