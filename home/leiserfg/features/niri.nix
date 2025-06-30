@@ -17,24 +17,26 @@
   home.packages = [
     pkgs.niri
     (pkgs.writeShellScriptBin "Hyprland" ''
+      # Hack to "hide" the layers of bash
+      export SHLVL=-2
       niri-session
     '')
-    pkgs.fuzzel
   ];
-
-    # HACK Force portals start
-  systemd.user.services.xdg-desktop-portal-gtk = {
-    after = [ "xdg-desktop-autostart.target" ];
-  };
-
-  systemd.user.services.xdg-desktop-portal-gnome = {
-    after = [ "xdg-desktop-autostart.target" ];
-  };
 
   wayland.windowManager.niri = {
 
     enable = true;
+    spawnAtStartup = [
+      [
+        # Force the start as xdg-portal is not helping
+        "systemctl"
+        "--user"
+        "start"
+        "xdg-desktop-portal-gnome"
+      ]
+    ];
     settings = {
+      prefer-no-csd = [];
       input = {
         keyboard = {
           xkb = {
