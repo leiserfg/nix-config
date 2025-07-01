@@ -72,7 +72,6 @@ commandline edit --replace (
     }
   ]
 }
-
 {
     name: fzf_files
     modifier: control
@@ -97,7 +96,7 @@ commandline edit --replace (
            ];
           } else { $res } | first
 
-          let result = fzf --reverse --walker=file,dir,follow,hidden --scheme=path --walker-root=($parts.needle | path expand);
+          let result = fzf --reverse --walker=file,dir,follow,hidden --scheme=path --walker-root=($parts.needle | path expand)
           commandline edit --replace ([$parts.prefix $result]|str join '')
           commandline set-cursor --end
           commandline edit --append $ending
@@ -109,6 +108,9 @@ commandline edit --replace (
 ]
 
 def --env awsenv [] {
-   open ~/.aws/credentials | from ini | columns | to text | fzf |  export-env { $env.AWS_PROFILE = $in }
+   open ~/.aws/credentials | from ini | columns | to text | fzf --reverse |  export-env { $env.AWS_PROFILE = $in }
 }
 
+def terraform_partial [] {
+    commandline edit --replace (terraform plan | grep '\sresource\s".*{' | sed -E 's/.*resource "(.*)" "(.*)".*/ "\1.\2"  /' | fzf -m --bind ctrl-a:select-all,ctrl-d:deselect-all |  sed "s/^/-target/"  | xargs echo terraform apply)
+}

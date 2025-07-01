@@ -448,7 +448,7 @@
             on = [ "<Backspace>" ];
           }
         ];
-        manager.prepend_keymap = [
+        mgr.prepend_keymap = [
           {
             on = [ "<C-n>" ];
             run = ''shell 'dragon -x -i -T "$1"' --confirm'';
