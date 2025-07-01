@@ -31,7 +31,7 @@ in
     # package = hyprPkgs.hyprland;
 
     # systemd.variables = ["--all"];
-
+    plugins = [ pkgs.hyprlandPlugins.hyprspace ];
     extraConfig =
       let
         env_vars = {
@@ -44,152 +44,154 @@ in
       in
       ''
 
-                      ${builtins.concatStringsSep "\n" (
-                        lib.attrsets.mapAttrsToList (name: val: "env = ${name},${val}") env_vars
-                      )}
+              ${builtins.concatStringsSep "\n" (
+                lib.attrsets.mapAttrsToList (name: val: "env = ${name},${val}") env_vars
+              )}
 
 
-                       $mod = SUPER
+               $mod = SUPER
 
-                       # Move focus
-                       bind = $mod, H, movefocus, l
-                       bind = $mod, L, movefocus, r
-                       bind = $mod, K, movefocus, u
-                       bind = $mod, J, movefocus, d
+               # Move focus
+               bind = $mod, H, movefocus, l
+               bind = $mod, L, movefocus, r
+               bind = $mod, K, movefocus, u
+               bind = $mod, J, movefocus, d
 
-                       bind = $mod SHIFT, H, movewindow, l
-                       bind = $mod SHIFT, L, movewindow, r
-                       bind = $mod SHIFT, K, movewindow, u
-                       bind = $mod SHIFT, J, movewindow, d
+               bind = $mod SHIFT, H, movewindow, l
+               bind = $mod SHIFT, L, movewindow, r
+               bind = $mod SHIFT, K, movewindow, u
+               bind = $mod SHIFT, J, movewindow, d
 
-                       bind = $mod, Escape, killactive
-                       bind = $mod , X, exec, hyprctl kill
-
-
-                      # fn buttons
-                      binde=,XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-                      binde=,XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
-                      bind =,XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-                      bind =,XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
-                      binde=,XF86MonBrightnessUp,   exec, brillo -A 10
-                      binde=,XF86MonBrightnessDown, exec, brillo -U 10
-                      # bind =,XF86AudioPlay,         exec, playerctl play-pause
-                      # bind =,XF86AudioPrev,         exec, playerctl previous
-                      # bind =,XF86AudioNext,         exec, playerctl next
-
-                      # Move/resize windows with mod + LMB/RMB and dragging
-                      bindm = $mod, mouse:272, movewindow
-                      bindm = $mod, mouse:273, resizewindow
+               bind = $mod, Escape, killactive
+               bind = $mod , X, exec, hyprctl kill
 
 
-                       bind=$mod,f,fullscreen
-                       bind = $mod, Slash, exec, firefox
-                       bind = $mod, Return, exec, kitty -1
+              # fn buttons
+              binde=,XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+              binde=,XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+              bind =,XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+              bind =,XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+              binde=,XF86MonBrightnessUp,   exec, brillo -A 10
+              binde=,XF86MonBrightnessDown, exec, brillo -U 10
+              # bind =,XF86AudioPlay,         exec, playerctl play-pause
+              # bind =,XF86AudioPrev,         exec, playerctl previous
+              # bind =,XF86AudioNext,         exec, playerctl next
 
-                       bind = $mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | rofi -dmenu -i  | xargs shikanectl switch"
-
-
-                       bind = ,Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -
-                       bind = SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -
-
-                       bind = $mod, G, exec, game-picker
-                       bind = $mod, 0, exec, rofi_power
-                       bind = $mod, P, exec, rofi_power
-                       bind = $mod, D, exec, rofi-launch
-
-                       bind = CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l
-                       bind = CTRL ALT $mod , period, movecurrentworkspacetomonitor, r
-
-                       # workspaces
-
-                       ${builtins.concatStringsSep "\n" (
-                         lib.lists.imap1 (ws: code: ''
-                           bind = $mod, ${code}, workspace, ${toString ws}
-                           bind = $mod SHIFT, ${code}, movetoworkspace, ${toString ws}
-
-                           bind = $mod, ${toString ws}, workspace, ${toString ws}
-                           bind = $mod SHIFT, ${toString ws}, movetoworkspace, ${toString ws}
-                         '') (lib.strings.stringToCharacters "QWERTYUIO")
-                       )}
-
-                    # debug {
-                    #    disable_logs = false
-                    # }
-
-                    general {
-                        layout = master
-                        gaps_out = 3
-                        gaps_in = 4
-                        col.active_border = rgb(bb3344) rgb(33bb44) 45deg
-                        border_size = 2
-                    }
-
-                    cursor {
-                        inactive_timeout = 10
-                    }
-
-                  misc {
-                      enable_swallow = true
-                      swallow_regex = ^(kitty)$
-                      swallow_exception_regex = ^(wev)$
-                      # disable_hyprland_logo = true
-                      # background_color=rgb(000000)
-                  }
-
-                    gestures {
-                        workspace_swipe = true
-                        workspace_swipe_fingers = 4
-                    }
-
-                    binds {
-                      workspace_back_and_forth = true
-                    }
-                    ecosystem {
-                      no_update_news = true
-                      no_donation_nag = true
-                    }
-
-                    xwayland {
-                         force_zero_scaling = true
-                    }
-                    input {
-                        kb_layout = us
-                        kb_variant = altgr-intl
-                        follow_mouse = 2
-
-                        touchpad {
-                          disable_while_typing = true
-                          natural_scroll = true
-                        }
-
-                    }
-
-                  # workspace rules
-
-                  # No gaps for single window
-                  workspace = w[t1], gapsin:0, gapsout:0, border:0
-
-                  #WINDOW RULES
-                  windowrule = workspace 1,class:firefox
-                  windowrule = workspace 4,class:org.telegram.desktop
-                  windowrule = center,class:pavucontrol
-                  windowrule = float,class:pavucontrol
-                  windowrule = pin,class:dragon-drop
+              # Move/resize windows with mod + LMB/RMB and dragging
+              bindm = $mod, mouse:272, movewindow
+              bindm = $mod, mouse:273, resizewindow
 
 
-                  windowrule = idleinhibit fullscreen, fullscreen:1
+               bind=$mod,f,fullscreen
+               bind = $mod, Slash, exec, firefox
+               bind = $mod, Return, exec, kitty -1
 
-                   # debug {
-                   #     disable_logs = false
-                   # }
+               bind = $mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | rofi -dmenu -i  | xargs shikanectl switch"
 
-                  layerrule = noanim,rofi
-                  layerrule = dimaround,rofi
 
-                # here and not as a systemd unit so it inherits PATH
-                 exec-once = hypridle
-                 exec-once = swaybg -i ~/wall.png -m fill
-                 # exec-once = env WAYLAND_DEBUG=1 shikane 2> /tmp/shikane.log
+               bind = ,Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -
+               bind = SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -
+
+               bind = $mod, G, exec, game-picker
+               bind = $mod, 0, exec, rofi_power
+               bind = $mod, P, exec, rofi_power
+               bind = $mod, D, exec, rofi-launch
+
+               bind = CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l
+               bind = CTRL ALT $mod , period, movecurrentworkspacetomonitor, r
+
+               bind = ,mouse:277, overview:toggle
+
+               # workspaces
+
+               ${builtins.concatStringsSep "\n" (
+                 lib.lists.imap1 (ws: code: ''
+                   bind = $mod, ${code}, workspace, ${toString ws}
+                   bind = $mod SHIFT, ${code}, movetoworkspace, ${toString ws}
+
+                   bind = $mod, ${toString ws}, workspace, ${toString ws}
+                   bind = $mod SHIFT, ${toString ws}, movetoworkspace, ${toString ws}
+                 '') (lib.strings.stringToCharacters "QWERTYUIO")
+               )}
+
+            # debug {
+            #    disable_logs = false
+            # }
+
+            general {
+                layout = master
+                gaps_out = 3
+                gaps_in = 4
+                col.active_border = rgb(bb3344) rgb(33bb44) 45deg
+                border_size = 2
+            }
+
+            cursor {
+                inactive_timeout = 10
+            }
+
+          misc {
+              enable_swallow = true
+              swallow_regex = ^(kitty)$
+              swallow_exception_regex = ^(wev)$
+              # disable_hyprland_logo = true
+              # background_color=rgb(000000)
+          }
+
+            gestures {
+                workspace_swipe = true
+                workspace_swipe_fingers = 4
+            }
+
+            binds {
+              workspace_back_and_forth = true
+            }
+            ecosystem {
+              no_update_news = true
+              no_donation_nag = true
+            }
+
+            xwayland {
+                 force_zero_scaling = true
+            }
+            input {
+                kb_layout = us
+                kb_variant = altgr-intl
+                follow_mouse = 2
+
+                touchpad {
+                  disable_while_typing = true
+                  natural_scroll = true
+                }
+
+            }
+
+          # workspace rules
+
+          # No gaps for single window
+          workspace = w[t1], gapsin:0, gapsout:0, border:0
+
+          #WINDOW RULES
+          windowrule = workspace 1,class:firefox
+          windowrule = workspace 4,class:org.telegram.desktop
+          windowrule = center,class:pavucontrol
+          windowrule = float,class:pavucontrol
+          windowrule = pin,class:dragon-drop
+
+
+          windowrule = idleinhibit fullscreen, fullscreen:1
+
+           # debug {
+           #     disable_logs = false
+           # }
+
+          layerrule = noanim,rofi
+          layerrule = dimaround,rofi
+
+        # here and not as a systemd unit so it inherits PATH
+         exec-once = hypridle
+         exec-once = swaybg -i ~/wall.png -m fill
+         # exec-once = env WAYLAND_DEBUG=1 shikane 2> /tmp/shikane.log
       '';
   };
 
