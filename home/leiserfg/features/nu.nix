@@ -10,6 +10,7 @@ rec {
       enable = true;
       extraConfig = builtins.readFile ./config.nu;
       shellAliases = {
+        fg = "job unfreeze";
         vi = "nvim";
         vim = "nvim";
       };
