@@ -33,7 +33,7 @@
     # moonlight-qt
     # gnome-network-displays
     anki
-    # sunvox
+    sunvox
     # orca-c
 
     # steam
