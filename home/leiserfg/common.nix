@@ -46,6 +46,7 @@
   home.packages = with pkgs; [
     # (inputs.fabric.packages.${pkgs.system}.run-widget)
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+    mupdf
     mosh
     nmap
     pandoc
@@ -363,7 +364,7 @@
             # Enable user chrome
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "sidebar.position_start" = false; # Sideberry in the right side
-            # "widget.wayland.fractional-scale.enabled" = true;
+            "widget.wayland.fractional-scale.enabled" = true;
             "browser.compactmode.show" = true;
             "dom.webgpu.enabled" = true;
             "browser.uidensity" = 1;
