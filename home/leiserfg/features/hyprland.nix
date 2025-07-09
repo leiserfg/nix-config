@@ -102,6 +102,13 @@ in
 
                bind = ,mouse:277, overview:toggle
 
+               bind = ,switch:on:[Lid Switch],exec,
+
+            # trigger when the switch is turning on
+            # bindl = , switch:on:[Lid Switch], exec, hyprctl keyword monitor "eDP-1, disable"
+            # trigger when the switch is turning off
+            # bindl = , switch:off:[Lid Switch], exec, hyprctl keyword monitor "eDP-1,preferred,auto,1.6"
+
                # workspaces
 
                ${builtins.concatStringsSep "\n" (
@@ -118,7 +125,11 @@ in
             #    disable_logs = false
             # }
 
+            # monitor = , preferred, auto, 1
+            # monitor = eDP-1,preferred,auto,1.6
+
             general {
+
                 layout = master
                 gaps_out = 3
                 gaps_in = 4
@@ -133,7 +144,7 @@ in
           misc {
               enable_swallow = true
               swallow_regex = ^(kitty)$
-              swallow_exception_regex = ^(wev)$
+              swallow_exception_regex = ^(wev).*
               # disable_hyprland_logo = true
               # background_color=rgb(000000)
           }

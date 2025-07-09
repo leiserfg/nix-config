@@ -6,15 +6,6 @@
   unstablePkgs,
   ...
 }: {
-  # xdg.portal = {
-  #   enable = true;
-  #   config.common.default = "*";
-  #   # wlr.enable = true;
-  #   extraPortals = [
-  #     pkgs.xdg-desktop-portal-gtk
-  #     unstablePkgs.xdg-desktop-portal-hyprland
-  #   ];
-  # };
 
   security.pam.services.hyprlock = {};
   environment.systemPackages = with pkgs; [
