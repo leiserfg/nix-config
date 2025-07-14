@@ -49,7 +49,23 @@
     mosh
     nmap
     pandoc
-    libjxl
+    (
+      (aider-chat.overrideAttrs (old: {
+        litellm = pkgs.litellm.overrideDerivation (oldAttrs: {
+          src = pkgs.fetchFromGitHub {
+            owner = "BerriAI";
+            repo = "litellm";
+            tag = "v1.74.3.rc.2";
+            hash = "sha256-MtGuCVjcXIykrzePduOBVzve5fs3OTzXeeBxv7Ab8Mo=";
+          };
+        });
+      })).overrideAttrs
+      (old: {
+        doCheck = false;
+        doInstallCheck = false;
+      })
+    )
+
     pinentry-qt
     cava
     exfatprogs
@@ -64,7 +80,9 @@
     devenv
     (unstablePkgs.shikane)
     nix
+    # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
     steam-run
+    myPkgs.jpegli
     glsl_analyzer
     myPkgs.glslviewer
     # glslviewer
