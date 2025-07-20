@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 let
   userEmail = "leiserfg@gmail.com";
   userName = "leiserfg";
@@ -31,7 +31,7 @@ in
       co = "checkout";
       br = "branch";
       down = "clone --depth=1";
-      delouse = "!f() { curr_sha=`git sha`; git reset HEAD~1;git commit --allow-empty --no-verify -C \"$curr_sha\"; }; f";
+      delouse = "!f() { curr_sha=`git rev-parse HEAD`; git reset HEAD~1;git commit --allow-empty --no-verify -C \"$curr_sha\"; }; f";
       cp = "cherry-pick";
       cps = "cherry-pick -s";
       today = "diff @{yesterday}.. --stat";
@@ -142,10 +142,10 @@ in
   programs.jujutsu = {
     enable = true;
     settings = {
+
       user = {
         name = userName;
         email = userEmail;
-
       };
 
       signing = {
@@ -153,6 +153,7 @@ in
         backend = "ssh";
         key = ssh_key;
       };
+
       # git = {
       #   sign-on-push = true;
       # };
@@ -164,6 +165,7 @@ in
           "master"
         ];
       };
+
       aliases =
         let
           sh = cmd: [
@@ -188,12 +190,12 @@ in
           pre-commit = sh (
             # bash
             ''
-              [ ! -f "$(jj root)/.pre-commit-config.yaml" ] || (jj diff -r @ --name-only --no-pager | xargs pre-commit run --files)
+              [ ! -f "$(jj root)/.pre-commit-config.yaml" ] || ${lib.getExe pkgs.pre-commit} run -a
             '');
           push = sh (
             # bash
             ''
-              jj pre-commit && jj git push -c @-
+              jj pre-commit && jj git push "$@"
             '');
 
         };
