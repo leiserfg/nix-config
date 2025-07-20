@@ -8,7 +8,6 @@
 }:
 let
   cursor = "Bibata-Original-Classic";
-  cursorPackage = pkgs.bibata-hyprcursor;
 in
 {
   imports = [
@@ -26,7 +25,10 @@ in
       enable = true;
     };
 
-    plugins = [ pkgs.hyprlandPlugins.hyprspace ];
+    plugins = [
+      pkgs.hyprlandPlugins.hyprspace
+      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
+    ];
     settings = {
       "$mod" = "SUPER";
       bind =
