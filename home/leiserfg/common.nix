@@ -49,22 +49,6 @@
     mosh
     nmap
     pandoc
-    (
-      (aider-chat.overrideAttrs (old: {
-        litellm = pkgs.litellm.overrideDerivation (oldAttrs: {
-          src = pkgs.fetchFromGitHub {
-            owner = "BerriAI";
-            repo = "litellm";
-            tag = "v1.74.3.rc.2";
-            hash = "sha256-MtGuCVjcXIykrzePduOBVzve5fs3OTzXeeBxv7Ab8Mo=";
-          };
-        });
-      })).overrideAttrs
-      (old: {
-        doCheck = false;
-        doInstallCheck = false;
-      })
-    )
 
     pinentry-qt
     cava
@@ -172,9 +156,10 @@
     vulkan-tools
     lm_sensors
     darktable
-    gimp3-with-plugins
 
+    kdePackages.qtlanguageserver
     lua-language-server
+
     lsof
     file
     unrar
