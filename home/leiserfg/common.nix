@@ -85,7 +85,6 @@
 
     tinymist
     websocat
-    goose-cli
     (unstablePkgs.tdesktop)
 
     # (unstablePkgs.ags)
@@ -155,10 +154,10 @@
     noto-fonts-cjk-sans
     vulkan-tools
     lm_sensors
-    darktable
+    # darktable
 
-    kdePackages.qtlanguageserver
     lua-language-server
+    kdePackages.qtdeclarative
 
     lsof
     file
@@ -167,7 +166,7 @@
     p7zip
     d-spy
     gparted
-    presenterm
+    # presenterm
     cntr
     pre-commit
     # age
@@ -196,6 +195,7 @@
     autossh
     openssh
 
+    aider-chat
     # git stuff
     delta
 

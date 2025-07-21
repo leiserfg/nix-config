@@ -2,7 +2,6 @@
   description = "My nix config";
 
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
     nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
     nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
@@ -16,21 +15,10 @@
     blender.url = "github:edolstra/nix-warez?dir=blender";
     blender.inputs.nixpkgs.follows = "nixpkgs";
 
-    # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&ref=keepDebugInfo";
-    # hypr.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&rev=b6e226c3200276978e487a68a16fd696fcb7e7c8";
-    # 5d4b54b01286c10d4b6bf402a772b5938b054ce6  # BORKED Multimonitor
-    # hypr.inputs.nixpkgs.follows = "nixpkgs";
-
     nixos-hardware = {
       url = "github:NixOS/nixos-hardware";
     };
 
-
-    # fabric = {
-    #   url = "github:Fabric-Development/fabric";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
   };
 
   outputs =

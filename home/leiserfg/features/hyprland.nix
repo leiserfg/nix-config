@@ -26,7 +26,7 @@ in
     };
 
     plugins = [
-      pkgs.hyprlandPlugins.hyprspace
+      # pkgs.hyprlandPlugins.hyprspace
       # pkgs.hyprlandPlugins.hypr-dynamic-cursors
     ];
     settings = {
