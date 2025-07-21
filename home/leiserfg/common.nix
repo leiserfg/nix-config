@@ -147,7 +147,6 @@
     material-symbols
 
     (writeShellScriptBin "xdg-open" ''
-      # export LD_LIBRARY_PATH=$(echo $LD_LIBRARY_PATH | sed "s/:/\n/g"|grep -v "libXcursor"|xargs|sed "s/ /:/g")
       exec -a $0 ${mimeo}/bin/mimeo "$@"
     '')
     noto-fonts-emoji
