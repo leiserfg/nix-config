@@ -44,12 +44,12 @@
   };
 
   home.packages = with pkgs; [
-    # (inputs.fabric.packages.${pkgs.system}.run-widget)
+
+    love
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
     mosh
     nmap
     pandoc
-
     pinentry-qt
     cava
     exfatprogs
@@ -66,6 +66,7 @@
     nix
     # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
     steam-run
+    quickshell
     myPkgs.jpegli
     glsl_analyzer
     myPkgs.glslviewer
@@ -594,7 +595,7 @@
     defaultApplications = {
       "text/html" = "firefox.desktop";
       "x-scheme-handler/tg" = "telegram.desktop";
-      # "x-scheme-handler/msteams" = "teams-for-linux.desktop";
+      "x-scheme-handler/msteams" = "teams-for-linux.desktop";
       # "inode/directory" = "thunar.desktop";
       "inode/directory" = "pcmanfm.desktop";
       "text/x-python" = "neovim.desktop";

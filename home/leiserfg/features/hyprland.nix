@@ -26,57 +26,56 @@ in
     };
 
     plugins = [
-      # pkgs.hyprlandPlugins.hyprspace
-      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      pkgs.hyprlandPlugins.hyprspace
+      pkgs.hyprlandPlugins.hypr-dynamic-cursors
     ];
     settings = {
       "$mod" = "SUPER";
-      bind =
-        [
+      bind = [
 
-          # Move focus
-          "$mod, H, movefocus, l"
-          "$mod, L, movefocus, r"
-          "$mod, K, movefocus, u"
-          "$mod, J, movefocus, d"
+        # Move focus
+        "$mod, H, movefocus, l"
+        "$mod, L, movefocus, r"
+        "$mod, K, movefocus, u"
+        "$mod, J, movefocus, d"
 
-          "$mod SHIFT, H, movewindow, l"
-          "$mod SHIFT, L, movewindow, r"
-          "$mod SHIFT, K, movewindow, u"
-          "$mod SHIFT, J, movewindow, d"
+        "$mod SHIFT, H, movewindow, l"
+        "$mod SHIFT, L, movewindow, r"
+        "$mod SHIFT, K, movewindow, u"
+        "$mod SHIFT, J, movewindow, d"
 
-          "$mod, Escape, killactive"
-          "$mod , X, exec, hyprctl kill"
+        "$mod, Escape, killactive"
+        "$mod , X, exec, hyprctl kill"
 
-          "$mod,f,fullscreen"
-          "$mod, Slash, exec, firefox"
-          "$mod, Return, exec, kitty -1"
+        "$mod,f,fullscreen"
+        "$mod, Slash, exec, firefox"
+        "$mod, Return, exec, kitty -1"
 
-          ''$mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | rofi -dmenu -i  | xargs shikanectl switch"''
+        ''$mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | rofi -dmenu -i  | xargs shikanectl switch"''
 
-          ",Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -"
-          "SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -"
+        ",Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -"
+        "SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -"
 
-          "$mod, G, exec, game-picker"
-          "$mod, 0, exec, rofi_power"
-          "$mod, P, exec, rofi_power"
-          "$mod, D, exec, rofi-launch"
+        "$mod, G, exec, game-picker"
+        "$mod, 0, exec, rofi_power"
+        "$mod, P, exec, rofi_power"
+        "$mod, D, exec, rofi-launch"
 
-          "CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l"
-          "CTRL ALT $mod , period, movecurrentworkspacetomonitor, r"
+        "CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l"
+        "CTRL ALT $mod , period, movecurrentworkspacetomonitor, r"
 
-          ",XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-          ",XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ]
-        ++ (builtins.concatLists (
-          lib.lists.imap1 (ws: code: [
-            "$mod, ${code}, workspace, ${toString ws}"
-            "$mod SHIFT, ${code}, movetoworkspace, ${toString ws}"
+        ",XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ",XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+      ]
+      ++ (builtins.concatLists (
+        lib.lists.imap1 (ws: code: [
+          "$mod, ${code}, workspace, ${toString ws}"
+          "$mod SHIFT, ${code}, movetoworkspace, ${toString ws}"
 
-            "$mod, ${toString ws}, workspace, ${toString ws}"
-            "$mod SHIFT, ${toString ws}, movetoworkspace, ${toString ws}"
-          ]) (lib.strings.stringToCharacters "QWERTYUIO")
-        ))
+          "$mod, ${toString ws}, workspace, ${toString ws}"
+          "$mod SHIFT, ${toString ws}, movetoworkspace, ${toString ws}"
+        ]) (lib.strings.stringToCharacters "QWERTYUIO")
+      ))
 
       ;
       binde = [
@@ -93,7 +92,13 @@ in
       # debug = {
       #    disable_logs = false;
       # }
-
+      render = {
+        direct_scanout = 2; # Enable in games
+        new_render_scheduling = true;
+      };
+      misc = {
+        vrr = 2; # in fullscreen
+      };
       general = {
         layout = "master";
         gaps_out = 3;

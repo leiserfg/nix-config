@@ -23,7 +23,6 @@
     # poetry
     unstablePkgs.blender-hip
     gamescope
-    # love
     # unstablePkgs.godot_4
     # nushell
     ghostty

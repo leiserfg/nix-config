@@ -10,6 +10,7 @@
     # ./features/daw.nix
   ];
   home.packages = with pkgs; [
+    centrifugo
     pgcli
     pre-commit
     poetry
