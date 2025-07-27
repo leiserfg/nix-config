@@ -66,7 +66,7 @@
     nix
     # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
     steam-run
-    quickshell
+    myPkgs.quickshell
     myPkgs.jpegli
     glsl_analyzer
     myPkgs.glslviewer

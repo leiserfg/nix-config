@@ -66,6 +66,18 @@ in
 
         ",XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ",XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+
+        # "$mod,y,global,caelestia:session"
+        # "$mod,u,global,caelestia:launcher"
+        # "$mod,i,global,caelestia:launcherInterrupt"
+        # "$mod,o,global,caelestia:clearNotifs"
+        # "$mod,p,global,caelestia:brightnessUp"
+        # "$mod,8,global,caelestia:brightnessDown"
+        # "$mod,9,global,caelestia:mediaToggle"
+        # "$mod,0,global,caelestia:mediaPrev"
+        # "$mod,6,global,caelestia:mediaNext"
+        # "$mod,7,global,caelestia:mediaStop"
+
       ]
       ++ (builtins.concatLists (
         lib.lists.imap1 (ws: code: [

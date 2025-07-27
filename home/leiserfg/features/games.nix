@@ -4,7 +4,7 @@
   pkgs,
   config,
   outputs,
-  # gamingPkgs,
+
   unstablePkgs,
   myPkgs,
   ...
@@ -15,18 +15,19 @@ rec {
     with builtins;
     with lib;
     [
-      wineWowPackages.staging
+      # wineWowPackages.staging
       winetricks
-      myPkgs.torzu
+      myPkgs.eden-emu
       # unstablePkgs.ryujinx
       # mgba
       # aseprite
       fuse-overlayfs
       dwarfs
       bubblewrap
+      umu-launcher
       # glslviewer
-      dxvk.out
-      # gamingPkgs.wine-tkg  # This one has the wayland patches
+      # dxvk.out
+
       # gamingPkgs.wine-ge
       # unstablePkgs.wineWowPackages.waylandFull
       # myPkgs.glslviewer

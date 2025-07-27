@@ -116,7 +116,7 @@
           pkgs = legacyPackages.x86_64-linux;
           extraSpecialArgs = {
             inherit inputs;
-            # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
+
             myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
             unstablePkgs = unstablePackages.x86_64-linux;
             neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
@@ -130,7 +130,7 @@
           pkgs = legacyPackages.x86_64-linux;
           extraSpecialArgs = {
             inherit inputs;
-            # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
+
             myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
             unstablePkgs = unstablePackages.x86_64-linux;
             neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
@@ -145,7 +145,7 @@
           extraSpecialArgs = {
             inherit inputs;
             unstablePkgs = unstablePackages.x86_64-linux;
-            # gamingPkgs = inputs.nix-gaming.packages.x86_64-linux;
+
             myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
             neovimPkgs = inputs.neovim-nightly.packages.x86_64-linux;
           };

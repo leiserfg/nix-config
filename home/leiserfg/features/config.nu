@@ -1,3 +1,5 @@
+use std/config light-theme
+
 let carapace_completer = {|spans: list<string>|
 
    let expanded_alias = scope aliases
@@ -18,6 +20,7 @@ let carapace_completer = {|spans: list<string>|
 }
 
 $env.config = {
+ color_config: (light-theme)
  show_banner: false,
  buffer_editor : $env.EDITOR
  completions: {

@@ -17,8 +17,6 @@
 
   home.packages = with pkgs; [
 
-    quickshell
-
     pgcli
     # poetry
     unstablePkgs.blender-hip
