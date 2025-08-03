@@ -9,9 +9,9 @@
 {
   imports = [
     ./common.nix
-    # ./features/hyprland.nix
+    ./features/hyprland.nix
     ./features/laptop.nix
-    ./features/niri.nix
+    # ./features/niri.nix
     ./features/games.nix
     # ./features/daw.nix
   ];

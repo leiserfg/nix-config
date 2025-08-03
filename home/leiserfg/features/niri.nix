@@ -12,15 +12,10 @@
     ./_waybar.nix
   ];
 
-  _module.args.wm = "niri";
+  # _module.args.wm = "niri";
 
   home.packages = [
     pkgs.niri
-    (pkgs.writeShellScriptBin "Hyprland" ''
-      # Hack to "hide" the layers of bash
-      export SHLVL=-2
-      niri-session
-    '')
   ];
 
   wayland.windowManager.niri = {

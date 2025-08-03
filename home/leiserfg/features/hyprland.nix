@@ -57,7 +57,9 @@ in
         "$mod, Slash, exec, firefox"
         "$mod, Return, exec, kitty -1"
 
-        ''$mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | rofi -dmenu -i  | xargs shikanectl switch"''
+        # ''$mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | rofi -dmenu -i  | xargs shikanectl switch"''
+
+        ''$mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"''
 
         ",Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.satty} -f -"
         "SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.satty} -f -"
