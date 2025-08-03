@@ -20,7 +20,6 @@ rec {
       ];
     };
     carapace.enable = true;
+    carapace.enableNushellIntegration = false; # Enabled  by hand in the config
   };
-  # Workaround to avoid the gc from removing the plugins until it's fixed in home-manager
-  # home.extraDependencies = programs.nushell.plugins;
 }

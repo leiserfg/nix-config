@@ -2,12 +2,14 @@
   pkgs,
   unstablePkgs,
   lib,
-  hyprPkgs,
+  # hyprPkgs,
   config,
+  inputs,
   ...
 }:
 let
   cursor = "Bibata-Original-Classic";
+  hyprPkgs = inputs.hyprland.packages.${pkgs.system};
 in
 {
   imports = [
@@ -19,15 +21,19 @@ in
 
   services.kanshi.systemdTarget = "hyprland-session.target";
 
+  # services.shikane.enable = true;
+  # wayland.windowManager.hyprland.package = hyprPkgs.hyprland;
+
   wayland.windowManager.hyprland = {
+    # package = pkgs.hyprland.override { debug = true; };
     enable = true;
     systemd = {
       enable = true;
     };
 
     plugins = [
-      pkgs.hyprlandPlugins.hyprspace
-      pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      # pkgs.hyprlandPlugins.hyprspace
+      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
     ];
     settings = {
       "$mod" = "SUPER";
@@ -53,8 +59,8 @@ in
 
         ''$mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | rofi -dmenu -i  | xargs shikanectl switch"''
 
-        ",Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -"
-        "SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -"
+        ",Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.satty} -f -"
+        "SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.satty} -f -"
 
         "$mod, G, exec, game-picker"
         "$mod, 0, exec, rofi_power"
@@ -260,12 +266,11 @@ in
     ];
   };
 
-  xdg.portal = {
-    enable = true;
-    config.common.default = "*";
-    extraPortals = [
-      pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-hyprland
-    ];
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   config.common.default = "*";
+  #   extraPortals = [
+  #     pkgs.xdg-desktop-portal-gtk
+  #   ];
+  # };
 }

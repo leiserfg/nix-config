@@ -66,7 +66,7 @@
     nix
     # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
     steam-run
-    myPkgs.quickshell
+    quickshell
     myPkgs.jpegli
     glsl_analyzer
     myPkgs.glslviewer
@@ -155,9 +155,11 @@
     vulkan-tools
     lm_sensors
     # darktable
+    # dnglab
 
     lua-language-server
     kdePackages.qtdeclarative
+    # kdePackages.qtquickeffectmaker
 
     lsof
     file
