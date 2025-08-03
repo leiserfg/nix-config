@@ -47,6 +47,7 @@
 
     love
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+    mupdf
     mosh
     nmap
     pandoc
