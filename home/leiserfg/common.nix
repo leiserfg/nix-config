@@ -19,6 +19,7 @@
     ./features/mpv.nix
     ./features/git.nix
     ./features/kitty.nix
+    ./features/aider.nix
   ];
 
   # disable news, they don't work well with flakes and message is anoying
@@ -44,10 +45,11 @@
   };
 
   home.packages = with pkgs; [
-
-    love
+    myPkgs.wl_shimeji
+    # love
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
     mupdf
+    nix-search-cli
     mosh
     nmap
     pandoc
@@ -198,7 +200,6 @@
     autossh
     openssh
 
-    aider-chat
     # git stuff
     delta
 

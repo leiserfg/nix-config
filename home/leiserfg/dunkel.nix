@@ -2,7 +2,8 @@
   pkgs,
   unstablePkgs,
   ...
-}: {
+}:
+{
   imports = [
     ./common.nix
     # ./features/mesa.nix
@@ -26,7 +27,7 @@
   ];
 
   services.shikane = {
-    enable = true;
+    enable = false;
     settings = {
       profile = [
         {
@@ -37,7 +38,7 @@
               enable = false;
             }
             {
-              search = ["m=LG HDR WQHD"];
+              search = [ "m=LG HDR WQHD" ];
               enable = true;
               scale = 1.6666;
               mode = "3840x1600@59.99300";
@@ -53,7 +54,7 @@
               enable = false;
             }
             {
-              search = ["m=DELL U3421WE"];
+              search = [ "m=DELL U3421WE" ];
               enable = true;
               scale = 1.6666;
               mode = "3440x1440@59.97300";

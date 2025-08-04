@@ -27,6 +27,18 @@ in
   wayland.windowManager.hyprland = {
     # package = pkgs.hyprland.override { debug = true; };
     enable = true;
+    # package = pkgs.hyprland.overrideAttrs {
+    #   src = pkgs.fetchFromGitHub {
+    #     owner = "hyprwm";
+    #     repo = "hyprland";
+    #     fetchSubmodules = true;
+    #     rev = "refs/pull/11276/head";
+    #     # rev = "8857f2c";
+    #     hash = "sha256-yCoptpRPHndv4Wem+yUyHhhbQw49PM9QSfMbQJWQE+4=";
+    #   };
+    # };
+    # package = pkgs.hyprland.override { debug = true; };
+
     systemd = {
       enable = true;
     };
@@ -37,6 +49,7 @@ in
     ];
     settings = {
       "$mod" = "SUPER";
+
       bind = [
 
         # Move focus
@@ -109,9 +122,9 @@ in
         "$mod, mouse:273, resizewindow"
       ];
 
-      # debug = {
-      #    disable_logs = false;
-      # }
+      debug = {
+        disable_logs = false;
+      };
       render = {
         direct_scanout = 2; # Enable in games
         new_render_scheduling = true;
