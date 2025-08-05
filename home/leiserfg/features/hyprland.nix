@@ -44,8 +44,8 @@ in
     };
 
     plugins = [
-      # pkgs.hyprlandPlugins.hyprspace
-      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      pkgs.hyprlandPlugins.hyprspace
+      pkgs.hyprlandPlugins.hypr-dynamic-cursors
     ];
     settings = {
       "$mod" = "SUPER";
@@ -120,6 +120,7 @@ in
       bindm = [
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
+        ", mouse:277, overview:toggle"
       ];
 
       debug = {
@@ -145,9 +146,9 @@ in
       };
 
       misc = {
-        enable_swallow = true;
-        swallow_regex = "^(kitty)$";
-        swallow_exception_regex = "^(wev).*";
+        # enable_swallow = true;
+        # swallow_regex = "^(kitty)$";
+        # swallow_exception_regex = ''^(wpp.*|wps.*|et.*|.*\.tex.*|xev|wev)$'';
       };
 
       gestures = {
