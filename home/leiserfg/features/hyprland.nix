@@ -127,7 +127,7 @@ in
       };
       render = {
         direct_scanout = 2; # Enable in games
-        new_render_scheduling = true;
+        # new_render_scheduling = true;
       };
       misc = {
         vrr = 2; # in fullscreen

@@ -1,5 +1,4 @@
 {
-  unstablePkgs,
   lib,
   pkgs,
   myPkgs,

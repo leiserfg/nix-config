@@ -41,7 +41,7 @@
 
   services = {
     shikane = {
-      # enable = true;
+      enable = true;
       settings = {
         profile = [
           {
