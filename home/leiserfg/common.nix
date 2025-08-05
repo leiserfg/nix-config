@@ -3,6 +3,7 @@
   pkgs,
   myPkgs,
   neovimPkgs,
+  unstablePkgs,
   config,
   inputs,
   ...

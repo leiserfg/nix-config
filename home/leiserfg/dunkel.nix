@@ -27,7 +27,7 @@
   ];
 
   services.shikane = {
-    enable = false;
+    enable = true;
     settings = {
       profile = [
         {

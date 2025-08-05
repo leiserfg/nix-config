@@ -4,6 +4,7 @@ let
   models = [
     "gpt-4.1"
     "claude-sonnet-4"
+    "o4-mini"
   ];
   extra_params = {
     max_tokens = 80000;
@@ -20,6 +21,7 @@ in
 
   home.file.".aider.conf.yml".source = yaml.generate "aider-conf" {
     model = "github_copilot/claude-sonnet-4";
+    editor-model = "github_copilot/o4-mini";
     show-model-warnings = false;
     auto-commits = false;
   };
