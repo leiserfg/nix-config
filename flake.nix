@@ -19,9 +19,9 @@
       url = "github:NixOS/nixos-hardware";
     };
 
-    hyprland = {
-      url = "github:leiserfg/Hyprland";
-    };
+    # hyprland = {
+    #   url = "github:leiserfg/Hyprland";
+    # };
 
   };
 
