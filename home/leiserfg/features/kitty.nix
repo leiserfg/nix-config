@@ -38,11 +38,13 @@
       "ctrl+F1" = "launch --allow-remote-control kitty +kitten broadcast";
       "ctrl+shift+t" = "new_tab_with_cwd";
       "ctrl+shift+enter" = "new_os_window_with_cwd";
-            # TODO fix the cursor position
+
+      # ''launch   --stdin-source=@screen_scrollback  nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c "autocmd VimEnter * normal G" -'';
+
       "kitty_mod+h" =
-        ''launch --type=overlay --stdin-source=@screen_scrollback nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c "autocmd VimEnter * normal @scrolled_byG@cursor-yjk@cursor-xl" - '';
+        ''launch --type=overlay --stdin-source=@screen_scrollback nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c 'autocmd VimEnter * normal let kitty_data = $KITTY_PIPE_DATA | let parts = split(kitty_data, ":") | let scrolled_by = parts[0] | call cursor(line("$") - scrolled_by + 1, 0) | call feedkeys("zb", "n")' - '';
       "kitty_mod+g" =
-        ''launch --type=overlay --stdin-source=@last_cmd_output nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c "autocmd VimEnter * normal @scrolled_byG@cursor-yjk@cursor-xl" -'';
+        ''launch --type=overlay --stdin-source=@last_cmd_output nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c 'autocmd VimEnter * normal let kitty_data = $KITTY_PIPE_DATA | let parts = split(kitty_data, ":") | let scrolled_by = parts[0] | call cursor(line("$") - scrolled_by, 0) | call feedkeys("zb", "n")' -'';
     };
   };
 }
