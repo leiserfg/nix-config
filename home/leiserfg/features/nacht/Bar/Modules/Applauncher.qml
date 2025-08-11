@@ -13,12 +13,16 @@ import "../../Helpers/Fuzzysort.js" as Fuzzysort
 PanelWithOverlay {
     id: appLauncherPanel
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
-    
+
+    property int topMargin: 10
+
     function isPinned(app) {
         return app && app.execString && Settings.settings.pinnedExecs.indexOf(app.execString) !== -1;
     }
+
     function togglePin(app) {
-        if (!app || !app.execString) return;
+        if (!app || !app.execString)
+            return;
         var arr = Settings.settings.pinnedExecs ? Settings.settings.pinnedExecs.slice() : [];
         var idx = arr.indexOf(app.execString);
         if (idx === -1) {
@@ -29,7 +33,7 @@ PanelWithOverlay {
         Settings.settings.pinnedExecs = arr;
         root.updateFilter();
     }
-    
+
     function showAt() {
         appLauncherPanelRect.showAt();
     }
@@ -157,7 +161,7 @@ PanelWithOverlay {
                     }
                 }
                 // Sort pinned alphabetically
-                pinned.sort(function(a, b) {
+                pinned.sort(function (a, b) {
                     return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
                 });
                 root.filteredApps = pinned.concat(unpinned);
@@ -184,7 +188,7 @@ PanelWithOverlay {
                         Quickshell.clipboardText = String(modelData.result);
                         Quickshell.execDetached(["notify-send", "Calculator Result", `${modelData.expr} = ${modelData.result} (copied to clipboard)`]);
                     });
-                } else if (modelData.runInTerminal && termEmu){
+                } else if (modelData.runInTerminal && termEmu) {
                     Quickshell.execDetached([termEmu, "-e", modelData.execString.trim()]);
                 } else if (modelData.execute) {
                     modelData.execute();
@@ -215,7 +219,6 @@ PanelWithOverlay {
                     id: searchBar
                     color: Theme.surfaceVariant
                     radius: 20
-                    height: 48
                     Layout.fillWidth: true
                     border.color: searchField.activeFocus ? Theme.accentPrimary : Theme.outline
                     border.width: searchField.activeFocus ? 2 : 1
@@ -310,13 +313,9 @@ PanelWithOverlay {
 
                             Rectangle {
                                 anchors.fill: parent
-                                color: (hovered || isSelected)
-                                    ? Theme.accentPrimary
-                                    : (appLauncherPanel.isPinned(modelData) ? Theme.surfaceVariant : "transparent")
+                                color: (hovered || isSelected) ? Theme.accentPrimary : (appLauncherPanel.isPinned(modelData) ? Theme.surfaceVariant : "transparent")
                                 radius: 12
-                                border.color: appLauncherPanel.isPinned(modelData)
-                                    ? "transparent"
-                                    : (hovered || isSelected ? Theme.accentPrimary : "transparent")
+                                border.color: appLauncherPanel.isPinned(modelData) ? "transparent" : (hovered || isSelected ? Theme.accentPrimary : "transparent")
                                 border.width: appLauncherPanel.isPinned(modelData) ? 0 : (hovered || isSelected ? 2 : 0)
                                 Behavior on color {
                                     ColorAnimation {
@@ -393,14 +392,15 @@ PanelWithOverlay {
                                     text: modelData.isCalculator ? "content_copy" : "chevron_right"
                                     font.family: "Material Symbols Sharp"
                                     font.pixelSize: Theme.fontSizeBody
-                                    color: (hovered || isSelected)
-                                        ? Theme.onAccent
-                                        : (appLauncherPanel.isPinned(modelData) ? Theme.textPrimary : Theme.textSecondary)
+                                    color: (hovered || isSelected) ? Theme.onAccent : (appLauncherPanel.isPinned(modelData) ? Theme.textPrimary : Theme.textSecondary)
                                     verticalAlignment: Text.AlignVCenter
                                     Layout.rightMargin: 8 // Add margin to separate from star
                                 }
                                 // Add a spacing item between chevron and star
-                                Item { width: 8; height: 1 }
+                                Item {
+                                    width: 8
+                                    height: 1
+                                }
                             }
 
                             Rectangle {
@@ -417,7 +417,8 @@ PanelWithOverlay {
                                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                                 onClicked: {
                                     // Prevent app launch if click is inside pinArea
-                                    if (pinArea.containsMouse) return;
+                                    if (pinArea.containsMouse)
+                                        return;
                                     if (mouse.button === Qt.RightButton) {
                                         appLauncherPanel.togglePin(modelData);
                                         return;
@@ -451,7 +452,8 @@ PanelWithOverlay {
                             // Pin/Unpin button (move to last child for stacking)
                             Item {
                                 id: pinArea
-                                width: 28; height: 28
+                                width: 28
+                                height: 28
                                 z: 100 // Ensure above everything else
                                 anchors.right: parent.right
                                 anchors.verticalCenter: parent.verticalCenter
@@ -473,9 +475,7 @@ PanelWithOverlay {
                                     text: "star"
                                     font.family: "Material Symbols Sharp"
                                     font.pixelSize: Theme.fontSizeSmall
-                                    color: (parent.MouseArea.containsMouse || hovered || isSelected)
-                                        ? Theme.onAccent
-                                        : (appLauncherPanel.isPinned(modelData) ? Theme.textPrimary : Theme.textDisabled)
+                                    color: (parent.MouseArea.containsMouse || hovered || isSelected) ? Theme.onAccent : (appLauncherPanel.isPinned(modelData) ? Theme.textPrimary : Theme.textDisabled)
                                     verticalAlignment: Text.AlignVCenter
                                 }
                             }

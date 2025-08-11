@@ -381,12 +381,6 @@ Rectangle {
     }
 
     Process {
-        id: logoutProcessNiri
-        command: ["niri", "msg", "action", "quit", "--skip-confirmation"]
-        running: false
-    }
-
-    Process {
         id: logoutProcessHyprland
         command: ["hyprctl", "dispatch", "exit"]
         running: false
@@ -399,9 +393,7 @@ Rectangle {
     }
 
     function logout() {
-        if (WorkspaceManager.isNiri) {
-            logoutProcessNiri.running = true;
-        } else if (WorkspaceManager.isHyprland) {
+        if (WorkspaceManager.isHyprland) {
             logoutProcessHyprland.running = true;
         } else {
             // fallback or error

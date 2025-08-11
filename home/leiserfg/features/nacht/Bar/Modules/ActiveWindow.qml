@@ -13,11 +13,10 @@ PanelWindow {
     anchors.left: true
     anchors.right: true
     focusable: false
-    margins.top: barHeight
+    margins.top: Settings.settings.barHeight
     visible: !activeWindowWrapper.finallyHidden
     implicitHeight: activeWindowTitleContainer.height
     implicitWidth: 0
-    property int barHeight: 36
     color: "transparent"
 
             function getIcon() {
@@ -76,7 +75,7 @@ PanelWindow {
             }
         }
 
-        y: shouldShow ? 0 : -activeWindowPanel.barHeight
+        y: shouldShow ? 0 : -Settings.settings.barHeight
         height: shouldShow ? fullHeight : 1
         opacity: shouldShow ? 1 : 0
         clip: true

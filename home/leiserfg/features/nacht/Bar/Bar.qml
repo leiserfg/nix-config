@@ -33,7 +33,7 @@ Scope {
                     id: panel
                     screen: modelData
                     color: "transparent"
-                    implicitHeight: barBackground.height
+                    implicitHeight:  Settings.settings.barHeight
                     anchors.top: true
                     anchors.left: true
                     anchors.right: true
@@ -42,11 +42,8 @@ Scope {
 
                     Rectangle {
                         id: barBackground
-                        width: parent.width
-                        height: 36
+                        anchors.fill: parent
                         color: Theme.backgroundPrimary
-                        anchors.top: parent.top
-                        anchors.left: parent.left
                     }
 
                     Row {

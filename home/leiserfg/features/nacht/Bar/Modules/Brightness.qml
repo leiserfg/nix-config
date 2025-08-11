@@ -13,94 +13,64 @@ Item {
     property bool isSettingBrightness: false
     property bool hasPendingSet: false
     property int pendingSetValue: -1
-    property bool firstChange: true 
+    property bool firstChange: true
 
     width: pill.width
     height: pill.height
-    
+
     Process {
         id: getBrightnessProcess
-        command: [Quickshell.shellDir + "/Programs/zigbrightness", "get", monitorName]
+        command: ["brillo"]
 
         stdout: StdioCollector {
             onStreamFinished: {
-                const output = this.text.trim()
-                const val = parseInt(output)
-                if (isNaN(val)) return
-
+                const output = this.text.trim();
+                const val = parseFloat(output);
+                if (isNaN(val))
+                    return;
                 if (val < 0) {
-                    brightnessDisplay.visible = false
-                }
-                else if (val >= 0 && val !== previousBrightness) {
-                    brightnessDisplay.visible = true
-                    previousBrightness = brightness
-                    brightness = val
-                    pill.text = brightness + "%"
+                    brightnessDisplay.visible = false;
+                } else if (val >= 0 && val !== previousBrightness) {
+                    brightnessDisplay.visible = true;
+                    previousBrightness = brightness;
+                    brightness = val;
+                    // pill.text = brightness + "%";
 
                     if (firstChange) {
-                        firstChange = false
-                    }
-                    else {
-                        pill.show()
+                        firstChange = false;
+                    } else {
+                        pill.show();
                     }
                 }
             }
         }
     }
-    
+
     function getBrightness() {
-        if (isSettingBrightness) {
-            return
-        }
-        getBrightnessProcess.running = true
+        getBrightnessProcess.running = true;
     }
-    
+
     Process {
         id: setBrightnessProcess
         property int targetValue: -1
-        command: [Quickshell.shellDir + "/Programs/zigbrightness", "set", monitorName, targetValue.toString()]
-        
-        stdout: StdioCollector {
-            onStreamFinished: {
-                const output = this.text.trim()
-                const val = parseInt(output)
-                
-                if (!isNaN(val) && val >= 0) {
-                    brightness = val
-                    pill.text = brightness + "%"
-                    pill.show()
-                }
-                
-                isSettingBrightness = false
-                
-                if (hasPendingSet) {
-                    hasPendingSet = false
-                    const pendingValue = pendingSetValue
-                    pendingSetValue = -1
-                    setBrightness(pendingValue)
-                }
+        command: ["brillo", "-S", targetValue.toString()]
+        onExited: status_code => {
+            if (status_code == 0) {
+                brightnessDisplay.brightness = parseFloat(targetValue);
             }
         }
     }
-    
+
     function setBrightness(newValue) {
-        newValue = Math.max(0, Math.min(100, newValue))
-        
-        if (isSettingBrightness) {
-            hasPendingSet = true
-            pendingSetValue = newValue
-            return
-        }
-        
-        isSettingBrightness = true
-        setBrightnessProcess.targetValue = newValue
-        setBrightnessProcess.running = true
+        newValue = Math.max(0, Math.min(100, newValue));
+        setBrightnessProcess.targetValue = newValue;
+        setBrightnessProcess.running = true;
     }
 
     PillIndicator {
         id: pill
         icon: "brightness_high"
-        text: brightness >= 0 ? brightness + "%" : "--"
+        text: brightnessDisplay.brightness >= 0 ? brightnessDisplay.brightness + "%" : "--"
         pillColor: Theme.surfaceVariant
         iconCircleColor: Theme.accentPrimary
         iconTextColor: Theme.backgroundPrimary
@@ -109,19 +79,19 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             onEntered: {
-                getBrightness()
-                brightnessTooltip.tooltipVisible = true
-                pill.showDelayed()
+                brightnessDisplay.getBrightness();
+                brightnessTooltip.tooltipVisible = true;
+                pill.showDelayed();
             }
             onExited: {
-                brightnessTooltip.tooltipVisible = false
-                pill.hide()
+                brightnessTooltip.tooltipVisible = false;
+                pill.hide();
             }
-            
-            onWheel: function(wheel) {
-                const delta = wheel.angleDelta.y > 0 ? 5 : -5
-                const newBrightness = brightness + delta
-                setBrightness(newBrightness)
+
+            onWheel: function (wheel) {
+                const delta = wheel.angleDelta.y > 0 ? 5 : -5;
+                const newBrightness = brightness + delta;
+                setBrightness(newBrightness);
             }
         }
         StyledTooltip {
@@ -135,6 +105,6 @@ Item {
     }
 
     Component.onCompleted: {
-        getBrightness()
+        getBrightness();
     }
 }
