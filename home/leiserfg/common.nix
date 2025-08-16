@@ -111,6 +111,7 @@
 
     dmidecode
     wf-recorder
+    gpu-screen-recorder
     # iredis
     dua
     picocom # run as:  sudo picocom /dev/ttyACM0
@@ -162,8 +163,14 @@
 
     lua-language-server
     kdePackages.qtdeclarative
-    # kdePackages.qtquickeffectmaker
 
+    (kdePackages.qtquickeffectmaker.overrideAttrs {
+      postPatch = ''
+        ls
+         substituteInPlace ./tools/qqem/applicationsettings.cpp \
+         --replace "QLibraryInfo::path(QLibraryInfo::QmlImportsPath)"  "QStringLiteral(\"$out/lib/qt-6/qml\")"
+      '';
+    })
     lsof
     file
     unrar
@@ -548,7 +555,7 @@
   };
 
   services = {
-    darkman.enable = false;
+    # darkman.enable = false;
     trayscale.enable = true;
     gpg-agent.enable = true;
     # pasystray.enable = true;

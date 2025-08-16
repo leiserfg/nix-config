@@ -1,6 +1,7 @@
 # This file (and the global directory) holds config that i use on all hosts
 {
   pkgs,
+  lib,
   inputs,
   outputs,
   ...
@@ -16,12 +17,6 @@
       scheduler = "scx_lavd";
       extraArgs = [ "--autopower" ];
     };
-    # disabled cause i"m using LAVD
-    # ananicy = {
-    #   enable = true;
-    #   package = pkgs.ananicy-cpp;
-    #   rulesProvider = pkgs.ananicy-rules-cachyos;
-    # };
 
     openssh.enable = true;
     udev.packages = [
@@ -29,7 +24,11 @@
     ];
     dbus.implementation = "broker";
     upower.enable = true;
-    power-profiles-daemon.enable = true;
+    # power-profiles-daemon.enable = true;
+
+    tuned.enable = true;
+    tlp.enable = false;
+
     interception-tools =
       let
         intercept = "${pkgs.interception-tools}/bin/intercept";
@@ -39,9 +38,6 @@
       {
         enable = true;
         udevmonConfig = ''
-          - JOB: ""
-            DEVICE:
-              NAME: .*[Ff]erris.*
           - JOB: ""
             DEVICE:
               NAME: .*Leiser.*
@@ -60,4 +56,5 @@
         '';
       };
   };
+
 }

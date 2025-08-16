@@ -27,7 +27,7 @@
     ghostty
     audacity
     ddcutil
-    # playwright-test
+    playwright-test
     # moonlight-qt
     # gnome-network-displays
     anki
@@ -38,6 +38,12 @@
     # scrcpy
     # (unstablePkgs.llama-cpp.override { vulkanSupport = true; })
   ];
+  # environment.
+
+  home.sessionVariables = {
+    PLAYWRIGHT_BROWSERS_PATH = pkgs.playwright-driver.browsers;
+    PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
+  };
 
   services = {
     shikane = {

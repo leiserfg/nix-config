@@ -12,6 +12,7 @@
     ../common/features/docker.nix
     ../common/features/oom.nix
     # ../common/features/zswap.nix
+    ../common/features/laptop.nix
   ];
   hardware.cpu.amd.updateMicrocode = true;
   services.fprintd.enable = true;

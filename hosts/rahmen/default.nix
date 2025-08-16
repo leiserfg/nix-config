@@ -12,6 +12,7 @@
     ../common/users/leiserfg.nix
     ../common/features/hyprland.nix
     ../common/features/docker.nix
+    ../common/features/laptop.nix
   ];
 
   programs.dconf.enable = true;
