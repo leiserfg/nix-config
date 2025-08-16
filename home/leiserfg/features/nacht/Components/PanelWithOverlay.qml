@@ -34,6 +34,11 @@ PanelWindow {
         onClicked: outerPanel.dismiss()
     }
 
+    Shortcut {
+        sequences: ["Escape"]
+        onActivated: outerPanel.dismiss()
+    }
+
     Behavior on color {
         ColorAnimation {
             duration: 350

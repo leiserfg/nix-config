@@ -53,10 +53,6 @@ Scope {
                         anchors.leftMargin: 18
                         spacing: 12
 
-                        SystemInfo {
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-
                         Media {
                             anchors.verticalCenter: parent.verticalCenter
                         }

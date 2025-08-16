@@ -160,21 +160,8 @@ PanelWithOverlay {
                     z: 2
                 }
 
-                // Music and System Monitor row
-                RowLayout {
-                    spacing: 12
-                    Layout.fillWidth: true
-                    Layout.alignment: Qt.AlignHCenter
+                    Music { }
 
-                    Music {
-                        z: 2
-                    }
-
-                    SystemMonitor {
-                        id: systemMonitor
-                        z: 2
-                    }
-                }
 
                 // Power profile, Wifi and Bluetooth row
                 RowLayout {
