@@ -24,12 +24,11 @@
     gamescope
     # unstablePkgs.godot_4
     # nushell
-    ghostty
-    audacity
+    # ghostty
+    # audacity
     ddcutil
+
     playwright-test
-    # moonlight-qt
-    # gnome-network-displays
     anki
     sunvox
     # orca-c

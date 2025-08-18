@@ -104,9 +104,9 @@
     nixd
     # pmenu
     pciutils
-    # image-roll
+
     imv
-    swayimg
+    eog
     unzip
 
     dmidecode
