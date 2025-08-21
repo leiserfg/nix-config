@@ -71,11 +71,6 @@ WlSessionLock {
             console.log("PAM not available");
             return;
         }
-        if (!lock.password) {
-            lock.errorMessage = "Password required.";
-            console.log("No password entered");
-            return;
-        }
         console.log("Starting PAM authentication...");
         lock.authenticating = true;
         lock.errorMessage = "";
