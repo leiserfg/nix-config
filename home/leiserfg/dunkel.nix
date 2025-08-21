@@ -11,7 +11,7 @@
     # ./features/daw.nix
   ];
   home.packages = with pkgs; [
-    centrifugo
+    # centrifugo
     pgcli
     pre-commit
     poetry
@@ -20,9 +20,9 @@
     csvkit
     libreoffice-qt6
     terraform
-    traceroute
+    # traceroute
     poedit
-    (unstablePkgs.teams-for-linux)
+    # (unstablePkgs.teams-for-linux)
     # slack
   ];
 

@@ -48,6 +48,7 @@
     myPkgs.wl_shimeji
     # love
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+    nix-playground
     mupdf
     nix-search-cli
     mosh

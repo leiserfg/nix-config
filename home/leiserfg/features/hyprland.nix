@@ -210,6 +210,7 @@ in
         HYPRCURSOR_THEME = cursor;
         HYPRCURSOR_SIZE = config.home.pointerCursor.size;
         GRIMBLAST_HIDE_CURSOR = 0;
+        GDK_SCALE = 2;
       };
     };
   };
