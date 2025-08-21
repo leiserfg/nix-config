@@ -41,7 +41,6 @@ in
 
     systemd = {
       enable = true;
-      variables = [ "--all" ];
     };
 
     plugins = [
@@ -124,15 +123,17 @@ in
         ", mouse:277, overview:toggle"
       ];
 
-      debug = {
-        disable_logs = false;
-      };
+      # debug = {
+      #   disable_logs = false;
+      # };
+
       render = {
         direct_scanout = 2; # Enable in games
         # new_render_scheduling = true;
       };
       misc = {
         vrr = 2; # in fullscreen
+        vfr = true;
       };
       general = {
         layout = "master";
