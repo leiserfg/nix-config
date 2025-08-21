@@ -41,6 +41,7 @@ in
 
     systemd = {
       enable = true;
+      variables = [ "--all" ];
     };
 
     plugins = [
@@ -257,30 +258,32 @@ in
     };
   };
 
-  programs.hypridle = {
+  services.hypridle = {
     enable = true;
-    package = pkgs.hypridle; # it's not in stable yet
-    lockCmd = "pidof hyprlock || hyprlock";
+    settings = {
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
+        after_sleep_cmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
+      };
 
-    beforeSleepCmd = "loginctl lock-session"; # lock before suspend.
-    afterSleepCmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
+      listener = [
+        {
+          timeout = 5 * 60; # 5min
+          on_timeout = "loginctl lock-session"; # lock screen when timeout has passed
+        }
 
-    listeners = [
-      {
-        timeout = 5 * 60; # 5min
-        onTimeout = "loginctl lock-session"; # lock screen when timeout has passed
-      }
-
-      {
-        timeout = builtins.floor (5.5 * 60); # 5.5min
-        onTimeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
-        onResume = "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
-      }
-      {
-        timeout = 30 * 60;
-        onTimeout = "systemctl suspend"; # suspend pc
-      }
-    ];
+        {
+          timeout = builtins.floor (5.5 * 60);
+          on_timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
+          on_resume = "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
+        }
+        # {
+        #   timeout = 30 * 60;
+        #   on_timeout = "systemctl suspend";
+        # }
+      ];
+    };
   };
 
   # xdg.portal = {

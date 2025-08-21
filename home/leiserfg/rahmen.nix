@@ -18,6 +18,13 @@
 
   home.packages = with pkgs; [
 
+    # (kdePackages.qtquickeffectmaker.overrideAttrs {
+    #   postPatch = ''
+    #     ls
+    #      substituteInPlace ./tools/qqem/applicationsettings.cpp \
+    #      --replace "QLibraryInfo::path(QLibraryInfo::QmlImportsPath)"  "QStringLiteral(\"$out/lib/qt-6/qml\")"
+    #   '';
+    # })
     pgcli
     # poetry
     unstablePkgs.blender-hip

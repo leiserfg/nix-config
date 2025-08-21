@@ -13,7 +13,10 @@
       "hid-nintendo"
       "k10temp"
     ];
-    extraModulePackages = with config.boot.kernelPackages; [ zenpower ];
+    extraModulePackages = with config.boot.kernelPackages; [
+      zenpower
+      # ddcci-driver
+    ];
 
   };
 }

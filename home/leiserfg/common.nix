@@ -165,13 +165,6 @@
     lua-language-server
     kdePackages.qtdeclarative
 
-    (kdePackages.qtquickeffectmaker.overrideAttrs {
-      postPatch = ''
-        ls
-         substituteInPlace ./tools/qqem/applicationsettings.cpp \
-         --replace "QLibraryInfo::path(QLibraryInfo::QmlImportsPath)"  "QStringLiteral(\"$out/lib/qt-6/qml\")"
-      '';
-    })
     lsof
     file
     unrar
@@ -378,7 +371,7 @@
             # Enable user chrome
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
             "sidebar.position_start" = false; # Sideberry in the right side
-            "widget.wayland.fractional-scale.enabled" = false;
+            "widget.wayland.fractional-scale.enabled" = true;
             "browser.compactmode.show" = true;
             "dom.webgpu.enabled" = true;
             "browser.uidensity" = 1;
