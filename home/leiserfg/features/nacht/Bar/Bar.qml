@@ -57,21 +57,21 @@ Scope {
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
-                        Taskbar {
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-                    }
-
-                    ActiveWindow {
-                        screen: modelData
-                    }
-
                     Workspace {
                         id: workspace
                         screen: modelData
                         anchors.horizontalCenter: barBackground.horizontalCenter
                         anchors.verticalCenter: barBackground.verticalCenter
                     }
+                        // HyprWSbar {
+                        //     anchors.verticalCenter: parent.verticalCenter
+                        // }
+                    }
+
+                    ActiveWindow {
+                        screen: modelData
+                    }
+
 
                     Row {
                         id: rightWidgetsRow

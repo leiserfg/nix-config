@@ -393,12 +393,7 @@ Rectangle {
     }
 
     function logout() {
-        if (WorkspaceManager.isHyprland) {
-            logoutProcessHyprland.running = true;
-        } else {
-            // fallback or error
-            console.warn("No supported compositor detected for logout");
-        }
+        logoutProcessHyprland.running = true;
     }
 
     function suspend() {

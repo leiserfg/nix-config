@@ -11,7 +11,6 @@ Singleton {
     id: root
 
     property ListModel workspaces: ListModel {}
-    property bool isHyprland: false
     property var hlWorkspaces: Hyprland.workspaces.values
     // Detect which compositor we're using
     Component.onCompleted: {
@@ -24,7 +23,6 @@ Singleton {
             try {
                 if (Hyprland.eventSocketPath) {
                     console.log("Detected Hyprland compositor");
-                    isHyprland = true;
                     initHyprland();
                     return;
                 }
@@ -38,17 +36,8 @@ Singleton {
 
     // Initialize Hyprland integration
     function initHyprland() {
-        try {
-            // Fixes the odd workspace issue.
-            Hyprland.refreshWorkspaces();
-            // hlWorkspaces = Hyprland.workspaces.values;
-            // updateHyprlandWorkspaces();
-            return true;
-        } catch (e) {
-            console.error("Error initializing Hyprland:", e);
-            isHyprland = false;
-            return false;
-        }
+        Hyprland.refreshWorkspaces();
+        return true;
     }
 
     onHlWorkspacesChanged: {

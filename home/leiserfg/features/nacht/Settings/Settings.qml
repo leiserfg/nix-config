@@ -62,9 +62,8 @@ Singleton {
             property bool reverseDayMonth: false
             property bool use12HourClock: false
             property bool dimPanels: true
-            property int barHeight: 20
+            property int barHeight: 24
             property real fontSizeMultiplier: 1.0  // Font size multiplier (1.0 = normal, 1.2 = 20% larger, 0.8 = 20% smaller)
-            property int taskbarIconSize: 24  // Taskbar icon button size in pixels (default: 32, smaller: 24, larger: 40)
             property var pinnedExecs: [] // Added for AppLauncher pinned apps
 
             property bool showDock: true

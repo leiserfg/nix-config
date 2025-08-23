@@ -19,20 +19,20 @@ PanelWindow {
     implicitWidth: 0
     color: "transparent"
 
-            function getIcon() {
-            var icon = Quickshell.iconPath(ToplevelManager.activeToplevel.appId.toLowerCase(), true);
-            if (!icon) {
-                icon = Quickshell.iconPath(ToplevelManager.activeToplevel.appId, true);
-            }
-            if (!icon) {
-                icon = Quickshell.iconPath(ToplevelManager.activeToplevel.title, true);
-            }
-            if (!icon) {
-                icon = Quickshell.iconPath(ToplevelManager.activeToplevel.title.toLowerCase(), "application-x-executable");
-            }
-
-            return icon;
+    function getIcon() {
+        var icon = Quickshell.iconPath(ToplevelManager.activeToplevel.appId.toLowerCase(), true);
+        if (!icon) {
+            icon = Quickshell.iconPath(ToplevelManager.activeToplevel.appId, true);
         }
+        if (!icon) {
+            icon = Quickshell.iconPath(ToplevelManager.activeToplevel.title, true);
+        }
+        if (!icon) {
+            icon = Quickshell.iconPath(ToplevelManager.activeToplevel.title.toLowerCase(), "application-x-executable");
+        }
+
+        return icon;
+    }
 
     Item {
         id: activeWindowWrapper
@@ -120,7 +120,6 @@ PanelWindow {
                 source: ToplevelManager?.activeToplevel ? getIcon() : ""
                 visible: Settings.settings.showActiveWindowIcon
                 anchors.verticalCenterOffset: -3
-
             }
 
             Text {

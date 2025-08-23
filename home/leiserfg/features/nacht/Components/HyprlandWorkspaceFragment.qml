@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Widgets
@@ -8,10 +7,11 @@ import qs.Components
 import Quickshell.Hyprland
 
 Item {
-    id: taskbar
-    width: runningAppsRow.width
+    id: tasks
+    width: Math.max(runningAppsRow.width, Settings.settings.barHeight/2)
     height: Settings.settings.barHeight
     visible: Settings.settings.showTaskbar
+    property HyprlandWorkspace workspace
 
     // Attach custom tooltip
     StyledTooltip {
@@ -40,14 +40,19 @@ Item {
         return icon || "";
     }
 
+    Rectangle {
+        anchors.fill: parent
+        color: Theme.surfaceVariant
+        radius: Math.max(4, Settings.settings.barHeight * 0.25)
+        border.color: tasks.workspace.focused ? Qt.darker(Theme.accentPrimary, 1.2) : "transparent"
+    }
+
     Row {
         id: runningAppsRow
         spacing: 8
-        height: parent.height
-
+        height: Settings.settings.barHeight - 2
         Repeater {
-            // model: ToplevelManager ? ToplevelManager.toplevels : null
-            model: Hyprland ? Hyprland.focusedWorkspace.toplevels : null
+            model: tasks.workspace.toplevels
 
             delegate: Rectangle {
                 id: appButton
@@ -57,18 +62,23 @@ Item {
                 color: isActive ? Theme.accentPrimary : (hovered ? Theme.surfaceVariant : "transparent")
                 border.color: isActive ? Qt.darker(Theme.accentPrimary, 1.2) : "transparent"
                 border.width: 1
+                property Toplevel waylandToplevel: modelData.wayland
 
-                property bool isActive: modelData.activated
+                property bool isActive: modelData?.activated && tasks.workspace.focused
                 property bool hovered: mouseArea.containsMouse
-                property string appId: modelData.wayland ? modelData.wayland.appId : ""
-                property string appTitle: modelData.wayland ? modelData.wayland.title : ""
+                property string appId: waylandToplevel ? waylandToplevel.appId : ""
+                property string appTitle: waylandToplevel ? waylandToplevel.title : ""
 
                 Behavior on color {
-                    ColorAnimation { duration: 150 }
+                    ColorAnimation {
+                        duration: 150
+                    }
                 }
 
                 Behavior on border.color {
-                    ColorAnimation { duration: 150 }
+                    ColorAnimation {
+                        duration: 150
+                    }
                 }
 
                 IconImage {
@@ -76,7 +86,7 @@ Item {
                     width: Math.max(12, Settings.settings.barHeight * 0.625)
                     height: Math.max(12, Settings.settings.barHeight * 0.625)
                     anchors.centerIn: parent
-                    source: getAppIcon(modelData.wayland)
+                    source: getAppIcon(waylandToplevel)
                     visible: source.toString() !== ""
                 }
 
@@ -87,7 +97,7 @@ Item {
                     font.family: Theme.fontFamily
                     font.pixelSize: Math.max(10, Settings.settings.barHeight * 0.4375)
                     font.bold: true
-                    color: appButton.isActive ? Theme.onAccent : Theme.textPrimary
+                    color: appButton.isActive && tasks.workspace.focused ? Theme.onAccent : Theme.textPrimary
                 }
 
                 MouseArea {
@@ -107,24 +117,24 @@ Item {
                         styledTooltip.tooltipVisible = false;
                     }
 
-                    onClicked: function(mouse) {
+                    onClicked: function (mouse) {
                         if (mouse.button === Qt.MiddleButton) {
-                            if (modelData && modelData.close) {
-                                modelData.close();
+                            if (waylandToplevel && waylandToplevel.close) {
+                                waylandToplevel.close();
                             }
                         }
 
                         if (mouse.button === Qt.LeftButton) {
-                            if (modelData && modelData.activate) {
-                                modelData.activate();
+                            if (waylandToplevel && waylandToplevel.activate) {
+                                waylandToplevel.activate();
                             }
                         }
                     }
 
                     onPressed: mouse => {
-                        if (mouse.button === Qt.RightButton) {
-                            // context menu logic (optional)
-                        }
+                        if (mouse.button === Qt.RightButton)
+                        // context menu logic (optional)
+                        {}
                     }
                 }
 
