@@ -1,15 +1,12 @@
 import Quickshell
-import Quickshell.Io
 import Quickshell.Services.Pipewire
 import Quickshell.Services.Notifications
 import QtQuick
-import QtCore
 import qs.Bar
 import qs.Bar.Modules
 import qs.Widgets
 import qs.Widgets.LockScreen
 import qs.Widgets.Notification
-import qs.Settings
 import qs.Helpers
 
 import "./Helpers/IdleInhibitor.qml"
@@ -29,9 +26,7 @@ Scope {
 
     // Volume property reflecting current audio volume in 0-100
     // Will be kept in sync dynamically below
-    property int volume: (defaultAudioSink && defaultAudioSink.audio && !defaultAudioSink.audio.muted)
-                        ? Math.round(defaultAudioSink.audio.volume * 100)
-                        : 0
+    property int volume: (defaultAudioSink && defaultAudioSink.audio && !defaultAudioSink.audio.muted) ? Math.round(defaultAudioSink.audio.volume * 100) : 0
 
     // Function to update volume with clamping, stepping, and applying to audio sink
     function updateVolume(vol) {
@@ -46,6 +41,10 @@ Scope {
     Component.onCompleted: {
         Quickshell.shell = root;
     }
+
+    // Paint {
+    //
+    // }
 
     Bar {
         id: bar
@@ -146,6 +145,7 @@ Scope {
             }
         }
     }
+
 
     // --- NEW: Keep volume property in sync with actual Pipewire audio sink volume ---
 

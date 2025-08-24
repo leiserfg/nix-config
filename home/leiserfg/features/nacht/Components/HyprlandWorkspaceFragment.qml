@@ -8,7 +8,7 @@ import Quickshell.Hyprland
 
 Item {
     id: tasks
-    width: Math.max(runningAppsRow.width, Settings.settings.barHeight/2)
+    width: Math.max(runningAppsRow.width, Settings.settings.barHeight / 2)
     height: Settings.settings.barHeight
     visible: Settings.settings.showTaskbar
     property HyprlandWorkspace workspace
@@ -151,4 +151,20 @@ Item {
             }
         }
     }
+
+    // Rectangle {
+    //     id: badge
+    //     anchors.bottom: parent.bottom
+    //     anchors.right: parent.right
+    //     width: Settings.settings.barHeight * 0.5
+    //     height: Settings.settings.barHeight / 2
+    //     color: Theme.surfaceVariant
+    //     radius: Math.max(4, Settings.settings.barHeight * 0.25)
+    //     Text {
+    //         anchors.horizontalCenter: badge.horizontalCenter
+    //         text: workspace.name
+    //         font.pixelSize: Settings.settings.barHeight * 0.5
+    //         color: Qt.darker(Theme.accentPrimary, 1.2)
+    //     }
+    // }
 }
