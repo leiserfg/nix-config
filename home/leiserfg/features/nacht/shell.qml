@@ -42,9 +42,9 @@ Scope {
         Quickshell.shell = root;
     }
 
-    // Paint {
-    //
-    // }
+    Paint {
+
+    }
 
     Bar {
         id: bar
