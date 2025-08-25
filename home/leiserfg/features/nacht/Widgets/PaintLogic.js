@@ -1,24 +1,240 @@
 .pragma library
 
-function drawRectangle(ctx, x1, y1, x2, y2, fill) {
+// Base Tool class
+class Tool {
+    constructor() {
+        this.name = "";
+        this.defaultArgs = {};
+        this.visibleAttributes = [];
+    }
+
+    draw(ctx, item) {
+        // Override in subclasses
+    }
+
+    createItem(x, y, args = {}) {
+        // Override in subclasses
+        return null;
+    }
+
+    updateItem(item, x, y) {
+        // Override in subclasses
+    }
+
+    getHandlers(item) {
+        // Override in subclasses - return array of handler objects with x, y, name
+        return [];
+    }
+
+    updateHandler(item, handlerName, x, y) {
+        // Override in subclasses
+    }
+
+    isNearHandler(item, x, y) {
+        // Returns handler name if near one, null otherwise
+        const handlers = this.getHandlers(item);
+        for (let i = 0; i < handlers.length; i++) {
+            const handler = handlers[i];
+            if (Math.abs(x - handler.x) < 10 && Math.abs(y - handler.y) < 10) {
+                return handler.name;
+            }
+        }
+        return null;
+    }
+
+    drawHandlers(ctx, item) {
+        const handlers = this.getHandlers(item);
+        for (let i = 0; i < handlers.length; i++) {
+            const handler = handlers[i];
+            drawHandler(ctx, handler.x, handler.y);
+        }
+    }
+
+    // New methods for undo and commit
+    undo(state) {
+        // Override in subclasses
+    }
+
+    commit(state, item) {
+        // Override in subclasses
+    }
+
+    drawAll(ctx, state) {
+        // Override in subclasses
+    }
+}
+
+// Arrow Tool
+class ArrowTool extends Tool {
+    constructor() {
+        super();
+        this.name = "arrow";
+        this.defaultArgs = {
+            lineColor: "black"
+        };
+        this.visibleAttributes = ["lineColor"];
+    }
+
+    draw(ctx, item) {
+        drawArrow(ctx, item.x1, item.y1, item.x2, item.y2, item.lineColor || this.defaultArgs.lineColor);
+    }
+
+    createItem(x, y, args = {}) {
+        return {
+            x1: x,
+            y1: y,
+            x2: x,
+            y2: y,
+            lineColor: args.lineColor || this.defaultArgs.lineColor
+        };
+    }
+
+    updateItem(item, x, y) {
+        item.x2 = x;
+        item.y2 = y;
+    }
+
+    getHandlers(item) {
+        return [
+            { x: item.x1, y: item.y1, name: "start" },
+            { x: item.x2, y: item.y2, name: "end" }
+        ];
+    }
+
+    updateHandler(item, handlerName, x, y) {
+        if (handlerName === "start") {
+            item.x1 = x;
+            item.y1 = y;
+        } else if (handlerName === "end") {
+            item.x2 = x;
+            item.y2 = y;
+        }
+    }
+
+    undo(state) {
+        state.arrows.pop();
+    }
+
+    commit(state, item) {
+        state.arrows.push(item);
+    }
+
+    drawAll(ctx, state) {
+        for (let i = 0; i < state.arrows.length; ++i) {
+            this.draw(ctx, state.arrows[i]);
+        }
+    }
+}
+
+// Rectangle Tool
+class RectangleTool extends Tool {
+    constructor() {
+        super();
+        this.name = "rect";
+        this.defaultArgs = {
+            fillColor: "rgba(0,0,255,0.2)",
+            borderColor: "blue"
+        };
+        this.visibleAttributes = ["fillColor", "borderColor"];
+    }
+
+    draw(ctx, item) {
+        drawRectangle(ctx, item.x1, item.y1, item.x2, item.y2, 
+                     item.fillColor || this.defaultArgs.fillColor, 
+                     item.borderColor || this.defaultArgs.borderColor);
+    }
+
+    createItem(x, y, args = {}) {
+        return {
+            x1: x,
+            y1: y,
+            x2: x,
+            y2: y,
+            fillColor: args.fillColor || this.defaultArgs.fillColor,
+            borderColor: args.borderColor || this.defaultArgs.borderColor
+        };
+    }
+
+    updateItem(item, x, y) {
+        item.x2 = x;
+        item.y2 = y;
+    }
+
+    getHandlers(item) {
+        return [
+            { x: item.x1, y: item.y1, name: "tl" },
+            { x: item.x2, y: item.y1, name: "tr" },
+            { x: item.x1, y: item.y2, name: "bl" },
+            { x: item.x2, y: item.y2, name: "br" }
+        ];
+    }
+
+    updateHandler(item, handlerName, x, y) {
+        switch (handlerName) {
+            case "tl":
+                item.x1 = x;
+                item.y1 = y;
+                break;
+            case "tr":
+                item.x2 = x;
+                item.y1 = y;
+                break;
+            case "bl":
+                item.x1 = x;
+                item.y2 = y;
+                break;
+            case "br":
+                item.x2 = x;
+                item.y2 = y;
+                break;
+        }
+    }
+
+    undo(state) {
+        state.rectangles.pop();
+    }
+
+    commit(state, item) {
+        state.rectangles.push(item);
+    }
+
+    drawAll(ctx, state) {
+        for (let i = 0; i < state.rectangles.length; ++i) {
+            this.draw(ctx, state.rectangles[i]);
+        }
+    }
+}
+
+// Tool Registry
+const tools = {
+    "arrow": new ArrowTool(),
+    "rect": new RectangleTool()
+};
+
+function getTool(name) {
+    return tools[name];
+}
+
+// Drawing functions
+function drawRectangle(ctx, x1, y1, x2, y2, fillColor, borderColor) {
     ctx.save();
-    ctx.strokeStyle = "blue";
+    ctx.strokeStyle = borderColor;
     ctx.lineWidth = 2;
-    var rx = Math.min(x1, x2);
-    var ry = Math.min(y1, y2);
-    var rw = Math.abs(x2 - x1);
-    var rh = Math.abs(y2 - y1);
-    if (fill) {
-        ctx.fillStyle = "rgba(0,0,255,0.2)";
+    const rx = Math.min(x1, x2);
+    const ry = Math.min(y1, y2);
+    const rw = Math.abs(x2 - x1);
+    const rh = Math.abs(y2 - y1);
+    if (fillColor && fillColor !== "transparent") {
+        ctx.fillStyle = fillColor;
         ctx.fillRect(rx, ry, rw, rh);
     }
     ctx.strokeRect(rx, ry, rw, rh);
     ctx.restore();
 }
 
-function drawArrow(ctx, x1, y1, x2, y2) {
+function drawArrow(ctx, x1, y1, x2, y2, lineColor) {
     ctx.save();
-    ctx.strokeStyle = "black";
+    ctx.strokeStyle = lineColor;
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.moveTo(x1, y1);
@@ -26,13 +242,13 @@ function drawArrow(ctx, x1, y1, x2, y2) {
     ctx.stroke();
 
     // Arrowhead
-    var angle = Math.atan2(y2 - y1, x2 - x1);
-    var headlen = 15;
-    var arrowAngle = Math.PI / 7;
-    var x3 = x2 - headlen * Math.cos(angle - arrowAngle);
-    var y3 = y2 - headlen * Math.sin(angle - arrowAngle);
-    var x4 = x2 - headlen * Math.cos(angle + arrowAngle);
-    var y4 = y2 - headlen * Math.sin(angle + arrowAngle);
+    const angle = Math.atan2(y2 - y1, x2 - x1);
+    const headlen = 15;
+    const arrowAngle = Math.PI / 7;
+    const x3 = x2 - headlen * Math.cos(angle - arrowAngle);
+    const y3 = y2 - headlen * Math.sin(angle - arrowAngle);
+    const x4 = x2 - headlen * Math.cos(angle + arrowAngle);
+    const y4 = y2 - headlen * Math.sin(angle + arrowAngle);
 
     ctx.beginPath();
     ctx.moveTo(x2, y2);
@@ -43,237 +259,110 @@ function drawArrow(ctx, x1, y1, x2, y2) {
     ctx.restore();
 }
 
+function drawHandler(ctx, x, y) {
+    ctx.beginPath();
+    ctx.arc(x, y, 3, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
+}
+
+// Main functions
 function undo(paintCanvas) {
-    if (paintCanvas.contextStack.length === 0)
+    const state = paintCanvas.paintState;
+    if (state.contextStack.length === 0)
         return;
-    var last = paintCanvas.contextStack.pop();
-    if (last.type === "arrow") {
-        paintCanvas.arrows.pop();
-    } else if (last.type === "rect") {
-        paintCanvas.rectangles.pop();
-    } else if (last.type === "rectPerimeter") {
-        paintCanvas.rectanglePerimeters.pop();
+    const last = state.contextStack.pop();
+    const tool = getTool(last.type);
+    if (tool) {
+        tool.undo(state);
     }
     paintCanvas.requestPaint();
 }
 
 function commitCurrentItem(paintCanvas) {
-    if (paintCanvas.currentArrow) {
-        paintCanvas.arrows.push(paintCanvas.currentArrow);
-        paintCanvas.contextStack.push({
-            type: "arrow"
+    const state = paintCanvas.paintState;
+    if (state.currentItem && state.currentTool) {
+        state.currentTool.commit(state, state.currentItem);
+        state.contextStack.push({
+            type: state.currentTool.name
         });
-        paintCanvas.currentArrow = null;
-    } else if (paintCanvas.currentRectangle) {
-        paintCanvas.rectangles.push(paintCanvas.currentRectangle);
-        paintCanvas.contextStack.push({
-            type: "rect"
-        });
-        paintCanvas.currentRectangle = null;
-    } else if (paintCanvas.currentRectanglePerimeter) {
-        paintCanvas.rectanglePerimeters.push(paintCanvas.currentRectanglePerimeter);
-        paintCanvas.contextStack.push({
-            type: "rectPerimeter"
-        });
-        paintCanvas.currentRectanglePerimeter = null;
+        state.currentItem = null;
     }
     paintCanvas.requestPaint();
 }
 
 function onPressed(paintCanvas, mouse) {
-    // Handler drag logic
-    if (paintCanvas.mode === "arrow" && paintCanvas.currentArrow) {
-        // Check if near endpoints
-        if (Math.abs(mouse.x - paintCanvas.currentArrow.x1) < 10 && Math.abs(mouse.y - paintCanvas.currentArrow.y1) < 10) {
-            paintCanvas.handlerDrag = {
-                type: "arrow",
-                point: "start"
-            };
-        } else if (Math.abs(mouse.x - paintCanvas.currentArrow.x2) < 10 && Math.abs(mouse.y - paintCanvas.currentArrow.y2) < 10) {
-            paintCanvas.handlerDrag = {
-                type: "arrow",
-                point: "end"
-            };
-        }
-    } else if ((paintCanvas.mode === "rect" && paintCanvas.currentRectangle) || (paintCanvas.mode === "rectPerimeter" && paintCanvas.currentRectanglePerimeter)) {
-        var rect = paintCanvas.mode === "rect" ? paintCanvas.currentRectangle : paintCanvas.currentRectanglePerimeter;
-        // Check corners
-        var corners = [
-            {
-                x: rect.x1,
-                y: rect.y1,
-                name: "tl"
-            },
-            {
-                x: rect.x2,
-                y: rect.y1,
-                name: "tr"
-            },
-            {
-                x: rect.x1,
-                y: rect.y2,
-                name: "bl"
-            },
-            {
-                x: rect.x2,
-                y: rect.y2,
-                name: "br"
-            }
-        ];
-        for (var i = 0; i < corners.length; ++i) {
-            if (Math.abs(mouse.x - corners[i].x) < 10 && Math.abs(mouse.y - corners[i].y) < 10) {
-                paintCanvas.handlerDrag = {
-                    type: paintCanvas.mode,
-                    corner: corners[i].name
-                };
-                break;
+    const state = paintCanvas.paintState;
+    const tool = getTool(state.mode);
+    if (!tool) return;
+
+    state.currentTool = tool;
+
+    // Handle left-click for handlers and drawing
+    if (mouse.button === Qt.LeftButton) {
+        // Handler drag logic
+        if (state.currentItem) {
+            const handlerName = tool.isNearHandler(state.currentItem, mouse.x, mouse.y);
+            if (handlerName) {
+                state.handlerDrag = handlerName;
+                paintCanvas.requestPaint();
+                return;
             }
         }
 
-        // Draw handlers for current item
-    } else {
-        // Start new item
-        if (paintCanvas.mode === "arrow") {
-            paintCanvas.currentArrow = {
-                x1: mouse.x,
-                y1: mouse.y,
-                x2: mouse.x,
-                y2: mouse.y
-            };
-        } else if (paintCanvas.mode === "rect") {
-            paintCanvas.currentRectangle = {
-                x1: mouse.x,
-                y1: mouse.y,
-                x2: mouse.x,
-                y2: mouse.y
-            };
-        } else if (paintCanvas.mode === "rectPerimeter") {
-            paintCanvas.currentRectanglePerimeter = {
-                x1: mouse.x,
-                y1: mouse.y,
-                x2: mouse.x,
-                y2: mouse.y
-            };
+        // Start new item only if no current item exists
+        if (!state.currentItem) {
+            state.currentItem = tool.createItem(mouse.x, mouse.y, state.toolArgs);
+            paintCanvas.requestPaint();
+        }
+    } 
+    // Handle right-click for committing
+    else if (mouse.button === Qt.RightButton) {
+        if (state.currentItem) {
+            commitCurrentItem(paintCanvas);
         }
     }
-    paintCanvas.requestPaint();
 }
 
 function onPositionChanged(paintCanvas, mouse) {
-    if (paintCanvas.handlerDrag) {
-        if (paintCanvas.handlerDrag.type === "arrow" && paintCanvas.currentArrow) {
-            if (paintCanvas.handlerDrag.point === "start") {
-                paintCanvas.currentArrow.x1 = mouse.x;
-                paintCanvas.currentArrow.y1 = mouse.y;
-            } else if (paintCanvas.handlerDrag.point === "end") {
-                paintCanvas.currentArrow.x2 = mouse.x;
-                paintCanvas.currentArrow.y2 = mouse.y;
-            }
-        } else if ((paintCanvas.handlerDrag.type === "rect" || paintCanvas.handlerDrag.type === "rectPerimeter") && (paintCanvas.currentRectangle || paintCanvas.currentRectanglePerimeter)) {
-            var rect = paintCanvas.handlerDrag.type === "rect" ? paintCanvas.currentRectangle : paintCanvas.currentRectanglePerimeter;
-            switch (paintCanvas.handlerDrag.corner) {
-            case "tl":
-                rect.x1 = mouse.x;
-                rect.y1 = mouse.y;
-                break;
-            case "tr":
-                rect.x2 = mouse.x;
-                rect.y1 = mouse.y;
-                break;
-            case "bl":
-                rect.x1 = mouse.x;
-                rect.y2 = mouse.y;
-                break;
-            case "br":
-                rect.x2 = mouse.x;
-                rect.y2 = mouse.y;
-                break;
-            }
-        }
+    const state = paintCanvas.paintState;
+    if (!state.currentTool || !state.currentItem) return;
+
+    if (state.handlerDrag) {
+        state.currentTool.updateHandler(state.currentItem, state.handlerDrag, mouse.x, mouse.y);
     } else {
-        if (paintCanvas.mode === "arrow" && paintCanvas.currentArrow) {
-            paintCanvas.currentArrow.x2 = mouse.x;
-            paintCanvas.currentArrow.y2 = mouse.y;
-        } else if (paintCanvas.mode === "rect" && paintCanvas.currentRectangle) {
-            paintCanvas.currentRectangle.x2 = mouse.x;
-            paintCanvas.currentRectangle.y2 = mouse.y;
-        } else if (paintCanvas.mode === "rectPerimeter" && paintCanvas.currentRectanglePerimeter) {
-            paintCanvas.currentRectanglePerimeter.x2 = mouse.x;
-            paintCanvas.currentRectanglePerimeter.y2 = mouse.y;
-        }
+        state.currentTool.updateItem(state.currentItem, mouse.x, mouse.y);
     }
     paintCanvas.requestPaint();
 }
 
 function onReleased(paintCanvas) {
-    paintCanvas.handlerDrag = null;
+    const state = paintCanvas.paintState;
+    state.handlerDrag = null;
     paintCanvas.requestPaint();
 }
 
-function onDoubleClicked(paintCanvas) {
-    commitCurrentItem(paintCanvas);
-}
-
 function paintCanvas(paintCanvas) {
-    var ctx = paintCanvas.getContext("2d");
+    const ctx = paintCanvas.getContext("2d");
     ctx.clearRect(0, 0, paintCanvas.width, paintCanvas.height);
-    
-    // Draw all arrows
-    for (var i = 0; i < paintCanvas.arrows.length; ++i) {
-        drawArrow(ctx, paintCanvas.arrows[i].x1, paintCanvas.arrows[i].y1, paintCanvas.arrows[i].x2, paintCanvas.arrows[i].y2);
-    }
-    
-    // Draw all rectangles
-    for (var i = 0; i < paintCanvas.rectangles.length; ++i) {
-        drawRectangle(ctx, paintCanvas.rectangles[i].x1, paintCanvas.rectangles[i].y1, paintCanvas.rectangles[i].x2, paintCanvas.rectangles[i].y2, true);
-    }
-    
-    // Draw all rectangle perimeters
-    for (var i = 0; i < paintCanvas.rectanglePerimeters.length; ++i) {
-        drawRectangle(ctx, paintCanvas.rectanglePerimeters[i].x1, paintCanvas.rectanglePerimeters[i].y1, paintCanvas.rectanglePerimeters[i].x2, paintCanvas.rectanglePerimeters[i].y2, false);
-    }
-    
-    // Draw current shape if any
-    if (paintCanvas.currentArrow && paintCanvas.mode === "arrow") {
-        drawArrow(ctx, paintCanvas.currentArrow.x1, paintCanvas.currentArrow.y1, paintCanvas.currentArrow.x2, paintCanvas.currentArrow.y2);
-    }
-    if (paintCanvas.currentRectangle && paintCanvas.mode === "rect") {
-        drawRectangle(ctx, paintCanvas.currentRectangle.x1, paintCanvas.currentRectangle.y1, paintCanvas.currentRectangle.x2, paintCanvas.currentRectangle.y2, true);
-    }
-    if (paintCanvas.currentRectanglePerimeter && paintCanvas.mode === "rectPerimeter") {
-        drawRectangle(ctx, paintCanvas.currentRectanglePerimeter.x1, paintCanvas.currentRectanglePerimeter.y1, paintCanvas.currentRectanglePerimeter.x2, paintCanvas.currentRectanglePerimeter.y2, false);
+
+    const state = paintCanvas.paintState;
+
+    // Draw all items using tool-specific drawAll methods
+    for (const toolName in tools) {
+        tools[toolName].drawAll(ctx, state);
     }
 
-    // Draw handlers
-    ctx.save();
-    ctx.lineWidth = 1;
-    ctx.fillStyle = "white";
-    ctx.strokeStyle = "black";
-    
-    function drawHandler(x, y) {
-        ctx.beginPath();
-        ctx.arc(x, y, 3, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.stroke();
+    // Draw current item if any
+    if (state.currentItem && state.currentTool) {
+        state.currentTool.draw(ctx, state.currentItem);
+
+        // Draw handlers
+        ctx.save();
+        ctx.lineWidth = 1;
+        ctx.fillStyle = "white";
+        ctx.strokeStyle = "black";
+        state.currentTool.drawHandlers(ctx, state.currentItem);
+        ctx.restore();
     }
-    
-    if (paintCanvas.currentArrow && paintCanvas.mode === "arrow") {
-        drawHandler(paintCanvas.currentArrow.x1, paintCanvas.currentArrow.y1);
-        drawHandler(paintCanvas.currentArrow.x2, paintCanvas.currentArrow.y2);
-    }
-    if (paintCanvas.currentRectangle && paintCanvas.mode === "rect") {
-        var rx1 = paintCanvas.currentRectangle.x1, ry1 = paintCanvas.currentRectangle.y1, rx2 = paintCanvas.currentRectangle.x2, ry2 = paintCanvas.currentRectangle.y2;
-        drawHandler(rx1, ry1);
-        drawHandler(rx2, ry1);
-        drawHandler(rx1, ry2);
-        drawHandler(rx2, ry2);
-    }
-    if (paintCanvas.currentRectanglePerimeter && paintCanvas.mode === "rectPerimeter") {
-        var px1 = paintCanvas.currentRectanglePerimeter.x1, py1 = paintCanvas.currentRectanglePerimeter.y1, px2 = paintCanvas.currentRectanglePerimeter.x2, py2 = paintCanvas.currentRectanglePerimeter.y2;
-        drawHandler(px1, py1);
-        drawHandler(px2, py1);
-        drawHandler(px1, py2);
-        drawHandler(px2, py2);
-    }
-    ctx.restore();
 }
