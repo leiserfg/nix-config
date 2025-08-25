@@ -2,28 +2,9 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import QtQuick.Controls
+
 PanelWindow {
-    Keys.onPressed: {
-        if (event.modifiers & Qt.ControlModifier && event.key === Qt.Key_Z) {
-            paintCanvas.undo();
-            event.accepted = true;
-        } else if (event.key === Qt.Key_A) {
-            paintCanvas.mode = "arrow";
-            event.accepted = true;
-        } else if (event.key === Qt.Key_R) {
-            paintCanvas.mode = "rect";
-            event.accepted = true;
-        } else if (event.key === Qt.Key_P) {
-            paintCanvas.mode = "rectPerimeter";
-            event.accepted = true;
-        } else if (event.key === Qt.Key_T) {
-            paintCanvas.mode = "text";
-            event.accepted = true;
-        } else if (event.key === Qt.Key_Z) {
-            paintCanvas.undo();
-            event.accepted = true;
-        }
-    }
+    id: panel
 
     Row {
         id: btns
@@ -35,81 +16,92 @@ PanelWindow {
             topMargin: 12
         }
         Button {
-            text: "Arrow (A)"
+            text: "Arrow"
             checkable: true
             checked: paintCanvas.mode === "arrow"
-            onClicked: paintCanvas.mode = "arrow"
+            onClicked: {
+                paintCanvas.commitCurrentItem();
+                paintCanvas.mode = "arrow";
+            }
         }
         Button {
-            text: "Rect (R)"
+            text: "Rect"
             checkable: true
             checked: paintCanvas.mode === "rect"
-            onClicked: paintCanvas.mode = "rect"
+            onClicked: {
+                paintCanvas.commitCurrentItem();
+                paintCanvas.mode = "rect";
+            }
         }
         Button {
-            text: "Perimeter (P)"
+            text: "Perimeter"
             checkable: true
             checked: paintCanvas.mode === "rectPerimeter"
-            onClicked: paintCanvas.mode = "rectPerimeter"
+            onClicked: {
+                paintCanvas.commitCurrentItem();
+                paintCanvas.mode = "rectPerimeter";
+            }
         }
         Button {
-            text: "Text (T)"
+            text: "Text"
             checkable: true
             checked: paintCanvas.mode === "text"
-            onClicked: paintCanvas.mode = "text"
+            onClicked: {
+                paintCanvas.commitCurrentItem();
+                paintCanvas.mode = "text";
+            }
         }
         Button {
-            text: "Undo (Z/Ctrl+Z)"
-            onClicked: paintCanvas.undo()
+            text: "Undo"
+            onClicked: undo()
         }
     }
-    id: panel
     anchors {
         left: true
         bottom: true
         right: true
     }
 
-        function drawRectangle(ctx, x1, y1, x2, y2, fill) {
-            ctx.save();
-            ctx.strokeStyle = "blue";
-            ctx.lineWidth = 2;
-            var rx = Math.min(x1, x2);
-            var ry = Math.min(y1, y2);
-            var rw = Math.abs(x2 - x1);
-            var rh = Math.abs(y2 - y1);
-            if (fill) {
-                ctx.fillStyle = "rgba(0,0,255,0.2)";
-                ctx.fillRect(rx, ry, rw, rh);
-            }
-            ctx.strokeRect(rx, ry, rw, rh);
-            ctx.restore();
+    function drawRectangle(ctx, x1, y1, x2, y2, fill) {
+        ctx.save();
+        ctx.strokeStyle = "blue";
+        ctx.lineWidth = 2;
+        var rx = Math.min(x1, x2);
+        var ry = Math.min(y1, y2);
+        var rw = Math.abs(x2 - x1);
+        var rh = Math.abs(y2 - y1);
+        if (fill) {
+            ctx.fillStyle = "rgba(0,0,255,0.2)";
+            ctx.fillRect(rx, ry, rw, rh);
         }
+        ctx.strokeRect(rx, ry, rw, rh);
+        ctx.restore();
+    }
 
-        function drawText(ctx, x, y, text) {
-            ctx.save();
-            ctx.font = "16px sans-serif";
-            ctx.fillStyle = "black";
-            ctx.fillText(text, x, y);
-            ctx.restore();
-        }
+    function drawText(ctx, x, y, text) {
+        ctx.save();
+        ctx.font = "16px sans-serif";
+        ctx.fillStyle = "black";
+        ctx.fillText(text, x, y);
+        ctx.restore();
+    }
 
-        function undo() {
-            if (paintCanvas.contextStack.length === 0)
-                return;
-            var last = paintCanvas.contextStack.pop();
-            if (last.type === "arrow") {
-                paintCanvas.arrows.pop();
-            } else if (last.type === "rect") {
-                paintCanvas.rectangles.pop();
-            } else if (last.type === "rectPerimeter") {
-                paintCanvas.rectanglePerimeters.pop();
-            } else if (last.type === "text") {
-                paintCanvas.texts.pop();
-            }
-            paintCanvas.requestPaint();
+    function undo() {
+        if (paintCanvas.contextStack.length === 0)
+            return;
+        var last = paintCanvas.contextStack.pop();
+        if (last.type === "arrow") {
+            paintCanvas.arrows.pop();
+        } else if (last.type === "rect") {
+            paintCanvas.rectangles.pop();
+        } else if (last.type === "rectPerimeter") {
+            paintCanvas.rectanglePerimeters.pop();
+        } else if (last.type === "text") {
+            paintCanvas.texts.pop();
         }
-    height: 300
+        paintCanvas.requestPaint();
+    }
+    implicitHeight: 300
 
     WlrLayershell.exclusionMode: ExclusionMode.Ignore
 
@@ -125,6 +117,35 @@ PanelWindow {
         property var currentRectanglePerimeter: null
         property var currentText: null
         property string mode: "arrow" // Modes: arrow, rect, rectPerimeter, text
+        property var handlerDrag: null
+        function commitCurrentItem() {
+            if (currentArrow) {
+                arrows.push(currentArrow);
+                contextStack.push({
+                    type: "arrow"
+                });
+                currentArrow = null;
+            } else if (currentRectangle) {
+                rectangles.push(currentRectangle);
+                contextStack.push({
+                    type: "rect"
+                });
+                currentRectangle = null;
+            } else if (currentRectanglePerimeter) {
+                rectanglePerimeters.push(currentRectanglePerimeter);
+                contextStack.push({
+                    type: "rectPerimeter"
+                });
+                currentRectanglePerimeter = null;
+            } else if (currentText) {
+                texts.push(currentText);
+                contextStack.push({
+                    type: "text"
+                });
+                currentText = null;
+            }
+            requestPaint();
+        }
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -161,33 +182,94 @@ PanelWindow {
             if (paintCanvas.currentText && mode === "text") {
                 drawText(ctx, currentText.x, currentText.y, currentText.text);
             }
+
+            {
+                ctx.save();
+                ctx.lineWidth = 1;
+                ctx.fillStyle = "white";
+                ctx.strokeStyle = "black";
+                function drawHandler(x, y) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 3, 0, 2 * Math.PI);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+                if (paintCanvas.currentArrow && mode === "arrow") {
+                    drawHandler(currentArrow.x1, currentArrow.y1);
+                    drawHandler(currentArrow.x2, currentArrow.y2);
+                }
+                if (paintCanvas.currentRectangle && mode === "rect") {
+                    var rx1 = currentRectangle.x1, ry1 = currentRectangle.y1, rx2 = currentRectangle.x2, ry2 = currentRectangle.y2;
+                    drawHandler(rx1, ry1);
+                    drawHandler(rx2, ry1);
+                    drawHandler(rx1, ry2);
+                    drawHandler(rx2, ry2);
+                }
+                if (paintCanvas.currentRectanglePerimeter && mode === "rectPerimeter") {
+                    var px1 = currentRectanglePerimeter.x1, py1 = currentRectanglePerimeter.y1, px2 = currentRectanglePerimeter.x2, py2 = currentRectanglePerimeter.y2;
+                    drawHandler(px1, py1);
+                    drawHandler(px2, py1);
+                    drawHandler(px1, py2);
+                    drawHandler(px2, py2);
+                }
+                ctx.restore();
+            }
         }
 
         MouseArea {
             anchors.fill: parent
-            onPressed: {
-                if (paintCanvas.mode === "arrow") {
-                    paintCanvas.currentArrow = {
-                        x1: mouse.x,
-                        y1: mouse.y,
-                        x2: mouse.x,
-                        y2: mouse.y
-                    };
-                } else if (paintCanvas.mode === "rect") {
-                    paintCanvas.currentRectangle = {
-                        x1: mouse.x,
-                        y1: mouse.y,
-                        x2: mouse.x,
-                        y2: mouse.y
-                    };
-                } else if (paintCanvas.mode === "rectPerimeter") {
-                    paintCanvas.currentRectanglePerimeter = {
-                        x1: mouse.x,
-                        y1: mouse.y,
-                        x2: mouse.x,
-                        y2: mouse.y
-                    };
-                } else if (paintCanvas.mode === "text") {
+            onPressed: mouse => {
+                // Handler drag logic
+                if (paintCanvas.mode === "arrow" && paintCanvas.currentArrow) {
+                    // Check if near endpoints
+                    if (Math.abs(mouse.x - paintCanvas.currentArrow.x1) < 10 && Math.abs(mouse.y - paintCanvas.currentArrow.y1) < 10) {
+                        paintCanvas.handlerDrag = {
+                            type: "arrow",
+                            point: "start"
+                        };
+                    } else if (Math.abs(mouse.x - paintCanvas.currentArrow.x2) < 10 && Math.abs(mouse.y - paintCanvas.currentArrow.y2) < 10) {
+                        paintCanvas.handlerDrag = {
+                            type: "arrow",
+                            point: "end"
+                        };
+                    }
+                } else if ((paintCanvas.mode === "rect" && paintCanvas.currentRectangle) || (paintCanvas.mode === "rectPerimeter" && paintCanvas.currentRectanglePerimeter)) {
+                    var rect = paintCanvas.mode === "rect" ? paintCanvas.currentRectangle : paintCanvas.currentRectanglePerimeter;
+                    // Check corners
+                    var corners = [
+                        {
+                            x: rect.x1,
+                            y: rect.y1,
+                            name: "tl"
+                        },
+                        {
+                            x: rect.x2,
+                            y: rect.y1,
+                            name: "tr"
+                        },
+                        {
+                            x: rect.x1,
+                            y: rect.y2,
+                            name: "bl"
+                        },
+                        {
+                            x: rect.x2,
+                            y: rect.y2,
+                            name: "br"
+                        }
+                    ];
+                    for (var i = 0; i < corners.length; ++i) {
+                        if (Math.abs(mouse.x - corners[i].x) < 10 && Math.abs(mouse.y - corners[i].y) < 10) {
+                            paintCanvas.handlerDrag = {
+                                type: paintCanvas.mode,
+                                corner: corners[i].name
+                            };
+                            break;
+                        }
+                    }
+
+                    // Draw handlers for current item
+                } else if (paintCanvas.mode === "text" && !paintCanvas.currentText) {
                     var text = prompt("Enter annotation text:", "");
                     if (text) {
                         paintCanvas.currentText = {
@@ -195,42 +277,85 @@ PanelWindow {
                             y: mouse.y,
                             text: text
                         };
-                        paintCanvas.texts.push(paintCanvas.currentText);
-                        paintCanvas.contextStack.push({type: "text"});
-                        paintCanvas.currentText = null;
-                        paintCanvas.requestPaint();
+                    }
+                } else {
+                    // Start new item
+                    if (paintCanvas.mode === "arrow") {
+                        paintCanvas.currentArrow = {
+                            x1: mouse.x,
+                            y1: mouse.y,
+                            x2: mouse.x,
+                            y2: mouse.y
+                        };
+                    } else if (paintCanvas.mode === "rect") {
+                        paintCanvas.currentRectangle = {
+                            x1: mouse.x,
+                            y1: mouse.y,
+                            x2: mouse.x,
+                            y2: mouse.y
+                        };
+                    } else if (paintCanvas.mode === "rectPerimeter") {
+                        paintCanvas.currentRectanglePerimeter = {
+                            x1: mouse.x,
+                            y1: mouse.y,
+                            x2: mouse.x,
+                            y2: mouse.y
+                        };
                     }
                 }
                 paintCanvas.requestPaint();
             }
-            onPositionChanged: {
-                if (paintCanvas.mode === "arrow" && paintCanvas.currentArrow) {
-                    paintCanvas.currentArrow.x2 = mouse.x;
-                    paintCanvas.currentArrow.y2 = mouse.y;
-                } else if (paintCanvas.mode === "rect" && paintCanvas.currentRectangle) {
-                    paintCanvas.currentRectangle.x2 = mouse.x;
-                    paintCanvas.currentRectangle.y2 = mouse.y;
-                } else if (paintCanvas.mode === "rectPerimeter" && paintCanvas.currentRectanglePerimeter) {
-                    paintCanvas.currentRectanglePerimeter.x2 = mouse.x;
-                    paintCanvas.currentRectanglePerimeter.y2 = mouse.y;
+            onPositionChanged: mouse => {
+                if (paintCanvas.handlerDrag) {
+                    if (paintCanvas.handlerDrag.type === "arrow" && paintCanvas.currentArrow) {
+                        if (paintCanvas.handlerDrag.point === "start") {
+                            paintCanvas.currentArrow.x1 = mouse.x;
+                            paintCanvas.currentArrow.y1 = mouse.y;
+                        } else if (paintCanvas.handlerDrag.point === "end") {
+                            paintCanvas.currentArrow.x2 = mouse.x;
+                            paintCanvas.currentArrow.y2 = mouse.y;
+                        }
+                    } else if ((paintCanvas.handlerDrag.type === "rect" || paintCanvas.handlerDrag.type === "rectPerimeter") && (paintCanvas.currentRectangle || paintCanvas.currentRectanglePerimeter)) {
+                        var rect = paintCanvas.handlerDrag.type === "rect" ? paintCanvas.currentRectangle : paintCanvas.currentRectanglePerimeter;
+                        switch (paintCanvas.handlerDrag.corner) {
+                        case "tl":
+                            rect.x1 = mouse.x;
+                            rect.y1 = mouse.y;
+                            break;
+                        case "tr":
+                            rect.x2 = mouse.x;
+                            rect.y1 = mouse.y;
+                            break;
+                        case "bl":
+                            rect.x1 = mouse.x;
+                            rect.y2 = mouse.y;
+                            break;
+                        case "br":
+                            rect.x2 = mouse.x;
+                            rect.y2 = mouse.y;
+                            break;
+                        }
+                    }
+                } else {
+                    if (paintCanvas.mode === "arrow" && paintCanvas.currentArrow) {
+                        paintCanvas.currentArrow.x2 = mouse.x;
+                        paintCanvas.currentArrow.y2 = mouse.y;
+                    } else if (paintCanvas.mode === "rect" && paintCanvas.currentRectangle) {
+                        paintCanvas.currentRectangle.x2 = mouse.x;
+                        paintCanvas.currentRectangle.y2 = mouse.y;
+                    } else if (paintCanvas.mode === "rectPerimeter" && paintCanvas.currentRectanglePerimeter) {
+                        paintCanvas.currentRectanglePerimeter.x2 = mouse.x;
+                        paintCanvas.currentRectanglePerimeter.y2 = mouse.y;
+                    }
                 }
                 paintCanvas.requestPaint();
             }
             onReleased: {
-                if (paintCanvas.mode === "arrow" && paintCanvas.currentArrow) {
-                    paintCanvas.arrows.push(paintCanvas.currentArrow);
-                    paintCanvas.contextStack.push({type: "arrow"});
-                    paintCanvas.currentArrow = null;
-                } else if (paintCanvas.mode === "rect" && paintCanvas.currentRectangle) {
-                    paintCanvas.rectangles.push(paintCanvas.currentRectangle);
-                    paintCanvas.contextStack.push({type: "rect"});
-                    paintCanvas.currentRectangle = null;
-                } else if (paintCanvas.mode === "rectPerimeter" && paintCanvas.currentRectanglePerimeter) {
-                    paintCanvas.rectanglePerimeters.push(paintCanvas.currentRectanglePerimeter);
-                    paintCanvas.contextStack.push({type: "rectPerimeter"});
-                    paintCanvas.currentRectanglePerimeter = null;
-                }
+                paintCanvas.handlerDrag = null;
                 paintCanvas.requestPaint();
+            }
+            onDoubleClicked: {
+                paintCanvas.commitCurrentItem();
             }
         }
 
