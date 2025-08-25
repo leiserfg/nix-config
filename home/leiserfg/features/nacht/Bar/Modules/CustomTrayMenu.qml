@@ -7,7 +7,7 @@ import qs.Settings
 
 PopupWindow {
     id: trayMenu
-    implicitWidth: 180
+    implicitWidth: 280
     implicitHeight: Math.max(40, listView.contentHeight + 12)
     visible: false
     color: "transparent"

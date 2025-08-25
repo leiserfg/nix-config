@@ -152,19 +152,20 @@ Item {
         }
     }
 
-    // Rectangle {
-    //     id: badge
-    //     anchors.bottom: parent.bottom
-    //     anchors.right: parent.right
-    //     width: Settings.settings.barHeight * 0.5
-    //     height: Settings.settings.barHeight / 2
-    //     color: Theme.surfaceVariant
-    //     radius: Math.max(4, Settings.settings.barHeight * 0.25)
-    //     Text {
-    //         anchors.horizontalCenter: badge.horizontalCenter
-    //         text: workspace.name
-    //         font.pixelSize: Settings.settings.barHeight * 0.5
-    //         color: Qt.darker(Theme.accentPrimary, 1.2)
-    //     }
-    // }
+    Rectangle {
+        id: badge
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        width: Settings.settings.barHeight * 0.5
+        height: Settings.settings.barHeight / 2
+        color: Theme.surfaceVariant
+        radius: Math.max(4, Settings.settings.barHeight * 0.25)
+        Text {
+            anchors.horizontalCenter: badge.horizontalCenter
+            text: workspace.name
+            font.pixelSize: Settings.settings.barHeight * 0.5
+            font.bold: true
+            color: Qt.darker(Theme.accentPrimary, 1.2)
+        }
+    }
 }
