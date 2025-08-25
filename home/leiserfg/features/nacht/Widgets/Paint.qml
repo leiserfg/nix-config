@@ -43,15 +43,6 @@ PanelWindow {
             }
         }
         Button {
-            text: "Text"
-            checkable: true
-            checked: paintCanvas.mode === "text"
-            onClicked: {
-                paintCanvas.commitCurrentItem();
-                paintCanvas.mode = "text";
-            }
-        }
-        Button {
             text: "Undo"
             onClicked: undo()
         }
@@ -78,14 +69,6 @@ PanelWindow {
         ctx.restore();
     }
 
-    function drawText(ctx, x, y, text) {
-        ctx.save();
-        ctx.font = "16px sans-serif";
-        ctx.fillStyle = "black";
-        ctx.fillText(text, x, y);
-        ctx.restore();
-    }
-
     function undo() {
         if (paintCanvas.contextStack.length === 0)
             return;
@@ -96,8 +79,6 @@ PanelWindow {
             paintCanvas.rectangles.pop();
         } else if (last.type === "rectPerimeter") {
             paintCanvas.rectanglePerimeters.pop();
-        } else if (last.type === "text") {
-            paintCanvas.texts.pop();
         }
         paintCanvas.requestPaint();
     }
@@ -110,13 +91,11 @@ PanelWindow {
         property var arrows: []
         property var rectangles: []
         property var rectanglePerimeters: []
-        property var texts: []
         property var contextStack: []
         property var currentArrow: null
         property var currentRectangle: null
         property var currentRectanglePerimeter: null
-        property var currentText: null
-        property string mode: "arrow" // Modes: arrow, rect, rectPerimeter, text
+        property string mode: "arrow" // Modes: arrow, rect, rectPerimeter
         property var handlerDrag: null
         function commitCurrentItem() {
             if (currentArrow) {
@@ -137,12 +116,6 @@ PanelWindow {
                     type: "rectPerimeter"
                 });
                 currentRectanglePerimeter = null;
-            } else if (currentText) {
-                texts.push(currentText);
-                contextStack.push({
-                    type: "text"
-                });
-                currentText = null;
             }
             requestPaint();
         }
@@ -165,10 +138,6 @@ PanelWindow {
             for (var i = 0; i < rectanglePerimeters.length; ++i) {
                 drawRectangle(ctx, rectanglePerimeters[i].x1, rectanglePerimeters[i].y1, rectanglePerimeters[i].x2, rectanglePerimeters[i].y2, false);
             }
-            // Draw all texts
-            for (var i = 0; i < texts.length; ++i) {
-                drawText(ctx, texts[i].x, texts[i].y, texts[i].text);
-            }
             // Draw current shape if any
             if (paintCanvas.currentArrow && mode === "arrow") {
                 drawArrow(ctx, currentArrow.x1, currentArrow.y1, currentArrow.x2, currentArrow.y2);
@@ -178,9 +147,6 @@ PanelWindow {
             }
             if (paintCanvas.currentRectanglePerimeter && mode === "rectPerimeter") {
                 drawRectangle(ctx, currentRectanglePerimeter.x1, currentRectanglePerimeter.y1, currentRectanglePerimeter.x2, currentRectanglePerimeter.y2, false);
-            }
-            if (paintCanvas.currentText && mode === "text") {
-                drawText(ctx, currentText.x, currentText.y, currentText.text);
             }
 
             {
@@ -269,15 +235,6 @@ PanelWindow {
                     }
 
                     // Draw handlers for current item
-                } else if (paintCanvas.mode === "text" && !paintCanvas.currentText) {
-                    var text = prompt("Enter annotation text:", "");
-                    if (text) {
-                        paintCanvas.currentText = {
-                            x: mouse.x,
-                            y: mouse.y,
-                            text: text
-                        };
-                    }
                 } else {
                     // Start new item
                     if (paintCanvas.mode === "arrow") {
