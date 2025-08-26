@@ -43,10 +43,10 @@ in
       enable = true;
     };
 
-    # plugins = [
-    #   pkgs.hyprlandPlugins.hyprspace
-    #   pkgs.hyprlandPlugins.hypr-dynamic-cursors
-    # ];
+    plugins = [
+      pkgs.hyprlandPlugins.hyprspace
+      pkgs.hyprlandPlugins.hypr-dynamic-cursors
+    ];
     settings = {
       "$mod" = "SUPER";
 

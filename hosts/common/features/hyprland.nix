@@ -12,13 +12,22 @@
 
   services.greetd = {
     enable = true;
-    settings = {
-      default_session.command = "true"; # skip the greeter
-      initial_session = {
+    settings =
+      let
         command = "Hyprland";
         user = "leiserfg";
+      in
+      {
+        default_session = {
+          command = "${lib.getExe pkgs.greetd.tuigreet} --time --cmd ${command} --user-menu --remember";
+          user = "greeter";
+        };
+
+        initial_session = {
+          command = "Hyprland";
+          user = "leiserfg";
+        };
       };
-    };
   };
 
 }
