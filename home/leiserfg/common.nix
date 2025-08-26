@@ -45,7 +45,8 @@
   };
 
   home.packages = with pkgs; [
-    myPkgs.wl_shimeji
+    # myPkgs.wl_shimeji
+    myPkgs.friction-graphics 
     # love
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
     nix-playground

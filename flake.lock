@@ -188,11 +188,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1755720740,
-        "narHash": "sha256-uzs35Ix1bm6f2AclqOxvukLKM88CjAKIIopunb7h8q0=",
+        "lastModified": 1756217515,
+        "narHash": "sha256-XJzMK9Azo754hE7Js6yC91IdD/f1DlTvI3JhdYWvvIo=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "06815cd5efcc7dfd496f31f2fed98fc5251823c4",
+        "rev": "e39c2c616af42820b21567f6677080ba3529af7f",
         "type": "github"
       },
       "original": {
@@ -258,18 +258,19 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1755027561,
-        "narHash": "sha256-IVft239Bc8p8Dtvf7UAACMG5P3ZV+3/aO28gXpGtMXI=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "005433b926e16227259a1843015b5b2b7f7d1fc3",
-        "type": "github"
+        "lastModified": 1756125398,
+        "narHash": "sha256-XexyKZpf46cMiO5Vbj+dWSAXOnr285GHsMch8FBoHbc=",
+        "ref": "nixos-unstable",
+        "rev": "3b9f00d7a7bf68acd4c4abb9d43695afb04e03a5",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/NixOS/nixpkgs"
       },
       "original": {
-        "owner": "nixos",
         "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/NixOS/nixpkgs"
       }
     },
     "nixpkgs-unstable": {
