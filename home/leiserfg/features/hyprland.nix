@@ -43,10 +43,10 @@ in
       enable = true;
     };
 
-    plugins = [
-      pkgs.hyprlandPlugins.hyprspace
-      pkgs.hyprlandPlugins.hypr-dynamic-cursors
-    ];
+    # plugins = [
+    #   pkgs.hyprlandPlugins.hyprspace
+    #   pkgs.hyprlandPlugins.hypr-dynamic-cursors
+    # ];
     settings = {
       "$mod" = "SUPER";
 
@@ -132,8 +132,8 @@ in
         # new_render_scheduling = true;
       };
       misc = {
-        vrr = 2; # in fullscreen
-        vfr = true;
+        # vrr = 2; # in fullscreen
+        # vfr = true;
       };
       general = {
         layout = "master";
@@ -191,7 +191,7 @@ in
         "center,class:pavucontrol"
         "float,class:pavucontrol"
         "pin,class:dragon-drop"
-        "idleinhibit fullscreen, fullscreen:1"
+        "idleinhibit fullscreen, class:.*"
       ];
 
       layerrule = [
@@ -268,30 +268,25 @@ in
         after_sleep_cmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
       };
 
-      listener = [
-        {
-          timeout = 5 * 60; # 5min
-          on_timeout = "loginctl lock-session"; # lock screen when timeout has passed
-        }
-
-        {
-          timeout = builtins.floor (5.5 * 60);
-          on_timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
-          on_resume = "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
-        }
-        # {
-        #   timeout = 30 * 60;
-        #   on_timeout = "systemctl suspend";
-        # }
-      ];
+      listener =
+        let
+          mins = x: builtins.floor (x * 60);
+        in
+        [
+          {
+            timeout = mins 5; # 5min
+            on-timeout = "loginctl lock-session"; # lock screen when timeout has passed
+          }
+          {
+            timeout = mins 5.5;
+            on-timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
+            on-resume = "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
+          }
+          {
+            timeout = mins 10;
+            on_timeout = "systemctl suspend";
+          }
+        ];
     };
   };
-
-  # xdg.portal = {
-  #   enable = true;
-  #   config.common.default = "*";
-  #   extraPortals = [
-  #     pkgs.xdg-desktop-portal-gtk
-  #   ];
-  # };
 }
