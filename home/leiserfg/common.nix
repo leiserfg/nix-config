@@ -46,7 +46,7 @@
 
   home.packages = with pkgs; [
     # myPkgs.wl_shimeji
-    myPkgs.friction-graphics 
+    myPkgs.friction-graphics
     # love
     # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
     nix-playground
@@ -83,6 +83,7 @@
     flamegraph
     psmisc
     python313Packages.ipython
+    python3
     uv
     cmake
     gnumake
@@ -378,7 +379,6 @@
             "browser.uidensity" = 1;
             "media.ffmpeg.vaapi.enabled" = true;
             "media.ffvpx.enabled" = true;
-            # "browser.tabs.cardPreview.enabled" = true;
           };
           search.force = true;
           search.engines = {
@@ -421,8 +421,8 @@
       enable = true;
       settings = {
         cookies-from-browser = "firefox";
-        # downloader = "aria2c";
-        # downloader-args = "aria2c:'-c -x8 -s8 -k1M'";
+        downloader = "aria2c";
+        downloader-args = "aria2c:'-c -x8 -s8 -k1M'";
       };
     };
 
