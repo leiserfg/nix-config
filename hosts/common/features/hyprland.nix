@@ -19,7 +19,7 @@
       in
       {
         default_session = {
-          command = "${lib.getExe pkgs.greetd.tuigreet} --time --cmd ${command} --user-menu --remember";
+          command = "${lib.getExe pkgs.tuigreet} --time --cmd ${command} --user-menu --remember";
           user = "greeter";
         };
 
