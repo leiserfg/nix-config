@@ -59,7 +59,7 @@ Item {
                 width: Settings.settings.barHeight
                 height: Settings.settings.barHeight
                 radius: Math.max(4, Settings.settings.barHeight * 0.25)
-                color: isActive ? Theme.accentPrimary : (hovered ? Theme.surfaceVariant : "transparent")
+                color: isActive ? Theme.accentPrimary : (hovered ? Theme.surfaceVariant : (modelData.urgent ? "red" : "transparent"))
                 border.color: isActive ? Qt.darker(Theme.accentPrimary, 1.2) : "transparent"
                 border.width: 1
                 property Toplevel waylandToplevel: modelData.wayland
@@ -85,7 +85,7 @@ Item {
                     id: appIcon
                     width: Math.max(12, Settings.settings.barHeight * 0.625)
                     height: Math.max(12, Settings.settings.barHeight * 0.625)
-                    anchors.centerIn: parent
+                    anchors.centerIn: appButton
                     source: getAppIcon(waylandToplevel)
                     visible: source.toString() !== ""
                 }

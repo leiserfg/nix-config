@@ -33,7 +33,7 @@ Scope {
                     id: panel
                     screen: modelData
                     color: "transparent"
-                    implicitHeight:  Settings.settings.barHeight
+                    implicitHeight: Settings.settings.barHeight
                     anchors.top: true
                     anchors.left: true
                     anchors.right: true
@@ -57,21 +57,25 @@ Scope {
                             anchors.verticalCenter: parent.verticalCenter
                         }
 
-                    Workspace {
-                        id: workspace
-                        screen: modelData
-                        anchors.horizontalCenter: barBackground.horizontalCenter
-                        anchors.verticalCenter: barBackground.verticalCenter
-                    }
-                        // HyprWSbar {
-                        //     anchors.verticalCenter: parent.verticalCenter
-                        // }
+                        Workspace {
+                            id: workspace
+                            screen: modelData
+                            anchors.horizontalCenter: barBackground.horizontalCenter
+                            anchors.verticalCenter: barBackground.verticalCenter
+                        }
                     }
 
-                    ActiveWindow {
-                        screen: modelData
+                    Text {
+                        id: activeWindowTitle
+                        text: ToplevelManager?.activeToplevel?.title && ToplevelManager?.activeToplevel?.title.length > 60 ? ToplevelManager?.activeToplevel?.title.substring(0, 60) + "…" : ToplevelManager?.activeToplevel?.title || ""
+                        font.pixelSize: 12
+                        font.bold: true
+                        color: Theme.textSecondary
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        verticalAlignment: Text.AlignVCenter
+                        maximumLineCount: 1
                     }
-
 
                     Row {
                         id: rightWidgetsRow
