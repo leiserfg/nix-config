@@ -14,28 +14,23 @@ Item {
     height: pillIndicator.height
 
     function getVolumeColor() {
-        if (volume <= 100) return Theme.accentPrimary;
+        if (volume <= 100)
+            return Theme.accentPrimary;
         // Calculate interpolation factor (0 at 100%, 1 at 200%)
         var factor = (volume - 100) / 100;
         // Blend between accent and warning colors
-        return Qt.rgba(
-            Theme.accentPrimary.r + (Theme.warning.r - Theme.accentPrimary.r) * factor,
-            Theme.accentPrimary.g + (Theme.warning.g - Theme.accentPrimary.g) * factor,
-            Theme.accentPrimary.b + (Theme.warning.b - Theme.accentPrimary.b) * factor,
-            1
-        );
+        return Qt.rgba(Theme.accentPrimary.r + (Theme.warning.r - Theme.accentPrimary.r) * factor, Theme.accentPrimary.g + (Theme.warning.g - Theme.accentPrimary.g) * factor, Theme.accentPrimary.b + (Theme.warning.b - Theme.accentPrimary.b) * factor, 1);
     }
 
     function getIconColor() {
-        if (volume <= 100) return Theme.textPrimary;
+        if (volume <= 100)
+            return Theme.textPrimary;
         return getVolumeColor(); // Only use warning blend when >100%
     }
 
     PillIndicator {
         id: pillIndicator
-        icon: shell && shell.defaultAudioSink && shell.defaultAudioSink.audio && shell.defaultAudioSink.audio.muted
-            ? "volume_off"
-            : (volume === 0 ? "volume_off" : (volume < 30 ? "volume_down" : "volume_up"))
+        icon: shell && shell.defaultAudioSink && shell.defaultAudioSink.audio && shell.defaultAudioSink.audio.muted ? "volume_off" : (volume === 0 ? "volume_off" : (volume < 30 ? "volume_down" : "volume_up"))
         text: volume + "%"
 
         pillColor: Theme.surfaceVariant
@@ -58,11 +53,18 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                if (ioSelector.visible) {
-                    ioSelector.dismiss();
-                } else {
-                    ioSelector.show();
+            acceptedButtons: Qt.LeftButton | Qt.MiddleButton
+
+            onClicked: mouse => {
+                if (mouse.button == Qt.MiddleButton) {
+                    shell.toggleOutput();
+                }
+                if (mouse.button == Qt.RightButton) {
+                    if (ioSelector.visible) {
+                        ioSelector.dismiss();
+                    } else {
+                        ioSelector.show();
+                    }
                 }
             }
         }
@@ -76,14 +78,11 @@ Item {
                 if (clampedVolume !== volume) {
                     volume = clampedVolume;
                     pillIndicator.text = volume + "%";
-                    pillIndicator.icon = shell.defaultAudioSink && shell.defaultAudioSink.audio && shell.defaultAudioSink.audio.muted
-                        ? "volume_off"
-                        : (volume === 0 ? "volume_off" : (volume < 30 ? "volume_down" : "volume_up"));
+                    pillIndicator.icon = shell.defaultAudioSink && shell.defaultAudioSink.audio && shell.defaultAudioSink.audio.muted ? "volume_off" : (volume === 0 ? "volume_off" : (volume < 30 ? "volume_down" : "volume_up"));
 
                     if (firstChange) {
-                        firstChange = false
-                    }
-                    else {
+                        firstChange = false;
+                    } else {
                         pillIndicator.show();
                     }
                 }
@@ -103,18 +102,19 @@ Item {
         acceptedButtons: Qt.NoButton
         propagateComposedEvents: true
         onEntered: {
-            volumeDisplay.containsMouse = true
+            volumeDisplay.containsMouse = true;
             pillIndicator.autoHide = false;
-            pillIndicator.showDelayed()
+            pillIndicator.showDelayed();
         }
         onExited: {
-            volumeDisplay.containsMouse = false
+            volumeDisplay.containsMouse = false;
             pillIndicator.autoHide = true;
-            pillIndicator.hide()
+            pillIndicator.hide();
         }
         cursorShape: Qt.PointingHandCursor
-        onWheel: (wheel) => {
-            if (!shell) return;
+        onWheel: wheel => {
+            if (!shell)
+                return;
             let step = 5;
             if (wheel.angleDelta.y > 0) {
                 shell.updateVolume(Math.min(200, shell.volume + step));

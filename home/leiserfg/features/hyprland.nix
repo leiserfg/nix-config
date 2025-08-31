@@ -192,6 +192,7 @@ in
         "float,class:pavucontrol"
         "pin,class:dragon-drop"
         "idleinhibit fullscreen, class:.*"
+        "noscreenshare, class:^(org.telegram.desktop)$"
       ];
 
       layerrule = [

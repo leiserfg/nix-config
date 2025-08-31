@@ -38,6 +38,13 @@ Scope {
         volume = stepped;
     }
 
+    function toggleOutput() {
+        if (defaultAudioSink && defaultAudioSink.audio) {
+            console.log(`muted? ${defaultAudioSink.audio.muted}`)
+            defaultAudioSink.audio.muted = !defaultAudioSink.audio.muted;
+        }
+    }
+
     Component.onCompleted: {
         Quickshell.shell = root;
     }
@@ -145,7 +152,6 @@ Scope {
             }
         }
     }
-
 
     // --- NEW: Keep volume property in sync with actual Pipewire audio sink volume ---
 
