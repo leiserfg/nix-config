@@ -202,7 +202,6 @@ in
 
       exec-once = [
         "swaybg -i ~/wall.png -m fill"
-        "qs -p ${./nacht}"
       ];
       env = lib.attrsets.mapAttrsToList (name: val: "${name},${toString val}") {
         XDG_CURRENT_DESKTOP = "Hyprland";

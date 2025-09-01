@@ -158,6 +158,13 @@ in
       #   sign-on-push = true;
       # };
 
+      ui.diff-formatter = [
+        (lib.getExe pkgs.difftastic)
+        "--color=always"
+        "$left"
+        "$right"
+      ];
+
       experimental-advance-branches = {
         enabled-branches = [ "glob:*" ];
         disabled-branches = [
