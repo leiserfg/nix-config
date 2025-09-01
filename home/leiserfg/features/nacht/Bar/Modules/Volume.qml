@@ -53,7 +53,7 @@ Item {
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.PointingHandCursor
-            acceptedButtons: Qt.LeftButton | Qt.MiddleButton
+            acceptedButtons: Qt.RightButton | Qt.MiddleButton
 
             onClicked: mouse => {
                 if (mouse.button == Qt.MiddleButton) {

@@ -14,7 +14,7 @@ in
 {
   imports = [
     ./_wayland_common.nix
-    ./_waybar.nix
+    # ./_waybar.nix
   ];
 
   _module.args.wm = "hyprland";
@@ -201,10 +201,8 @@ in
       ];
 
       exec-once = [
-        # here and not as a systemd unit so it inherits PATH
-        "hypridle"
-
         "swaybg -i ~/wall.png -m fill"
+        "qs -p ${./nacht}"
       ];
       env = lib.attrsets.mapAttrsToList (name: val: "${name},${toString val}") {
         XDG_CURRENT_DESKTOP = "Hyprland";
@@ -217,6 +215,29 @@ in
       };
     };
   };
+
+  systemd.user.services.quickshell =
+    let
+      sysemdTarget = config.wayland.systemd.target;
+    in
+    {
+      Install = {
+        WantedBy = [ sysemdTarget ];
+      };
+
+      Unit = {
+        ConditionEnvironment = "WAYLAND_DISPLAY";
+        Description = "quickshell magic";
+        After = [ sysemdTarget ];
+        PartOf = [ sysemdTarget ];
+      };
+
+      Service = {
+        ExecStart = "${lib.getExe pkgs.quickshell} -p ${./nacht}";
+        Restart = "always";
+        RestartSec = "10";
+      };
+    };
 
   home.packages = [
     pkgs.swaybg
