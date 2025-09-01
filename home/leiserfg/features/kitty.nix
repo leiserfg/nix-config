@@ -42,7 +42,9 @@
       # ''launch   --stdin-source=@screen_scrollback  nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c "autocmd VimEnter * normal G" -'';
 
       "kitty_mod+h" =
-        ''launch --type=overlay --stdin-source=@screen_scrollback nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c 'autocmd VimEnter * normal let kitty_data = $KITTY_PIPE_DATA | let parts = split(kitty_data, ":") | let scrolled_by = parts[0] | call cursor(line("$") - scrolled_by + 1, 0) | call feedkeys("zb", "n")' - '';
+        # ''launch --type=overlay --stdin-source=@screen_scrollback nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c 'autocmd VimEnter * normal let kitty_data = $KITTY_PIPE_DATA | let parts = split(kitty_data, ":") | let scrolled_by = parts[0] | call cursor(line("$") - scrolled_by + 1, 0) | call feedkeys("zb", "n")' - '';
+
+        ''launch --type=overlay --stdin-source=@screen_scrollback nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' +@input-line-number  - '';
       "kitty_mod+g" =
         ''launch --type=overlay --stdin-source=@last_cmd_output nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c 'autocmd VimEnter * normal let kitty_data = $KITTY_PIPE_DATA | let parts = split(kitty_data, ":") | let scrolled_by = parts[0] | call cursor(line("$") - scrolled_by, 0) | call feedkeys("zb", "n")' -'';
     };

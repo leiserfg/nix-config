@@ -21,24 +21,6 @@
       # either case. I consider zswap as a best-effort speed efficiency
       # boost though, so speed is more important I think.
       compressor = "lz4";
-
-      # AFAIK zsmalloc has memory fragmentation issues because it concatenates
-      # compressed pages with no regard for page boundaries. Reading a single
-      # page from compressed memory might require reading many pages. z3fold
-      # does not have such issues and a 3:1 compression ratio is good enough for
-      # me; the same point about me merely considering zswap an efficiency
-      # booster applies here.
-      zpool = "z3fold";
-
-      # This controls how much of the system RAM may be taken up by swap. On the
-      # one hand, you might think one wants this as high as possible but you
-      # must consider that at some point you do actually want stuff to be
-      # swapped out to disk as zswap is merely a stage between memory and swap
-      # that is cheaper than actual swap in terms of performance but still
-      # requires memory; memory that is still taken away from file-backed pages.
-      # Let's keep the default limit of 20% until I have formed a better opinion
-      # on this.
-      # max_pool_percent = "20";
     }
   );
 

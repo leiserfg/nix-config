@@ -622,34 +622,26 @@
       ^.*.sunvox$
   '';
 
-  # xdg.configFile."wireplumber/wireplumber.conf.d/10-disable-camera.conf".text = ''
-  #   wireplumber.profiles = {
-  #     main = {
-  #       monitor.libcamera = disabled
-  #     }
-  #   }
-  # '';
-
   xdg.configFile."wireplumber/wireplumber.conf.d/10-bluetooth.conf".text = ''
     wireplumber.settings = {
        bluetooth.autoswitch-to-headset-profile = false
     }
   '';
 
-  # home.file.".local/state/wireplumber/sm-settings".text = lib.generators.toINI {} {
-  #   sm-settings = {"bluetooth.autoswitch-to-headset-profile" = "true";};
-  # };
-
-  # xdg.configFile."yt-dlp/config".text = ''
-  #   --cookies-from-browser firefox
-  #   # --downloader aria2c
-  #   # --downloader-args aria2c:'-c -x8 -s8 -k1M'
-  #   # Disable tv extractor to avoid DRM
-  #   --extractor-args "youtube:player-client=default,-tv,web_safari,web_embedded"
-  # '';
-
   home.file."${config.xdg.configHome}/nvim/spell/de.utf-8.spl".source = builtins.fetchurl {
     url = "https://ftp.nluug.nl/pub/vim/runtime/spell/de.utf-8.spl";
     sha256 = "sha256:1ld3hgv1kpdrl4fjc1wwxgk4v74k8lmbkpi1x7dnr19rldz11ivk";
   };
+  home.file.".local/share/file-manager/actions/action.desktop".text = ''
+    [Desktop Entry]
+    Type=Action
+    Profiles=profile_id
+    Name=Send to telegram
+    Icon=telegram
+
+    [X-Action-Profile profile_id]
+    MimeTypes=all/all;
+    Exec=Telegram -sendpath %F
+  '';
+
 }

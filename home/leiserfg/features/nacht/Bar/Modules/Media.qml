@@ -75,7 +75,7 @@ Item {
                 }
 
 
-                Component.onCompleted: console.log(this.font)
+                // Component.onCompleted: console.log(this.font)
                 // Fallback icon
                 Text {
                     anchors.centerIn: parent
