@@ -643,5 +643,4 @@
     MimeTypes=all/all;
     Exec=Telegram -sendpath %F
   '';
-
 }

@@ -25,18 +25,20 @@
     #      --replace "QLibraryInfo::path(QLibraryInfo::QmlImportsPath)"  "QStringLiteral(\"$out/lib/qt-6/qml\")"
     #   '';
     # })
+
     pgcli
     # poetry
     unstablePkgs.blender-hip
     gamescope
     # unstablePkgs.godot_4
+    godot
     # nushell
     # ghostty
     # audacity
     ddcutil
 
-    playwright-test
-    anki
+    # playwright-test
+    # anki
     sunvox
     # orca-c
 
@@ -44,12 +46,11 @@
     # scrcpy
     # (unstablePkgs.llama-cpp.override { vulkanSupport = true; })
   ];
-  # environment.
 
-  home.sessionVariables = {
-    PLAYWRIGHT_BROWSERS_PATH = pkgs.playwright-driver.browsers;
-    PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
-  };
+  # home.sessionVariables = {
+  #   PLAYWRIGHT_BROWSERS_PATH = pkgs.playwright-driver.browsers;
+  #   PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS = "true";
+  # };
 
   services = {
     shikane = {
