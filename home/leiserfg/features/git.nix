@@ -181,15 +181,12 @@ in
             "--"
             "bash"
             "-c"
-            (
-              (
-                # bash
-                ''
-                  set -euo pipefail
-                '')
-              + cmd
-            )
-            "" # This will be replaced by bash with $0
+            # bash
+            (''
+              set -euo pipefail
+              ${cmd}
+            '')
+            "" # This will be replaced by bash with $@
           ];
         in
         {
