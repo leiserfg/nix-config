@@ -185,7 +185,6 @@ in
               (
                 # bash
                 ''
-                  #!/usr/bin/env bash
                   set -euo pipefail
                 '')
               + cmd
@@ -204,7 +203,12 @@ in
             ''
               jj pre-commit && jj git push "$@"
             '');
-
+          prc = sh ''
+            gh pr create --head $(jj log -T "bookmarks" --no-graph -r @) "$@"
+          '';
+          prw = sh ''
+            gh pr view  $(jj log -T "bookmarks" --no-graph -r @) -w "$@"
+          '';
         };
     };
   };

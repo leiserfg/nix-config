@@ -22,6 +22,7 @@
     terraform
     # traceroute
     poedit
+    # chromium
     # (unstablePkgs.teams-for-linux)
     # slack
   ];
