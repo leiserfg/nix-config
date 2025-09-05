@@ -232,18 +232,18 @@
 
     libva-utils
 
-    (makeDesktopItem {
-      name = "teams-for-linux-call";
-      exec = "teams-for-linux %U";
-      icon = "teams-for-linux";
-      desktopName = "Microsoft Teams for Linux";
-      categories = [
-        "Network"
-        "InstantMessaging"
-        "Chat"
-      ];
-      mimeTypes = [ "x-scheme-handler/msteams" ];
-    })
+    # (makeDesktopItem {
+    #   name = "teams-for-linux-call";
+    #   exec = "teams-for-linux %U";
+    #   icon = "teams-for-linux";
+    #   desktopName = "Microsoft Teams for Linux";
+    #   categories = [
+    #     "Network"
+    #     "InstantMessaging"
+    #     "Chat"
+    #   ];
+    #   mimeTypes = [ "x-scheme-handler/msteams" ];
+    # })
 
     #scripts
     # here we don't use the nix binaries to allow rewriting ruff with the correct one
