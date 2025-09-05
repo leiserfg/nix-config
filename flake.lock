@@ -188,11 +188,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1756239358,
-        "narHash": "sha256-EbC2TJ2l/0zGdKw0RH6OC69K314H+HT+HpJcDmBp3OA=",
+        "lastModified": 1757013561,
+        "narHash": "sha256-EW/gqd6kxuZxzbFV/B3JQvz5c/OAKyv8E7vaECLWT2k=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "bded5eb0ffede6f54eb77e044db7a86f4c21b0a4",
+        "rev": "0d0892eb5d3f388e56d18ff1117b02b621be7403",
         "type": "github"
       },
       "original": {
