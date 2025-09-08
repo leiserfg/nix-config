@@ -39,9 +39,9 @@
   nix = {
     enable = true;
     package = pkgs.nix;
-    gc = {
-      automatic = true;
-    };
+    # gc = {
+    #   automatic = true;
+    # };
   };
 
   home.packages = with pkgs; [
@@ -327,6 +327,7 @@
 
   programs = {
     home-manager.enable = true;
+
     aria2.enable = true;
     bash = {
       enable = true;
