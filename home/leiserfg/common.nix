@@ -5,7 +5,7 @@
   neovimPkgs,
   unstablePkgs,
   config,
-  inputs,
+  stdenv,
   ...
 }:
 {
@@ -22,7 +22,7 @@
     ./features/aider.nix
   ];
 
-  # disable news, they don't work well with flakes and message is anoying
+  # disable news; they don't work well with flakes and message is anoying
   news = {
     display = "silent";
     json = lib.mkForce { };
@@ -67,7 +67,7 @@
     htop
     smartmontools
     devenv
-    (unstablePkgs.shikane)
+    shikane
     nix
     # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
     steam-run
@@ -251,7 +251,7 @@
     # see x11 and wayland
 
     (writeShellScriptBin "rofi-launch" ''
-      exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
+      exec -a $0 rofi -combi-modi window;drun;ssh -show combi -modi combi -show-icons
     '')
 
     (writeShellScriptBin "rofi-pp" ''
@@ -436,9 +436,35 @@
 
     yazi = {
       enable = true;
+      package = pkgs.yazi.override { _7zz = pkgs._7zz-rar; };
       shellWrapperName = "y";
-      package = unstablePkgs.yazi;
+      initLua = ''
+        require("gvfs"):setup()
+      '';
 
+      plugins = {
+        inherit (pkgs.yaziPlugins) smart-filter;
+        gvfs = (
+          pkgs.stdenvNoCC.mkDerivation rec {
+            pname = "gvfs.yazi";
+            version = "0.0.1";
+
+            src = pkgs.fetchFromGitHub {
+              owner = "boydaihungst";
+              repo = pname;
+              rev = "b58c30588215093cb6f8b0dc4eed562894c091bc";
+              hash = "sha256-koqbOTSEFL7O8J3PYcdv+XtPK8//m2nixuan6fWMR9Y=";
+            };
+
+            buildPhase = ''
+              mkdir $out
+              cp -r $src/* $out
+            '';
+          }
+
+        );
+
+      };
       keymap = {
         input.prepend_keymap = [
           {
@@ -458,7 +484,13 @@
             on = [ "<Backspace>" ];
           }
         ];
+
         mgr.prepend_keymap = [
+          {
+            on = [ "F" ];
+            run = ''plugin smart-filter'';
+            desc = "Smart filter";
+          }
           {
             on = [ "<C-n>" ];
             run = ''shell 'dragon -x -i -T "$1"' --confirm'';
@@ -490,12 +522,45 @@
             run = "close";
             on = [ "<C-q>" ];
           }
+          {
+            on = [
+              "M"
+              "m"
+            ];
+            run = "plugin gvfs -- select-then-mount";
+            desc = "Select device then mount";
+          }
+          {
+            on = [
+              "M"
+              "u"
+            ];
+            run = "plugin gvfs -- select-then-unmount --eject";
+            desc = "Select device then eject";
+          }
+          {
+            on = [
+              "M"
+              "a"
+            ];
+            run = "plugin gvfs -- add-mount";
+            desc = "Add a GVFS mount URI";
+          }
+          {
+            on = [
+              "g"
+              "m"
+            ];
+            run = "plugin gvfs -- jump-to-device";
+            desc = "Select device then jump to its mount point";
+          }
         ];
       };
     };
+
     rbw = {
       enable = true;
-      settings = rec {
+      settings = {
         # A bit of obfuscation doesn't hurt
         base_url = "https:" + "//bw.nul.mywire.org/";
         email = "${config.home.username}@gmail.com";
@@ -594,7 +659,7 @@
   };
   # Force Rewrite
 
-  manual.manpages.enable = false; # Doc framework is broken, so let's stop updating this
+  manual.manpages.enable = false; # Doc framework is broken; so let's stop updating this
   # xdg.enable = true ;
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps = {

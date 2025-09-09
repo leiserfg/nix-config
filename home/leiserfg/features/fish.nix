@@ -2,11 +2,12 @@
   unstablePkgs,
   pkgs,
   lib,
+  config,
   ...
 }:
 {
   programs.fish = {
-    enable = true;
+    enable = false;
     package = pkgs.fish;
     shellAliases = {
       "open" = "command xdg-open";
@@ -35,7 +36,7 @@
     enable = true;
   };
   programs.lsd = {
-    enable = true;
+    enable = config.programs.fish.enable;
   };
 
   programs.starship = {
