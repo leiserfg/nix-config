@@ -5,7 +5,6 @@
   neovimPkgs,
   unstablePkgs,
   config,
-  stdenv,
   ...
 }:
 {
@@ -251,7 +250,7 @@
     # see x11 and wayland
 
     (writeShellScriptBin "rofi-launch" ''
-      exec -a $0 rofi -combi-modi window;drun;ssh -show combi -modi combi -show-icons
+      exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
     '')
 
     (writeShellScriptBin "rofi-pp" ''
@@ -461,9 +460,37 @@
               cp -r $src/* $out
             '';
           }
-
         );
+      };
+      settings = {
 
+        plugin = {
+          prepend_preloaders = [
+            {
+              name = "/run/user/1000/gvfs/**/*";
+              run = "noop";
+            }
+          ];
+          prepend_previewers = [
+            # Allow to preview folder.
+            {
+              name = "*/";
+              run = "folder";
+            }
+
+            # Do not previewing files in mounted locations (uncomment this line to except text file):
+            {
+              mime = "{text/*,application/x-subrip}";
+              run = "code";
+            }
+
+            # Using absolute path.
+            {
+              name = "/run/user/1000/gvfs/**/*";
+              run = "noop";
+            }
+          ];
+        };
       };
       keymap = {
         input.prepend_keymap = [
@@ -553,6 +580,25 @@
             ];
             run = "plugin gvfs -- jump-to-device";
             desc = "Select device then jump to its mount point";
+          }
+
+          {
+            on = [
+              "M"
+              "e"
+            ];
+            run = "plugin gvfs -- edit-mount";
+            desc = "Edit a GVFS mount URI";
+          }
+
+          # Remove a Scheme/Mount URI
+          {
+            on = [
+              "M"
+              "r"
+            ];
+            run = "plugin gvfs -- remove-mount";
+            desc = "Remove a GVFS mount URI";
           }
         ];
       };
