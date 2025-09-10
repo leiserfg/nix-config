@@ -39,19 +39,7 @@
     powerUpCommands = "${pkgs.util-linux}/bin/rfkill unblock all";
   };
 
-  # systemd.services.rfkill-sleep = {
-  #   description = "Disable Bluetooth before sleep and enable it after wake";
-  #   before = [ "sleep.target" ];
-  #   # stopWhenUnneeded = "yes";
-  #   serviceConfig = {
-  #     Type = "oneshot";
-  #     ExecStart = "${pkgs.util-linux}/bin/rfkill block all";
-  #     ExecStop = "${pkgs.util-linux}/bin/rfkill unblock all";
-  #     RemainAfterExit = true;
-  #   };
-  #
-  #   # This ensures the service runs at startup
-  #   wantedBy = [ "sleep.target" ];
-  # };
-
+  services.udev.extraRules = ''
+    ACTION=="add", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c548", ATTR{power/wakeup}="disabled"
+  '';
 }
