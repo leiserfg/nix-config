@@ -5,11 +5,15 @@ let
   ssh_key = "/home/leiserfg/.ssh/id_rsa.pub";
 in
 {
-  home.packages = [
-    pkgs.git-filter-repo
-    pkgs.glab
-    pkgs.git-branchless
-  ];
+  home.packages = builtins.attrValues {
+    inherit (pkgs)
+      git-filter-repo
+      glab
+      git-branchless
+      jjui
+      ;
+  };
+
   programs.git = {
     enable = true;
     delta.enable = true;

@@ -451,8 +451,8 @@
             src = pkgs.fetchFromGitHub {
               owner = "boydaihungst";
               repo = pname;
-              rev = "b58c30588215093cb6f8b0dc4eed562894c091bc";
-              hash = "sha256-koqbOTSEFL7O8J3PYcdv+XtPK8//m2nixuan6fWMR9Y=";
+              rev = "8303bed80f10464e64a1d26d09c78bd61f7d6d47";
+              hash = "sha256-v+aCRh3cukA8ahv+Hh+FAcbWMnIJHOUYnRax7XQTXVM=";
             };
 
             buildPhase = ''
