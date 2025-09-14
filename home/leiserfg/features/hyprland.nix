@@ -45,7 +45,7 @@ in
 
     plugins = [
       # pkgs.hyprlandPlugins.hyprspace
-      pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
     ];
     settings = {
       "$mod" = "SUPER";
@@ -154,8 +154,7 @@ in
       };
 
       gestures = {
-        workspace_swipe = true;
-        workspace_swipe_fingers = 4;
+        gesture = "4, horizontal, workspace";
       };
 
       binds = {

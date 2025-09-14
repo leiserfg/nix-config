@@ -28,7 +28,7 @@
     myPkgs.pixieditor
     pgcli
     # poetry
-    unstablePkgs.blender-hip
+    # blender-hip
     gamescope
     # unstablePkgs.godot_4
     godot

@@ -9,5 +9,4 @@
     wl-clipboard
     wdisplays
   ];
-  programs.rofi.package = pkgs.rofi-wayland;
 }
