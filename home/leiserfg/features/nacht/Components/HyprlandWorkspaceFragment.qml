@@ -36,7 +36,6 @@ Item {
         if (!icon) {
             icon = Quickshell.iconPath("application-x-executable", true);
         }
-
         return icon || "";
     }
 

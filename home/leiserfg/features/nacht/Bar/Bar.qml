@@ -46,23 +46,9 @@ Scope {
                         color: Theme.backgroundPrimary
                     }
 
-                    Row {
-                        id: leftWidgetsRow
-                        anchors.verticalCenter: barBackground.verticalCenter
-                        anchors.left: barBackground.left
-                        anchors.leftMargin: 18
-                        spacing: 12
-
-                        Media {
-                            anchors.verticalCenter: parent.verticalCenter
-                        }
-
-                        Workspace {
-                            id: workspace
-                            screen: modelData
-                            anchors.horizontalCenter: barBackground.horizontalCenter
-                            anchors.verticalCenter: barBackground.verticalCenter
-                        }
+                    Workspace {
+                        id: workspace
+                        screen: modelData
                     }
 
                     Text {

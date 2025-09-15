@@ -35,7 +35,6 @@ Singleton {
 
     Connections {
         target: Hyprland
-
         function onRawEvent(event: HyprlandEvent): void {
             const n = event.name;
             if (n.endsWith("v2"))
