@@ -194,6 +194,21 @@ in
           ];
         in
         {
+          tug = [
+            "bookmark"
+            "move"
+            "--from"
+            "heads(::@- & bookmarks())"
+            "--to"
+            "@-"
+          ];
+          rebase-all = [
+            "rebase"
+            "-s"
+            "all:roots(trunk()..mutable())"
+            "-d"
+            "trunk()"
+          ];
           pre-commit = sh (
             # bash
             ''
@@ -211,6 +226,19 @@ in
             gh pr view  $(jj log -T "bookmarks" --no-graph -r @) -w "$@"
           '';
         };
+      templates = {
+        log_node = ''
+          if(self && !current_working_copy && !immutable && !conflict && in_branch(self),
+            "◇",
+            builtin_log_node
+          )
+        '';
+      };
+
+      template-aliases = {
+        "in_branch(commit)" = ''commit.contained_in("immutable_heads()..bookmarks()")'';
+      };
+
     };
   };
 }
