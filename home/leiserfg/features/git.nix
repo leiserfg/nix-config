@@ -9,7 +9,7 @@ in
     inherit (pkgs)
       git-filter-repo
       glab
-      git-branchless
+      # git-branchless
       jjui
       ;
   };
@@ -212,7 +212,7 @@ in
           pre-commit = sh (
             # bash
             ''
-              [ ! -f "$(jj root)/.pre-commit-config.yaml" ] || ${lib.getExe pkgs.pre-commit} run -a
+              [ ! -f "$(jj root)/.pre-commit-config.yaml" ] || ${lib.getExe' pkgs.prek "prek"} run -a
             '');
           push = sh (
             # bash

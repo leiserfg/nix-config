@@ -13,7 +13,7 @@
   home.packages = with pkgs; [
     # centrifugo
     pgcli
-    pre-commit
+
     poetry
     insomnia
     awscli2
@@ -25,8 +25,8 @@
     # chromium
     # (unstablePkgs.teams-for-linux)
     # slack
+    prek
   ];
-
   services.shikane = {
     enable = true;
     settings = {

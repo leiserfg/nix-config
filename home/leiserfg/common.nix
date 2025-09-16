@@ -175,7 +175,6 @@
     gparted
     # presenterm
     cntr
-    pre-commit
     # age
     # agebox
     # age-kegen-deterministic
