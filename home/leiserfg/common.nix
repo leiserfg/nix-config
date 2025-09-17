@@ -91,6 +91,7 @@
 
     tinymist
     websocat
+
     (unstablePkgs.tdesktop)
 
     # (unstablePkgs.ags)
