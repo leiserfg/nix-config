@@ -25,6 +25,15 @@
   # finger cross to this workarounding mesa issues
   boot.kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
 
+  powerManagement = {
+    powerDownCommands = ''
+      echo "0 0 1 0 0 0" > /sys/class/leds/chromeos\:multicolor\:charging/multi_intensity && echo "60" > /sys/class/leds/chromeos\:multicolor\:charging/brightness
+    '';
+    powerUpCommands = ''
+      echo "chromeos-auto" > /sys/class/leds/chromeos\:multicolor\:charging/trigger
+    '';
+  };
+
   systemd.services.set-charge-limit = {
     description = "Set battery charge limit";
     after = [ "multi-user.target" ];
