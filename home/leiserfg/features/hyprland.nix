@@ -132,8 +132,9 @@ in
         # new_render_scheduling = true;
       };
       misc = {
-        # vrr = 2; # in fullscreen
-        # vfr = true;
+        disable_hyprland_logo = true;
+        vrr = 2; # in fullscreen
+        vfr = true;
       };
       general = {
         layout = "master";
