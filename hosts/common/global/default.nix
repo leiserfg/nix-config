@@ -14,7 +14,7 @@
     ./gl.nix
     ./locale.nix
     ./network.nix
-    ./nfs.nix
+    # ./nfs.nix
     ./nix.nix
     ./services.nix
     ./security.nix
@@ -27,7 +27,7 @@
     '';
 
     # Add terminfo files
-    enableAllTerminfo = true;
+    # enableAllTerminfo = true;
   };
 
   system.stateVersion = "22.05";
@@ -38,7 +38,7 @@
   programs.dconf.enable = true;
   hardware.enableRedistributableFirmware = true;
 
-  programs.fish.enable = true;
+  # programs.fish.enable = true;
   programs.adb.enable = true;
 
   programs.nix-ld.enable = true;

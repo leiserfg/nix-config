@@ -45,7 +45,7 @@ in
 
     plugins = [
       # pkgs.hyprlandPlugins.hyprspace
-      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      pkgs.hyprlandPlugins.hypr-dynamic-cursors
     ];
     settings = {
       "$mod" = "SUPER";
