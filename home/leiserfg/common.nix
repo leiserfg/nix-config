@@ -100,7 +100,8 @@
       shellcheck
       fish
       (unstablePkgs.ruff)
-      basedpyright
+      # basedpyright
+      ty
       typescript-language-server
       pulseaudio
 
