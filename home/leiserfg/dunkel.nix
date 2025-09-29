@@ -10,23 +10,25 @@
     ./features/hyprland.nix
     # ./features/daw.nix
   ];
-  home.packages = with pkgs; [
-    # centrifugo
-    pgcli
+  home.packages =
+    with pkgs;
+    [
+      # centrifugo
+      pgcli
 
-    poetry
-    insomnia
-    awscli2
-    csvkit
-    libreoffice-qt6
-    terraform
-    # traceroute
-    poedit
-    # chromium
-    # (unstablePkgs.teams-for-linux)
-    # slack
-    prek
-  ];
+      poetry
+      insomnia
+      awscli2
+      csvkit
+      libreoffice-qt6
+      terraform
+      # traceroute
+      poedit
+      # chromium
+      # (unstablePkgs.teams-for-linux)
+      # slack
+    ];
+
   services.shikane = {
     enable = true;
     settings = {
