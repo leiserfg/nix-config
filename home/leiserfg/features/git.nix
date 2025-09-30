@@ -7,10 +7,11 @@ in
 {
   home.packages = builtins.attrValues {
     inherit (pkgs)
-      git-filter-repo
+      # git-filter-repo
       glab
       # git-branchless
       jjui
+      mergiraf
       ;
   };
 
