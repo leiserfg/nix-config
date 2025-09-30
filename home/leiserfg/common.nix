@@ -147,6 +147,8 @@
       krita
       inkscape
 
+      vtracer
+
       tree-sitter
       nodejs
 
