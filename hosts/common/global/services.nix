@@ -60,40 +60,5 @@
         };
       };
     };
-    interception-tools =
-      let
-        intercept = "${pkgs.interception-tools}/bin/intercept";
-        caps2esc = "${
-          (pkgs.interception-tools-plugins.caps2esc.overrideAttrs {
-            patchPhase = ''
-              ls .
-              sed s/3.0/3.5/ -i ./CMakeLists.txt
-              cat ./CMakeLists.txt
-            '';
-          })
-        }/bin/caps2esc";
-        uinput = "${pkgs.interception-tools}/bin/uinput";
-      in
-      {
-        enable = false;
-        udevmonConfig = ''
-          - JOB: ""
-            DEVICE:
-              NAME: .*Leiser.*
-              EVENTS:
-                EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
-          - JOB: "${intercept} -g $DEVNODE | ${caps2esc} -m 2 | ${uinput} -d $DEVNODE"
-            DEVICE:
-              NAME: .*Akko.*
-              EVENTS:
-                EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
-          # Laptop
-          - JOB: "${intercept} -g $DEVNODE | ${caps2esc} | ${uinput} -d $DEVNODE"
-            DEVICE:
-              EVENTS:
-                EV_KEY: [KEY_CAPSLOCK, KEY_ESC]
-        '';
-      };
   };
-
 }
