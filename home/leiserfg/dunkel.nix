@@ -15,15 +15,10 @@
     [
       # centrifugo
       pgcli
-
-      poetry
       insomnia
-      awscli2
-      csvkit
-      libreoffice-qt6
+      # libreoffice-qt6
       terraform
       # traceroute
-      poedit
       # chromium
       # (unstablePkgs.teams-for-linux)
       # slack
