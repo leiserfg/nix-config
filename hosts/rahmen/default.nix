@@ -27,7 +27,7 @@
 
   powerManagement = {
     powerDownCommands = ''
-      echo "0 0 1 0 0 0" > /sys/class/leds/chromeos\:multicolor\:charging/multi_intensity && echo "40" > /sys/class/leds/chromeos\:multicolor\:charging/brightness
+      echo "0 0 1 0 0 0" > /sys/class/leds/chromeos\:multicolor\:charging/multi_intensity && echo "60" > /sys/class/leds/chromeos\:multicolor\:charging/brightness
     '';
     powerUpCommands = ''
       echo "chromeos-auto" > /sys/class/leds/chromeos\:multicolor\:charging/trigger

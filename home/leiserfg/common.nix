@@ -38,15 +38,51 @@
   nix = {
     enable = true;
     package = pkgs.nix;
-    # gc = {
-    #   automatic = true;
-    # };
   };
 
   home.packages =
       with pkgs;
       [
         # --- Development Tools ---
+        myPkgs.wl_shimeji
+        # myPkgs.friction-graphics
+        # love
+        # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+        nix-playground
+        mupdf
+        nix-search-cli
+        mosh
+        nmap
+        pandoc
+        pinentry-qt
+        cava
+        exfatprogs
+        matugen
+        localsend
+        kitty-img
+        # myPkgs.typsite
+        # v4l-utils
+        dive
+        # gdb
+        htop
+        smartmontools
+        devenv
+        shikane
+        nix
+        # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
+        steam-run
+        quickshell
+        myPkgs.jpegli
+        glsl_analyzer
+        myPkgs.glslviewer
+        # glslviewer
+        # easyeffects
+        util-linux
+        nix-update
+        # inferno
+        flamegraph
+        psmisc
+        python313Packages.ipython
         python3
         python313Packages.ipython
         pipenv
@@ -663,7 +699,7 @@
     defaultApplications = {
       "text/html" = "firefox.desktop";
       "x-scheme-handler/tg" = "telegram.desktop";
-      "x-scheme-handler/msteams" = "teams-for-linux.desktop";
+      # "x-scheme-handler/msteams" = "teams-for-linux.desktop";
       # "inode/directory" = "thunar.desktop";
       "inode/directory" = "pcmanfm.desktop";
       "text/x-python" = "neovim.desktop";

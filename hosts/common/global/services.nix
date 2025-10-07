@@ -29,14 +29,53 @@
     tuned.enable = true;
     tlp.enable = false;
 
+    keyd = {
+      enable = true;
+      keyboards = {
+        piantor = {
+          ids = [ "239a:102e" ];
+        };
+        default = {
+          ids = [ "*" ];
+          settings = {
+            main = {
+              capslock = "overload(ctrl_vim,esc)";
+            };
+            "ctrl_vim:C" = {
+              # space = "swap(vim_mode)";
+            };
+
+            # "vim_mode:C" = {
+            #   space = "swap(vim_mode)";
+            #   h = "left";
+            #   j = "down";
+            #   k = "up";
+            #   l = "right";
+            #   # forward "word";
+            #   w = "C-right";
+            #   # backward "word";
+            #   b = "C-left";
+            # };
+          };
+        };
+      };
+    };
     interception-tools =
       let
         intercept = "${pkgs.interception-tools}/bin/intercept";
-        caps2esc = "${pkgs.interception-tools-plugins.caps2esc}/bin/caps2esc";
+        caps2esc = "${
+          (pkgs.interception-tools-plugins.caps2esc.overrideAttrs {
+            patchPhase = ''
+              ls .
+              sed s/3.0/3.5/ -i ./CMakeLists.txt
+              cat ./CMakeLists.txt
+            '';
+          })
+        }/bin/caps2esc";
         uinput = "${pkgs.interception-tools}/bin/uinput";
       in
       {
-        enable = true;
+        enable = false;
         udevmonConfig = ''
           - JOB: ""
             DEVICE:
