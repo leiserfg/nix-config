@@ -39,26 +39,21 @@
           ids = [ "*" ];
           settings = {
             main = {
-              capslock = "overload(ctrl_vim,esc)";
+              capslock = "overload(control, esc)";
+              esc = "`";
+              "`" = "capslock";
             };
-            "ctrl_vim:C" = {
-              # space = "swap(vim_mode)";
-            };
-
-            # "vim_mode:C" = {
-            #   space = "swap(vim_mode)";
-            #   h = "left";
-            #   j = "down";
-            #   k = "up";
-            #   l = "right";
-            #   # forward "word";
-            #   w = "C-right";
-            #   # backward "word";
-            #   b = "C-left";
-            # };
           };
         };
       };
     };
   };
+
+  # Make sure touchpad is disabled with keyd
+  environment.etc."libinput/local-overrides.quirks".text = ''
+    [Serial Keyboards]
+    MatchUdevType=keyboard
+    MatchName=keyd virtual keyboard
+    AttrKeyboardIntegration=internal
+  '';
 }
