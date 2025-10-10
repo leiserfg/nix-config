@@ -57,12 +57,12 @@
       pinentry-qt
       cava
       exfatprogs
-      matugen
-      localsend
+      # matugen
+      # localsend
       kitty-img
       # myPkgs.typsite
       # v4l-utils
-      dive
+      # dive
       # gdb
       htop
       smartmontools
@@ -129,7 +129,7 @@
       # material-maker
       # git-branchless
 
-      # --- Editor
+    # --- Editor
       (neovimPkgs.neovim)
 
       # --- Networking & Communication ---
@@ -143,6 +143,7 @@
       doggo
 
       # --- System Utilities ---
+      dragon-drop
       util-linux
       exfatprogs
       smartmontools
@@ -173,7 +174,7 @@
       # agebox
       # age-kegen-deterministic
 
-      # --- Media & Graphics ---
+    # --- Media & Graphics ---
       mupdf
       zathura
       imv
