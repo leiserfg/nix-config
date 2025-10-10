@@ -41,254 +41,255 @@
   };
 
   home.packages =
-      with pkgs;
-      [
-        # --- Development Tools ---
-        myPkgs.wl_shimeji
-        # myPkgs.friction-graphics
-        # love
-        # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
-        nix-playground
-        mupdf
-        nix-search-cli
-        mosh
-        nmap
-        pandoc
-        pinentry-qt
-        cava
-        exfatprogs
-        matugen
-        localsend
-        kitty-img
-        # myPkgs.typsite
-        # v4l-utils
-        dive
-        # gdb
-        htop
-        smartmontools
-        devenv
-        shikane
-        nix
-        # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
-        steam-run
-        quickshell
-        myPkgs.jpegli
-        glsl_analyzer
-        myPkgs.glslviewer
-        # glslviewer
-        # easyeffects
-        util-linux
-        nix-update
-        # inferno
-        flamegraph
-        psmisc
-        python313Packages.ipython
-        python3
-        python313Packages.ipython
-        pipenv
-        uv
-        cmake
-        gnumake
-        gcc
-        rustup
-        nodejs
-        tree-sitter
-        lua-language-server
-        kdePackages.qtdeclarative
-        typst
-        devenv
-        nix
-        nixd
-        nix-update
-        nixfmt-rfc-style
-        nixpkgs-review
-        taplo
-        stylua
-        shfmt
-        shellcheck
-        ty
-        pyrefly
-        (unstablePkgs.ruff)
-        # basedpyright
-        # typescript-language-server
-        # gdb
-        # inferno
-        flamegraph
-        glsl_analyzer
-        myPkgs.glslviewer
-        # myPkgs.friction-graphics
-        myPkgs.jpegli
-        # love
-        # myPkgs.wl_shimeji
-        # easyeffects
-        rink
-        uiua
-        # figlet
-        # ventoy-bin
-        # presenterm
-        # material-maker
-        # git-branchless
+    with pkgs;
+    [
+      # --- Development Tools ---
+      myPkgs.wl_shimeji
+      # myPkgs.friction-graphics
+      # love
+      # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
+      nix-playground
+      mupdf
+      nix-search-cli
+      mosh
+      nmap
+      pandoc
+      pinentry-qt
+      cava
+      exfatprogs
+      matugen
+      localsend
+      kitty-img
+      # myPkgs.typsite
+      # v4l-utils
+      dive
+      # gdb
+      htop
+      smartmontools
+      devenv
+      shikane
+      nix
+      # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
+      steam-run
+      quickshell
+      myPkgs.jpegli
+      glsl_analyzer
+      myPkgs.glslviewer
+      # glslviewer
+      # easyeffects
+      util-linux
+      nix-update
+      # inferno
+      flamegraph
+      psmisc
+      python313Packages.ipython
+      python3
+      python313Packages.ipython
+      pipenv
+      uv
+      cmake
+      gnumake
+      gcc
+      rustup
+      nodejs
+      tree-sitter
+      lua-language-server
+      kdePackages.qtdeclarative
+      typst
+      devenv
+      nix
+      nixd
+      nix-update
+      nixfmt-rfc-style
+      nixpkgs-review
+      taplo
+      stylua
+      shfmt
+      shellcheck
+      ty
+      pyrefly
+      (unstablePkgs.ruff)
+      # basedpyright
+      # typescript-language-server
+      # gdb
+      # inferno
+      flamegraph
+      glsl_analyzer
+      myPkgs.glslviewer
+      # myPkgs.friction-graphics
+      myPkgs.jpegli
+      # love
+      # myPkgs.wl_shimeji
+      # easyeffects
+      rink
+      uiua
+      # figlet
+      # ventoy-bin
+      # presenterm
+      # material-maker
+      # git-branchless
 
-        # --- Editor
-        (neovimPkgs.neovim)
+      # --- Editor
+      (neovimPkgs.neovim)
 
-        # --- Networking & Communication ---
-        mosh
-        websocat
-        (unstablePkgs.tdesktop)
-        sshuttle
-        autossh
-        openssh
-        croc
-        doggo
+      # --- Networking & Communication ---
+      mosh
+      websocat
+      (unstablePkgs.tdesktop)
+      sshuttle
+      autossh
+      openssh
+      croc
+      doggo
 
-        # --- System Utilities ---
-        util-linux
-        exfatprogs
-        smartmontools
-        pciutils
-        lm_sensors
-        lsof
-        file
-        psmisc
-        htop
-        dmidecode
-        dua
-        picocom # run as:  sudo picocom /dev/ttyACM0
-        powertop
-        usbutils
-        gparted
-        gnome-disk-utility
-        rsync
-        moreutils
-        cntr
-        patool
-        unrar
-        zpaq
-        p7zip
-        d-spy
-        clinfo
-        nix-du
-        # age
-        # agebox
-        # age-kegen-deterministic
+      # --- System Utilities ---
+      util-linux
+      exfatprogs
+      smartmontools
+      pciutils
+      lm_sensors
+      lsof
+      file
+      psmisc
+      htop
+      dmidecode
+      dua
+      picocom # run as:  sudo picocom /dev/ttyACM0
+      powertop
+      usbutils
+      gparted
+      gnome-disk-utility
+      rsync
+      moreutils
+      cntr
+      patool
+      unrar
+      zpaq
+      p7zip
+      d-spy
+      clinfo
+      nix-du
+      # age
+      # agebox
+      # age-kegen-deterministic
 
-        # --- Media & Graphics ---
-        mupdf
-        zathura
-        imv
-        # krita
-        vtracer
-        inkscape
-        ffmpeg-full
-        gpu-screen-recorder
-        kitty-img
-        cava
-        material-symbols
-        noto-fonts-emoji
-        noto-fonts-cjk-sans
-        qpwgraph
-        # darktable
+      # --- Media & Graphics ---
+      mupdf
+      zathura
+      imv
+      # krita
+      # calibre
+      vtracer
+      inkscape
+      ffmpeg-full
+      gpu-screen-recorder
+      kitty-img
+      cava
+      material-symbols
+      noto-fonts-emoji
+      noto-fonts-cjk-sans
+      qpwgraph
+      # darktable
 
-        # --- File Management ---
-        pcmanfm
-        xarchiver
-        unzip
-        yadm
+      # --- File Management ---
+      pcmanfm
+      xarchiver
+      unzip
+      yadm
 
-        # --- Fonts ---
-        (pkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
-        nerd-fonts.symbols-only
+      # --- Fonts ---
+      (pkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
+      nerd-fonts.symbols-only
 
-        # --- Audio ---
-        pulseaudio
-        pavucontrol
+      # --- Audio ---
+      pulseaudio
+      pavucontrol
 
-        # --- Cloud & Infra ---
-        terraform-ls
-        # awscli2
-        docker-compose
-        # cachix
+      # --- Cloud & Infra ---
+      terraform-ls
+      # awscli2
+      docker-compose
+      # cachix
 
-        # --- Git & VCS ---
-        git
-        gh
-        git-standup
-        delta
-        git-lfs
-        # git-absorb
+      # --- Git & VCS ---
+      git
+      gh
+      git-standup
+      delta
+      git-lfs
+      # git-absorb
 
-        # --- Search & Grep ---
-        ripgrep
-        ast-grep
+      # --- Search & Grep ---
+      ripgrep
+      ast-grep
 
-        # --- Miscellaneous ---
-        nix-playground
-        tinymist
-        shikane
-        steam-run
-        quickshell
-        glib
-        jq
-        xh
+      # --- Miscellaneous ---
+      nix-playground
+      tinymist
+      shikane
+      steam-run
+      quickshell
+      glib
+      jq
+      xh
 
-        # --- Scripts & Custom Binaries ---
-        (writeShellScriptBin "xdg-open" ''
-          exec -a $0 ${mimeo}/bin/mimeo "$@"
-        '')
-        (writeShellScriptBin "rofi-launch" ''
-          exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
-        '')
-        (writeShellScriptBin "rofi-pp" ''
-          printf " Performance\n Balanced\n Power Saver" \
-          | rofi -dmenu -i \
-          | tr -cd '[:print:]' \
-          | xargs|tr " " "-" \
-          | tr '[:upper:]' '[:lower:]' \
-          | xargs powerprofilesctl set
-        '')
-        (writeShellScriptBin "pp-state" ''
-          state=$(powerprofilesctl get | sed -e "s/.*string//" -e "s/.*save.*/ /"  -e "s/.*perf.*/ /"  -e "s/.*balanced.*/ /")
-          echo $state
-        '')
-        (writeShellScriptBin "game-picker" ''
-          exec  sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
-          |xargs -n 1 -d '\n' dirname \
-          |xargs -d '\n' -n 1 basename \
-          |rofi -dmenu -i  \
-          |xargs  -d '\n'  -I__  bash -c 'cd $HOME/Games/__/  && source *start*.sh'"
-        '')
-        (writeShellScriptBin "rofi_power" ''
-          enumerate () {
-              awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
-          }
-          question=$(printf "||||"| enumerate|rofi -dmenu -markup-rows)
+      # --- Scripts & Custom Binaries ---
+      (writeShellScriptBin "xdg-open" ''
+        exec -a $0 ${mimeo}/bin/mimeo "$@"
+      '')
+      (writeShellScriptBin "rofi-launch" ''
+        exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
+      '')
+      (writeShellScriptBin "rofi-pp" ''
+        printf " Performance\n Balanced\n Power Saver" \
+        | rofi -dmenu -i \
+        | tr -cd '[:print:]' \
+        | xargs|tr " " "-" \
+        | tr '[:upper:]' '[:lower:]' \
+        | xargs powerprofilesctl set
+      '')
+      (writeShellScriptBin "pp-state" ''
+        state=$(powerprofilesctl get | sed -e "s/.*string//" -e "s/.*save.*/ /"  -e "s/.*perf.*/ /"  -e "s/.*balanced.*/ /")
+        echo $state
+      '')
+      (writeShellScriptBin "game-picker" ''
+        exec  sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
+        |xargs -n 1 -d '\n' dirname \
+        |xargs -d '\n' -n 1 basename \
+        |rofi -dmenu -i  \
+        |xargs  -d '\n'  -I__  bash -c 'cd $HOME/Games/__/  && source *start*.sh'"
+      '')
+      (writeShellScriptBin "rofi_power" ''
+        enumerate () {
+            awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
+        }
+        question=$(printf "||||"| enumerate|rofi -dmenu -markup-rows)
 
-          case $question in
-              **)
-                  loginctl lock-session $XDG_SESSION_ID
-                  ;;
-              **)
-                  systemctl suspend
-                  ;;
-              **)
-                  # bspc quit || qtile cmd-obj -o cmd -f shutdown
-                  systemctl --user  stop graphical-session.target
-                  hyprctl dispatch exit || loginctl terminate-session $XDG_SESSION_ID
-                  ;;
-              **)
-                  systemctl reboot
-                  ;;
-              **)
-                  systemctl poweroff
-                  ;;
-              *)
-                  exit 0  # do nothing on wrong response
-                  ;;
-          esac
-        '')
-      ]
-      ++ (if builtins.hasAttr "prek" pkgs then [ pkgs.prek ] else [ pkgs.pre-commit ]);
+        case $question in
+            **)
+                loginctl lock-session $XDG_SESSION_ID
+                ;;
+            **)
+                systemctl suspend
+                ;;
+            **)
+                # bspc quit || qtile cmd-obj -o cmd -f shutdown
+                systemctl --user  stop graphical-session.target
+                hyprctl dispatch exit || loginctl terminate-session $XDG_SESSION_ID
+                ;;
+            **)
+                systemctl reboot
+                ;;
+            **)
+                systemctl poweroff
+                ;;
+            *)
+                exit 0  # do nothing on wrong response
+                ;;
+        esac
+      '')
+    ]
+    ++ (if builtins.hasAttr "prek" pkgs then [ pkgs.prek ] else [ pkgs.pre-commit ]);
 
   # xdg.configFile."Thunar/uca.xml" = {
   #   executable = false;
