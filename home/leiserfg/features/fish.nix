@@ -64,12 +64,12 @@
         "$python"
         "$hostname"
         "$aws"
-        "$git_branch"
-        "$git_commit"
-        "$git_state"
-        "$git_metrics"
-        "$git_status"
-        # "$custom"
+        # "$git_branch"
+        # "$git_commit"
+        # "$git_state"
+        # "$git_metrics"
+        # "$git_status"
+        "$custom"
       ];
       custom.jj = {
         ignore_timeout = true;
@@ -98,25 +98,11 @@
           '
         '';
       };
-
-      # # optionally disable git modules
-      # [git_state]
-      # disabled = true
-      #
-      # [git_commit]
-      # disabled = true
-      #
-      # [git_metrics]
-      # disabled = true
-      #
-      # [git_branch]
-      # disabled = true
-      #
-      # # re-enable git_branch as long as we're not in a jj repo
-      # [custom.git_branch]
-      # when = true
-      # command = "jj root >/dev/null 2>&1 || starship module git_branch"
-      # description = "Only show git_branch if we're not in a jj repo"
+      custom.git_branch = {
+        when = true;
+        command = "jj root >/dev/null 2>&1 || starship module git_branch";
+        description = "Only show git_branch if we're not in a jj repo";
+      };
 
     };
   };
