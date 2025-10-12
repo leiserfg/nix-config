@@ -44,7 +44,8 @@
     with pkgs;
     [
       # --- Development Tools ---
-      myPkgs.wl_shimeji
+      numbat
+      # myPkgs.wl_shimeji
       # myPkgs.friction-graphics
       # love
       # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
@@ -129,7 +130,7 @@
       # material-maker
       # git-branchless
 
-    # --- Editor
+      # --- Editor
       (neovimPkgs.neovim)
 
       # --- Networking & Communication ---
@@ -174,7 +175,7 @@
       # agebox
       # age-kegen-deterministic
 
-    # --- Media & Graphics ---
+      # --- Media & Graphics ---
       mupdf
       zathura
       imv
@@ -233,10 +234,10 @@
       glib
       jq
       xh
-
+      handlr-regex
       # --- Scripts & Custom Binaries ---
       (writeShellScriptBin "xdg-open" ''
-        exec -a $0 ${mimeo}/bin/mimeo "$@"
+        exec -a $0 ${handlr-regex}/bin/handlr open "$@"
       '')
       (writeShellScriptBin "rofi-launch" ''
         exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
@@ -696,31 +697,35 @@
   manual.manpages.enable = false; # Doc framework is broken; so let's stop updating this
   # xdg.enable = true ;
   xdg.configFile."mimeapps.list".force = true;
-  xdg.mimeApps = {
-    enable = true;
-    defaultApplications = {
-      "text/html" = "firefox.desktop";
-      "x-scheme-handler/tg" = "telegram.desktop";
-      # "x-scheme-handler/msteams" = "teams-for-linux.desktop";
-      # "inode/directory" = "thunar.desktop";
-      "inode/directory" = "pcmanfm.desktop";
-      "text/x-python" = "neovim.desktop";
-      "text/plain" = "neovim.desktop";
-      "application/zip" = "xarchiver.desktop";
-      "application/pdf" = "org.pwmt.zathura.desktop";
-      "application/epub+zip" = "org.pwmt.zathura.desktop.desktop";
-      # "image/*" = "com.github.weclaw1.ImageRoll.desktop";
+  xdg.mimeApps =
+    let
+      editor = "nvim.desktop";
+    in
+    {
+      enable = true;
+      defaultApplications = {
+        "text/html" = "firefox.desktop";
+        "x-scheme-handler/tg" = "telegram.desktop";
+        # "x-scheme-handler/msteams" = "teams-for-linux.desktop";
+        # "inode/directory" = "thunar.desktop";
+        "inode/directory" = "pcmanfm.desktop";
+        "text/*" = editor;
+        "application/x-subrip" = editor;
+        "application/zip" = "xarchiver.desktop";
+        "application/pdf" = "org.pwmt.zathura.desktop";
+        "application/epub+zip" = "org.pwmt.zathura.desktop.desktop";
+        # "image/*" = "com.github.weclaw1.ImageRoll.desktop";
+      };
     };
-  };
 
   # mpv %U
   #     ^https?://(www.)?youtube.com/watch\?v=.*$
-  xdg.configFile."mimeo/associations.txt".text = ''
-    mpv --loop %U
-      ^.*.gif$
-    sunvox %f
-      ^.*.sunvox$
-  '';
+  # xdg.configFile."mimeo/associations.txt".text = ''
+  #   mpv --loop %U
+  #     ^.*.gif$
+  #   sunvox %f
+  #     ^.*.sunvox$
+  # '';
 
   xdg.configFile."wireplumber/wireplumber.conf.d/10-bluetooth.conf".text = ''
     wireplumber.settings = {

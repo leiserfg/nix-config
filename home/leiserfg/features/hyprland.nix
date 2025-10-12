@@ -133,7 +133,7 @@ in
       };
       misc = {
         disable_hyprland_logo = true;
-        vrr = 2; # in fullscreen
+        # vrr = 2; # in fullscreen
         vfr = true;
       };
       general = {

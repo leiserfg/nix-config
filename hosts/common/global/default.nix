@@ -6,7 +6,8 @@
   outputs,
   config,
   ...
-}: {
+}:
+{
   imports = [
     ./audio.nix
     ./boot.nix
@@ -49,13 +50,11 @@
   environment.systemPackages = with pkgs; [
     vim
     cntr
+    # run0-sudo-shim
   ];
+
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
-
   hardware.brillo.enable = true;
-  # services.scx.enable = true;
-  # security.scx.scheduler = "scx_bpfland";
 
- 
 }
