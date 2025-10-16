@@ -62,6 +62,7 @@
       # localsend
       kitty-img
       # myPkgs.typsite
+      # myPkgs.vicinae
       # v4l-utils
       # dive
       # gdb

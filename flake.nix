@@ -27,9 +27,6 @@
     # hyprland = {
     #   url = "github:leiserfg/Hyprland";
     # };
-
-    # vicinae.url = "github:vicinaehq/vicinae";
-
   };
 
   outputs =
@@ -37,7 +34,6 @@
       nixos-hardware,
       nixpkgs,
       home-manager,
-      # vicinae,
       ...
     }@inputs:
     let
@@ -133,8 +129,6 @@
       homeConfigurations =
         let
           common-mods = (builtins.attrValues homeManagerModules) ++ [
-            # vicinae.homeManagerModules.default
-            # { services.vicinae.enable = true; }
           ];
           extra-args = {
             inherit inputs;

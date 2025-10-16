@@ -51,6 +51,29 @@
         ''launch --type=overlay --stdin-source=@screen_scrollback nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' +@input-line-number  - '';
       "kitty_mod+g" =
         ''launch --type=overlay --stdin-source=@last_cmd_output nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c 'autocmd VimEnter * normal let kitty_data = $KITTY_PIPE_DATA | let parts = split(kitty_data, ":") | let scrolled_by = parts[0] | call cursor(line("$") - scrolled_by, 0) | call feedkeys("zb", "n")' -'';
+
+      # background = "#0e1415";
+      # foreground = "#cecece";
+      # cursor = "#cd974b";
+      # selection_background = "#293334";
+      # selection_foreground = "#cecece";
+      # color0 = "#000000";
+      # color1 = "#d2322d";
+      # color2 = "#6abf40";
+      # color3 = "#cd974b";
+      # color4 = "#217EBC";
+      # color5 = "#9B3596";
+      # color6 = "#178F79";
+      # color7 = "#cecece";
+      # color8 = "#333333";
+      # color9 = "#c33c33";
+      # color10 = "#95cb82";
+      # color11 = "#dfdf8e";
+      # color12 = "#71aed7";
+      # color13 = "#cc8bc9";
+      # color14 = "#47BEA9";
+      # color15 = "#ffffff";
+
     };
   };
 }
