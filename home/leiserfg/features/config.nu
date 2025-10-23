@@ -111,7 +111,7 @@ commandline edit --replace (
 ]
 
 def --env awsenv [] {
-   open ~/.aws/credentials | from ini | columns | to text | fzf --reverse |  export-env { $env.AWS_PROFILE = $in }
+   export-env {$env.AWS_PROFILE = (open ~/.aws/credentials | from ini | columns | to text | fzf --reverse )}
 }
 
 def terraform_partial [] {
