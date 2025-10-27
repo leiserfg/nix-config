@@ -59,7 +59,7 @@
       cava
       exfatprogs
       # matugen
-      # localsend
+      localsend
       kitty-img
       # myPkgs.typsite
       # myPkgs.vicinae
