@@ -6,7 +6,10 @@
 {
   boot = {
     # kernelPackages = pkgs.linuxPackages_6_12;
-    # kernelPackages = pkgs.linuxPackages_latest;
+
+    kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = [ "amdgpu.dcdebugmask=0x410" ];
+
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
     blacklistedKernelModules = [

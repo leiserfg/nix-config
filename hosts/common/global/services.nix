@@ -19,12 +19,8 @@
     };
 
     openssh.enable = true;
-    udev.packages = [
-      pkgs.android-udev-rules
-    ];
     dbus.implementation = "broker";
     upower.enable = true;
-    # power-profiles-daemon.enable = true;
 
     tuned.enable = true;
     tlp.enable = false;
@@ -35,13 +31,21 @@
         piantor = {
           ids = [ "239a:102e" ];
         };
-        default = {
-          ids = [ "*" ];
+        akko = {
+          ids = [ "0c45:7638" ];
           settings = {
             main = {
               capslock = "overload(control, esc)";
               esc = "`";
               "`" = "capslock";
+            };
+          };
+        };
+        laptop = {
+          ids = [ "*" ];
+          settings = {
+            main = {
+              capslock = "overload(control, esc)";
             };
           };
         };
