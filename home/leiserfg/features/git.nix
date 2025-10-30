@@ -209,6 +209,11 @@ in
           ];
         in
         {
+          ll = [
+            "log"
+            "-T"
+            "log_with_files"
+          ];
           tug = [
             "bookmark"
             "move"
@@ -224,6 +229,9 @@ in
             "-d"
             "trunk()"
           ];
+          z = sh ''
+            jj bookmark list -a -T 'separate("@", name, remote) ++ "\n"' 2> /dev/null | sort | uniq | fzf -f "$1" | head -n1 | xargs jj new
+          '';
           pre-commit = sh (
             # bash
             ''
@@ -249,9 +257,34 @@ in
           )
         '';
       };
-
       template-aliases = {
         "in_branch(commit)" = ''commit.contained_in("immutable_heads()..bookmarks()")'';
+
+        log_with_files = ''
+          if(root,
+            format_root_commit(self),
+            label(if(current_working_copy, "working_copy"),
+              concat(
+                format_short_commit_header(self) ++ "\n",
+                separate(" ",
+                  if(empty, label("empty", "(empty)")),
+                  if(description,
+                    description.first_line(),
+                    label(if(empty, "empty"), description_placeholder),
+                  ),
+                ) ++ "\n",
+                if(self.contained_in("recent_work"), diff.summary()),
+              ),
+            )
+          )
+        '';
+
+      };
+      revset-aliases = {
+        recent_work = "ancestors(visible_heads(), 3) & mutable()";
+      };
+      revsets = {
+        log = "(trunk()..@):: | (trunk()..@)-";
       };
 
     };

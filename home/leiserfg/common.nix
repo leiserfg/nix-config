@@ -315,8 +315,6 @@
   # };
 
   programs = {
-    home-manager.enable = true;
-
     aria2.enable = true;
     bash = {
       enable = true;
@@ -341,12 +339,6 @@
     };
     firefox = {
       enable = true;
-      # package = pkgs.firefox.override {
-      #   nativeMessagingHosts = [
-      #     pkgs.tridactyl-native
-      #   ];
-      # };
-      # package = pkgs.firefox-devedition;
       profiles = {
         yolo = {
           userContent = "";

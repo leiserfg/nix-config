@@ -16,7 +16,7 @@
       # centrifugo
       pgcli
       insomnia
-      # libreoffice-qt6
+      libreoffice-qt6
       terraform
       # traceroute
       # chromium

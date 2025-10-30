@@ -99,7 +99,7 @@ commandline edit --replace (
            ];
           } else { $res } | first
 
-          let result = fzf --reverse --walker=file,dir,follow,hidden --scheme=path --walker-root=($parts.needle | path expand)
+          let result = rg --files | fzf --reverse --walker=file,dir,follow,hidden --scheme=path --walker-root=($parts.needle | path expand)
           commandline edit --replace ([$parts.prefix $result]|str join '')
           commandline set-cursor --end
           commandline edit --append $ending
