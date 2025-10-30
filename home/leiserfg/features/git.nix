@@ -172,6 +172,11 @@ in
       #   sign-on-push = true;
       # };
 
+      git.fetch = [
+        "origin"
+        "upstream"
+      ];
+
       ui.diff-formatter = [
         (lib.getExe pkgs.difftastic)
         "--color=always"
