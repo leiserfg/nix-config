@@ -230,7 +230,7 @@ in
             "trunk()"
           ];
           z = sh ''
-            jj bookmark list -a -T 'separate("@", name, remote) ++ "\n"' 2> /dev/null | sort | uniq | fzf -f "$1" | head -n1 | xargs jj new
+            jj bookmark list -a -T 'separate("@", name, remote) ++ "\n"' 2> /dev/null | sort | uniq | fzf | xargs jj new
           '';
           pre-commit = sh (
             # bash
