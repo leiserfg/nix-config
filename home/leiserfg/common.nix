@@ -587,8 +587,12 @@
     };
   };
 
-  qt.enable = true;
-  qt.platformTheme.name = "gtk3";
+  qt = {
+    enable = true;
+    platformTheme = {
+      name = "gtk3";
+    };
+  };
 
   home.sessionVariables = {
     BROWSER = "firefox";
@@ -605,7 +609,8 @@
     # Make cargo use git to pull from github
     CARGO_NET_GIT_FETCH_WITH_CLI = "true";
 
-    FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
+    # FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
+
     # Force wayland for electron
     NIXOS_OZONE_WL = 1;
 
@@ -624,7 +629,6 @@
   services = {
     trayscale.enable = true;
     gpg-agent.enable = true;
-
     udiskie = {
       enable = true;
       automount = true;
