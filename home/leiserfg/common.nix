@@ -62,7 +62,7 @@
       localsend
       kitty-img
       # myPkgs.typsite
-      # myPkgs.vicinae
+      vicinae
       # v4l-utils
       # dive
       # gdb
@@ -137,7 +137,7 @@
       # --- Networking & Communication ---
       mosh
       websocat
-      (unstablePkgs.tdesktop)
+      (unstablePkgs.telegram-desktop)
       sshuttle
       autossh
       openssh
@@ -189,7 +189,7 @@
       kitty-img
       cava
       material-symbols
-      noto-fonts-emoji
+      noto-fonts-color-emoji
       noto-fonts-cjk-sans
       qpwgraph
       # darktable
