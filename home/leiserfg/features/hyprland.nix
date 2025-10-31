@@ -70,7 +70,7 @@ in
         "$mod, Slash, exec, firefox"
         "$mod, Return, exec, kitty -1"
 
-        # ''$mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | rofi -dmenu -i  | xargs shikanectl switch"''
+        # ''$mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | vicinae -dmenu -i  | xargs shikanectl switch"''
 
         ''$mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"''
 
@@ -80,7 +80,7 @@ in
         "$mod, G, exec, game-picker"
         "$mod, 0, exec, rofi_power"
         "$mod, P, exec, rofi_power"
-        "$mod, D, exec, rofi-launch"
+        "$mod, D, exec, vicinae toggle"
 
         "CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l"
         "CTRL ALT $mod , period, movecurrentworkspacetomonitor, r"
@@ -196,8 +196,8 @@ in
       ];
 
       layerrule = [
-        "noanim,rofi"
-        "dimaround,rofi"
+        "noanim,vicinae"
+        "dimaround,vicinae"
       ];
 
       exec-once = [

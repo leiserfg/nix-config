@@ -10,7 +10,6 @@
 {
   imports = [
     ../../shared/nix.nix
-    ./features/rofi.nix
     ./features/audio.nix
     ./features/fish.nix
     ./features/nu.nix
@@ -48,7 +47,6 @@
       # myPkgs.wl_shimeji
       # myPkgs.friction-graphics
       # love
-      # (pkgs.pinentry-rofi.overrideAttrs (old: {rofi = pkgs.rofi-wayland;}))
       nix-playground
       mupdf
       nix-search-cli
@@ -62,7 +60,6 @@
       localsend
       kitty-img
       # myPkgs.typsite
-      vicinae
       # v4l-utils
       # dive
       # gdb
@@ -240,12 +237,9 @@
       (writeShellScriptBin "xdg-open" ''
         exec -a $0 ${handlr-regex}/bin/handlr open "$@"
       '')
-      (writeShellScriptBin "rofi-launch" ''
-        exec -a $0 rofi -combi-modi window,drun,ssh -show combi -modi combi -show-icons
-      '')
-      (writeShellScriptBin "rofi-pp" ''
+      (writeShellScriptBin "vicinae-pp" ''
         printf " Performance\n Balanced\n Power Saver" \
-        | rofi -dmenu -i \
+        | vicinae dmenu \
         | tr -cd '[:print:]' \
         | xargs|tr " " "-" \
         | tr '[:upper:]' '[:lower:]' \
@@ -259,14 +253,14 @@
         exec  sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
         |xargs -n 1 -d '\n' dirname \
         |xargs -d '\n' -n 1 basename \
-        |rofi -dmenu -i  \
+        |vicinae dmenu \
         |xargs  -d '\n'  -I__  bash -c 'cd $HOME/Games/__/  && source *start*.sh'"
       '')
       (writeShellScriptBin "rofi_power" ''
         enumerate () {
             awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
         }
-        question=$(printf "||||"| enumerate|rofi -dmenu -markup-rows)
+        question=$(printf "||||"| enumerate|vicinae dmenu)
 
         case $question in
             **)
@@ -662,7 +656,7 @@
           font = "Droid Sans 9";
           frame_width = 2;
           show_indicators = true;
-          dmenu = "rofi -dmenu -p dunst";
+          dmenu = "vicinae -dmenu -p dunst";
         };
         urgency_normal = {
           background = "#303446";
@@ -741,4 +735,21 @@
     MimeTypes=all/all;
     Exec=Telegram -sendpath %F
   '';
+
+  services.vicinae = {
+    enable = true;
+    extensions = [
+      # (config.lib.vicinae.mkExtension {
+      #   name = "test-extension";
+      #   src =
+      #     pkgs.fetchFromGitHub {
+      #       owner = "schromp";
+      #       repo = "vicinae-extensions";
+      #       rev = "f8be5c89393a336f773d679d22faf82d59631991";
+      #       sha256 = "sha256-zk7WIJ19ITzRFnqGSMtX35SgPGq0Z+M+f7hJRbyQugw=";
+      #     }
+      #     + "/test-extension";
+      # })
+    ];
+  };
 }

@@ -46,7 +46,7 @@
         };
       };
       binds = {
-        "Mod+D".spawn = "rofi-launch";
+        "Mod+D".spawn = "vicinae open";
         "Mod+Return".spawn = "kitty";
         "Mod+0".spawn = "rofi_power";
         "Super+Alt+L".spawn = "swaylock";

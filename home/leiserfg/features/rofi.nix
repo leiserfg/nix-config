@@ -1,5 +1,5 @@
 {config, ...}: {
-  programs.rofi = {
+  programs.vicinae = {
     enable = true;
     theme = let
       inherit (config.lib.formats.rasi) mkLiteral;

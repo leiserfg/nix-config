@@ -68,7 +68,7 @@
       "Mod4+Shift+space" = "floating toggle";
       "Mod4+space" = "focus mode_toggle";
       "Mod4+slash" = "exec firefox";
-      "Mod4+d" = "exec --no-startup-id rofi-launch";
+      "Mod4+d" = "exec --no-startup-id vicinae-launch";
       "Mod4+g" = "exec game-picker";
       "Mod4+0" = "exec rofi_power";
 
@@ -112,7 +112,7 @@
         always = true;
       }
     ];
-    menu = "rofi-pp";
+    menu = "vicinae-pp";
     bars = [];
   };
 }
