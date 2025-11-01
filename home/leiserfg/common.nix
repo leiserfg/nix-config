@@ -39,277 +39,259 @@
     package = pkgs.nix;
   };
 
-  home.packages =
-    with pkgs;
-    [
-      # --- Development Tools ---
-      numbat
-      # myPkgs.wl_shimeji
-      # myPkgs.friction-graphics
-      # love
-      nix-playground
-      mupdf
-      nix-search-cli
-      mosh
-      nmap
-      pandoc
-      pinentry-qt
-      cava
-      exfatprogs
-      # matugen
-      localsend
-      kitty-img
-      # myPkgs.typsite
-      # v4l-utils
-      # dive
-      # gdb
-      htop
-      smartmontools
-      devenv
-      shikane
-      nix
-      # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
-      steam-run
-      quickshell
-      myPkgs.jpegli
-      glsl_analyzer
-      myPkgs.glslviewer
-      # glslviewer
-      # easyeffects
-      util-linux
-      nix-update
-      # inferno
-      flamegraph
-      psmisc
-      python313Packages.ipython
-      python3
-      python313Packages.ipython
-      pipenv
-      uv
-      cmake
-      gnumake
-      gcc
-      rustup
-      nodejs
-      tree-sitter
-      lua-language-server
-      kdePackages.qtdeclarative
-      typst
-      devenv
-      nix
-      nixd
-      nix-update
-      nixfmt-rfc-style
-      nixpkgs-review
-      taplo
-      stylua
-      shfmt
-      shellcheck
-      ty
-      pyrefly
-      (unstablePkgs.ruff)
-      # basedpyright
-      # typescript-language-server
-      # gdb
-      # inferno
-      flamegraph
-      glsl_analyzer
-      myPkgs.glslviewer
-      # myPkgs.friction-graphics
-      myPkgs.jpegli
-      # love
-      # myPkgs.wl_shimeji
-      # easyeffects
-      rink
-      uiua
-      # figlet
-      # ventoy-bin
-      # presenterm
-      # material-maker
-      # git-branchless
+  home.packages = with pkgs; [
+    # --- Development Tools ---
+    numbat
+    # myPkgs.wl_shimeji
+    # myPkgs.friction-graphics
+    # love
+    nix-playground
+    mupdf
+    nix-search-cli
+    mosh
+    nmap
+    pandoc
+    pinentry-qt
+    cava
+    exfatprogs
+    # matugen
+    localsend
+    kitty-img
+    # myPkgs.typsite
+    # v4l-utils
+    # dive
+    # gdb
+    htop
+    smartmontools
+    devenv
+    shikane
+    nix
+    # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
+    steam-run
+    quickshell
+    myPkgs.jpegli
+    glsl_analyzer
+    myPkgs.glslviewer
+    # glslviewer
+    # easyeffects
+    util-linux
+    nix-update
+    # inferno
+    flamegraph
+    psmisc
+    python313Packages.ipython
+    python3
+    python313Packages.ipython
+    pipenv
+    uv
+    cmake
+    gnumake
+    gcc
+    rustup
+    nodejs
+    tree-sitter
+    lua-language-server
+    kdePackages.qtdeclarative
+    typst
+    devenv
+    nix
+    nixd
+    nix-update
+    nixfmt-rfc-style
+    nixpkgs-review
+    taplo
+    stylua
+    shfmt
+    shellcheck
+    ty
+    pyrefly
+    (unstablePkgs.ruff)
+    # basedpyright
+    # typescript-language-server
+    # gdb
+    # inferno
+    flamegraph
+    glsl_analyzer
+    myPkgs.glslviewer
+    # myPkgs.friction-graphics
+    myPkgs.jpegli
+    # love
+    # myPkgs.wl_shimeji
+    # easyeffects
+    rink
+    uiua
+    # figlet
+    # ventoy-bin
+    # presenterm
+    # material-maker
+    # git-branchless
 
-      # --- Editor
-      (neovimPkgs.neovim)
+    # --- Editor
+    (neovimPkgs.neovim)
 
-      # --- Networking & Communication ---
-      mosh
-      websocat
-      (unstablePkgs.telegram-desktop)
-      sshuttle
-      autossh
-      openssh
-      croc
-      doggo
+    # --- Networking & Communication ---
+    mosh
+    websocat
+    (unstablePkgs.telegram-desktop)
+    sshuttle
+    autossh
+    openssh
+    croc
+    doggo
 
-      # --- System Utilities ---
-      dragon-drop
-      util-linux
-      exfatprogs
-      smartmontools
-      pciutils
-      lm_sensors
-      lsof
-      file
-      psmisc
-      htop
-      dmidecode
-      dua
-      picocom # run as:  sudo picocom /dev/ttyACM0
-      powertop
-      usbutils
-      gparted
-      gnome-disk-utility
-      rsync
-      moreutils
-      cntr
-      patool
-      unrar
-      zpaq
-      p7zip
-      d-spy
-      clinfo
-      nix-du
-      # age
-      # agebox
-      # age-kegen-deterministic
+    # --- System Utilities ---
+    dragon-drop
+    util-linux
+    exfatprogs
+    smartmontools
+    pciutils
+    lm_sensors
+    lsof
+    file
+    psmisc
+    htop
+    dmidecode
+    dua
+    picocom # run as:  sudo picocom /dev/ttyACM0
+    powertop
+    usbutils
+    gparted
+    gnome-disk-utility
+    rsync
+    moreutils
+    cntr
+    patool
+    unrar
+    zpaq
+    p7zip
+    d-spy
+    clinfo
+    nix-du
+    # age
+    # agebox
+    # age-kegen-deterministic
 
-      # --- Media & Graphics ---
-      mupdf
-      zathura
-      imv
-      # krita
-      # calibre
-      vtracer
-      inkscape
-      ffmpeg-full
-      gpu-screen-recorder
-      kitty-img
-      cava
-      material-symbols
-      noto-fonts-color-emoji
-      noto-fonts-cjk-sans
-      qpwgraph
-      # darktable
+    # --- Media & Graphics ---
+    mupdf
+    zathura
+    imv
+    # krita
+    # calibre
+    vtracer
+    inkscape
+    ffmpeg-full
+    gpu-screen-recorder
+    kitty-img
+    cava
+    material-symbols
+    noto-fonts-color-emoji
+    noto-fonts-cjk-sans
+    qpwgraph
+    # darktable
 
-      # --- File Management ---
-      pcmanfm
-      xarchiver
-      unzip
-      yadm
+    # --- File Management ---
+    pcmanfm
+    xarchiver
+    unzip
+    yadm
 
-      # --- Fonts ---
-      (pkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
-      nerd-fonts.symbols-only
+    # --- Fonts ---
+    (pkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
+    nerd-fonts.symbols-only
 
-      # --- Audio ---
-      pulseaudio
-      pavucontrol
+    # --- Audio ---
+    pulseaudio
+    pavucontrol
 
-      # --- Cloud & Infra ---
-      terraform-ls
-      # awscli2
-      docker-compose
-      # cachix
+    # --- Cloud & Infra ---
+    terraform-ls
+    # awscli2
+    docker-compose
+    # cachix
 
-      # --- Git & VCS ---
-      git
-      gh
-      git-standup
-      delta
-      git-lfs
-      # git-absorb
+    # --- Git & VCS ---
+    git
+    gh
+    git-standup
+    delta
+    git-lfs
+    # git-absorb
 
-      # --- Search & Grep ---
-      ripgrep
-      ast-grep
+    # --- Search & Grep ---
+    ripgrep
+    ast-grep
 
-      # --- Miscellaneous ---
-      nix-playground
-      tinymist
-      shikane
-      steam-run
-      quickshell
-      glib
-      jq
-      xh
-      handlr-regex
-      # --- Scripts & Custom Binaries ---
-      (writeShellScriptBin "xdg-open" ''
-        exec -a $0 ${handlr-regex}/bin/handlr open "$@"
-      '')
-      (writeShellScriptBin "vicinae-pp" ''
-        printf " Performance\n Balanced\n Power Saver" \
-        | vicinae dmenu \
-        | tr -cd '[:print:]' \
-        | xargs|tr " " "-" \
-        | tr '[:upper:]' '[:lower:]' \
-        | xargs powerprofilesctl set
-      '')
-      (writeShellScriptBin "pp-state" ''
-        state=$(powerprofilesctl get | sed -e "s/.*string//" -e "s/.*save.*/ /"  -e "s/.*perf.*/ /"  -e "s/.*balanced.*/ /")
-        echo $state
-      '')
-      (writeShellScriptBin "game-picker" ''
-        exec  sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
-        |xargs -n 1 -d '\n' dirname \
-        |xargs -d '\n' -n 1 basename \
-        |vicinae dmenu \
-        |xargs  -d '\n'  -I__  bash -c 'cd $HOME/Games/__/  && source *start*.sh'"
-      '')
-      (writeShellScriptBin "rofi_power" ''
-        enumerate () {
-            awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
-        }
-        question=$(printf "||||"| enumerate|vicinae dmenu)
+    # --- Miscellaneous ---
+    nix-playground
+    tinymist
+    shikane
+    steam-run
+    quickshell
+    glib
+    jq
+    xh
+    handlr-regex
+    # --- Scripts & Custom Binaries ---
+    (writeShellScriptBin "xdg-open" ''
+      exec -a $0 ${handlr-regex}/bin/handlr open "$@"
+    '')
+    (writeShellScriptBin "vicinae-pp" ''
+      printf " Performance\n Balanced\n Power Saver" \
+      | vicinae dmenu \
+      | tr -cd '[:print:]' \
+      | xargs|tr " " "-" \
+      | tr '[:upper:]' '[:lower:]' \
+      | xargs powerprofilesctl set
+    '')
+    (writeShellScriptBin "pp-state" ''
+      state=$(powerprofilesctl get | sed -e "s/.*string//" -e "s/.*save.*/ /"  -e "s/.*perf.*/ /"  -e "s/.*balanced.*/ /")
+      echo $state
+    '')
+    (writeShellScriptBin "game-picker" ''
+      exec  sh -c "ls ~/Games/*/*start*.sh  --quoting-style=escape \
+      |xargs -n 1 -d '\n' dirname \
+      |xargs -d '\n' -n 1 basename \
+      |vicinae dmenu \
+      |xargs  -d '\n'  -I__  bash -c 'cd $HOME/Games/__/  && source *start*.sh'"
+    '')
+    (writeShellScriptBin "rofi_power" ''
+      enumerate () {
+          awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
+      }
+      question=$(printf "||||"| enumerate|vicinae dmenu)
 
-        case $question in
-            **)
-                loginctl lock-session $XDG_SESSION_ID
-                ;;
-            **)
-                systemctl suspend
-                ;;
-            **)
-                # bspc quit || qtile cmd-obj -o cmd -f shutdown
-                systemctl --user  stop graphical-session.target
-                hyprctl dispatch exit || loginctl terminate-session $XDG_SESSION_ID
-                ;;
-            **)
-                systemctl reboot
-                ;;
-            **)
-                systemctl poweroff
-                ;;
-            *)
-                exit 0  # do nothing on wrong response
-                ;;
-        esac
-      '')
-    ]
-    ++ (if builtins.hasAttr "prek" pkgs then [ pkgs.prek ] else [ pkgs.pre-commit ]);
+      case $question in
+          **)
+              loginctl lock-session $XDG_SESSION_ID
+              ;;
+          **)
+              systemctl suspend
+              ;;
+          **)
+              # bspc quit || qtile cmd-obj -o cmd -f shutdown
+              systemctl --user  stop graphical-session.target
+              hyprctl dispatch exit || loginctl terminate-session $XDG_SESSION_ID
+              ;;
+          **)
+              systemctl reboot
+              ;;
+          **)
+              systemctl poweroff
+              ;;
+          *)
+              exit 0  # do nothing on wrong response
+              ;;
+      esac
+    '')
 
-  # xdg.configFile."Thunar/uca.xml" = {
-  #   executable = false;
-  #   text = ''
-  #     <?xml version="1.0" encoding="UTF-8"?>
-  #     <actions>
-  #         <action>
-  #             <icon>kitty</icon>
-  #             <name>Open In Kitty</name>
-  #             <submenu></submenu>
-  #             <unique-id>1713512577329704-1</unique-id>
-  #             <command>kitty -1 --directory %f</command>
-  #             <description></description>
-  #             <range>*</range>
-  #             <patterns>*</patterns>
-  #             <directories/>
-  #         </action>
-  #     </actions>
-  #   '';
-  # };
+    prek
+  ];
 
   programs = {
-    aria2.enable = true;
+    aria2 = {
+      enable = true;
+      settings = { };
+    };
     bash = {
       enable = true;
       initExtra = ''
@@ -322,7 +304,6 @@
     };
     fzf = {
       enable = true;
-      package = unstablePkgs.fzf;
       defaultOptions = [ "--color=light" ];
     };
     btop = {
@@ -427,8 +408,8 @@
             src = pkgs.fetchFromGitHub {
               owner = "boydaihungst";
               repo = pname;
-              rev = "8303bed80f10464e64a1d26d09c78bd61f7d6d47";
-              hash = "sha256-v+aCRh3cukA8ahv+Hh+FAcbWMnIJHOUYnRax7XQTXVM=";
+              rev = "6db0c60";
+              hash = "sha256-0W1nQ8MJ+BgPyKcn+oDzntX9BXplJEyl8UjsHWCHrE8=";
             };
 
             buildPhase = ''
@@ -438,8 +419,8 @@
           }
         );
       };
-      settings = {
 
+      settings = {
         plugin = {
           prepend_preloaders = [
             {
@@ -617,7 +598,7 @@
     MOZ_USE_XINPUT2 = "1";
 
     # Fix telegram input
-    ALSOFT_DRIVERS = "pulse";
+    # ALSOFT_DRIVERS = "pulse";
 
     # Disable qt decoration for telegram
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
@@ -627,6 +608,9 @@
     FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
     # Force wayland for electron
     NIXOS_OZONE_WL = 1;
+
+    # Fixes some qt programs crashing while using gtks file-dialog
+    GSETTINGS_SCHEMA_DIR = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas";
   };
 
   home.pointerCursor = {
@@ -638,51 +622,21 @@
   };
 
   services = {
-    # darkman.enable = false;
     trayscale.enable = true;
     gpg-agent.enable = true;
-    # pasystray.enable = true;
 
     udiskie = {
       enable = true;
       automount = true;
     };
+
     mpris-proxy.enable = true;
-    dunst = {
-      enable = false;
-      settings = {
-        global = {
-          frame_color = "#8CAAEE";
-          font = "Droid Sans 9";
-          frame_width = 2;
-          show_indicators = true;
-          dmenu = "vicinae -dmenu -p dunst";
-        };
-        urgency_normal = {
-          background = "#303446";
-          foreground = "#C6D0F5";
-        };
-
-        urgency_low = {
-          background = "#303446";
-          foreground = "#C6D0F5";
-        };
-
-        urgency_critical = {
-          background = "#303446";
-          foreground = "#C6D0F5";
-          frame_color = "#EF9F76";
-        };
-      };
-    };
-
     blueman-applet.enable = true;
     network-manager-applet.enable = true;
   };
-  # Force Rewrite
 
   manual.manpages.enable = false; # Doc framework is broken; so let's stop updating this
-  # xdg.enable = true ;
+
   xdg.configFile."mimeapps.list".force = true;
   xdg.mimeApps =
     let
@@ -720,6 +674,23 @@
     }
   '';
 
+  xdg.configFile."handlr/handlr.toml".source = (pkgs.formats.toml { }).generate "handlr.toml" {
+    enable_selector = true;
+    selector = "vicinae dmenu";
+    handlers = [
+      {
+        regexes = [ "^.*.gif$" ];
+        exec = "mpv --loop %U";
+        terminal = false;
+      }
+      {
+        regexes = [ "^.*.sunvox$" ];
+        exec = "sunvox %f";
+        terminal = false;
+      }
+    ];
+  };
+
   home.file."${config.xdg.configHome}/nvim/spell/de.utf-8.spl".source = builtins.fetchurl {
     url = "https://ftp.nluug.nl/pub/vim/runtime/spell/de.utf-8.spl";
     sha256 = "sha256:1ld3hgv1kpdrl4fjc1wwxgk4v74k8lmbkpi1x7dnr19rldz11ivk";
@@ -736,9 +707,15 @@
     Exec=Telegram -sendpath %F
   '';
 
-  services.vicinae = {
+  programs.vicinae = {
     enable = true;
+    systemd.enable = true;
     extensions = [
+      (config.lib.vicinae.mkRayCastExtension {
+        name = "gif-search";
+        sha256 = "sha256-G7il8T1L+P/2mXWJsb68n4BCbVKcrrtK8GnBNxzt73Q=";
+        rev = "4d417c2dfd86a5b2bea202d4a7b48d8eb3dbaeb1";
+      })
       # (config.lib.vicinae.mkExtension {
       #   name = "test-extension";
       #   src =

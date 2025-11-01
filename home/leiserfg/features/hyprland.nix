@@ -4,11 +4,11 @@
   lib,
   # hyprPkgs,
   config,
+  options,
   inputs,
   ...
 }:
 let
-  cursor = "Bibata-Original-Classic";
   hyprPkgs = inputs.hyprland.packages.${pkgs.system};
 in
 {
@@ -21,8 +21,9 @@ in
 
   services.kanshi.systemdTarget = "hyprland-session.target";
 
-  # services.shikane.enable = true;
-  # wayland.windowManager.hyprland.package = hyprPkgs.hyprland;
+  home.pointerCursor.hyprcursor = {
+    enable = true;
+  };
 
   wayland.windowManager.hyprland = {
     # package = pkgs.hyprland.override { debug = true; };
@@ -41,6 +42,7 @@ in
 
     systemd = {
       enable = true;
+      variables = options.wayland.windowManager.hyprland.systemd.variables.default ++ [ "XCURSOR_SIZE" ];
     };
 
     plugins = [
@@ -207,8 +209,6 @@ in
         XDG_CURRENT_DESKTOP = "Hyprland";
         XDG_SESSION_TYPE = "wayland";
         XDG_SESSION_DESKTOP = "Hyprland";
-        HYPRCURSOR_THEME = cursor;
-        HYPRCURSOR_SIZE = config.home.pointerCursor.size;
         GRIMBLAST_HIDE_CURSOR = 0;
         # GDK_SCALE = 2;
       };
@@ -218,6 +218,12 @@ in
   systemd.user.services.quickshell =
     let
       sysemdTarget = config.wayland.systemd.target;
+      noctalia = pkgs.fetchFromGitHub {
+        rev = "v2.21.1";
+        owner = "noctalia-dev";
+        repo = "noctalia-shell";
+        sha256 = "sha256-GRB1AZD76QsLfLetskAbvPYBLy08pot2PoZLPzbsSnw=";
+      };
     in
     {
       Install = {
@@ -232,7 +238,7 @@ in
       };
 
       Service = {
-        ExecStart = "${lib.getExe pkgs.quickshell} -p ${./nacht}";
+        ExecStart = "${lib.getExe pkgs.quickshell} -p ${noctalia}";
         Restart = "always";
         RestartSec = "10";
       };
