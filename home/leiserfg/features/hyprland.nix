@@ -2,15 +2,12 @@
   pkgs,
   unstablePkgs,
   lib,
-  # hyprPkgs,
   config,
   options,
   inputs,
   ...
 }:
-let
-  hyprPkgs = inputs.hyprland.packages.${pkgs.system};
-in
+
 {
   imports = [
     ./_wayland_common.nix
@@ -116,8 +113,8 @@ in
       binde = [
         ",XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ",XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86MonBrightnessUp,   exec, brillo -A 10"
-        ",XF86MonBrightnessDown, exec, brillo -U 10"
+        ",XF86MonBrightnessUp,   exec, brightnessctl -set 10%+"
+        ",XF86MonBrightnessDown, exec, brightnessctl -set 10%-"
       ];
       bindm = [
         "$mod, mouse:272, movewindow"
@@ -219,10 +216,10 @@ in
     let
       sysemdTarget = config.wayland.systemd.target;
       noctalia = pkgs.fetchFromGitHub {
-        rev = "v2.21.1";
+        rev = "v3.0.0";
         owner = "noctalia-dev";
         repo = "noctalia-shell";
-        sha256 = "sha256-GRB1AZD76QsLfLetskAbvPYBLy08pot2PoZLPzbsSnw=";
+        sha256 = "sha256-QNs/MaVkfyjgMfsz4doSp0UynH5b0pYPp+KvW3cYBUU=";
       };
     in
     {

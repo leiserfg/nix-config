@@ -284,7 +284,7 @@ in
         recent_work = "ancestors(visible_heads(), 3) & mutable()";
       };
       revsets = {
-        log = "(trunk()..@):: | (trunk()..@)-";
+        # log = "(trunk()..@):: | (trunk()..@)-";
       };
 
     };

@@ -55,6 +55,4 @@
 
   hardware.logitech.wireless.enable = true;
   hardware.logitech.wireless.enableGraphical = true;
-  hardware.brillo.enable = true;
-
 }

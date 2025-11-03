@@ -40,6 +40,8 @@
   };
 
   home.packages = with pkgs; [
+    brightnessctl
+
     # --- Development Tools ---
     numbat
     # myPkgs.wl_shimeji
