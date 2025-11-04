@@ -649,28 +649,18 @@
     {
       enable = true;
       defaultApplications = {
+        "x-scheme-handler/terminal" = "kitty.desktop";
         "text/html" = "firefox.desktop";
         "x-scheme-handler/tg" = "telegram.desktop";
-        # "x-scheme-handler/msteams" = "teams-for-linux.desktop";
-        # "inode/directory" = "thunar.desktop";
         "inode/directory" = "pcmanfm.desktop";
         "text/*" = editor;
         "application/x-subrip" = editor;
         "application/zip" = "xarchiver.desktop";
         "application/pdf" = "org.pwmt.zathura.desktop";
-        "application/epub+zip" = "org.pwmt.zathura.desktop.desktop";
-        # "image/*" = "com.github.weclaw1.ImageRoll.desktop";
+        "application/epub+zip" = "org.pwmt.zathura.desktop";
+        "image/*" = "imv.desktop";
       };
     };
-
-  # mpv %U
-  #     ^https?://(www.)?youtube.com/watch\?v=.*$
-  # xdg.configFile."mimeo/associations.txt".text = ''
-  #   mpv --loop %U
-  #     ^.*.gif$
-  #   sunvox %f
-  #     ^.*.sunvox$
-  # '';
 
   xdg.configFile."wireplumber/wireplumber.conf.d/10-bluetooth.conf".text = ''
     wireplumber.settings = {
@@ -690,6 +680,11 @@
       {
         regexes = [ "^.*.sunvox$" ];
         exec = "sunvox %f";
+        terminal = false;
+      }
+      {
+        exec = "mpv %U";
+        regexes = [ "^https?://(www.)?youtube.com/watch\?v=.*$" ];
         terminal = false;
       }
     ];
