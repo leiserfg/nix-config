@@ -4,5 +4,4 @@
   # List your module files here
   # hypridle-module = import ./hypridle.nix;
   niri-module = import ./niri.nix;
-  vicinae = import ./vicinae.nix;
 }

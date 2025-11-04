@@ -288,6 +288,13 @@
   ];
 
   programs = {
+    opencode = {
+      enable = true;
+      settings = {
+        share = "disabled";
+      };
+    };
+
     aria2 = {
       enable = true;
       settings = { };
