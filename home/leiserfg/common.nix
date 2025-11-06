@@ -716,6 +716,7 @@
   programs.vicinae = {
     enable = true;
     systemd.enable = true;
+    package = myPkgs.vicinae;
     extensions = [
       (config.lib.vicinae.mkRayCastExtension {
         name = "gif-search";

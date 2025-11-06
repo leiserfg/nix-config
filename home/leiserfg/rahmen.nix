@@ -25,6 +25,7 @@
     #      --replace "QLibraryInfo::path(QLibraryInfo::QmlImportsPath)"  "QStringLiteral(\"$out/lib/qt-6/qml\")"
     #   '';
     # })
+
     myPkgs.pixieditor
     pgcli
     # poetry
