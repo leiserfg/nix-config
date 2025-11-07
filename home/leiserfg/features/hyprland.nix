@@ -73,8 +73,8 @@
 
         ''$mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"''
 
-        ",Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.satty} -f -"
-        "SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.satty} -f -"
+        ",Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -"
+        "SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -"
 
         "$mod, G, exec, game-picker"
         "$mod, 0, exec, rofi_power"
@@ -216,10 +216,10 @@
     let
       sysemdTarget = config.wayland.systemd.target;
       noctalia = pkgs.fetchFromGitHub {
-        rev = "v3.0.0";
+        rev = "v3.0.1";
         owner = "noctalia-dev";
         repo = "noctalia-shell";
-        sha256 = "sha256-QNs/MaVkfyjgMfsz4doSp0UynH5b0pYPp+KvW3cYBUU=";
+        sha256 = "sha256-p0ce8760x7AODJI9AU/Qrz9gzF0KtU+INGmq+cz5nIU=";
       };
     in
     {

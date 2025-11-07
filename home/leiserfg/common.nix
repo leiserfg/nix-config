@@ -62,7 +62,7 @@
     # myPkgs.typsite
     # v4l-utils
     # dive
-    # gdb
+    gdb
     htop
     smartmontools
     devenv
