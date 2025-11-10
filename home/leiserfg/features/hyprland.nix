@@ -216,10 +216,10 @@
     let
       sysemdTarget = config.wayland.systemd.target;
       noctalia = pkgs.fetchFromGitHub {
-        rev = "v3.0.1";
+        rev = "v3.0.6";
         owner = "noctalia-dev";
         repo = "noctalia-shell";
-        sha256 = "sha256-p0ce8760x7AODJI9AU/Qrz9gzF0KtU+INGmq+cz5nIU=";
+        sha256 = "sha256-vGslP1gzCFwiVPSHnVeyLztj8YRHNsuee8gab5rPXeE=";
       };
     in
     {
