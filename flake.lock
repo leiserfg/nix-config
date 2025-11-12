@@ -87,11 +87,11 @@
         "vicinae": "vicinae"
       },
       "locked": {
-        "lastModified": 1762459534,
-        "narHash": "sha256-5rZ2zW0QdTAGv7H6dgKWadaBPldiRaIbHbXOnvtIH8Y=",
+        "lastModified": 1762981315,
+        "narHash": "sha256-KXd+cgMgunqnFksq5AIwaUVJRB7qxG3/og5nJJ1ZEas=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "fcaba006c87a1bd3729b31f40e121076b6a66243",
+        "rev": "c4998801ce5b24cda86197490c04cbacf8406246",
         "type": "github"
       },
       "original": {
@@ -153,10 +153,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1762111121,
-        "narHash": "sha256-4vhDuZ7OZaZmKKrnDpxLZZpGIJvAeMtK6FKLJYUtAdw=",
+        "lastModified": 1762844143,
+        "narHash": "sha256-SlybxLZ1/e4T2lb1czEtWVzDCVSTvk9WLwGhmxFmBxI=",
         "ref": "nixos-unstable",
-        "rev": "b3d51a0365f6695e7dd5cdf3e180604530ed33b4",
+        "rev": "9da7f1cf7f8a6e2a7cb3001b048546c92a8258b4",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -253,10 +253,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1762438376,
-        "narHash": "sha256-sO8186XCEKI5WRyvJrJOhkEEvhtluNjY5P/TagvuJ40=",
+        "lastModified": 1762946496,
+        "narHash": "sha256-1I3MYXT/tc//ljO887yV/6z/nFLib2Y9aUumX20owR0=",
         "ref": "refs/heads/main",
-        "rev": "b36b894a991aa752edb766afc78b5aa020fe7071",
+        "rev": "4da216d79b51c7c50b018a064530d52e98bacd7c",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/vicinaehq/vicinae"

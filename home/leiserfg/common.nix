@@ -258,7 +258,8 @@
     '')
     (writeShellScriptBin "rofi_power" ''
       enumerate () {
-          awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
+      # awk -F"|"  '{ for (i = 1; i <= NF; ++i) print "<big>"$i"</big><sub><small>"i"</small></sub>"; exit } '
+       awk -F"|"  '{ for (i = 1; i <= NF; ++i) print i": "  $i; exit } '
       }
       question=$(printf "||||"| enumerate|vicinae dmenu)
 
