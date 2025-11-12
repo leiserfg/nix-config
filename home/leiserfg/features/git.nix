@@ -177,7 +177,11 @@ in
         "upstream"
       ];
 
+      # fsmonitor.backend = "watcher";
+
       ui.diff-formatter = [
+        "env"
+        "DFT_BACKGROUND=light"
         (lib.getExe pkgs.difftastic)
         "--color=always"
         "$left"
