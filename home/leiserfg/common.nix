@@ -169,6 +169,7 @@
     d-spy
     clinfo
     nix-du
+    nix-tree
     # age
     # agebox
     # age-kegen-deterministic
@@ -595,6 +596,7 @@
       package = pkgs.inter;
       name = "Inter";
     };
+    gtk2.enable = false;
   };
 
   qt = {
