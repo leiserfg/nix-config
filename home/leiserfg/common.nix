@@ -17,7 +17,7 @@
     ./features/mpv.nix
     ./features/git.nix
     ./features/kitty.nix
-    ./features/aider.nix
+    # ./features/aider.nix
   ];
 
   # disable news; they don't work well with flakes and message is anoying
