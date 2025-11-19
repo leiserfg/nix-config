@@ -11,7 +11,6 @@
 {
   imports = [
     ./_wayland_common.nix
-    # ./_waybar.nix
   ];
 
   _module.args.wm = "hyprland";
@@ -24,14 +23,12 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-
     systemd = {
       enable = true;
       variables = [ "--all" ];
     };
 
     plugins = [
-      # pkgs.hyprlandPlugins.hyprspace
       pkgs.hyprlandPlugins.hypr-dynamic-cursors
     ];
     settings = {
@@ -180,7 +177,6 @@
         "pin,class:dragon-drop"
         "idleinhibit fullscreen, class:.*"
         "noscreenshare, class:^(org.telegram.desktop)$"
-
       ];
 
       layerrule = [

@@ -116,7 +116,6 @@
     glsl_analyzer
     myPkgs.glslviewer
     # myPkgs.friction-graphics
-    myPkgs.jpegli
     # love
     # myPkgs.wl_shimeji
     # easyeffects
