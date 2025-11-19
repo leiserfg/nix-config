@@ -17,6 +17,10 @@
     #   include ${./gv_light.conf}
     # '';
     settings = {
+
+      shell = "nu --login --interactive";
+
+
       # bold_font = "Iosevka Term SS15 Medium";
       # italic_font = "Iosevka Term SS15 Light Italic";
       bold_font = "auto";

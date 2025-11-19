@@ -26,7 +26,7 @@
     #   '';
     # })
 
-    myPkgs.pixieditor
+    # myPkgs.pixieditor
     pgcli
     # poetry
     # blender-hip

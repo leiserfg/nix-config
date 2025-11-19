@@ -4,7 +4,7 @@
   lib,
   ...
 }:
-rec {
+{
   programs = {
     nushell = {
       enable = true;

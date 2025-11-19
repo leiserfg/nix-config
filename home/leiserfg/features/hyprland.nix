@@ -23,23 +23,11 @@
   };
 
   wayland.windowManager.hyprland = {
-    # package = pkgs.hyprland.override { debug = true; };
     enable = true;
-    # package = pkgs.hyprland.overrideAttrs {
-    #   src = pkgs.fetchFromGitHub {
-    #     owner = "hyprwm";
-    #     repo = "hyprland";
-    #     fetchSubmodules = true;
-    #     rev = "refs/pull/11276/head";
-    #     # rev = "8857f2c";
-    #     hash = "sha256-yCoptpRPHndv4Wem+yUyHhhbQw49PM9QSfMbQJWQE+4=";
-    #   };
-    # };
-    # package = pkgs.hyprland.override { debug = true; };
 
     systemd = {
       enable = true;
-      variables = options.wayland.windowManager.hyprland.systemd.variables.default ++ [ "XCURSOR_SIZE" ];
+      variables = [ "--all" ];
     };
 
     plugins = [

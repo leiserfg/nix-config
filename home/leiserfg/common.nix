@@ -29,9 +29,8 @@
 
   home = {
     username = lib.mkDefault "leiserfg";
-    homeDirectory = lib.mkDefault "/home/${config.home.username}";
-    stateVersion = lib.mkDefault "22.05";
-    enableNixpkgsReleaseCheck = false;
+    homeDirectory = "/home/${config.home.username}";
+    stateVersion = "22.05";
   };
 
   nix = {
@@ -305,26 +304,19 @@
       enable = true;
       settings = { };
     };
-    bash = {
-      enable = true;
-      initExtra = ''
-        if [[ $SHLVL == 1 ]]
-        then
-            shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-            exec nu $LOGIN_OPTION
-        fi
-      '';
-    };
+
     fzf = {
       enable = true;
       defaultOptions = [ "--color=light" ];
     };
+
     btop = {
       enable = true;
       settings = {
         vim_keys = true;
       };
     };
+
     firefox = {
       enable = true;
       profiles = {
