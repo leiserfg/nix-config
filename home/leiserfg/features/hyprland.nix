@@ -227,6 +227,9 @@
     };
 
   home.packages = [
+
+    pkgs.grim
+    pkgs.slurp
     pkgs.swaybg
     pkgs.bibata-hyprcursor
   ];

@@ -39,6 +39,7 @@
   };
 
   home.packages = with pkgs; [
+    inferno
     brightnessctl
 
     # --- Development Tools ---
@@ -87,7 +88,7 @@
     uv
     cmake
     gnumake
-    gcc
+    # gcc
     rustup
     nodejs
     tree-sitter
@@ -486,7 +487,7 @@
           {
             on = "y";
             run = [
-              ''shell 'echo "$@" |  wl-copy --type text/uri-list' --confirm''
+              ''shell -- for path in "$@"; do echo "file://$path"; done | wl-copy -t text/uri-list''
               "yank"
             ];
           }

@@ -2,9 +2,14 @@
   unstablePkgs,
   pkgs,
   lib,
+  config,
   ...
 }:
 {
+
+  home.file."${config.xdg.configHome}/nushell/nix-your-shell.nu".source =
+    pkgs.nix-your-shell.generate-config "nu";
+
   programs = {
     nushell = {
       enable = true;
@@ -14,6 +19,7 @@
         vi = "nvim";
         vim = "nvim";
       };
+
       plugins = [
         pkgs.nushellPlugins.formats
         pkgs.nushellPlugins.query
