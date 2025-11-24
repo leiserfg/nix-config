@@ -17,6 +17,7 @@
     ./features/mpv.nix
     ./features/git.nix
     ./features/kitty.nix
+    ./features/noctalia.nix
     # ./features/aider.nix
   ];
 
@@ -203,8 +204,7 @@
     nerd-fonts.symbols-only
 
     # --- Audio ---
-    pulseaudio
-    pavucontrol
+    pwvucontrol
 
     # --- Cloud & Infra ---
     terraform-ls

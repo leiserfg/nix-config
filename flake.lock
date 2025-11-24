@@ -43,24 +43,6 @@
         "type": "github"
       }
     },
-    "flake-utils": {
-      "inputs": {
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -87,11 +69,11 @@
         "vicinae": "vicinae"
       },
       "locked": {
-        "lastModified": 1763537653,
-        "narHash": "sha256-tCrfT4fYwmQLP5pd+nntmylAqFwfLfdm4gLFcPh3n2Q=",
+        "lastModified": 1763974174,
+        "narHash": "sha256-ODNeUY/v0gYP7OX4SvT17g463Kzcy5DS5ppP1zs4hZc=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "6752b57e7d6d1850d28a0f9005d5618d85916ad6",
+        "rev": "088006f569328c6779e77ce7df5353ebb488f1de",
         "type": "github"
       },
       "original": {
@@ -218,6 +200,26 @@
         "url": "https://github.com/NixOS/nixpkgs"
       }
     },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1764014382,
+        "narHash": "sha256-yR8z0fgCxru7JWBNq8j3jC+LPxz6IqZuYqboSyaH2Lg=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "rev": "3cf4e1f95b6628d2985e3b890bd7cc1f9f1baa5b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "blender": "blender",
@@ -226,7 +228,8 @@
         "neovim-nightly": "neovim-nightly",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "noctalia": "noctalia"
       }
     },
     "systems": {
@@ -246,17 +249,17 @@
     },
     "vicinae": {
       "inputs": {
-        "flake-utils": "flake-utils",
         "nixpkgs": [
           "leiserfg-overlay",
           "nixpkgs"
-        ]
+        ],
+        "systems": "systems"
       },
       "locked": {
-        "lastModified": 1763505293,
-        "narHash": "sha256-huleUPkt0iZJZy4e/KPhcHK4ueeqaqiMUu7Ft6NVDFU=",
+        "lastModified": 1763934927,
+        "narHash": "sha256-orsv0YJ6e6Sm6/ft56spin/npDf2xXKls1B7HauJ4dk=",
         "ref": "refs/heads/main",
-        "rev": "e600ffc4ad1e87f3389327adfab8bb8d2f34261e",
+        "rev": "63304cee4a967f30eeca7d875f6c9a8ff4454050",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/vicinaehq/vicinae"

@@ -197,37 +197,7 @@
     };
   };
 
-  systemd.user.services.quickshell =
-    let
-      sysemdTarget = config.wayland.systemd.target;
-      noctalia = pkgs.fetchFromGitHub {
-        rev = "v3.0.11";
-        owner = "noctalia-dev";
-        repo = "noctalia-shell";
-        sha256 = "sha256-kcYQAE0uGwgYwzy4Ko5SkUBe/OtyyE1MUFw7Xmn5TPY=";
-      };
-    in
-    {
-      Install = {
-        WantedBy = [ sysemdTarget ];
-      };
-
-      Unit = {
-        ConditionEnvironment = "WAYLAND_DISPLAY";
-        Description = "quickshell magic";
-        After = [ sysemdTarget ];
-        PartOf = [ sysemdTarget ];
-      };
-
-      Service = {
-        ExecStart = "${lib.getExe pkgs.quickshell} -p ${noctalia}";
-        Restart = "always";
-        RestartSec = "10";
-      };
-    };
-
   home.packages = [
-
     pkgs.grim
     pkgs.slurp
     pkgs.swaybg
