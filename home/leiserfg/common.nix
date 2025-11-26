@@ -42,6 +42,7 @@
   home.packages = with pkgs; [
     inferno
     brightnessctl
+    ghostscript
 
     # --- Development Tools ---
     numbat
@@ -293,6 +294,7 @@
   ];
 
   programs = {
+    bash.enable = true;
     opencode = {
       enable = true;
       settings = {
