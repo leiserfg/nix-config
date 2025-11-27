@@ -43,6 +43,8 @@
     sunvox
     # orca-c
 
+    # myPkgs.tola
+
     # steam
     # scrcpy
     # (unstablePkgs.llama-cpp.override { vulkanSupport = true; })

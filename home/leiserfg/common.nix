@@ -180,7 +180,7 @@
     mupdf
     zathura
     imv
-    # krita
+    krita
     # calibre
     vtracer
     inkscape
