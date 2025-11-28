@@ -93,6 +93,7 @@
     # gcc
     rustup
     nodejs
+    pnpm
     tree-sitter
     lua-language-server
     typescript
