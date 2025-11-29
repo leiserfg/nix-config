@@ -38,7 +38,7 @@
     enable = true;
     package = pkgs.nix;
   };
-
+  # services.opensnitch-ui.enable = true;
   home.packages = with pkgs; [
     inferno
     brightnessctl
@@ -718,7 +718,7 @@
   programs.vicinae = {
     enable = true;
     systemd.enable = true;
-    package = myPkgs.vicinae;
+    # package = myPkgs.vicinae;
     extensions =
       let
         vicExts =

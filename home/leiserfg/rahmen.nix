@@ -17,7 +17,7 @@
   ];
 
   home.packages = with pkgs; [
-
+    immich-go
     # (kdePackages.qtquickeffectmaker.overrideAttrs {
     #   postPatch = ''
     #     ls
@@ -26,7 +26,7 @@
     #   '';
     # })
 
-    # myPkgs.pixieditor
+    pixieditor
     pgcli
     # poetry
     # blender-hip

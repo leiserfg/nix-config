@@ -1,4 +1,3 @@
-# This file (and the global directory) holds config that i use on all hosts
 {
   pkgs,
   lib,
@@ -25,9 +24,6 @@
       # Activate home-manager environment, if not already
       [ -d "$HOME/.nix-profile" ] || /nix/var/nix/profiles/per-user/$USER/home-manager/activate &> /dev/null
     '';
-
-    # Add terminfo files
-    # enableAllTerminfo = true;
   };
 
   system.stateVersion = "22.05";
@@ -38,7 +34,6 @@
   programs.dconf.enable = true;
   hardware.enableRedistributableFirmware = true;
 
-  # programs.fish.enable = true;
   programs.adb.enable = true;
 
   programs.nix-ld.enable = true;
@@ -49,7 +44,6 @@
   environment.systemPackages = with pkgs; [
     vim
     cntr
-    # run0-sudo-shim
   ];
 
   hardware.logitech.wireless.enable = true;
