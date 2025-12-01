@@ -19,7 +19,15 @@
       url = "github:NixOS/nixos-hardware";
     };
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
+      url = "git+https://github.com/noctalia-dev/noctalia-shell?shallow=1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nvf = {
+      url = "git+https://github.com/NotAShelf/nvf?shallow=1&ref=v0.8";
+      # You can override the input nixpkgs to follow your system's
+      # instance of nixpkgs. This is safe to do as nvf does not depend
+      # on a binary cache.
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
