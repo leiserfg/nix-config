@@ -1,45 +1,51 @@
 {
   description = "My nix config";
 
-  inputs = {
+  inputs =
 
-    nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
-    nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+    {
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    neovim-nightly = {
-      url = "github:nix-community/neovim-nightly-overlay";
+      nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+      nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+
+      home-manager.url = "github:nix-community/home-manager";
+      home-manager.inputs.nixpkgs.follows = "nixpkgs";
+      neovim-nightly = {
+        url = "github:nix-community/neovim-nightly-overlay";
+      };
+      leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
+      blender.url = "github:edolstra/nix-warez?dir=blender";
+      blender.inputs.nixpkgs.follows = "nixpkgs";
+
+      nixos-hardware = {
+        url = "github:NixOS/nixos-hardware";
+      };
+      noctalia = {
+        url = "git+https://github.com/noctalia-dev/noctalia-shell?shallow=1";
+        inputs.nixpkgs.follows = "nixpkgs";
+      };
+
+      nixCats.url = "github:BirdeeHub/nixCats-nvim";
+
+      "plugins-wildfire" = {
+        url = "github:SUSTech-data/wildfire.nvim";
+        flake = false;
+      };
+
+      # "plugins-treesitter-modules" = {
+      #   url = "github:MeanderingProgrammer/treesitter-modules.nvim";
+      #   flake = false;
+      # };
+
+      # run0-sudo-shim = {
+      #   url = "github:lordgrimmauld/run0-sudo-shim";
+      #   inputs.nixpkgs.follows = "nixpkgs";
+      # };
+
+      # hyprland = {
+      #   url = "github:leiserfg/Hyprland";
+      # };
     };
-    leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
-    blender.url = "github:edolstra/nix-warez?dir=blender";
-    blender.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-    };
-    noctalia = {
-      url = "git+https://github.com/noctalia-dev/noctalia-shell?shallow=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nvf = {
-      url = "git+https://github.com/NotAShelf/nvf?shallow=1&ref=v0.8";
-      # You can override the input nixpkgs to follow your system's
-      # instance of nixpkgs. This is safe to do as nvf does not depend
-      # on a binary cache.
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # run0-sudo-shim = {
-    #   url = "github:lordgrimmauld/run0-sudo-shim";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
-    # hyprland = {
-    #   url = "github:leiserfg/Hyprland";
-    # };
-  };
 
   outputs =
     {

@@ -18,8 +18,7 @@
     ./features/git.nix
     ./features/kitty.nix
     ./features/noctalia.nix
-    ./features/nvim.nix
-    # ./features/aider.nix
+    ./nvim
   ];
 
   # disable news; they don't work well with flakes and message is anoying
