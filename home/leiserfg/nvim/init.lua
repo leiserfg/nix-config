@@ -2,12 +2,64 @@ require "my/options"
 require "my/keymap"
 require "my/snackbar"
 
--- vim.cmd.colorscheme("onedark")
+vim.cmd.colorscheme "notebook"
+
+local map = vim.keymap.set
+local opts = { silent = true, expr = true }
+
+map("i", "<c-j>", function()
+  return require("luasnip").expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<c-j>"
+end, opts)
+map("i", "<c-k>", function()
+  return require("luasnip").jumpable(-1) and "<Plug>luasnip-jump-prev" or "<c-k>"
+end, opts)
+
+map("i", "<c-e>", function()
+  return require("luasnip").choice_active() and "<Plug>luasnip-next-choice" or "<c-e>"
+end, opts)
+
+map("s", "<c-j>", function()
+  require("luasnip").jump(1)
+end, { silent = true })
+map("s", "<c-k>", function()
+  require("luasnip").jump(-1)
+end, { silent = true })
+map("v", "<c-f>", function()
+  require("luasnip.extras.otf").on_the_fly()
+end, { silent = true })
+map("i", "<c-f>", function()
+  require("luasnip.extras.otf").on_the_fly "e"
+end, { silent = true })
 
 require("lze").load {
   {
+    "luasnip",
+    on_require = "luasnip",
+    after = function()
+      require "my/snippets"
+      require("luasnip.loaders.from_vscode").lazy_load()
+      local ls = require "luasnip"
+      local types = require "luasnip.util.types"
+      ls.config.set_config {
+        ext_opts = {
+          [types.choiceNode] = {
+            active = { virt_text = { { "choiceNode", "IncSearch" } } },
+          },
+          [types.insertNode] = { passive = { hl_group = "Substitute" } },
+          [types.exitNode] = { passive = { hl_group = "Substitute" } },
+        },
+        updateevents = "TextChanged,TextChangedI",
+        store_selection_keys = "<c-j>",
+      }
+    end,
+  },
+  {
+    "friendly-snippets",
+    dep_of = "luasnip",
+  },
+  {
     "blink.cmp",
-    enabled = nixCats "general" or false,
+
     event = "DeferredUIEnter",
     on_require = "blink",
     after = function()
@@ -45,16 +97,15 @@ require("lze").load {
   },
   {
     "nvim-treesitter",
-    enabled = nixCats "general" or false,
+
     -- cmd = { "" },
     event = "DeferredUIEnter",
     load = function(name)
       vim.cmd.packadd(name)
-      -- vim.cmd.packadd "treesitter-modules"
+      vim.cmd.packadd "wildfire"
     end,
 
     after = function(plugin)
-
       vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "<filetype>" },
@@ -63,34 +114,148 @@ require("lze").load {
         end,
       })
 
-      -- require("treesitter-modules").setup {
-      --   highlight = { enable = true },
-      --   indent = { enable = false },
-      --   incremental_selection = {
-      --     enable = true,
-      --     keymaps = {
-      --       init_selection = "<c-space>",
-      --       node_incremental = "<c-space>",
-      --       scope_incremental = "<c-s>",
-      --       node_decremental = "<M-space>",
-      --     },
-      --   },
-      -- }
+      require("wildfire").setup {
+        keymaps = {
+          init_selection = "<c-space>",
+          node_incremental = "<c-space>",
+          scope_incremental = "<nop>",
+          node_decremental = "<bs>",
+        },
+      }
+    end,
+  },
+  {
+    "yazi.nvim",
+    event = "DeferredUIEnter",
+    keys = {
+      {
+        "-",
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+    },
+    after = function()
+      require("yazi").setup { open_for_directories = true }
+    end,
+  },
+  {
+    "vim-suda",
+    after = function()
+      vim.g.suda_smart_edit = 1
+    end,
+  },
+  {
+    "quicker.nvim",
+    ft = "qf",
+    after = function()
+      require("quicker").setup()
     end,
   },
   {
     "mini.nvim",
-    enabled = nixCats "general" or false,
     event = "DeferredUIEnter",
     after = function(plugin)
-      require("mini.pairs").setup()
-      require("mini.icons").setup()
-      require("mini.ai").setup()
+      for _, mini in ipairs {
+        "jump",
+        "align",
+        "move",
+        "splitjoin",
+        "icons",
+        "pairs",
+      } do
+        require(("mini.%s"):format(mini)).setup {}
+      end
+
+      local ai = require "mini.ai"
+      ai.setup {
+        n_lines = 500,
+        custom_textobjects = {
+          o = ai.gen_spec.treesitter({
+            a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+            i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+          }, {}),
+          f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
+          c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
+        },
+      }
+
+      require("mini.icons").mock_nvim_web_devicons()
+
+      -- I'm an old dog, so I keep using tpope's surround keybindings
+      require("mini.surround").setup {
+        mappings = {
+          add = "ys",
+          delete = "ds",
+          find = "",
+          find_left = "",
+          highlight = "",
+          replace = "cs",
+          update_n_lines = "",
+          -- -- Add this only if you don't want to use extended mappings
+          -- suffix_last = '',
+          -- suffix_next = '',
+        },
+        search_method = "cover_or_next",
+      }
+      -- Remap adding surrounding to Visual mode selection
+      vim.api.nvim_del_keymap("x", "ys")
+      vim.api.nvim_set_keymap(
+        "x",
+        "S",
+        [[:<C-u>lua MiniSurround.add('visual')<CR>]],
+        { noremap = true }
+      )
+      -- Make special mapping for "add surrounding for line"
+      vim.api.nvim_set_keymap("n", "yss", "ys_", { noremap = false })
+
+      require("mini.bracketed").setup {
+        comment = { suffix = "k" }, -- I use c for changes as diffmode does by default
+      }
+
+      local miniclue = require "mini.clue"
+      miniclue.setup {
+        triggers = {
+          -- Leader triggers
+          { mode = "n", keys = "<Leader>" },
+          { mode = "x", keys = "<Leader>" },
+
+          -- `g` key
+          { mode = "n", keys = "g" },
+          { mode = "x", keys = "g" },
+
+          -- Marks
+          { mode = "n", keys = "'" },
+          { mode = "n", keys = "`" },
+          { mode = "x", keys = "'" },
+          { mode = "x", keys = "`" },
+
+          -- Registers
+          { mode = "n", keys = '"' },
+          { mode = "x", keys = '"' },
+          { mode = "i", keys = "<C-r>" },
+          { mode = "c", keys = "<C-r>" },
+
+          -- Window commands
+          { mode = "n", keys = "<C-w>" },
+
+          -- `z` key
+          { mode = "n", keys = "z" },
+          { mode = "x", keys = "z" },
+        },
+
+        clues = {
+          miniclue.gen_clues.g(),
+          miniclue.gen_clues.marks(),
+          miniclue.gen_clues.registers(),
+          miniclue.gen_clues.windows(),
+          miniclue.gen_clues.z(),
+        },
+      }
     end,
   },
   {
     "vim-startuptime",
-    enabled = nixCats "general" or false,
+
     cmd = { "StartupTime" },
     before = function(_)
       vim.g.startuptime_event_width = 0
@@ -100,175 +265,97 @@ require("lze").load {
   },
   {
     "lualine.nvim",
-    enabled = nixCats "general" or false,
-    -- cmd = { "" },
     event = "DeferredUIEnter",
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
     load = function(name)
       vim.cmd.packadd(name)
       vim.cmd.packadd "lualine-lsp-progress"
     end,
     after = function(plugin)
       require("lualine").setup {
+        extensions = { "quickfix", "man" },
         options = {
-          icons_enabled = false,
-          theme = "onedark",
-          component_separators = "|",
+          component_separators = "",
           section_separators = "",
+          globalstatus = true,
+          icons_enabled = false,
         },
         sections = {
-          lualine_c = {
-            {
-              "filename",
-              path = 1,
-              status = true,
-            },
-          },
-        },
-        inactive_sections = {
           lualine_b = {
             {
-              "filename",
-              path = 3,
-              status = true,
+              require "my/lualine_rec",
+              "lsp_progress",
             },
           },
-          lualine_x = { "filetype" },
-        },
-        tabline = {
-          lualine_a = { "buffers" },
-          lualine_b = { "lsp_progress" },
-          lualine_z = { "tabs" },
         },
       }
     end,
   },
   {
     "gitsigns.nvim",
-    enabled = nixCats "general" or false,
     event = "DeferredUIEnter",
-    -- cmd = { "" },
-    -- ft = "",
-    -- keys = "",
-    -- colorscheme = "",
-    after = function(plugin)
-      require("gitsigns").setup {
-        -- See `:help gitsigns.txt`
-        signs = {
-          add = { text = "+" },
-          change = { text = "~" },
-          delete = { text = "_" },
-          topdelete = { text = "‾" },
-          changedelete = { text = "~" },
-        },
-        on_attach = function(bufnr)
-          local gs = package.loaded.gitsigns
+    after = function()
+      local gs = require "gitsigns"
 
-          local function map(mode, l, r, opts)
-            opts = opts or {}
-            opts.buffer = bufnr
-            vim.keymap.set(mode, l, r, opts)
+      local function config(bufnr)
+        local function map(mode, l, r, opts)
+          opts = (opts or {})
+          opts.buffer = bufnr
+          return vim.keymap.set(mode, l, r, opts)
+        end
+
+        -- Navigation
+        map("n", "]c", function()
+          if vim.wo.diff then
+            return "]c"
           end
+          vim.schedule(function()
+            gs.nav_hunk "next"
+          end)
+          return "<Ignore>"
+        end, { expr = true })
 
-          -- Navigation
-          map({ "n", "v" }, "]c", function()
-            if vim.wo.diff then
-              return "]c"
-            end
-            vim.schedule(function()
-              gs.next_hunk()
-            end)
-            return "<Ignore>"
-          end, { expr = true, desc = "Jump to next hunk" })
+        map("n", "[c", function()
+          if vim.wo.diff then
+            return "[c"
+          end
+          vim.schedule(function()
+            gs.nav_hunk "prev"
+          end)
+          return "<Ignore>"
+        end, { expr = true })
 
-          map({ "n", "v" }, "[c", function()
-            if vim.wo.diff then
-              return "[c"
-            end
-            vim.schedule(function()
-              gs.prev_hunk()
-            end)
-            return "<Ignore>"
-          end, { expr = true, desc = "Jump to previous hunk" })
+        -- Actions
+        map({ "n", "v" }, "<leader>hs", ":Gitsigns stage_hunk<CR>")
+        map({ "n", "v" }, "<leader>hr", ":Gitsigns reset_hunk<CR>")
+        map("n", "<leader>hS", gs.stage_buffer)
+        map("n", "<leader>hu", gs.undo_stage_hunk)
+        map("n", "<leader>hR", gs.reset_buffer)
+        map("n", "<leader>hp", gs.preview_hunk)
+        map("n", "<leader>hb", function()
+          gs.blame_line { full = true }
+        end)
+        map("n", "<leader>tb", gs.toggle_current_line_blame)
+        map("n", "<leader>hd", gs.diffthis)
+        map("n", "<leader>hD", function()
+          gs.diffthis "~"
+        end)
+        map("n", "<leader>td", gs.toggle_deleted)
 
-          -- Actions
-          -- visual mode
-          map("v", "<leader>hs", function()
-            gs.stage_hunk { vim.fn.line ".", vim.fn.line "v" }
-          end, { desc = "stage git hunk" })
-          map("v", "<leader>hr", function()
-            gs.reset_hunk { vim.fn.line ".", vim.fn.line "v" }
-          end, { desc = "reset git hunk" })
-          -- normal mode
-          map("n", "<leader>gs", gs.stage_hunk, { desc = "git stage hunk" })
-          map("n", "<leader>gr", gs.reset_hunk, { desc = "git reset hunk" })
-          map("n", "<leader>gS", gs.stage_buffer, { desc = "git Stage buffer" })
-          map("n", "<leader>gu", gs.undo_stage_hunk, { desc = "undo stage hunk" })
-          map("n", "<leader>gR", gs.reset_buffer, { desc = "git Reset buffer" })
-          map("n", "<leader>gp", gs.preview_hunk, { desc = "preview git hunk" })
-          map("n", "<leader>gb", function()
-            gs.blame_line { full = false }
-          end, { desc = "git blame line" })
-          map("n", "<leader>gd", gs.diffthis, { desc = "git diff against index" })
-          map("n", "<leader>gD", function()
-            gs.diffthis "~"
-          end, { desc = "git diff against last commit" })
+        -- Text object
+        map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+      end
 
-          -- Toggles
-          map("n", "<leader>gtb", gs.toggle_current_line_blame, { desc = "toggle git blame line" })
-          map("n", "<leader>gtd", gs.toggle_deleted, { desc = "toggle git show deleted" })
-
-          -- Text object
-          map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", { desc = "select git hunk" })
-        end,
-      }
-      vim.cmd [[hi GitSignsAdd guifg=#04de21]]
-      vim.cmd [[hi GitSignsChange guifg=#83fce6]]
-      vim.cmd [[hi GitSignsDelete guifg=#fa2525]]
-    end,
-  },
-  {
-    "which-key.nvim",
-    enabled = nixCats "general" or false,
-    event = "DeferredUIEnter",
-    after = function(plugin)
-      require("which-key").setup {}
-      require("which-key").add {
-        { "<leader><leader>", group = "buffer commands" },
-        { "<leader><leader>_", hidden = true },
-        { "<leader>c", group = "[c]ode" },
-        { "<leader>c_", hidden = true },
-        { "<leader>d", group = "[d]ocument" },
-        { "<leader>d_", hidden = true },
-        { "<leader>g", group = "[g]it" },
-        { "<leader>g_", hidden = true },
-        { "<leader>r", group = "[r]ename" },
-        { "<leader>r_", hidden = true },
-        { "<leader>f", group = "[f]ind" },
-        { "<leader>f_", hidden = true },
-        { "<leader>s", group = "[s]earch" },
-        { "<leader>s_", hidden = true },
-        { "<leader>t", group = "[t]oggles" },
-        { "<leader>t_", hidden = true },
-        { "<leader>w", group = "[w]orkspace" },
-        { "<leader>w_", hidden = true },
-      }
+      gs.setup { on_attach = config }
     end,
   },
   {
     "nvim-lint",
-    enabled = nixCats "general" or false,
+
     event = "FileType",
     after = function(plugin)
       require("lint").linters_by_ft = {
-        -- NOTE: download some linters in lspsAndRuntimeDeps
-        -- and configure them here
-        -- markdown = {'vale',},
-        -- javascript = { 'eslint' },
-        -- typescript = { 'eslint' },
-        go = nixCats "go" and { "golangcilint" } or nil,
+        nix = { "nix" },
+        sh = { "shellcheck" },
       }
 
       vim.api.nvim_create_autocmd({ "BufWritePost" }, {
@@ -279,89 +366,56 @@ require("lze").load {
     end,
   },
   {
+    "typst-preview-nvim",
+    ft = { "typst" },
+    after = function()
+      require("typst-preview.nvim").setup {
+        dependencies_bin = { ["tinymist"] = "tinymist", ["websocat"] = "websocat" },
+      }
+    end,
+  },
+
+  {
     "conform.nvim",
-    enabled = nixCats "general" or false,
     keys = {
-      { "<leader>FF", desc = "[F]ormat [F]ile" },
+      { "<leader>=", desc = "Format" },
     },
-    -- colorscheme = "",
     after = function(plugin)
       local conform = require "conform"
-
       conform.setup {
         formatters_by_ft = {
-          -- NOTE: download some formatters in lspsAndRuntimeDeps
-          -- and configure them here
-          lua = nixCats "lua" and { "stylua" } or nil,
-          go = nixCats "go" and { "gofmt", "golint" } or nil,
-          -- templ = { "templ" },
-          -- Conform will run multiple formatters sequentially
-          -- python = { "isort", "black" },
-          -- Use a sub-list to run only the first available formatter
-          -- javascript = { { "prettierd", "prettier" } },
+          lua = { "stylua" },
+          json = { "jq" },
+          sh = { "shellcheck", "shfmt" },
+          toml = { "taplo" },
+          typst = { "typstyle" },
         },
       }
 
-      vim.keymap.set({ "n", "v" }, "<leader>FF", function()
+      vim.keymap.set({ "n", "v" }, "<leader>=", function()
         conform.format {
           lsp_fallback = true,
           async = false,
           timeout_ms = 1000,
         }
-      end, { desc = "[F]ormat [F]ile" })
+      end, { desc = "Format" })
     end,
   },
 }
 
-local function lsp_on_attach(_, bufnr)
-  -- we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
+local ld = vim.diagnostic
 
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = "LSP: " .. desc
-    end
-    vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
-  end
+local function toggle_inlay()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end
 
-  nmap("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
-  nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+local mappings = {
+  ["<Leader>lq"] = vim.diagnostic.setloclist,
+  ["<Leader>li"] = toggle_inlay,
+}
 
-  nmap("gd", vim.lsp.buf.definition, "[G]oto [D]efinition")
-
-  if nixCats "general" then
-    nmap("gr", function()
-      Snacks.picker.lsp_references()
-    end, "[G]oto [R]eferences")
-    nmap("gI", function()
-      Snacks.picker.lsp_implementations()
-    end, "[G]oto [I]mplementation")
-    nmap("<leader>ds", function()
-      Snacks.picker.lsp_symbols()
-    end, "[D]ocument [S]ymbols")
-    nmap("<leader>ws", function()
-      Snacks.picker.lsp_workspace_symbols()
-    end, "[W]orkspace [S]ymbols")
-  end
-
-  nmap("<leader>D", vim.lsp.buf.type_definition, "Type [D]efinition")
-
-  -- See `:help K` for why this keymap
-  nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-  nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
-
-  -- Lesser used LSP functionality
-  nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
-  nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "[W]orkspace [A]dd Folder")
-  nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "[W]orkspace [R]emove Folder")
-  nmap("<leader>wl", function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, "[W]orkspace [L]ist Folders")
-
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-    vim.lsp.buf.format()
-  end, { desc = "Format current buffer with LSP" })
+for shortcut, callback in pairs(mappings) do
+  vim.keymap.set("n", shortcut, callback, { noremap = true, silent = true })
 end
 
 -- NOTE: Register a handler from lzextras. This one makes it so that
@@ -370,16 +424,17 @@ end
 -- it adds the lsp field used below
 -- (and must be registered before any load calls that use it!)
 require("lze").register_handlers(require("lzextras").lsp)
--- also replace the fallback filetype list retrieval function with a slightly faster one
+-- replace the fallback filetype list retrieval function with a slightly faster one
 require("lze").h.lsp.set_ft_fallback(function(name)
   return dofile(
     nixCats.pawsible { "allPlugins", "opt", "nvim-lspconfig" } .. "/lsp/" .. name .. ".lua"
   ).filetypes or {}
 end)
+
 require("lze").load {
   {
     "nvim-lspconfig",
-    enabled = nixCats "general" or false,
+
     -- the on require handler will be needed here if you want to use the
     -- fallback method of getting filetypes if you don't provide any
     on_require = { "lspconfig" },
@@ -391,14 +446,28 @@ require("lze").load {
     end,
     before = function(_)
       vim.lsp.config("*", {
-        on_attach = lsp_on_attach,
+        capabilities = require("blink.cmp").get_lsp_capabilities(),
       })
+    end,
+    after = function()
+      for _, lsp in ipairs {
+        "gdscript",
+        "vimls",
+        "clangd",
+        "terraformls",
+        "glsl_analyzer",
+        "nixd",
+        "uiua",
+        "ruff",
+        "nushell",
+      } do
+        vim.lsp.enable(lsp)
+      end
     end,
   },
   {
     -- name of the lsp
     "lua_ls",
-    enabled = nixCats "lua" or false,
     -- provide a table containing filetypes,
     -- and then whatever your functions defined in the function type specs expect.
     -- in our case, it just expects the normal lspconfig setup options.
@@ -422,43 +491,18 @@ require("lze").load {
     },
     -- also these are regular specs and you can use before and after and all the other normal fields
   },
-  {
-    "gopls",
-    enabled = nixCats "go" or false,
-    -- if you don't provide the filetypes it asks lspconfig for them using the function we set above
-    lsp = {
-      -- filetypes = { "go", "gomod", "gowork", "gotmpl" },
-    },
-  },
+
   {
     "nixd",
-    enabled = nixCats "nix" or false,
     lsp = {
       filetypes = { "nix" },
       settings = {
         nixd = {
-          -- nixd requires some configuration.
-          -- luckily, the nixCats plugin is here to pass whatever we need!
-          -- we passed this in via the `extra` table in our packageDefinitions
-          -- for additional configuration options, refer to:
-          -- https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md
           nixpkgs = {
-            -- in the extras set of your package definition:
-            -- nixdExtras.nixpkgs = ''import ${pkgs.path} {}''
             expr = nixCats.extra "nixdExtras.nixpkgs" or [[import <nixpkgs> {}]],
           },
-          options = {
-            nixos = {
-              -- nixdExtras.nixos_options = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").nixosConfigurations.configname.options''
-              expr = nixCats.extra "nixdExtras.nixos_options",
-            },
-            ["home-manager"] = {
-              -- nixdExtras.home_manager_options = ''(builtins.getFlake "path:${builtins.toString inputs.self.outPath}").homeConfigurations.configname.options''
-              expr = nixCats.extra "nixdExtras.home_manager_options",
-            },
-          },
           formatting = {
-            command = { "alejandra" },
+            command = { "nixfmt" },
           },
           diagnostic = {
             suppress = {
@@ -468,5 +512,202 @@ require("lze").load {
         },
       },
     },
+  },
+  { "rustaceanvim" },
+  {
+    "typescript-tools.nvim",
+    ft = { "typscript" },
+    after = function()
+      require("typescript-tools").setup()
+    end,
+  },
+  { "plenary.nvim", on_require = "plenary" },
+  {
+    "render-markdown.nvim",
+    ft = { "markdown", "codecompanion" },
+    after = function()
+      require("render-markdown").setup()
+    end,
+  },
+  { "gitlinker.nvim" },
+  {
+    "dial.nvim",
+    event = "DeferredUIEnter",
+    after = function()
+      local dm = require "dial.map"
+      local augend = require "dial.augend"
+
+      local kms = vim.keymap.set
+
+      kms("n", "<C-A>", dm.inc_normal(), { noremap = true })
+      kms("n", "<C-X>", dm.dec_normal(), { noremap = true })
+      kms("v", "<C-A>", dm.inc_visual(), { noremap = true })
+      kms("v", "<C-X>", dm.dec_visual(), { noremap = true })
+      kms("v", "g<C-A>", dm.inc_gvisual(), { noremap = true })
+      kms("v", "g<C-X>", dm.dec_gvisual(), { noremap = true })
+
+      local function words(vals)
+        return augend.constant.new {
+          elements = vals,
+          word = true,
+          cyclic = true,
+        }
+      end
+
+      local default = {
+        augend.date.alias["%Y-%m-%d"],
+        augend.semver.alias.semver,
+        augend.integer.alias.decimal,
+        augend.integer.alias.hex,
+        augend.constant.alias.bool,
+        words { "staging", "production" },
+      }
+
+      local function ftd(others)
+        -- Fallback To Default
+        return vim.list_extend(others, default)
+      end
+
+      require("dial.config").augends:register_group { default = default }
+      require("dial.config").augends:on_filetype {
+        typescript = ftd {
+          words { "let", "const" },
+        },
+        markdown = ftd {
+          augend.misc.alias.markdown_header,
+        },
+        python = ftd {
+          words { "True", "False" },
+        },
+        csv = ftd {
+          words { "True", "False" },
+        },
+      }
+    end,
+  },
+  {
+    "gx.nvim",
+    cmd = { "Browse" },
+    keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
+    config = {
+      handlers = {
+        rust = {
+          name = "rust",
+          filename = "Cargo.toml", -- or the necessary filename
+          handle = function(mode, line, _)
+            local crate = require("gx.helper").find(line, mode, "(%w+)%s-=%s")
+
+            if crate then
+              return "https://crates.io/crates/" .. crate
+            end
+          end,
+        },
+
+        pypi = {
+          name = "pypi",
+          filename = "pyproject.toml", -- or the necessary filename
+          handle = function(mode, line, _)
+            local pkg = require("gx.helper").find(line, mode, "(%w+)%s-=%s")
+
+            if pkg then
+              return "https://pypi.org/project/" .. pkg
+            end
+          end,
+        },
+
+        jira = {
+          name = "jira",
+          handle = function(mode, line, _)
+            local ticket = require("gx.helper").find(line, mode, "(%u+-%d+)")
+            if ticket and #ticket < 20 then
+              return "https://group-one.atlassian.net/browse/" .. ticket
+            end
+          end,
+        },
+      },
+    },
+  },
+  { "copilot.lua", cmd = "Copilot" }, -- only for doing :Copilot auth
+  {
+    "codecompanion.nvim",
+    after = function()
+      require("codecompanion").setup {
+        strategies = {
+          chat = {
+            adapter = "copilot",
+            model = "claude-4-5-sonnet",
+          },
+          inline = {
+            adapter = "copilot",
+            model = "claude-4-5-sonnet",
+          },
+          agent = {
+            adapter = "copilot",
+            model = "claude-4-5-sonnet",
+          },
+        },
+
+        memory = {
+          opts = {
+            chat = {
+              enabled = true,
+            },
+          },
+        },
+
+        prompt_library = {
+          ["JJ Code Review"] = {
+            strategy = "chat",
+            description = "Code review",
+            prompts = {
+              {
+                role = "system",
+                content = "You are an experienced developer which makes good but not too verbose comments and avoids bullshit chat",
+              },
+              {
+                role = "user",
+                content = function()
+                  return string.format(
+                    [[Review the changes in the diff bellow. Don't do a resume of the changes, just comment what you see wrong or remarcable. Whenever it makes sence, include the file and number line.
+              In case of change request, include a diff. Changes:
+
+  ```diff
+  %s
+  ```
+              ]],
+                    vim.fn.system "jj diff '@..trunk()'"
+                  )
+                end,
+              },
+            },
+          },
+          ["Code Review"] = {
+            strategy = "chat",
+            description = "Code review",
+            prompts = {
+              {
+                role = "system",
+                content = "You are an experienced developer which makes good but not too verbose comments and avoids bullshit chat",
+              },
+              {
+                role = "user",
+                content = function()
+                  return string.format(
+                    [[Review the changes in the diff bellow. Don't do a resume of the changes, just comment what you see wrong or remarcable. Whenever it makes sence, include the file and number line.
+              In case of change request, include a diff. Changes:
+
+  ```diff
+  %s
+  ```
+              ]],
+                    vim.fn.system "git diff --no-ext-diff $(git symbolic-ref refs/remotes/origin/HEAD --short)..HEAD"
+                  )
+                end,
+              },
+            },
+          },
+        },
+      }
+    end,
   },
 }

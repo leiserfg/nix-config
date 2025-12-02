@@ -105,19 +105,14 @@
     nix-update
     nixfmt-rfc-style
     nixpkgs-review
-    taplo
     stylua
-    shfmt
-    shellcheck
     ty
-    pyrefly
     (unstablePkgs.ruff)
     # basedpyright
     # typescript-language-server
     # gdb
     # inferno
     flamegraph
-    glsl_analyzer
     myPkgs.glslviewer
     # myPkgs.friction-graphics
     # love
@@ -125,12 +120,6 @@
     # easyeffects
     rink
     uiua
-    # figlet
-    # ventoy-bin
-    # presenterm
-    # material-maker
-    # git-branchless
-
     # --- Editor
     (neovimPkgs.neovim)
 
