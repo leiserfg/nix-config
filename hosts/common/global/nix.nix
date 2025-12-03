@@ -11,7 +11,7 @@
   programs.nh = {
     enable = true;
     flake = "/home/leiserfg/nix-config/";
-    clean.enable = true;
+    clean.enable = false;
     clean.extraArgs = "--keep-since 9d --keep 3";
   };
   nix = {

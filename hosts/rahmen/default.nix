@@ -40,7 +40,8 @@
 
     serviceConfig = {
       Type = "oneshot";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 80 > /sys/class/power_supply/BAT1/charge_control_end_threshold'";
+      ExecStart = "${lib.getExe pkgs.bash} -c 'echo 100 > /sys/class/power_supply/BAT1/charge_control_end_threshold'";
+      # ExecStart = "${pkgs.bash}/bin/bash -c 'echo 80 > /sys/class/power_supply/BAT1/charge_control_end_threshold'";
       RemainAfterExit = true;
     };
 

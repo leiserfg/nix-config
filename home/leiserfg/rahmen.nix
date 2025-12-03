@@ -41,7 +41,7 @@
     # playwright-test
     # anki
     sunvox
-    # orca-c
+    orca-c
 
     # myPkgs.tola
 

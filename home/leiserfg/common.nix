@@ -48,7 +48,7 @@
     numbat
     # myPkgs.wl_shimeji
     # myPkgs.friction-graphics
-    # love
+    love
     nix-playground
     mupdf
     nix-search-cli
@@ -375,8 +375,8 @@
       enable = true;
       settings = {
         cookies-from-browser = "firefox";
-        downloader = "aria2c";
-        downloader-args = "aria2c:'-c -x8 -s8 -k1M'";
+        # downloader = "aria2c";
+        # downloader-args = "aria2c:'-c -x8 -s8 -k1M'";
       };
     };
 

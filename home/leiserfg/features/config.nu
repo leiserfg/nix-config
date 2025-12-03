@@ -108,7 +108,7 @@ def __parse_cmd [] {
 #     ]
 # }
 
-]
+# ]
 
 def --env awsenv [] {
    export-env {$env.AWS_PROFILE = (open ~/.aws/credentials | from ini | columns | to text | fzf --reverse )}

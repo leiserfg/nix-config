@@ -84,7 +84,7 @@ in
             # but as a demo, we do it anyway.
             lze
             lzextras
-            snacks-nvim
+            # snacks-nvim
             typst-preview-nvim
             deepwhite-nvim
             # onedark-nvim
@@ -147,8 +147,8 @@ in
               conform-nvim
               plenary-nvim
               dial-nvim
-              gitlinker-nvim
               codecompanion-nvim
+              fzf-lua
               gx-nvim
             ]
             ++ (with pkgs.neovimPlugins; [ wildfire ]);
