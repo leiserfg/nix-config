@@ -1,5 +1,6 @@
 {
   pkgs,
+  myPkgs,
   unstablePkgs,
   lib,
   config,
@@ -56,7 +57,7 @@
 
         # ''$mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | vicinae -dmenu -i  | xargs shikanectl switch"''
 
-        ''$mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"''
+        # ''$mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"''
 
         ",Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -"
         "SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -"
@@ -65,6 +66,8 @@
         "$mod, 0, exec, rofi_power"
         "$mod, P, exec, rofi_power"
         "$mod, D, exec, vicinae toggle"
+
+        "$mod, s, exec, ${lib.getExe myPkgs.wayscriber} --freeze"
 
         "CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l"
         "CTRL ALT $mod , period, movecurrentworkspacetomonitor, r"

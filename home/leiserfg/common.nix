@@ -744,4 +744,143 @@
         # })
       ];
   };
+
+  programs.television = {
+    enable = true;
+    settings = {
+      ui = {
+        use_nerd_font_icons = true;
+        ui_scale = 120;
+      };
+      keybindings = {
+        "esc" = "quit";
+        "ctrl-c" = "quit";
+      };
+
+    };
+    channels = {
+      git-diff = {
+        metadata = {
+          name = "git-diff";
+          description = "A channel to select files from git diff commands";
+          requirements = [ "git" ];
+        };
+        source = {
+          command = "git diff --name-only HEAD";
+        };
+        preview = {
+          command = "git diff HEAD --color=always -- '{}'";
+        };
+      };
+      git-log = {
+        metadata = {
+          name = "git-log";
+          description = "A channel to select from git log entries";
+          requirements = [ "git" ];
+        };
+        source = {
+          command = "git log --oneline --date=short --pretty=\"format:%h %s %an %cd\" \"$@\"";
+          output = "{split: :0}";
+        };
+        preview = {
+          command = "git show -p --stat --pretty=fuller --color=always '{0}'";
+        };
+      };
+      path = {
+        metadata = {
+          name = "path";
+          description = "Investigate PATH contents";
+          requirements = [
+            "fd"
+            "bat"
+          ];
+        };
+        source = {
+          command = "printf '%s\\n' \"$PATH\" | tr ':' '\\n'";
+        };
+        preview = {
+          command = "fd -tx -d1 . \"{}\" -X printf \"%s\\n\" \"{/}\" | sort -f | bat -n --color=always";
+        };
+      };
+
+      nu-history = {
+        metadata = {
+          name = "nu-history";
+          description = "A channel to select from your nu history";
+        };
+        source = {
+          command = "nu -c 'open $nu.history-path | lines | uniq | reverse | to text'";
+        };
+      };
+
+      files = {
+        metadata = {
+          name = "files";
+          description = "A channel to select files and directories";
+          requirements = [
+            "fd"
+            "bat"
+          ];
+        };
+        source = {
+          command = [
+            "rg --files"
+            "rg --files --hidden"
+          ];
+        };
+        preview = {
+          command = "bat -n --color=always '{}'";
+          env = {
+            BAT_THEME = "ansi";
+          };
+        };
+        keybindings = {
+          shortcut = "f1";
+          f12 = "actions:edit";
+          "ctrl-up" = "actions:goto_parent_dir";
+        };
+        actions = {
+          edit = {
+            description = "Opens the selected entries with the default editor (falls back to vim)";
+            command = "${"EDITOR:-vim"} '{}'";
+            mode = "execute";
+          };
+          goto_parent_dir = {
+            description = "Re-opens tv in the parent directory";
+            command = "tv files ..";
+            mode = "execute";
+          };
+        };
+      };
+      procs = {
+        metadata = {
+          name = "procs";
+          description = "A channel to find and manage running processes";
+          requirements = [
+            "ps"
+            "awk"
+          ];
+        };
+        source = {
+          command = "ps -e -o pid=,ucomm= | awk '{print $1, $2}'";
+          display = "{split: :1}";
+          output = "{split: :0}";
+        };
+        preview = {
+          command = "ps -p '{split: :0}' -o user,pid,ppid,state,%cpu,%mem,command | fold";
+        };
+        keybindings = {
+          "ctrl-k" = "actions:kill";
+        };
+        actions = {
+          kill = {
+            description = "Kill the selected process (SIGKILL)";
+            command = "kill -9 {split: :0}";
+            mode = "execute";
+          };
+        };
+      };
+
+    };
+  };
 }

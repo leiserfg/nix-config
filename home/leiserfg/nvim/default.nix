@@ -96,6 +96,7 @@ in
           optionalPlugins.general =
             with pkgs.vimPlugins;
             [
+              tiny-inline-diagnostic-nvim
               vim-startuptime
               mini-nvim
               nvim-lspconfig

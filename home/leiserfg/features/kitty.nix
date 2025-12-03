@@ -25,7 +25,7 @@
       bold_font = "auto";
       italic_font = "auto";
       text_fg_override_threshold = "4.5 ratio";
-      cursor = "none";
+      # cursor = "none";
       font_features = "Iosevka-Term-SS15-Medium +THND";
       # font_features = "Iosevka-Term-SS15-Light +THND";
       tab_separator = "│";
@@ -43,7 +43,7 @@
 
       foreground = "#35243c";
       background = "#fcfdf1";
-      # cursor = "#f7edd6";
+      cursor = "#35243c";
       color0 = ''#fcfdf1'';
       color1 = ''#ffe6e6'';
       color2 = ''#e3f4df'';
