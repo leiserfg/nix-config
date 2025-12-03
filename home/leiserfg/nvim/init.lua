@@ -161,7 +161,6 @@ require("lze").load {
         "move",
         "splitjoin",
         "icons",
-        "pairs",
       } do
         require(("mini.%s"):format(mini)).setup {}
       end
@@ -181,8 +180,44 @@ require("lze").load {
 
       require("mini.icons").mock_nvim_web_devicons()
 
+      require("mini.pairs").setup {
+        mappings = {
+          ["'"] = {
+            action = "closeopen",
+            pair = "''",
+            neigh_pattern = "[^'].",
+            register = { cr = false },
+          },
+          ['"'] = {
+            action = "closeopen",
+            pair = '""',
+            neigh_pattern = '[^\\"].',
+            register = { cr = false },
+          },
+        },
+      }
       -- I'm an old dog, so I keep using tpope's surround keybindings
       require("mini.surround").setup {
+        custom_surroundings = {
+          -- lua string
+          l = {
+            input = { "%[%[().-()%]%]" },
+            output = { left = "[[", right = "]]" },
+          },
+
+          -- nix string
+          n = {
+            input = { "%'%'%'().-()%'%'%'" },
+            output = { left = "'''", right = "'''" },
+          },
+
+          -- python multiline string
+          p = {
+            input = { '%"%"%"().-()%"%"%"' },
+            output = { left = '"""', right = '"""' },
+          },
+        },
+
         mappings = {
           add = "ys",
           delete = "ds",
@@ -197,6 +232,7 @@ require("lze").load {
         },
         search_method = "cover_or_next",
       }
+
       -- Remap adding surrounding to Visual mode selection
       vim.api.nvim_del_keymap("x", "ys")
       vim.api.nvim_set_keymap(
@@ -632,6 +668,7 @@ require("lze").load {
     "codecompanion.nvim",
     after = function()
       require("codecompanion").setup {
+        ignore_warnings = true,
         strategies = {
           chat = {
             adapter = "copilot",

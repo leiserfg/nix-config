@@ -11,6 +11,7 @@ require("snacks").setup {
   gitbrowse = {},
   scope = {},
 }
+local Snacks = require "snacks"
 
 vim.keymap.set("n", "-", function()
   Snacks.explorer.open()
@@ -84,3 +85,5 @@ end, { desc = "Resume" })
 vim.keymap.set("n", "<leader>su", function()
   Snacks.picker.undo()
 end, { desc = "Undo History" })
+
+vim.keymap.set({ "n", "v" }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse" })
