@@ -121,7 +121,7 @@
     rink
     uiua
     # --- Editor
-    (neovimPkgs.neovim)
+    # (neovimPkgs.neovim)
 
     # --- Networking & Communication ---
     mosh

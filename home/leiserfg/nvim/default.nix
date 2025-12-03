@@ -26,7 +26,7 @@ in
         ];
       # see the packageDefinitions below.
       # This says which of those to install.
-      packageNames = [ "myHomeModuleNvim" ];
+      packageNames = [ "nvim" ];
 
       luaPath = ./.;
 
@@ -185,7 +185,7 @@ in
       packageDefinitions.replace = {
         # These are the names of your packages
         # you can include as many as you wish.
-        myHomeModuleNvim =
+        nvim =
           { pkgs, name, ... }:
           {
             # they contain a settings set defined above
@@ -193,12 +193,12 @@ in
             settings = {
               suffix-path = true;
               suffix-LD = true;
-              wrapRc = true;
+              wrapRc = "NO_WRAP";
               # unwrappedCfgPath = "/path/to/here"
 
               aliases = [
                 "vim"
-                "homeVim"
+                "vi"
               ];
               neovim-unwrapped = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
               hosts.python3.enable = false;
