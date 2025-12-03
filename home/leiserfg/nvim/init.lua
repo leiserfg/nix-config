@@ -207,8 +207,8 @@ require("lze").load {
 
           -- nix string
           n = {
-            input = { "%'%'%'().-()%'%'%'" },
-            output = { left = "'''", right = "'''" },
+            input = { "%'%'().-()%'%'" },
+            output = { left = "''", right = "''" },
           },
 
           -- python multiline string
@@ -747,4 +747,4 @@ require("lze").load {
       }
     end,
   },
-}
+bg

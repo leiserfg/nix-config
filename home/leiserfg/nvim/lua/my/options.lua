@@ -2,7 +2,7 @@ local o = vim.opt
 local g = vim.g
 
 -- o.commentstring = "/*%s*/"
-o.cpo:append(">")
+o.cpo:append ">"
 o.number = true
 o.relativenumber = true
 o.numberwidth = 2
@@ -29,11 +29,11 @@ o.list = true
 o.showbreak = "↪ "
 
 o.listchars = {
-	extends = "⟩",
-	nbsp = "␣",
-	precedes = "⟨",
-	tab = "<~>",
-	trail = "•",
+  extends = "⟩",
+  nbsp = "␣",
+  precedes = "⟨",
+  tab = "<~>",
+  trail = "•",
 }
 
 -- stops line wrapping from being confusing
@@ -47,12 +47,12 @@ o.smartindent = true
 o.signcolumn = "yes"
 o.inccommand = "split"
 o.termguicolors = true
-o.shortmess:append("Ic")
+o.shortmess:append "Ic"
 o.completeopt = "noinsert,menuone,noselect"
 o.swapfile = false
 o.pumheight = 20
 -- o.diffopt:append "internal,algorithm:patience,vertical"
-o.diffopt:append("internal,algorithm:histogram,indent-heuristic,vertical")
+o.diffopt:append "internal,algorithm:histogram,indent-heuristic,vertical"
 
 -- o.clipboard = "unnamedplus"
 
@@ -78,21 +78,32 @@ local acmd = vim.api.nvim_create_autocmd
 
 acmd("InsertEnter", { group = vimrc, command = "set nohlsearch" })
 acmd({ "BufRead", "BufNewFile" }, {
-	pattern = { "*.md", "*.rst" },
-	group = vimrc,
-	command = "setlocal spell spelllang=en_us",
+  pattern = { "*.md", "*.rst" },
+  group = vimrc,
+  command = "setlocal spell spelllang=en_us",
 })
 acmd("BufReadPost", { group = vimrc, command = 'silent! normal! g`"zv' })
 
 local function yank_colors()
-	vim.hl.on_yank({ higroup = "IncSearch", timeout = 150 })
+  vim.hl.on_yank { higroup = "IncSearch", timeout = 150 }
 end
 
 acmd("TextYankPost", { group = vimrc, callback = yank_colors })
 
-vim.filetype.add({
-	extension = { keymap = "dts", frag = "glsl", ua = "uiua" },
-	pattern = { ["*.xml.txt"] = "xml" },
-})
+vim.filetype.add {
+  extension = { keymap = "dts", frag = "glsl", ua = "uiua" },
+  pattern = { ["*.xml.txt"] = "xml" },
+}
 
 -- vim.cmd.colorscheme "notebook"
+
+vim.diagnostic.config {
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "⚬",
+      [vim.diagnostic.severity.WARN] = "⚬",
+      [vim.diagnostic.severity.INFO] = "⚬",
+      [vim.diagnostic.severity.HINT] = "⚬",
+    },
+  },
+}

@@ -13,19 +13,33 @@ require("snacks").setup {
 }
 local Snacks = require "snacks"
 
-vim.keymap.set("n", "-", function()
-  Snacks.explorer.open()
-end, { desc = "Snacks Explorer" })
+local smart_confirm = function(picker, ...)
+  local items = picker:selected { fallback = true }
+  if #items > 1 then
+    Snacks.picker.actions.qflist(picker, ...)
+  else
+    return Snacks.picker.actions.jump(picker, ...)
+  end
+end
+
 vim.keymap.set("n", "<c-\\>", function()
   Snacks.terminal.open()
 end, { desc = "Snacks Terminal" })
 vim.keymap.set("n", "<leader>_", function()
   Snacks.lazygit.open()
 end, { desc = "Snacks LazyGit" })
+
+vim.keymap.set("n", "<leader>/", function()
+  Snacks.picker.grep {
+    confirm = smart_confirm,
+  }
+end, { desc = "Grep Files" })
+
 vim.keymap.set("n", "<leader>sf", function()
   Snacks.picker.smart()
 end, { desc = "Smart Find Files" })
-vim.keymap.set("n", "<leader><leader>s", function()
+
+vim.keymap.set("n", "<leader>fb", function()
   Snacks.picker.buffers()
 end, { desc = "Search Buffers" })
 -- find
@@ -36,9 +50,6 @@ vim.keymap.set("n", "<leader>fg", function()
   Snacks.picker.git_files()
 end, { desc = "Find Git Files" })
 -- Grep
-vim.keymap.set("n", "<leader>sb", function()
-  Snacks.picker.lines()
-end, { desc = "Buffer Lines" })
 vim.keymap.set("n", "<leader>sB", function()
   Snacks.picker.grep_buffers()
 end, { desc = "Grep Open Buffers" })
@@ -86,4 +97,6 @@ vim.keymap.set("n", "<leader>su", function()
   Snacks.picker.undo()
 end, { desc = "Undo History" })
 
-vim.keymap.set({ "n", "v" }, "<leader>gB", function() Snacks.gitbrowse() end, { desc = "Git Browse" })
+vim.keymap.set({ "n", "v" }, "<leader>gB", function()
+  Snacks.gitbrowse()
+end, { desc = "Git Browse" })

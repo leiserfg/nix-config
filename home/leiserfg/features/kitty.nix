@@ -12,7 +12,7 @@
       # name = "Iosevka Term SS15 Light";
       size = 14.0;
     };
-    themeFile = "Solarized_Light";
+    # themeFile = "Solarized_Light";
     # extraConfig = ''
     #   include ${./gv_light.conf}
     # '';
@@ -40,6 +40,26 @@
       cursor_trail = 1;
       cursor_trail_decay = "0.1 0.3";
       cursor_trail_start_threshold = 2;
+
+      foreground = "#35243c";
+      background = "#fcfdf1";
+      # cursor = "#f7edd6";
+      color0 = ''#fcfdf1'';
+      color1 = ''#ffe6e6'';
+      color2 = ''#e3f4df'';
+      color3 = ''#f7edd6'';
+      color4 = ''#dff0ff'';
+      color5 = ''#fbe7f9'';
+      color6 = ''#d6f6f5'';
+      color7 = ''#35243c'';
+      color8 = ''#dabcb2'';
+      color9 = ''#d5a9a7'';
+      color10 = ''#c7b2a3'';
+      color11 = ''#d5ac9e'';
+      color12 = ''#b9b5b7'';
+      color13 = ''#ceadb3'';
+      color14 = ''#b8b8b1'';
+      color15 = ''#09000f'';
     };
 
     keybindings =
@@ -54,11 +74,9 @@
 
         # ''launch   --stdin-source=@screen_scrollback  nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c "autocmd VimEnter * normal G" -'';
 
-        "kitty_mod+h" =
-          ''launch --type=overlay  --stdin-source=@screen_scrollback ${nvim_scrollback}''; # --stdin-add-formatting
+        "kitty_mod+h" = ''launch --type=overlay  --stdin-source=@screen_scrollback ${nvim_scrollback}''; # --stdin-add-formatting
 
-        "kitty_mod+g" =
-          ''launch --type=overlay  --stdin-source=@last_cmd_output ${nvim_scrollback}'';
+        "kitty_mod+g" = ''launch --type=overlay  --stdin-source=@last_cmd_output ${nvim_scrollback}'';
 
         # background = "#0e1415";
         # foreground = "#cecece";

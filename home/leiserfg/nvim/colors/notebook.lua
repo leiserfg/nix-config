@@ -156,20 +156,65 @@ end
 hl("Normal", { fg = c.fg, bg = c.bg })
 hl("Comment", { fg = c.fg, bg = c.gray, italic = true })
 hl("String", { fg = c.fg, bg = c.green })
-hl("Keyword", { fg = c.fg, bg = c.bg, bold = true })
 hl("Function", { fg = c.fg, bg = c.bg })
 hl("Constant", { fg = c.fg, bg = c.orange })
 
-hl("DiagnosticError", { fg = c.fg, bg = c.red })
-hl("DiagnosticWarn", { fg = c.fg, bg = c.yellow })
-hl("DiagnosticInfo", { fg = c.fg, bg = c.info })
-hl("DiagnosticHint", { fg = c.fg, bg = c.hint })
-
+-- Core UI
+hl("NormalFloat", { link = "Normal" })
+hl("NonText", { fg = c.gray })
+hl("SpecialKey", { fg = c.blue })
+hl("Directory", { link = "SpecialKey" })
+hl("Title", { fg = c.fg, bold = true })
+hl("IncSearch", { fg = c.fg, bg = c.yellow })
+hl("Search", { link = "IncSearch" })
+hl("CurSearch", { link = "IncSearch" })
+hl("LineNr", { fg = c.gray })
+hl("CursorLineNr", { link = "Normal" })
+hl("Question", { fg = c.fg, bold = true })
+hl("StatusLine", { fg = c.fg, bg = c.bg, bold = true })
+hl("StatusLineNC", { fg = c.fg, bg = c.bg })
+hl("TabLine", { link = "Normal" })
+hl("TabLineSel", { reverse = true })
+hl("WinSeparator", { fg = c.fg })
+hl("SignColumn", { link = "LineNr" })
+hl("FoldColumn", { link = "SignColumn" })
+hl("Conceal", { fg = c.lilac })
+hl("SpellBad", { fg = c.fg, undercurl = true })
+hl("SpellCap", { link = "SpellBad" })
+hl("SpellLocal", { link = "SpellBad" })
+hl("SpellRare", { link = "SpellBad" })
+hl("Pmenu", { fg = c.fg, bg = c.bg_dim })
+hl("PmenuSel", { fg = c.fg, bg = c.gray })
+hl("PmenuSbar", { bg = c.fg })
+hl("PmenuThumb", { link = "PmenuSbar" })
+hl("WildMenu", { bg = c.lilac })
+hl("Visual", { bg = c.cyan })
+hl("Folded", {})
+hl("Cursor", { bg = c.gray })
+hl("TermCursor", { link = "Cursor" })
 hl("CursorLine", { bg = c.bg_dim })
-hl("LineNr", { fg = c.bg_dim, bg = c.bg })
-hl("CursorLineNr", { fg = "#333333", bg = c.bg_dim })
+hl("CursorColumn", { link = "CursorLine" })
+hl("ColorColumn", { bg = c.yellow })
+hl("MoreMsg", { fg = c.cyan })
+hl("ModeMsg", { fg = c.blue })
+hl("ErrorMsg", { fg = c.bg, bg = c.red })
+hl("WarningMsg", { fg = c.bg, bg = c.orange })
+hl("DiffAdd", { fg = c.green })
+hl("DiffChange", { fg = c.orange })
+hl("DiffDelete", { fg = c.red })
+hl("Identifier", { fg = c.fg })
+hl("Delimiter", { link = "Identifier" })
+hl("Operator", { link = "Identifier" })
+hl("PreProc", { link = "Question" })
+hl("Type", { bg = c.lilac })
+hl("Special", { link = "SpecialKey" })
+hl("Underlined", { underline = true })
+hl("Ignore", { fg = c.bg })
+hl("Error", { link = "ErrorMsg" })
+hl("Todo", { fg = c.green })
+hl("MatchParen", { fg = c.red, underline = true })
 
--- Treesitter highlights (link to base groups)
+-- Treesitter
 hl("@variable", { link = "Normal" })
 hl("@function", { link = "Function" })
 hl("@keyword", { link = "Keyword" })
@@ -177,102 +222,10 @@ hl("@constant", { link = "Constant" })
 hl("@string", { link = "String" })
 hl("@comment", { link = "Comment" })
 
--- LSP reference highlights
-hl("LspReferenceText", { bg = c.bg_dim })
-hl("LspReferenceRead", { bg = c.bg_dim })
-hl("LspReferenceWrite", { bg = c.bg_dim })
-
--- GitSigns plugin
-hl("GitSignsAdd", { fg = c.green, bg = c.bg })
-hl("GitSignsChange", { fg = c.lilac, bg = c.bg })
-hl("GitSignsDelete", { fg = c.orange, bg = c.bg })
-
--- Telescope plugin
-hl("TelescopeNormal", { link = "Normal" })
-hl("TelescopeBorder", { fg = c.gray, bg = c.bg })
-hl("TelescopePromptNormal", { link = "Normal" })
-hl("TelescopePromptBorder", { fg = c.gray, bg = c.bg })
-hl("TelescopeSelection", { bg = c.bg_dim })
-
--- NvimTree plugin
-hl("NvimTreeNormal", { link = "Normal" })
-hl("NvimTreeRootFolder", { fg = c.lilac, bold = true })
-hl("NvimTreeGitDirty", { fg = c.lilac })
-hl("NvimTreeGitNew", { fg = c.green })
-hl("NvimTreeGitDeleted", { fg = c.orange })
-
--- mini.nvim (MiniStatusline, MiniTabline, MiniCursorword, etc.)
-hl("MiniStatuslineModeNormal", { link = "Normal" })
-hl("MiniStatuslineModeInsert", { fg = c.bg, bg = c.green, bold = true })
-hl("MiniStatuslineModeVisual", { fg = c.bg, bg = c.lilac, bold = true })
-hl("MiniStatuslineModeReplace", { fg = c.bg, bg = c.orange, bold = true })
-hl("MiniTablineCurrent", { link = "CursorLine" })
-hl("MiniTablineVisible", { link = "LineNr" })
-hl("MiniTablineHidden", { link = "Comment" })
-hl("MiniCursorword", { bg = c.bg_dim })
-hl("MiniCursorwordCurrent", { bg = c.bg_dim })
-
--- hydra.nvim
-hl("HydraRed", { fg = c.orange, bold = true })
-hl("HydraBlue", { fg = c.blue, bold = true })
-hl("HydraHint", { fg = c.fg, bg = c.bg_dim })
-
--- beacon.nvim
-hl("Beacon", { bg = c.lilac })
-
--- lazy.nvim
-hl("LazyNormal", { link = "Normal" })
-hl("LazyButtonActive", { fg = c.bg, bg = c.lilac, bold = true })
-hl("LazyButton", { fg = c.fg, bg = c.bg_dim })
-hl("LazyProgressDone", { fg = c.green })
-hl("LazyProgressTodo", { fg = c.gray })
-
--- which-key.nvim
-hl("WhichKey", { fg = c.lilac, bold = true })
-hl("WhichKeyGroup", { fg = c.blue })
-hl("WhichKeyDesc", { fg = c.green })
-hl("WhichKeySeperator", { fg = c.gray })
-hl("WhichKeyFloat", { bg = c.bg_dim })
-
--- leap.nvim
-hl("LeapMatch", { fg = c.bg, bg = c.lilac, bold = true })
-hl("LeapLabelPrimary", { fg = c.bg, bg = c.blue, bold = true })
-hl("LeapLabelSecondary", { fg = c.bg, bg = c.orange, bold = true })
-
--- dashboard-nvim
-hl("DashboardHeader", { fg = c.lilac })
-hl("DashboardCenter", { fg = c.blue })
-hl("DashboardFooter", { fg = c.gray })
-hl("DashboardShortCut", { fg = c.green })
-
--- lspsaga.nvim
-hl("SagaBorder", { fg = c.gray, bg = c.bg })
-hl("SagaTitle", { fg = c.lilac, bold = true })
-hl("SagaLightBulb", { fg = c.hint })
-hl("SagaError", { fg = c.orange })
-hl("SagaWarn", { fg = c.lilac })
-hl("SagaInfo", { fg = c.info })
-hl("SagaHint", { fg = c.hint })
-
--- rainbow-delimiters.nvim
-hl("RainbowDelimiterRed", { fg = c.orange })
-hl("RainbowDelimiterYellow", { fg = c.lilac })
-hl("RainbowDelimiterBlue", { fg = c.blue })
-hl("RainbowDelimiterOrange", { fg = c.orange })
-hl("RainbowDelimiterGreen", { fg = c.green })
-hl("RainbowDelimiterViolet", { fg = c.gray })
-hl("RainbowDelimiterCyan", { fg = c.info })
-
--- fzf-lua
-hl("FzfLuaBorder", { fg = c.gray, bg = c.bg })
-hl("FzfLuaTitle", { fg = c.lilac, bold = true })
-hl("FzfLuaCursor", { fg = c.bg, bg = c.blue })
-hl("FzfLuaSearch", { fg = c.bg, bg = c.green })
-
--- nvim-bqf
-hl("BqfPreviewBorder", { fg = c.gray, bg = c.bg })
-hl("BqfPreviewTitle", { fg = c.lilac, bold = true })
-hl("BqfPreviewCursor", { fg = c.bg, bg = c.blue })
+-- Diffview
+hl("DiffviewDiffAdd", { bg = c.green })
+hl("DiffviewDiffDelete", { bg = c.red })
+hl("DiffviewDiffChange", { bg = c.orange })
 
 -- gitsigns.nvim (extra)
 hl("GitSignsUntracked", { fg = c.info })
@@ -283,3 +236,5 @@ hl("@markdown.heading", { fg = c.lilac, bold = true })
 hl("@markdown.list", { fg = c.green })
 hl("@markdown.code", { fg = c.blue, bg = c.bg_dim })
 hl("@markdown.url", { fg = c.info, underline = true })
+
+hl("SnacksIndent", { fg = c.blue, bg=c.bg })

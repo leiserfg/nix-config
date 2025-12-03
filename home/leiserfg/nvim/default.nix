@@ -86,6 +86,7 @@ in
             lzextras
             snacks-nvim
             typst-preview-nvim
+            deepwhite-nvim
             # onedark-nvim
             # vim-sleuth
           ];
