@@ -1,6 +1,5 @@
 {
   pkgs,
-  wm,
   ...
 } @ inputs: {
   home.packages = [pkgs.swaynotificationcenter];

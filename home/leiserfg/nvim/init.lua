@@ -205,6 +205,15 @@ require("lze").load {
           },
         },
       }
+
+      require("mini.hipatterns").setup {
+        highlighters = {
+          fixme = { pattern = "%f[%w]()FIXME()%f[%W]", group = "MiniHipatternsFixme" },
+          hack = { pattern = "%f[%w]()HACK()%f[%W]", group = "MiniHipatternsHack" },
+          todo = { pattern = "%f[%w]()TODO()%f[%W]", group = "MiniHipatternsTodo" },
+          -- note = { pattern = "NOTE", group = "MiniHipatternsNote" },
+        },
+      }
       -- I'm an old dog, so I keep using tpope's surround keybindings
       require("mini.surround").setup {
         custom_surroundings = {
@@ -411,10 +420,10 @@ require("lze").load {
     end,
   },
   {
-    "typst-preview-nvim",
+    "typst-preview.nvim",
     ft = { "typst" },
     after = function()
-      require("typst-preview.nvim").setup {
+      require("typst-preview").setup {
         dependencies_bin = { ["tinymist"] = "tinymist", ["websocat"] = "websocat" },
       }
     end,
@@ -718,11 +727,18 @@ require("lze").load {
     "codecompanion.nvim",
     after = function()
       require("codecompanion").setup {
-        ignore_warnings = true,
-        strategies = {
+        -- ignore_warnings = true,
+        interactions = {
           chat = {
             adapter = "copilot",
             model = "claude-4-5-sonnet",
+            variables = {
+              ["buffer"] = {
+                opts = {
+                  default_params = "diff",
+                },
+              },
+            },
           },
           inline = {
             adapter = "copilot",
@@ -734,14 +750,23 @@ require("lze").load {
           },
         },
 
-        memory = {
+        rules = {
           opts = {
             chat = {
               enabled = true,
+              default_rules = "default",
+              autoload = "default",
             },
           },
         },
-
+        display = {
+          chat = {
+            icons = {
+              chat_context = "📎️", -- You can also apply an icon to the fold
+            },
+            fold_context = true,
+          },
+        },
         prompt_library = {
           ["JJ Code Review"] = {
             strategy = "chat",

@@ -105,6 +105,7 @@
 
       };
       colorSchemes.predefinedScheme = "Monochrome";
+      wallpaper.enabled = false;
       general = {
         avatarImage = "/home/leiserfg/.face";
         radiusRatio = 0.2;

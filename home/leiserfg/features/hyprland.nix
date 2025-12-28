@@ -14,8 +14,6 @@
     ./_wayland_common.nix
   ];
 
-  _module.args.wm = "hyprland";
-
   services.kanshi.systemdTarget = "hyprland-session.target";
 
   home.pointerCursor.hyprcursor = {
@@ -122,6 +120,8 @@
         disable_hyprland_logo = true;
         # vrr = 2; # in fullscreen
         vfr = true;
+
+        # allow_session_lock_restore = true;
       };
       general = {
         layout = "master";
@@ -248,8 +248,8 @@
     enable = true;
     settings = {
       general = {
-        # lock_cmd = "pidof hyprlock || hyprlock";
-        lock_cmd = "noctalia-shell ipc call lockScreen lock";
+        lock_cmd = "pidof hyprlock || hyprlock";
+        # lock_cmd = "noctalia-shell ipc call lockScreen lock";
         before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
         after_sleep_cmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
       };

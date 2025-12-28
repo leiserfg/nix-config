@@ -9,10 +9,9 @@
 {
   imports = [
     ./_wayland_common.nix
-    ./_waybar.nix
   ];
 
-  # _module.args.wm = "niri";
+  
 
   home.packages = [
     pkgs.niri
