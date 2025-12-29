@@ -55,6 +55,7 @@ in
             nixd
             terraform-ls
             taplo
+            pyrefly
           ];
 
           startupPlugins.general = with pkgs.vimPlugins; [

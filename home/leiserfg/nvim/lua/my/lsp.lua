@@ -1,5 +1,3 @@
-local ld = vim.diagnostic
-
 local function toggle_inlay()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end
@@ -29,12 +27,7 @@ end)
 require("lze").load {
   {
     "nvim-lspconfig",
-
-    -- the on require handler will be needed here if you want to use the
-    -- fallback method of getting filetypes if you don't provide any
-    on_require = { "lspconfig" },
-    -- define a function to run over all type(plugin.lsp) == table
-    -- when their filetype trigger loads them
+    -- event = "DeferredUIEnter",
     lsp = function(plugin)
       vim.lsp.config(plugin.name, plugin.lsp or {})
       vim.lsp.enable(plugin.name)
@@ -44,30 +37,20 @@ require("lze").load {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
       })
     end,
-    after = function()
-      for _, lsp in ipairs {
-        "gdscript",
-        "vimls",
-        "clangd",
-        "terraformls",
-        "glsl_analyzer",
-        "nixd",
-        "uiua",
-        "ruff",
-        "nushell",
-      } do
-        vim.lsp.enable(lsp)
-      end
-    end,
   },
+
+  { "gdscript", lsp = {} },
+  { "vimls", lsp = {} },
+  { "clangd", lsp = {} },
+  { "terraformls", lsp = {} },
+  { "glsl_analyzer", lsp = {} },
+  { "uiua", lsp = {} },
+  { "ruff", lsp = {} },
+  { "nushell", lsp = {} },
+  { "pyrefly", lsp = {} },
   {
-    -- name of the lsp
     "lua_ls",
-    -- provide a table containing filetypes,
-    -- and then whatever your functions defined in the function type specs expect.
-    -- in our case, it just expects the normal lspconfig setup options.
     lsp = {
-      -- if you provide the filetypes it doesn't ask lspconfig for the filetypes
       filetypes = { "lua" },
       settings = {
         Lua = {
@@ -84,7 +67,6 @@ require("lze").load {
         },
       },
     },
-    -- also these are regular specs and you can use before and after and all the other normal fields
   },
   {
     "nixd",
