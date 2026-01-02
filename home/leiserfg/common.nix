@@ -40,7 +40,7 @@
   };
   # services.opensnitch-ui.enable = true;
   home.packages = with pkgs; [
-    # qutebrowser
+    qutebrowser
     inferno
     brightnessctl
     ghostscript
@@ -653,13 +653,16 @@
   xdg.mimeApps =
     let
       editor = "nvim.desktop";
+      browser = "firefox.desktop";
     in
     {
       enable = true;
       defaultApplications = {
         "x-scheme-handler/terminal" = "kitty.desktop";
-        "text/html" = "firefox.desktop";
         "x-scheme-handler/tg" = "telegram.desktop";
+        "x-scheme-handler/http" = browser;
+        "x-scheme-handler/https" = browser;
+        "text/html" = browser;
         "inode/directory" = "pcmanfm.desktop";
         "text/*" = editor;
         "application/x-subrip" = editor;
