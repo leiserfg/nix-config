@@ -57,6 +57,7 @@
     nmap
     pandoc
     pinentry-qt
+    ventoy-full
     cava
     exfatprogs
     # matugen
@@ -148,7 +149,8 @@
     htop
     dmidecode
     dua
-    picocom # run as:  sudo picocom /dev/ttyACM0
+    tio
+    # picocom # run as:  sudo picocom /dev/ttyACM0
     powertop
     usbutils
     gparted
@@ -287,12 +289,18 @@
 
   programs = {
     bash.enable = true;
-    opencode = {
+
+    pay-respects = {
       enable = true;
-      settings = {
-        share = "disabled";
-      };
+      enableNushellIntegration = true;
     };
+
+    # opencode = {
+    #   enable = true;
+    #   settings = {
+    #     share = "disabled";
+    #   };
+    # };
 
     aria2 = {
       enable = true;
@@ -909,5 +917,21 @@
         };
 
       };
+  };
+  xdg.desktopEntries = {
+    lolo = {
+      name = "Lolo";
+      genericName = "Web Browser";
+      exec = "lolo %U";
+      terminal = false;
+      categories = [
+        "Network"
+        "WebBrowser"
+      ];
+      mimeType = [
+        "text/html"
+        "text/xml"
+      ];
+    };
   };
 }

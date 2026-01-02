@@ -14,7 +14,7 @@
     enable = true;
     settings =
       let
-        command = "Hyprland";
+        command = "start-hyprland";
         user = "leiserfg";
       in
       {
@@ -24,8 +24,8 @@
         };
 
         initial_session = {
-          command = "Hyprland";
-          user = "leiserfg";
+          command = command;
+          user = user;
         };
       };
   };

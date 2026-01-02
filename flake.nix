@@ -98,7 +98,9 @@
             inputs.blender.overlays.default
           ];
           config.allowUnfree = true;
-          config.permittedInsecurePackages = [ ];
+          config.permittedInsecurePackages = [
+            "ventoy-1.1.07"
+          ];
         }
       );
 

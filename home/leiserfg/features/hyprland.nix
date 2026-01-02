@@ -28,7 +28,7 @@
     };
 
     plugins = [
-      pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
     ];
     settings = {
       "$mod" = "SUPER";
@@ -173,18 +173,17 @@
       workspace = "w[t1], gapsin:0, gapsout:0, border:0";
 
       windowrule = [
-        "workspace 1,class:firefox"
-        "workspace 4,class:org.telegram.desktop"
-        "center,class:pavucontrol"
-        "float,class:pavucontrol"
-        "pin,class:dragon-drop"
-        "idleinhibit fullscreen, class:.*"
-        "noscreenshare, class:^(org.telegram.desktop)$"
+        "match:class firefox                  , workspace 1            "
+        "match:class org.telegram.desktop     , workspace 4            "
+        "match:class pavucontrol              , center on,float on     "
+        "match:class pwvucontrol              , center on,float on     "
+        "match:class dragon-drop              , pin      on            "
+        "match:class .*                       , idle_inhibit fullscreen"
+        "match:class ^(org.telegram.desktop)$ , no_screen_share  on    "
       ];
 
       layerrule = [
-        "noanim,vicinae"
-        "dimaround,vicinae"
+        "match:namespace vicinae, no_anim on, dim_around on"
       ];
 
       exec-once = [
