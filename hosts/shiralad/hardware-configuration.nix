@@ -22,7 +22,6 @@
   */
   # hardware.sane.extraBackends = [ pkgs.epkowa ];
   # hardware.sane.extraBackends = [ pkgs.utsushi  pkgs.epkowa ];
-  # services.udev.packages = [ pkgs.utsushi ];
 
   hardware.nvidia = {
     # Modesetting is needed for most wayland compositors

@@ -101,7 +101,7 @@ require("lze").load {
             expr = nixCats.extra "nixdExtras.nixpkgs" or [[import <nixpkgs> {}]],
           },
           formatting = {
-            command = { "nixfmt" },
+            command = { "nixfmt"},
           },
           diagnostic = {
             suppress = {

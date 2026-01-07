@@ -1,4 +1,3 @@
-# This file (and the global directory) holds config that i use on all hosts
 {
   pkgs,
   lib,
@@ -29,7 +28,10 @@
       enable = true;
       keyboards = {
         piantor = {
-          ids = [ "239a:102e" ];
+          ids = [
+            "239a:102e"
+            "beeb:0001"
+          ];
         };
         akko = {
           ids = [ "0c45:7638" ];
@@ -52,7 +54,6 @@
       };
     };
   };
-
 
   # Make sure touchpad is disabled with keyd
   environment.etc."libinput/local-overrides.quirks".text = ''

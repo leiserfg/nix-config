@@ -6,7 +6,7 @@ return {
     vim.cmd.packadd "wildfire"
   end,
   after = function(plugin)
-    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    vim.o.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     vim.api.nvim_create_autocmd("FileType", {
       pattern = { "<filetype>" },
       callback = function()
@@ -14,12 +14,12 @@ return {
       end,
     })
     require("wildfire").setup {
-      keymaps = {
-        init_selection = "<c-space>",
-        node_incremental = "<c-space>",
-        scope_incremental = "<nop>",
-        node_decremental = "<bs>",
-      },
+      -- keymaps = {
+      --   init_selection = "<c-space>",
+      --   node_incremental = "<c-space>",
+      --   scope_incremental = "<nop>",
+      --   node_decremental = "<bs>",
+      -- },
     }
   end,
 }
