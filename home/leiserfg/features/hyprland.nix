@@ -177,7 +177,7 @@
         "match:class org.telegram.desktop     , workspace 4            "
         "match:class pavucontrol              , center on,float on     "
         "match:class pwvucontrol              , center on,float on     "
-        "match:class dragon-drop              , pin      on            "
+        "match:initial_title dragon           , pin      on            "
         "match:class .*                       , idle_inhibit fullscreen"
         "match:class ^(org.telegram.desktop)$ , no_screen_share  on    "
       ];

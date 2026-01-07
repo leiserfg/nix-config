@@ -34,8 +34,6 @@
   programs.dconf.enable = true;
   hardware.enableRedistributableFirmware = true;
 
-  programs.adb.enable = true;
-
   programs.nix-ld.enable = true;
   # programs.nix-ld = {
   #   enable = true;

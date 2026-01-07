@@ -57,7 +57,7 @@
     nmap
     pandoc
     pinentry-qt
-    ventoy-full
+    # ventoy-full
     cava
     exfatprogs
     # matugen
