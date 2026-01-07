@@ -13,7 +13,8 @@
   programs = {
     nushell = {
       enable = true;
-      extraConfig = builtins.readFile ./config.nu;
+      extraConfig =
+        (builtins.readFile ./config.nu) + "source ${pkgs.television}/share/television/completion.nu";
       shellAliases = {
         fg = "job unfreeze";
         vi = "nvim";
@@ -24,6 +25,7 @@
         pkgs.nushellPlugins.formats
         pkgs.nushellPlugins.query
       ];
+
     };
     carapace.enable = true;
     carapace.enableNushellIntegration = false; # Enabled  by hand in the config

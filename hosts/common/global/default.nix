@@ -35,11 +35,14 @@
   hardware.enableRedistributableFirmware = true;
 
   programs.nix-ld.enable = true;
+
   # programs.nix-ld = {
   #   enable = true;
   #   libraries = (pkgs.steam-run.fhsenv.args.multiPkgs pkgs) ++ [pkgs.curl];
   # };
+
   environment.systemPackages = with pkgs; [
+    android-tools
     vim
     cntr
   ];
