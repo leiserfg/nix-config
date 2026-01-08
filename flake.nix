@@ -32,10 +32,11 @@
         flake = false;
       };
 
-      # "plugins-treesitter-modules" = {
-      #   url = "github:MeanderingProgrammer/treesitter-modules.nvim";
-      #   flake = false;
-      # };
+      llm-agents = {
+        url = "github:numtide/llm-agents.nix";
+        inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
+      };
+
 
       # run0-sudo-shim = {
       #   url = "github:lordgrimmauld/run0-sudo-shim";

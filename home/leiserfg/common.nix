@@ -2,7 +2,7 @@
   lib,
   pkgs,
   myPkgs,
-  neovimPkgs,
+  inputs,
   unstablePkgs,
   config,
   ...
@@ -40,7 +40,9 @@
   };
   # services.opensnitch-ui.enable = true;
   home.packages = with pkgs; [
-    qutebrowser
+    inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi
+
+    # qutebrowser
     inferno
     brightnessctl
     ghostscript
@@ -203,7 +205,8 @@
 
     # --- Cloud & Infra ---
     terraform-ls
-    # awscli2
+    awscli2
+    awslogs
     docker-compose
     act
     # cachix

@@ -19,6 +19,7 @@
         fg = "job unfreeze";
         vi = "nvim";
         vim = "nvim";
+        awsl = "awslogs groups | fzf | xargs awslogs get -G -S -w";
       };
 
       plugins = [
