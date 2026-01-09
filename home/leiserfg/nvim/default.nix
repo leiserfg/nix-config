@@ -42,6 +42,8 @@ in
             # typist-preview
             tinymist
             websocat
+            # markdown
+            mpls
 
             typescript
             uiua
