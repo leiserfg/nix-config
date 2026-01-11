@@ -51,7 +51,7 @@ require("lze").load {
   {
     "mpls",
     lsp = {
-      cmd = { "mpls", "--enable-emoji", "--enable-footnotes" , "--no-auto"},
+      cmd = { "mpls", "--enable-emoji", "--enable-footnotes", "--no-auto" },
       filetypes = { "markdown" },
       on_attach = function(client, bufnr)
         vim.api.nvim_buf_create_user_command(bufnr, "MplsOpenPreview", function()
@@ -81,6 +81,12 @@ require("lze").load {
           formatters = {
             ignoreComments = true,
           },
+          workspace = {
+            checkThirdParty = false,
+            library = {
+              vim.env.VIMRUNTIME,
+            },
+          },
           signatureHelp = { enabled = true },
           diagnostics = {
             globals = { "nixCats", "vim" },
@@ -101,7 +107,7 @@ require("lze").load {
             expr = nixCats.extra "nixdExtras.nixpkgs" or [[import <nixpkgs> {}]],
           },
           formatting = {
-            command = { "nixfmt"},
+            command = { "nixfmt" },
           },
           diagnostic = {
             suppress = {

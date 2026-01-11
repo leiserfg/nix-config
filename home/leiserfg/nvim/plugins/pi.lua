@@ -9,7 +9,7 @@ local function get_project_root()
   end
 
   -- Try to get root from LSP
-  local clients = vim.lsp.get_active_clients { bufnr = bufnr }
+  local clients = vim.lsp.get_clients { bufnr = bufnr }
   if #clients > 0 then
     for _, client in ipairs(clients) do
       if client.config.root_dir then
@@ -53,7 +53,7 @@ local function pi_yank(first_line, last_line)
   local display_name = filename ~= "" and vim.fn.fnamemodify(filename, ":t") or "[No Name]"
 
   -- Get the filetype
-  local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
+  local filetype = vim.api.nvim_get_option_value("filetype", {buf=bufnr})
   if filetype == "" then
     filetype = "text"
   end

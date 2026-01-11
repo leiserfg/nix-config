@@ -51,7 +51,7 @@ in
             ruff
             shfmt
             shellcheck
-            nixfmt-rfc-style
+            nixfmt
             lua-language-server
             typescript
             nixd
