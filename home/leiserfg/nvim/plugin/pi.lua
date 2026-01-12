@@ -1,3 +1,6 @@
+-- Script-local variable to store the socket path
+local kitty_socket = nil
+
 -- Function to get the project root directory
 local function get_project_root()
   local bufnr = vim.api.nvim_get_current_buf()
@@ -34,26 +37,91 @@ local function get_project_root()
   end
 end
 
--- Function to launch Pi in Kitty
-local function launch_pi()
-  local root_dir = get_project_root()
+-- Function to get the socket path for this Neovim instance
+local function get_socket_path()
+  if kitty_socket then
+    return kitty_socket
+  end
 
-  -- Launch kitty in detached mode with pi
-  local cmd = string.format("kitty --detach --directory=%s pi &", vim.fn.shellescape(root_dir))
-
-  vim.fn.system(cmd)
+  -- Create a hash from the servername to ensure uniqueness
+  local servername = vim.v.servername
+  local hash = vim.fn.sha256(servername):sub(1, 16)
+  kitty_socket = string.format("/tmp/kitty-pi-%s.sock", hash)
+  return kitty_socket
 end
 
--- Function to yank selection with context for Pi
-local function pi_yank(first_line, last_line)
+-- Function to check if Kitty is running on the socket
+local function is_kitty_running()
+  local socket = get_socket_path()
+
+  -- Check if socket file exists
+  if vim.fn.filereadable(socket) == 0 then
+    return false
+  end
+
+  -- Try to communicate with Kitty to verify it's alive
+  local result = vim.system({ "kitten", "@", "--to", "unix:" .. socket, "ls" }):wait()
+  return result.code == 0
+end
+
+-- Function to ensure Kitty is running
+local function ensure_kitty_running()
+  if is_kitty_running() then
+    return true
+  end
+
+  local root_dir = get_project_root()
+  local socket = get_socket_path()
+
+  -- Launch kitty with remote control enabled
+  vim.system {
+    "kitty",
+    "--detach",
+    "--directory=" .. root_dir,
+    "-o",
+    "allow_remote_control=yes",
+    "--listen-on",
+    "unix:" .. socket,
+    "pi",
+  }
+
+  -- Give Kitty a moment to start
+  vim.wait(500, function()
+    return is_kitty_running()
+  end, 100)
+
+  return is_kitty_running()
+end
+
+-- Generic function to send text to Pi via Kitty
+local function pi_send(text)
+  if not ensure_kitty_running() then
+    vim.notify("Failed to start or connect to Kitty", vim.log.levels.ERROR)
+    return
+  end
+
+  local socket = get_socket_path()
+
+  -- Send text via stdin
+  local result = vim
+    .system({ "kitten", "@", "--to", "unix:" .. socket, "send-text", "--stdin" }, { stdin = text })
+    :wait()
+
+  if result.code ~= 0 then
+    vim.notify("Failed to send text to Kitty", vim.log.levels.ERROR)
+  end
+end
+
+-- Function to send selection with context for Pi
+local function pi_send_range(first_line, last_line)
   local bufnr = vim.api.nvim_get_current_buf()
   local filename = vim.api.nvim_buf_get_name(bufnr)
 
-  -- Get just the filename without full path
-  local display_name = filename ~= "" and vim.fn.fnamemodify(filename, ":t") or "[No Name]"
+  -- Get the absolute path
+  local display_name = filename ~= "" and vim.fn.fnamemodify(filename, ":p") or "[No Name]"
 
   -- Get the filetype
-  local filetype = vim.api.nvim_get_option_value("filetype", {buf=bufnr})
+  local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
   if filetype == "" then
     filetype = "text"
   end
@@ -72,26 +140,89 @@ local function pi_yank(first_line, last_line)
     content
   )
 
-  -- Copy to system clipboard
-  vim.fn.setreg("+", text)
+  pi_send(text)
 end
 
--- Create the command
-vim.api.nvim_create_user_command("Pi", function(opts)
-  -- If there's a range selection, call PiYank first
-  if opts.range > 0 then
-    pi_yank(opts.line1, opts.line2)
-  end
-  launch_pi()
-end, {
-  range = true,
-  desc = "Launch Pi in a new Kitty instance at project root (and yank selection if any)",
-})
+-- Create keybinding to send range to Pi
+vim.keymap.set("v", "<leader><leader>r", function()
+  -- Get visual selection range
+  local start_line = vim.fn.line "v"
+  local end_line = vim.fn.line "."
 
--- Create the PiYank command
-vim.api.nvim_create_user_command("PiYank", function(opts)
-  pi_yank(opts.line1, opts.line2)
-end, {
-  range = true,
-  desc = "Copy selection with context for Pi",
-})
+  -- Ensure correct order
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+
+  pi_send_range(start_line, end_line)
+end, { desc = "Send selection to Pi" })
+
+vim.keymap.set("n", "<leader><leader>r", function()
+  -- In normal mode, send current line
+  local line = vim.fn.line "."
+  pi_send_range(line, line)
+end, { desc = "Send current line to Pi" })
+
+-- Function to send diagnostics to Pi
+local function pi_send_diagnostics(first_line, last_line)
+  local bufnr = vim.api.nvim_get_current_buf()
+  local filename = vim.api.nvim_buf_get_name(bufnr)
+  local display_name = filename ~= "" and vim.fn.fnamemodify(filename, ":p") or "[No Name]"
+
+  -- Get diagnostics for the range
+  local diagnostics = vim.diagnostic.get(bufnr, { lnum = first_line - 1, end_lnum = last_line - 1 })
+
+  if #diagnostics == 0 then
+    vim.notify("No diagnostics in the specified range", vim.log.levels.INFO)
+    return
+  end
+
+  -- Get the code from the range
+  local lines = vim.api.nvim_buf_get_lines(bufnr, first_line - 1, last_line, false)
+  local content = table.concat(lines, "\n")
+
+  local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+  if filetype == "" then
+    filetype = "text"
+  end
+
+  -- Format diagnostics
+  local diag_text = {}
+  table.insert(
+    diag_text,
+    string.format("Diagnostics for %s (lines %d-%d):\n", display_name, first_line, last_line)
+  )
+
+  for _, diag in ipairs(diagnostics) do
+    local severity = vim.diagnostic.severity[diag.severity]
+    local line_num = diag.lnum + 1
+    table.insert(diag_text, string.format("- Line %d [%s]: %s", line_num, severity, diag.message))
+    if diag.source then
+      table.insert(diag_text, string.format("  Source: %s", diag.source))
+    end
+  end
+
+  table.insert(diag_text, string.format("\nCode:\n```%s\n%s\n```\n", filetype, content))
+
+  pi_send(table.concat(diag_text, "\n"))
+end
+
+-- Create keybinding to send diagnostics to Pi
+vim.keymap.set("v", "<leader><leader>d", function()
+  -- Get visual selection range
+  local start_line = vim.fn.line "v"
+  local end_line = vim.fn.line "."
+
+  -- Ensure correct order
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+
+  pi_send_diagnostics(start_line, end_line)
+end, { desc = "Send diagnostics for selection to Pi" })
+
+vim.keymap.set("n", "<leader><leader>d", function()
+  -- In normal mode, send diagnostics for entire buffer
+  local line_count = vim.api.nvim_buf_line_count(0)
+  pi_send_diagnostics(1, line_count)
+end, { desc = "Send diagnostics for buffer to Pi" })
