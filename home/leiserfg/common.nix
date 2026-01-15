@@ -18,6 +18,7 @@
     ./features/git.nix
     ./features/kitty.nix
     ./features/noctalia.nix
+    ./pi.nix
     ./nvim
   ];
 
