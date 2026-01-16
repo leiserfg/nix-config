@@ -20,7 +20,7 @@
     # chromium
     # (unstablePkgs.teams-for-linux)
     # slack
-    # bruno
+    bruno
   ];
 
   services.shikane = {

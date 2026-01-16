@@ -108,7 +108,7 @@
     nix
     nixd
     nix-update
-    nixfmt-rfc-style
+    nixfmt
     nixpkgs-review
     stylua
     ty
