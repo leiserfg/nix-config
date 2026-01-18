@@ -35,6 +35,7 @@
           ids = [
             "239a:102e"
             "beeb:0001"
+            "1d50:615e"  # default zmk
           ];
         };
         akko = {

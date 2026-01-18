@@ -13,7 +13,6 @@
     ../common/features/hyprland.nix
     ../common/features/docker.nix
     ../common/features/laptop.nix
-    ../common/features/games.nix
   ];
 
   programs.dconf.enable = true;
