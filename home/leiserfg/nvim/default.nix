@@ -125,6 +125,8 @@ in
               codecompanion-nvim
               fzf-lua
               gx-nvim
+              gitsigns-nvim
+              gitlinker-nvim
             ]
             ++ (with pkgs.neovimPlugins; [ wildfire ]);
 
@@ -169,7 +171,7 @@ in
             };
             # anything else to pass and grab in lua with `nixCats.extra`
             extra = {
-              nixdExtras.nixpkgs = ''import ${pkgs.path} {}'';
+              nixdExtras.nixpkgs = "import ${pkgs.path} {}";
             };
           };
       };

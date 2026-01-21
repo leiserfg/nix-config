@@ -91,5 +91,12 @@ require("lze").load {
   require "my.plugs.codecompanion_nvim",
   require "my.plugs.conform_nvim",
   require "my.plugs.fzf-lua",
+  {
+    "gitlinker.nvim",
+    after = function()
+      require("gitlinker").setup()
+    end,
+    event = "DeferredUIEnter",
+  },
 }
 require "my.lsp"

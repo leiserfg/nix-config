@@ -47,4 +47,3 @@ return {
     gs.setup { on_attach = config }
   end,
 }
-
