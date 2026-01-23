@@ -173,13 +173,13 @@
       workspace = "w[t1], gapsin:0, gapsout:0, border:0";
 
       windowrule = [
-        "match:class firefox                  , workspace 1            "
-        "match:class org.telegram.desktop     , workspace 4            "
-        "match:class pavucontrol              , center on,float on     "
-        "match:class pwvucontrol              , center on,float on     "
-        "match:initial_class dragon-drop      , pin on                 "
+        "match:class firefox                  , workspace 1"
+        "match:class org.telegram.desktop     , workspace 4"
+        "match:class pavucontrol              , center on,float on"
+        "match:class pwvucontrol              , center on,float on"
+        "match:initial_class dragon-drop      , pin on"
         "match:class .*                       , idle_inhibit fullscreen"
-        "match:class ^(org.telegram.desktop)$ , no_screen_share  on    "
+        "match:class org.telegram.desktop , no_screen_share on"
       ];
 
       layerrule = [
