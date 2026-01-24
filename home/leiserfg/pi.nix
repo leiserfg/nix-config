@@ -21,14 +21,17 @@ in
   home.file = extensionEntries;
 
   skills.entries = {
-    cal = {
-      resources.py = lib.getExe pkgs.python3;
-      description = "This tool shows the current calendar";
+    brave-search = {
+      resources.brave-search = lib.getExe (import ./skills/brave-search { inherit pkgs; });
+      description = "Brave web search (with content extraction)";
       instructions = aliases: ''
-        # Calendar showing
+        # Brave Search
 
-        ## Quick start
-        To use it call `${aliases.py} -m calendar`.
+        ## Search
+        To search: `${aliases.brave-search} search \"your query\" [-n 5] [--content] [--country <code>] [--freshness <period>]`
+
+        ## Extract Content
+        To extract content: `${aliases.brave-search} content <url>`
       '';
     };
   };
