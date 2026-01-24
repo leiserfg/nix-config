@@ -4,4 +4,5 @@
   # List your module files here
   # hypridle-module = import ./hypridle.nix;
   niri-module = import ./niri.nix;
+  agentic-skills = import ./agentic-skills.nix;
 }

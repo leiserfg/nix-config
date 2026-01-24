@@ -483,7 +483,7 @@
         mgr.prepend_keymap = [
           {
             on = [ "F" ];
-            run = ''plugin smart-filter'';
+            run = "plugin smart-filter";
             desc = "Smart filter";
           }
           {
@@ -628,6 +628,7 @@
 
     # Fixes some qt programs crashing while using gtks file-dialog
     GSETTINGS_SCHEMA_DIR = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas";
+
   };
 
   home.pointerCursor = {
