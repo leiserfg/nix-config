@@ -19,7 +19,9 @@ let
 in
 {
   home.file = extensionEntries;
-
+  skills.raw_paths = [
+    ./raw_skills
+  ];
   skills.entries = {
     brave-search = {
       resources.brave-search = lib.getExe (import ./skills/brave-search { inherit pkgs; });
@@ -57,6 +59,5 @@ in
         - Use `headless: false` unless headless mode explicitly requested.
       '';
     };
-
   };
 }

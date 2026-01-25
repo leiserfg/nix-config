@@ -40,6 +40,14 @@ in
       default = ".pi/agent/skills";
       description = "Subdirectory under home to store agentic skills (e.g. '.pi/agent/skills').";
     };
+    raw_paths = mkOption {
+      type = types.listOf types.path;
+      default = [];
+      description = ''
+        List of paths whose contents will be merged (via symlinks) into the skills root directory.
+        Allows you to aggregate skill directories from different sources into one location.
+      '';
+    };
     entries = mkOption {
       type = types.attrsOf (types.submodule skillModule);
       default = { };
@@ -87,6 +95,22 @@ in
       allLinks = concatMap (x: x.links) skillsRenderings;
       allFiles = concatMap (x: x.files) skillsRenderings;
     in
+    let
+      # collect all files from each raw_paths directory
+      extraSkillLinks = lib.flatten (map (dir:
+        lib.optional (builtins.pathExists dir) (
+          let
+            files = builtins.attrNames (builtins.readDir dir);
+          in
+          map (file: {
+            name = "${skillsRoot}/${file}";
+            value = {
+              source = "${dir}/${file}";
+            };
+          }) files
+        )
+      ) config.skills.raw_paths);
+    in
     {
       assertions = [
         {
@@ -108,6 +132,7 @@ in
             text = f.text;
           };
         }) allFiles)
+        ++ extraSkillLinks
       );
     };
 }
