@@ -51,7 +51,7 @@
     # --- Development Tools ---
     # numr
     # myPkgs.wl_shimeji
-    # myPkgs.friction-graphics
+    # myPkgs.voxtype
     love
     nix-playground
     mupdf

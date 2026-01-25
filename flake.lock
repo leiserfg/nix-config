@@ -110,11 +110,11 @@
         "vicinae": "vicinae"
       },
       "locked": {
-        "lastModified": 1767451217,
-        "narHash": "sha256-6RMP8T2OyfwxVUQ8IplT5ZhJ16zi2SrVfSYoREOmrqg=",
+        "lastModified": 1769338468,
+        "narHash": "sha256-oK8ngKGnMv/IuTLVim8l99f+j5KVptsmT03SumhuUmY=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "0dd593414a39b2208d19ce255350eee28296dcf8",
+        "rev": "ba7b35108a0615def7ca31aa2fdcb2f1d91cf2e4",
         "type": "github"
       },
       "original": {
