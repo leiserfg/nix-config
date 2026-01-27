@@ -47,7 +47,8 @@ require("lze").load {
   { "uiua", lsp = {} },
   { "ruff", lsp = {} },
   { "nushell", lsp = {} },
-  { "pyrefly", lsp = {} },
+  { "ty", lsp = {} },
+  -- { "pyrefly", lsp = {} },
   {
     "mpls",
     lsp = {

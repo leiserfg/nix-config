@@ -46,7 +46,7 @@
     # qutebrowser
     inferno
     brightnessctl
-    ghostscript
+    # ghostscript
 
     # --- Development Tools ---
     # numr

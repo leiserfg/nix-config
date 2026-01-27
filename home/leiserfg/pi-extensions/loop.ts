@@ -106,10 +106,7 @@ async function selectSummaryModel(
   if (!ctx.model) return null;
 
   // Try to use Haiku 4.5 for cost efficiency (available on both Anthropic and GitHub Copilot)
-  if (
-    ctx.model.provider === "anthropic" ||
-    ctx.model.provider === "github-copilot"
-  ) {
+  if (ctx.model.provider === "anthropic") {
     const haikuModel = ctx.modelRegistry.find(
       ctx.model.provider,
       HAIKU_MODEL_ID,
@@ -118,6 +115,18 @@ async function selectSummaryModel(
       const apiKey = await ctx.modelRegistry.getApiKey(haikuModel);
       if (apiKey) {
         return { model: haikuModel, apiKey };
+      }
+    }
+  }
+  if (ctx.model.provider === "github-copilot") {
+    const gpt4oModel = ctx.modelRegistry.find(
+      ctx.model.provider,
+      "gpt-4o",
+    );
+    if (gpt4oModel) {
+      const apiKey = await ctx.modelRegistry.getApiKey(gpt4oModel);
+      if (apiKey) {
+        return { model: gpt4oModel, apiKey };
       }
     }
   }
