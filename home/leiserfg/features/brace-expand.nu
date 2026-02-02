@@ -1,5 +1,25 @@
-# Brace expansion module for Nushell
-# Only exports expand-brace-at-cursor, all helpers are private
+# ==============================================================================
+# Brace Expansion Module for Nushell
+# ==============================================================================
+#
+# This module provides interactive brace expansion functionality for the Nushell
+# command line. It wraps the token under the cursor with Nushell's `str expand`
+# command, enabling quick expansion of brace patterns like `{a,b,c}` or `file{1..5}.txt`.
+#
+# Features:
+#   - Tokenizes command line while respecting quotes and escape sequences
+#   - Detects the token at or before the cursor position
+#   - Wraps the token with `...("token" | str expand)` for expansion
+#   - Preserves cursor position relative to the token
+#
+# Keybinding:
+#   Ctrl+E - Expand braces on the token at cursor (works in emacs, vi_insert, vi_normal)
+#
+# Example:
+#   file{1,2,3}.txt  →  ...("file{1,2,3}.txt" | str expand)
+#
+# Only exports `expand-brace-at-cursor`, all helper functions are private.
+# ==============================================================================
 
 module brace-expand {
     # Tokenize a string into tokens with their positions
