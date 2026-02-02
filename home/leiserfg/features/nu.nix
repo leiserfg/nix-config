@@ -13,8 +13,10 @@
   programs = {
     nushell = {
       enable = true;
-      extraConfig =
-        (builtins.readFile ./config.nu) + "source ${pkgs.television}/share/television/completion.nu";
+      extraConfig = (builtins.readFile ./config.nu) + ''
+        source ${./brace-expand.nu}
+        source ${pkgs.television}/share/television/completion.nu
+      '';
       shellAliases = {
         fg = "job unfreeze";
         vi = "nvim";

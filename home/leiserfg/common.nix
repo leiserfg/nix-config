@@ -419,8 +419,8 @@
             src = pkgs.fetchFromGitHub {
               owner = "boydaihungst";
               repo = pname;
-              rev = "6db0c60";
-              hash = "sha256-0W1nQ8MJ+BgPyKcn+oDzntX9BXplJEyl8UjsHWCHrE8=";
+              rev = "30440c7";
+              hash = "sha256-jcNHthObhZ5OPHwBxy0Pc3udlGUaZF9WqxHeoXeFbtg=";
             };
 
             buildPhase = ''
@@ -435,14 +435,14 @@
         plugin = {
           prepend_preloaders = [
             {
-              name = "/run/user/1000/gvfs/**/*";
+              url = "/run/user/1000/gvfs/**/*";
               run = "noop";
             }
           ];
           prepend_previewers = [
             # Allow to preview folder.
             {
-              name = "*/";
+              url = "*/";
               run = "folder";
             }
 
@@ -454,7 +454,7 @@
 
             # Using absolute path.
             {
-              name = "/run/user/1000/gvfs/**/*";
+              url = "/run/user/1000/gvfs/**/*";
               run = "noop";
             }
           ];
