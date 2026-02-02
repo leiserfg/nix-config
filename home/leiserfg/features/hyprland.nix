@@ -28,7 +28,7 @@
     };
 
     plugins = [
-      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
+      pkgs.hyprlandPlugins.hypr-dynamic-cursors
     ];
     settings = {
       "$mod" = "SUPER";
@@ -274,4 +274,7 @@
         ];
     };
   };
+  programs.mpv.config.target-colorspace-hint = lib.mkIf (
+    builtins.compareVersions pkgs.hyprland.version "0.53.3" <= 0
+  ) "no";
 }
