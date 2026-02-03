@@ -80,7 +80,8 @@
     quickshell
     myPkgs.jpegli
     glsl_analyzer
-    myPkgs.glslviewer
+    # myPkgs.
+    glslviewer
     # glslviewer
     # easyeffects
     util-linux
@@ -118,7 +119,7 @@
     # gdb
     # inferno
     flamegraph
-    myPkgs.glslviewer
+    # myPkgs.glslviewer
     # myPkgs.friction-graphics
     # love
     # myPkgs.wl_shimeji

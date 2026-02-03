@@ -73,17 +73,6 @@
         ",XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
         ",XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
-        # "$mod,y,global,caelestia:session"
-        # "$mod,u,global,caelestia:launcher"
-        # "$mod,i,global,caelestia:launcherInterrupt"
-        # "$mod,o,global,caelestia:clearNotifs"
-        # "$mod,p,global,caelestia:brightnessUp"
-        # "$mod,8,global,caelestia:brightnessDown"
-        # "$mod,9,global,caelestia:mediaToggle"
-        # "$mod,0,global,caelestia:mediaPrev"
-        # "$mod,6,global,caelestia:mediaNext"
-        # "$mod,7,global,caelestia:mediaStop"
-
       ]
       ++ (builtins.concatLists (
         lib.lists.imap1 (ws: code: [
@@ -96,6 +85,7 @@
       ))
 
       ;
+
       binde = [
         ",XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
         ",XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
@@ -107,6 +97,12 @@
         "$mod, mouse:273, resizewindow"
         ", mouse:277, overview:toggle"
       ];
+
+      # bindl = [
+      #   '', switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"''
+      #   # Trigger when the switch is turning off.
+      #   '', switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, preferred, auto, 1"''
+      # ];
 
       # debug = {
       #   disable_logs = false;
