@@ -61,6 +61,25 @@
       settings = {
         profile = [
           {
+            name = "left-docked-home";
+            output = [
+              {
+                match = "eDP-1";
+                enable = false;
+              }
+              {
+                search = [
+                  "m=DELL S2721QS"
+                  "s=DY1CM43"
+                  "v=Dell Inc."
+                ];
+                enable = true;
+                scale = 1.5;
+                mode = "3840x2160@60.00Hz";
+              }
+            ];
+          }
+          {
             name = "left-docked";
             output = [
               {
@@ -71,11 +90,10 @@
                 search = "/.*";
                 enable = true;
                 scale = 1.5;
-                mode = "preferred";
+                mode = "best";
               }
             ];
           }
-
           {
             name = "game-mode";
             output = [

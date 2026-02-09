@@ -34,37 +34,37 @@
       # cursor_trail = 3;
       # Have to force it because some symbols are loaded from djavu otherwise
       symbol_map = "U+e000-U+e00a,U+ea60-U+ebeb,U+e0a0-U+e0c8,U+e0ca,U+e0cc-U+e0d7,U+e200-U+e2a9,U+e300-U+e3e3,U+e5fa-U+e6b7,U+e700-U+e8ef,U+ed00-U+efc1,U+f000-U+f2ff,U+f000-U+f2e0,U+f300-U+f381,U+f400-U+f533,U+f0001-U+f1af0 Symbols Nerd Font Mono";
-
+      scrollback_pager = "nvim --cmd 'set eventignore=FileType' +'nnoremap q ZQ' +'call nvim_open_term(0, {})' +'set nomodified nolist' +'$' -";
       editor = "nvim";
 
-      cursor_trail = 1;
+      cursor_trail = 3;
       cursor_trail_decay = "0.1 0.3";
-      cursor_trail_start_threshold = 2;
+      cursor_trail_start_threshold = 1;
 
       foreground = "#35243c";
       background = "#fcfdf1";
       cursor = "#35243c";
-      color0 = ''#fcfdf1'';
-      color1 = ''#ffe6e6'';
-      color2 = ''#e3f4df'';
-      color3 = ''#f7edd6'';
-      color4 = ''#dff0ff'';
-      color5 = ''#fbe7f9'';
-      color6 = ''#d6f6f5'';
-      color7 = ''#35243c'';
-      color8 = ''#dabcb2'';
-      color9 = ''#d5a9a7'';
-      color10 = ''#c7b2a3'';
-      color11 = ''#d5ac9e'';
-      color12 = ''#b9b5b7'';
-      color13 = ''#ceadb3'';
-      color14 = ''#b8b8b1'';
-      color15 = ''#09000f'';
+      color0 = "#fcfdf1";
+      color1 = "#ffe6e6";
+      color2 = "#e3f4df";
+      color3 = "#f7edd6";
+      color4 = "#dff0ff";
+      color5 = "#fbe7f9";
+      color6 = "#d6f6f5";
+      color7 = "#35243c";
+      color8 = "#dabcb2";
+      color9 = "#d5a9a7";
+      color10 = "#c7b2a3";
+      color11 = "#d5ac9e";
+      color12 = "#b9b5b7";
+      color13 = "#ceadb3";
+      color14 = "#b8b8b1";
+      color15 = "#09000f";
     };
 
     keybindings =
       let
-        nvim_scrollback = ''nvim --cmd 'set eventignore=FileType' +'nnoremap q ZQ' +'call nvim_open_term(0, {})' +'set nomodified nolist' +'$' - '';
+        nvim_scrollback = "nvim --cmd 'set eventignore=FileType' +'nnoremap q ZQ' +'call nvim_open_term(0, {})' +'set nomodified nolist' +'$' - ";
 
       in
       {
@@ -74,9 +74,9 @@
 
         # ''launch   --stdin-source=@screen_scrollback  nvim -c 'setlocal nonumber nolist showtabline=0 foldcolumn=0|Man!' -c "autocmd VimEnter * normal G" -'';
 
-        "kitty_mod+h" = ''launch --type=overlay  --stdin-source=@screen_scrollback ${nvim_scrollback}''; # --stdin-add-formatting
-
-        "kitty_mod+g" = ''launch --type=overlay  --stdin-source=@last_cmd_output ${nvim_scrollback}'';
+        # "kitty_mod+h" = ''launch --type=overlay  --stdin-source=@screen_scrollback ${nvim_scrollback}''; # --stdin-add-formatting
+        #
+        # "kitty_mod+g" = ''launch --type=overlay  --stdin-source=@last_cmd_output ${nvim_scrollback}'';
 
         # background = "#0e1415";
         # foreground = "#cecece";
