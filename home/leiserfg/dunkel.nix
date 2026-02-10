@@ -26,7 +26,29 @@
   services.shikane = {
     enable = true;
     settings = {
+
       profile = [
+
+        {
+          name = "left-docked-home";
+          output = [
+            {
+              match = "eDP-1";
+              enable = false;
+            }
+            {
+              search = [
+                "m=DELL S2721QS"
+                "s=DY1CM43"
+                "v=Dell Inc."
+              ];
+              enable = true;
+              scale = 1.5;
+              mode = "3840x2160@60.00Hz";
+            }
+          ];
+        }
+
         {
           name = "ultra-wide-lg";
           output = [
