@@ -47,7 +47,7 @@
 
     # steam
     # scrcpy
-    # (unstablePkgs.llama-cpp.override { vulkanSupport = true; })
+    llama-cpp-vulkan
   ];
 
   # home.sessionVariables = {
@@ -79,21 +79,21 @@
               }
             ];
           }
-          {
-            name = "left-docked";
-            output = [
-              {
-                match = "eDP-1";
-                enable = false;
-              }
-              {
-                search = "/.*";
-                enable = true;
-                scale = 1.5;
-                mode = "best";
-              }
-            ];
-          }
+          # {
+          #   name = "left-docked";
+          #   output = [
+          #     {
+          #       match = "eDP-1";
+          #       enable = false;
+          #     }
+          #     {
+          #       search = "/.*";
+          #       enable = true;
+          #       scale = 1.5;
+          #       mode = "best";
+          #     }
+          #   ];
+          # }
           {
             name = "game-mode";
             output = [
