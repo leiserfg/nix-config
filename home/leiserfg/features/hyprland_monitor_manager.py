@@ -46,6 +46,7 @@ class MonitorRule(NamedTuple):
     """Hyprland monitor rule with metadata"""
 
     name: str
+    desc: str
     rule: str
     width: int
     height: int
@@ -317,8 +318,8 @@ def get_best_mode_for_monitor(monitor_name: str) -> Optional[MonitorMode]:
                 refresh_rate=monitor.get("refreshRate", 60.0),
             )
 
-        # Filter modes with >= 60Hz
-        high_refresh_modes = [m for m in modes if m.refresh_rate >= 60.0]
+        # Filter modes with > 59Hz, sometimes bad cables limit it to 30Hz and that sucks, I use 59 cause some monitors use fractinal rates
+        high_refresh_modes = [m for m in modes if m.refresh_rate > 59.0]
 
         if high_refresh_modes:
             # Pick highest resolution among high refresh modes
@@ -346,6 +347,14 @@ def create_ideal_monitor_rule(monitor_name: str) -> Optional[MonitorRule]:
     print(f"  Found monitor: {monitor_name}")
     print(f"  Current state: {monitor}")
 
+    # Get monitor description
+    desc = monitor.get("description", "")
+    if not desc:
+        print(f"  Warning: No description for {monitor_name}", file=sys.stderr)
+        desc = monitor_name  # Fallback to name
+    
+    print(f"  Description: {desc}")
+
     # Get the best mode (resolution and refresh rate)
     mode = get_best_mode_for_monitor(monitor_name)
     if mode:
@@ -371,8 +380,8 @@ def create_ideal_monitor_rule(monitor_name: str) -> Optional[MonitorRule]:
     )
     scale = guess_monitor_scale(config)
 
-    # Create the monitor rule
-    rule = f"monitor {monitor_name},{width}x{height}@{refresh:.0f},auto,{scale}"
+    # Create the monitor rule using desc instead of name
+    rule = f"monitor desc:{desc},{width}x{height}@{refresh:.0f},auto,{scale}"
 
     print(f"Calculated ideal {monitor_name} rule: {rule}")
     print(f"  Resolution: {width}x{height}")
@@ -381,6 +390,7 @@ def create_ideal_monitor_rule(monitor_name: str) -> Optional[MonitorRule]:
 
     return MonitorRule(
         name=monitor_name,
+        desc=desc,
         rule=rule,
         width=width,
         height=height,
@@ -405,23 +415,26 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
     if not monitors:
         return
 
-    external_monitors = [
-        m["name"]
-        for m in monitors
-        if m["name"] != "eDP-1" and not m.get("disabled", True)
-    ]
+    external_monitors = [m for m in monitors if m["name"] != "eDP-1" and not m.get("disabled", True)]
 
-    for monitor_name in external_monitors:
-        # Check if we have a cached rule
-        if monitor_name in monitor_rules_cache:
-            print(f"\nUsing cached rule for {monitor_name}")
-            rule = monitor_rules_cache[monitor_name]
+    for monitor in external_monitors:
+        monitor_name = monitor["name"]
+        monitor_desc = monitor.get("description", "")
+        
+        if not monitor_desc:
+            print(f"Warning: No description for {monitor_name}, using name as fallback", file=sys.stderr)
+            monitor_desc = monitor_name
+
+        # Check if we have a cached rule for this monitor description
+        if monitor_desc in monitor_rules_cache:
+            print(f"\nUsing cached rule for {monitor_name} (desc: {monitor_desc})")
+            rule = monitor_rules_cache[monitor_desc]
         else:
-            print(f"\nConfiguring external monitor: {monitor_name}")
+            print(f"\nConfiguring external monitor: {monitor_name} (desc: {monitor_desc})")
             rule = create_ideal_monitor_rule(monitor_name)
             if rule:
-                monitor_rules_cache[monitor_name] = rule
-                print(f"Cached rule for {monitor_name}")
+                monitor_rules_cache[monitor_desc] = rule
+                print(f"Cached rule for desc: {monitor_desc}")
 
         if rule:
             apply_monitor_rule(rule)
@@ -461,6 +474,18 @@ def get_hyprland_socket_path() -> str:
     runtime_dir = os.environ.get("XDG_RUNTIME_DIR", "/run/user/1000")
     socket_path = f"{runtime_dir}/hypr/{instance_sig}/.socket2.sock"
     return socket_path
+
+
+def print_cache(monitor_rules_cache: dict) -> None:
+    """Print the current cache contents"""
+    print(f"\n=== Monitor Rules Cache ({len(monitor_rules_cache)} entries) ===")
+    if not monitor_rules_cache:
+        print("  (empty)")
+    else:
+        for desc, rule in monitor_rules_cache.items():
+            print(f"  - {desc[:60]}{'...' if len(desc) > 60 else ''}")
+            print(f"    -> {rule.name}: {rule.width}x{rule.height}@{rule.refresh:.0f}Hz, scale={rule.scale}")
+    print("=" * 50 + "\n")
 
 
 def listen_to_events(
@@ -517,17 +542,28 @@ def listen_to_events(
                             # Debounce to allow monitor to be fully initialized
                             time.sleep(EVENT_DEBOUNCE_DELAY)
 
-                            # Check if we have a cached rule for this monitor
-                            if monitor_name in monitor_rules_cache:
-                                print(f"Using cached rule for {monitor_name}")
-                                external_rule = monitor_rules_cache[monitor_name]
+                            # Get monitor info to retrieve description
+                            monitor_info = get_monitor_info(monitor_name)
+                            if not monitor_info:
+                                print(f"Warning: Could not get info for {monitor_name}")
+                                continue
+                            
+                            monitor_desc = monitor_info.get("description", "")
+                            if not monitor_desc:
+                                print(f"Warning: No description for {monitor_name}, using name as fallback", file=sys.stderr)
+                                monitor_desc = monitor_name
+
+                            # Check if we have a cached rule for this monitor description
+                            if monitor_desc in monitor_rules_cache:
+                                print(f"Using cached rule for {monitor_name} (desc: {monitor_desc})")
+                                external_rule = monitor_rules_cache[monitor_desc]
                             else:
                                 # Create and cache the rule
-                                print(f"Creating new rule for {monitor_name}")
+                                print(f"Creating new rule for {monitor_name} (desc: {monitor_desc})")
                                 external_rule = create_ideal_monitor_rule(monitor_name)
                                 if external_rule:
-                                    monitor_rules_cache[monitor_name] = external_rule
-                                    print(f"Cached rule for {monitor_name}")
+                                    monitor_rules_cache[monitor_desc] = external_rule
+                                    print(f"Cached rule for desc: {monitor_desc}")
 
                             # Apply the rule
                             if external_rule:
@@ -545,6 +581,9 @@ def listen_to_events(
 
                             if "eDP-1" in active_monitors:
                                 disable_edp1()
+                            
+                            # Print cache after monitor added
+                            print_cache(monitor_rules_cache)
                         else:
                             # eDP-1 was added (shouldn't normally happen)
                             print("eDP-1 reconnected")
@@ -568,6 +607,9 @@ def listen_to_events(
                                     "No external monitors remaining, re-enabling eDP-1"
                                 )
                                 enable_edp1(ideal_edp1_rule)
+                            
+                            # Print cache after monitor removed
+                            print_cache(monitor_rules_cache)
 
             except socket.timeout:
                 # Timeout is normal, just continue listening
@@ -587,7 +629,7 @@ def listen_to_events(
 def main():
     print("=== Hyprland Monitor Manager ===\n")
 
-    # Cache for monitor rules (monitor_name -> rule)
+    # Cache for monitor rules (monitor_desc -> rule)
     monitor_rules_cache = {}
 
     # Step 1: Calculate ideal eDP-1 rule (using 'monitors all' to get it even if disabled)
@@ -598,8 +640,8 @@ def main():
         print("Failed to get eDP-1 information. Exiting.", file=sys.stderr)
         sys.exit(1)
 
-    # Cache the eDP-1 rule
-    monitor_rules_cache["eDP-1"] = ideal_edp1_rule
+    # Cache the eDP-1 rule using its description
+    monitor_rules_cache[ideal_edp1_rule.desc] = ideal_edp1_rule
 
     # Step 2: Check current monitor setup and configure all monitors
     print("\nStep 2: Checking current monitor setup...")
@@ -625,7 +667,7 @@ def main():
 
     # Step 3: Listen for events
     print("\nStep 3: Starting event listener...\n")
-    print(f"Cached rules for: {list(monitor_rules_cache.keys())}")
+    print_cache(monitor_rules_cache)
     listen_to_events(ideal_edp1_rule, monitor_rules_cache)
 
 

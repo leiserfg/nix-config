@@ -11,6 +11,7 @@ return {
         json = { "jq" },
         sh = { "shellcheck", "shfmt" },
         toml = { "taplo" },
+        yaml = { "yamlfix" },
         typst = { "typstyle" },
       },
     }
@@ -23,4 +24,3 @@ return {
     end, { desc = "Format" })
   end,
 }
-

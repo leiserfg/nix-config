@@ -52,7 +52,8 @@
     # --- Development Tools ---
     # numr
     # myPkgs.wl_shimeji
-    # myPkgs.voxtype
+    wtype
+    myPkgs.voxtype
     love
     nix-playground
     mupdf
@@ -86,6 +87,8 @@
     # glslviewer
     # easyeffects
     util-linux
+    wtype
+    llama-cpp-vulkan
     nix-update
     # inferno
     flamegraph

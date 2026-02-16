@@ -252,6 +252,10 @@ in
           prw = sh ''
             gh pr view  $(jj log -T "bookmarks" --no-graph -r @) -w "$@"
           '';
+
+          prm = sh ''
+            gh pr merge  $(jj log -T "bookmarks" --no-graph -r @) "$@"
+          '';
         };
       templates = {
         log_node = ''

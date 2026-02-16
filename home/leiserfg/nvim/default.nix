@@ -58,6 +58,7 @@ in
             terraform-ls
             taplo
             pyrefly
+            yamlfix
           ];
 
           startupPlugins.general = with pkgs.vimPlugins; [
