@@ -1,0 +1,615 @@
+#!/usr/bin/env python3
+"""
+Hyprland Monitor Manager
+Automatically manages monitor configuration:
+- Sets optimal scale for eDP-1 (laptop screen) on startup
+- Disables eDP-1 when external monitors are connected
+- Re-enables eDP-1 when it's the only monitor remaining
+"""
+
+import socket
+import json
+import subprocess
+import os
+import sys
+import time
+import re
+from typing import NamedTuple, Optional
+
+
+# Constants
+WAYLAND_SCALE_STEP = 120  # Wayland fractional-scale protocol uses 1/120 increments
+SCALE_SEARCH_RANGE = 90   # Search ±90 increments (±0.75) from target scale
+SOCKET_TIMEOUT = 5.0      # Socket timeout in seconds
+SOCKET_BUFFER_SIZE = 8192 # Buffer size for socket receive
+EVENT_DEBOUNCE_DELAY = 0.5  # Debounce delay for monitor events in seconds
+
+
+class MonitorMode(NamedTuple):
+    """Monitor resolution and refresh rate information"""
+    width: int
+    height: int
+    refresh_rate: float
+
+
+class MonitorConfig(NamedTuple):
+    """Monitor physical and logical configuration"""
+    width: int
+    height: int
+    physical_width_mm: Optional[float]
+    physical_height_mm: Optional[float]
+
+
+class MonitorRule(NamedTuple):
+    """Hyprland monitor rule with metadata"""
+    name: str
+    rule: str
+    width: int
+    height: int
+    refresh: float
+    scale: float
+
+
+def hyprland_get_monitors(all_monitors: bool = False) -> Optional[list]:
+    """Get list of monitors (including disabled ones if all_monitors=True)"""
+    command = "monitors all" if all_monitors else "monitors"
+    try:
+        result = subprocess.run(
+            ["hyprctl", "-j"] + command.split(),
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        return json.loads(result.stdout)
+    except subprocess.CalledProcessError as e:
+        print(f"Error running hyprctl: {e}", file=sys.stderr)
+        return None
+    except json.JSONDecodeError as e:
+        print(f"Error parsing hyprctl output: {e}", file=sys.stderr)
+        return None
+
+
+def hyprland_set_rule(rule_command: str) -> bool:
+    """Execute hyprctl keyword command to set a rule. Returns True on success."""
+    try:
+        result = subprocess.run(
+            ["hyprctl", "keyword"] + rule_command.split(),
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        return True
+    except subprocess.CalledProcessError as e:
+        print(f"Error running hyprctl keyword: {e}", file=sys.stderr)
+        return False
+
+
+def closest_representable_scale(scale: float) -> float:
+    """
+    Adjusts the scale to the closest exactly-representable value.
+    Hyprland uses 1/120 increments (like the Wayland fractional-scale protocol).
+    """
+    # Round to nearest 1/WAYLAND_SCALE_STEP
+    return round(scale * WAYLAND_SCALE_STEP) / WAYLAND_SCALE_STEP
+
+
+def find_valid_scale_for_resolution(width: int, height: int, target_scale: float) -> float:
+    """
+    Find a valid scale that produces whole logical pixels.
+    Based on Hyprland's scale validation logic.
+    """
+    # First, round to 1/WAYLAND_SCALE_STEP increments
+    search_scale = round(target_scale * WAYLAND_SCALE_STEP)
+
+    # Check if the rounded scale produces whole logical pixels
+    scale_zero = search_scale / WAYLAND_SCALE_STEP
+    logical_width = width / scale_zero
+    logical_height = height / scale_zero
+
+    if logical_width == round(logical_width) and logical_height == round(
+        logical_height
+    ):
+        return scale_zero
+
+    # Search for nearest valid scale within ±SCALE_SEARCH_RANGE increments
+    for i in range(1, SCALE_SEARCH_RANGE):
+        scale_up = (search_scale + i) / WAYLAND_SCALE_STEP
+        scale_down = (search_scale - i) / WAYLAND_SCALE_STEP
+
+        # Try higher scale
+        logical_up_w = width / scale_up
+        logical_up_h = height / scale_up
+        if logical_up_w == round(logical_up_w) and logical_up_h == round(logical_up_h):
+            return scale_up
+
+        # Try lower scale
+        logical_down_w = width / scale_down
+        logical_down_h = height / scale_down
+        if logical_down_w == round(logical_down_w) and logical_down_h == round(
+            logical_down_h
+        ):
+            return scale_down
+
+    # If no valid scale found, round to nearest integer
+    print(f"  Warning: Could not find clean scale divisor, using {round(scale_zero)}")
+    return round(scale_zero)
+
+
+def guess_monitor_scale(config: MonitorConfig) -> float:
+    """
+    Calculate the best scale factor based on resolution and physical size.
+    Based on niri's algorithm (which follows Mutter's logic):
+    https://github.com/niri-wm/niri/blob/main/src/utils/scale.rs
+
+    Args:
+        config: MonitorConfig with width, height, and physical dimensions
+
+    Returns:
+        Float scale factor
+    """
+    # Constants from niri
+    MIN_SCALE = 1
+    MAX_SCALE = 4
+    STEPS = 4  # 0.25 increments
+    MIN_LOGICAL_AREA = 800 * 480
+
+    MOBILE_TARGET_DPI = 135.0
+    LARGE_TARGET_DPI = 110.0
+    LARGE_MIN_SIZE_INCHES = 20.0
+
+    width = config.width
+    height = config.height
+    physical_width_mm = config.physical_width_mm
+    physical_height_mm = config.physical_height_mm
+
+    # Default to scale 1.0 if no physical size
+    if (
+        not physical_width_mm
+        or not physical_height_mm
+        or physical_width_mm <= 0
+        or physical_height_mm <= 0
+    ):
+        print("  Physical size unknown, defaulting to scale 1.0")
+        return 1.0
+
+    print(f"  Physical size: {physical_width_mm}x{physical_height_mm}mm")
+
+    # Calculate diagonal in inches
+    diag_inches = ((physical_width_mm**2 + physical_height_mm**2) ** 0.5) / 25.4
+    print(f"  Diagonal: {diag_inches:.1f} inches")
+
+    # Choose target DPI based on screen size
+    # Smaller screens (< 20") use higher target DPI (mobile/laptop)
+    # Larger screens use lower target DPI (desktop monitors)
+    if diag_inches < LARGE_MIN_SIZE_INCHES:
+        target_dpi = MOBILE_TARGET_DPI
+        print(f"  Target DPI: {target_dpi} (mobile/laptop)")
+    else:
+        target_dpi = LARGE_TARGET_DPI
+        print(f"  Target DPI: {target_dpi} (large monitor)")
+
+    # Calculate actual physical DPI
+    diagonal_pixels = (width**2 + height**2) ** 0.5
+    physical_dpi = diagonal_pixels / diag_inches
+    print(f"  Physical DPI: {physical_dpi:.1f}")
+
+    # Calculate perfect scale
+    perfect_scale = physical_dpi / target_dpi
+    print(f"  Perfect scale: {perfect_scale:.3f}")
+
+    # Generate all supported scales (1.0, 1.25, 1.5, 1.75, 2.0, ..., 4.0)
+    # Filter out scales that would make logical resolution too small
+    supported_scales = []
+    for i in range(MIN_SCALE * STEPS, MAX_SCALE * STEPS + 1):
+        scale = i / STEPS
+
+        # Check if this scale gives enough logical area
+        logical_width = int(width / scale)
+        logical_height = int(height / scale)
+        logical_area = logical_width * logical_height
+
+        if logical_area >= MIN_LOGICAL_AREA:
+            supported_scales.append(scale)
+
+    if not supported_scales:
+        print("  No supported scales found, defaulting to 1.0")
+        return 1.0
+
+    # Find the scale closest to perfect_scale
+    best_scale = min(supported_scales, key=lambda s: abs(s - perfect_scale))
+
+    print(f"  Supported scales: {supported_scales}")
+    print(f"  Selected scale: {best_scale}")
+
+    # Validate and adjust scale to produce whole logical pixels (Hyprland requirement)
+    valid_scale = find_valid_scale_for_resolution(width, height, best_scale)
+
+    if valid_scale != best_scale:
+        print(
+            f"  Adjusted to valid scale: {valid_scale} (produces whole logical pixels)"
+        )
+
+    return valid_scale
+
+
+def get_monitor_info(monitor_name: str) -> Optional[dict]:
+    """Get monitor information by name (including disabled ones)"""
+    monitors = hyprland_get_monitors(all_monitors=True)
+    if not monitors:
+        print(
+            f"Warning: No monitors found when looking for {monitor_name}",
+            file=sys.stderr,
+        )
+        return None
+
+    for monitor in monitors:
+        if monitor.get("name") == monitor_name:
+            return monitor
+
+    print(f"Warning: Monitor {monitor_name} not found in monitor list", file=sys.stderr)
+    return None
+
+
+def get_best_mode_for_monitor(monitor_name: str) -> Optional[MonitorMode]:
+    """
+    Get the best resolution and refresh rate for a monitor.
+    Prefers highest resolution with refresh rate >= 60Hz.
+    Falls back to highest resolution if no 60Hz+ mode available.
+    
+    Returns:
+        MonitorMode with width, height, and refresh_rate, or None on error.
+    """
+    try:
+        result = subprocess.run(
+            ["hyprctl", "-j", "monitors", "all"],
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        monitors = json.loads(result.stdout)
+
+        monitor = None
+        for m in monitors:
+            if m.get("name") == monitor_name:
+                monitor = m
+                break
+
+        if not monitor:
+            return None
+
+        available_modes = monitor.get("availableModes", [])
+        if not available_modes:
+            # Fallback to current mode
+            return MonitorMode(
+                width=monitor.get("width", 1920),
+                height=monitor.get("height", 1080),
+                refresh_rate=monitor.get("refreshRate", 60.0),
+            )
+
+        # Parse available modes and find the best one
+        # Format is like "1920x1080@60.00Hz"
+        modes = []
+        mode_pattern = re.compile(r"(\d+)x(\d+)@([\d.]+)Hz")
+        
+        for mode_str in available_modes:
+            match = mode_pattern.search(mode_str)
+            if match:
+                width = int(match.group(1))
+                height = int(match.group(2))
+                refresh = float(match.group(3))
+                modes.append(MonitorMode(width, height, refresh))
+
+        if not modes:
+            # Fallback to current mode
+            return MonitorMode(
+                width=monitor.get("width", 1920),
+                height=monitor.get("height", 1080),
+                refresh_rate=monitor.get("refreshRate", 60.0),
+            )
+
+        # Filter modes with >= 60Hz
+        high_refresh_modes = [m for m in modes if m.refresh_rate >= 60.0]
+
+        if high_refresh_modes:
+            # Pick highest resolution among high refresh modes
+            # Sort by total pixels (width * height), then by refresh rate
+            best_mode = max(high_refresh_modes, key=lambda m: (m.width * m.height, m.refresh_rate))
+        else:
+            # No 60Hz+ modes, just pick highest resolution
+            best_mode = max(modes, key=lambda m: (m.width * m.height, m.refresh_rate))
+
+        return best_mode
+
+    except (subprocess.CalledProcessError, json.JSONDecodeError, KeyError):
+        return None
+
+
+def create_ideal_monitor_rule(monitor_name: str) -> Optional[MonitorRule]:
+    """Create and store the ideal rule for any monitor"""
+    monitor = get_monitor_info(monitor_name)
+    if not monitor:
+        print(f"{monitor_name} not found!", file=sys.stderr)
+        return None
+
+    print(f"  Found monitor: {monitor_name}")
+    print(f"  Current state: {monitor}")
+
+    # Get the best mode (resolution and refresh rate)
+    mode = get_best_mode_for_monitor(monitor_name)
+    if mode:
+        width, height, refresh = mode.width, mode.height, mode.refresh_rate
+        print(f"  Selected mode: {width}x{height}@{refresh:.0f}Hz")
+    else:
+        # Fallback to current settings
+        width = monitor.get("width", 1920)
+        height = monitor.get("height", 1080)
+        refresh = monitor.get("refreshRate", 60.0)
+        print(f"  Using current mode: {width}x{height}@{refresh:.0f}Hz")
+
+    # Try to get physical dimensions (in mm)
+    physical_width_mm = monitor.get("physicalWidth")
+    physical_height_mm = monitor.get("physicalHeight")
+
+    # Create monitor config and get the best scale
+    config = MonitorConfig(
+        width=width,
+        height=height,
+        physical_width_mm=physical_width_mm,
+        physical_height_mm=physical_height_mm,
+    )
+    scale = guess_monitor_scale(config)
+
+    # Create the monitor rule
+    rule = f"monitor {monitor_name},{width}x{height}@{refresh:.0f},auto,{scale}"
+
+    print(f"Calculated ideal {monitor_name} rule: {rule}")
+    print(f"  Resolution: {width}x{height}")
+    print(f"  Refresh rate: {refresh:.0f}Hz")
+    print(f"  Scale: {scale}")
+
+    return MonitorRule(
+        name=monitor_name,
+        rule=rule,
+        width=width,
+        height=height,
+        refresh=refresh,
+        scale=scale,
+    )
+
+
+def apply_monitor_rule(monitor_rule: MonitorRule) -> bool:
+    """Apply a monitor rule. Returns True on success."""
+    if not monitor_rule:
+        print("No monitor rule to apply!", file=sys.stderr)
+        return False
+
+    print(f"Applying rule: {monitor_rule.rule}")
+    return hyprland_set_rule(monitor_rule.rule)
+
+
+def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
+    """Configure all external monitors (non-eDP-1) with optimal settings"""
+    monitors = hyprland_get_monitors(all_monitors=True)
+    if not monitors:
+        return
+
+    external_monitors = [m["name"] for m in monitors if m["name"] != "eDP-1" and not m.get("disabled", True)]
+
+    for monitor_name in external_monitors:
+        # Check if we have a cached rule
+        if monitor_name in monitor_rules_cache:
+            print(f"\nUsing cached rule for {monitor_name}")
+            rule = monitor_rules_cache[monitor_name]
+        else:
+            print(f"\nConfiguring external monitor: {monitor_name}")
+            rule = create_ideal_monitor_rule(monitor_name)
+            if rule:
+                monitor_rules_cache[monitor_name] = rule
+                print(f"Cached rule for {monitor_name}")
+
+        if rule:
+            apply_monitor_rule(rule)
+
+
+def disable_edp1() -> None:
+    """Disable eDP-1 monitor"""
+    print("Disabling eDP-1...")
+    hyprland_set_rule("monitor eDP-1,disable")
+
+
+def enable_edp1(ideal_rule: Optional[MonitorRule]) -> None:
+    """Enable eDP-1 with ideal rule"""
+    if not ideal_rule:
+        print("No ideal rule stored for eDP-1!", file=sys.stderr)
+        return
+
+    print(f"Enabling eDP-1 with rule: {ideal_rule.rule}")
+    hyprland_set_rule(ideal_rule.rule)
+
+
+def get_active_monitor_names() -> list[str]:
+    """Get list of active monitor names (excluding disabled monitors)"""
+    monitors = hyprland_get_monitors()
+    if not monitors:
+        return []
+    return [m["name"] for m in monitors if not m.get("disabled", False)]
+
+
+def get_hyprland_socket_path() -> str:
+    """Get the Hyprland event socket path"""
+    instance_sig = os.environ.get("HYPRLAND_INSTANCE_SIGNATURE")
+    if not instance_sig:
+        print("HYPRLAND_INSTANCE_SIGNATURE not found in environment!", file=sys.stderr)
+        sys.exit(1)
+
+    runtime_dir = os.environ.get("XDG_RUNTIME_DIR", "/run/user/1000")
+    socket_path = f"{runtime_dir}/hypr/{instance_sig}/.socket2.sock"
+    return socket_path
+
+
+def listen_to_events(ideal_edp1_rule: Optional[MonitorRule], monitor_rules_cache: dict) -> None:
+    """Listen to Hyprland events and manage monitors"""
+    socket_path = get_hyprland_socket_path()
+
+    print(f"Connecting to Hyprland socket: {socket_path}")
+
+    sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    sock.settimeout(SOCKET_TIMEOUT)
+    
+    try:
+        sock.connect(socket_path)
+    except (ConnectionRefusedError, FileNotFoundError) as e:
+        print(f"Failed to connect to Hyprland socket: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    print("Connected! Listening for monitor events...")
+
+    buffer = ""
+
+    try:
+        while True:
+            try:
+                data = sock.recv(SOCKET_BUFFER_SIZE).decode("utf-8")
+                if not data:
+                    print("Socket connection closed by server", file=sys.stderr)
+                    break
+
+                buffer += data
+
+                # Process complete events (separated by newlines)
+                while "\n" in buffer:
+                    line, buffer = buffer.split("\n", 1)
+
+                    if not line:
+                        continue
+
+                    # Events are in format: EVENT>>DATA
+                    if ">>" not in line:
+                        continue
+
+                    event_type, event_data = line.split(">>", 1)
+
+                    # Monitor added event
+                    if event_type == "monitoradded":
+                        monitor_name = event_data.strip()
+                        print(f"\n[EVENT] Monitor added: {monitor_name}")
+
+                        if monitor_name != "eDP-1":
+                            # External monitor connected
+                            # Debounce to allow monitor to be fully initialized
+                            time.sleep(EVENT_DEBOUNCE_DELAY)
+
+                            # Check if we have a cached rule for this monitor
+                            if monitor_name in monitor_rules_cache:
+                                print(f"Using cached rule for {monitor_name}")
+                                external_rule = monitor_rules_cache[monitor_name]
+                            else:
+                                # Create and cache the rule
+                                print(f"Creating new rule for {monitor_name}")
+                                external_rule = create_ideal_monitor_rule(monitor_name)
+                                if external_rule:
+                                    monitor_rules_cache[monitor_name] = external_rule
+                                    print(f"Cached rule for {monitor_name}")
+
+                            # Apply the rule
+                            if external_rule:
+                                apply_monitor_rule(external_rule)
+                                # Wait for configuration to apply
+                                time.sleep(0.2)
+                            else:
+                                print(
+                                    f"Warning: Could not create rule for {monitor_name}"
+                                )
+
+                            # Disable eDP-1 after external monitor is configured
+                            active_monitors = get_active_monitor_names()
+                            print(f"Active monitors: {active_monitors}")
+
+                            if "eDP-1" in active_monitors:
+                                disable_edp1()
+                        else:
+                            # eDP-1 was added (shouldn't normally happen)
+                            print("eDP-1 reconnected")
+
+                    # Monitor removed event
+                    elif event_type == "monitorremoved":
+                        monitor_name = event_data.strip()
+                        print(f"\n[EVENT] Monitor removed: {monitor_name}")
+
+                        if monitor_name != "eDP-1":
+                            # External monitor disconnected
+                            # Debounce to ensure monitor is fully removed
+                            time.sleep(EVENT_DEBOUNCE_DELAY)
+
+                            active_monitors = get_active_monitor_names()
+                            print(f"Active monitors: {active_monitors}")
+
+                            # If only eDP-1 remains (or no monitors), enable it
+                            if not active_monitors or active_monitors == ["eDP-1"]:
+                                print(
+                                    "No external monitors remaining, re-enabling eDP-1"
+                                )
+                                enable_edp1(ideal_edp1_rule)
+
+            except socket.timeout:
+                # Timeout is normal, just continue listening
+                continue
+            except UnicodeDecodeError as e:
+                print(f"Error decoding socket data: {e}", file=sys.stderr)
+                # Skip this data and continue
+                buffer = ""
+                continue
+
+    except KeyboardInterrupt:
+        print("\nShutting down...")
+    finally:
+        sock.close()
+
+
+def main():
+    print("=== Hyprland Monitor Manager ===\n")
+
+    # Cache for monitor rules (monitor_name -> rule)
+    monitor_rules_cache = {}
+
+    # Step 1: Calculate ideal eDP-1 rule (using 'monitors all' to get it even if disabled)
+    print("Step 1: Calculating optimal configuration for eDP-1...")
+    ideal_edp1_rule = create_ideal_monitor_rule("eDP-1")
+
+    if not ideal_edp1_rule:
+        print("Failed to get eDP-1 information. Exiting.", file=sys.stderr)
+        sys.exit(1)
+
+    # Cache the eDP-1 rule
+    monitor_rules_cache["eDP-1"] = ideal_edp1_rule
+
+    # Step 2: Check current monitor setup and configure all monitors
+    print("\nStep 2: Checking current monitor setup...")
+    active_monitors = get_active_monitor_names()
+    print(f"Currently active monitors: {active_monitors}")
+
+    # Configure external monitors with optimal settings
+    external_monitors = [m for m in active_monitors if m != "eDP-1"]
+    if external_monitors:
+        print(f"\nExternal monitors detected: {external_monitors}")
+        print("Configuring external monitors with optimal settings...")
+        configure_all_external_monitors(monitor_rules_cache)
+
+        # Only disable eDP-1 if it's currently active
+        if "eDP-1" in active_monitors:
+            disable_edp1()
+        else:
+            print("eDP-1 already disabled")
+    else:
+        # No external monitors, ensure eDP-1 is enabled with ideal settings
+        print("No external monitors, enabling eDP-1 with ideal settings")
+        enable_edp1(ideal_edp1_rule)
+
+    # Step 3: Listen for events
+    print("\nStep 3: Starting event listener...\n")
+    print(f"Cached rules for: {list(monitor_rules_cache.keys())}")
+    listen_to_events(ideal_edp1_rule, monitor_rules_cache)
+
+
+if __name__ == "__main__":
+    main()

@@ -270,7 +270,26 @@
         ];
     };
   };
+
   programs.mpv.config.target-colorspace-hint = lib.mkIf (
     builtins.compareVersions pkgs.hyprland.version "0.53.3" <= 0
   ) "no";
+
+  systemd.user.services.hyprland-monitor-manager = {
+    Unit = {
+      Description = "Hyprland Monitor Manager";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${lib.getExe pkgs.python3} ${./hyprland_monitor_manager.py}";
+      Restart = "on-failure";
+      RestartSec = 5;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
 }
