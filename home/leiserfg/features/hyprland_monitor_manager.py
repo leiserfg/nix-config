@@ -19,14 +19,15 @@ from typing import NamedTuple, Optional
 
 # Constants
 WAYLAND_SCALE_STEP = 120  # Wayland fractional-scale protocol uses 1/120 increments
-SCALE_SEARCH_RANGE = 90   # Search ±90 increments (±0.75) from target scale
-SOCKET_TIMEOUT = 5.0      # Socket timeout in seconds
-SOCKET_BUFFER_SIZE = 8192 # Buffer size for socket receive
+SCALE_SEARCH_RANGE = 90  # Search ±90 increments (±0.75) from target scale
+SOCKET_TIMEOUT = 5.0  # Socket timeout in seconds
+SOCKET_BUFFER_SIZE = 8192  # Buffer size for socket receive
 EVENT_DEBOUNCE_DELAY = 0.5  # Debounce delay for monitor events in seconds
 
 
 class MonitorMode(NamedTuple):
     """Monitor resolution and refresh rate information"""
+
     width: int
     height: int
     refresh_rate: float
@@ -34,6 +35,7 @@ class MonitorMode(NamedTuple):
 
 class MonitorConfig(NamedTuple):
     """Monitor physical and logical configuration"""
+
     width: int
     height: int
     physical_width_mm: Optional[float]
@@ -42,6 +44,7 @@ class MonitorConfig(NamedTuple):
 
 class MonitorRule(NamedTuple):
     """Hyprland monitor rule with metadata"""
+
     name: str
     rule: str
     width: int
@@ -60,7 +63,12 @@ def hyprland_get_monitors(all_monitors: bool = False) -> Optional[list]:
             text=True,
             check=True,
         )
-        return json.loads(result.stdout)
+
+        monitors = json.loads(result.stdout)
+        if any(m["name"].lower() == "fallback" for m in monitors):
+            sys.exit(1)
+        return monitors
+
     except subprocess.CalledProcessError as e:
         print(f"Error running hyprctl: {e}", file=sys.stderr)
         return None
@@ -72,7 +80,7 @@ def hyprland_get_monitors(all_monitors: bool = False) -> Optional[list]:
 def hyprland_set_rule(rule_command: str) -> bool:
     """Execute hyprctl keyword command to set a rule. Returns True on success."""
     try:
-        result = subprocess.run(
+        subprocess.run(
             ["hyprctl", "keyword"] + rule_command.split(),
             capture_output=True,
             text=True,
@@ -93,7 +101,9 @@ def closest_representable_scale(scale: float) -> float:
     return round(scale * WAYLAND_SCALE_STEP) / WAYLAND_SCALE_STEP
 
 
-def find_valid_scale_for_resolution(width: int, height: int, target_scale: float) -> float:
+def find_valid_scale_for_resolution(
+    width: int, height: int, target_scale: float
+) -> float:
     """
     Find a valid scale that produces whole logical pixels.
     Based on Hyprland's scale validation logic.
@@ -255,7 +265,7 @@ def get_best_mode_for_monitor(monitor_name: str) -> Optional[MonitorMode]:
     Get the best resolution and refresh rate for a monitor.
     Prefers highest resolution with refresh rate >= 60Hz.
     Falls back to highest resolution if no 60Hz+ mode available.
-    
+
     Returns:
         MonitorMode with width, height, and refresh_rate, or None on error.
     """
@@ -290,7 +300,7 @@ def get_best_mode_for_monitor(monitor_name: str) -> Optional[MonitorMode]:
         # Format is like "1920x1080@60.00Hz"
         modes = []
         mode_pattern = re.compile(r"(\d+)x(\d+)@([\d.]+)Hz")
-        
+
         for mode_str in available_modes:
             match = mode_pattern.search(mode_str)
             if match:
@@ -313,7 +323,9 @@ def get_best_mode_for_monitor(monitor_name: str) -> Optional[MonitorMode]:
         if high_refresh_modes:
             # Pick highest resolution among high refresh modes
             # Sort by total pixels (width * height), then by refresh rate
-            best_mode = max(high_refresh_modes, key=lambda m: (m.width * m.height, m.refresh_rate))
+            best_mode = max(
+                high_refresh_modes, key=lambda m: (m.width * m.height, m.refresh_rate)
+            )
         else:
             # No 60Hz+ modes, just pick highest resolution
             best_mode = max(modes, key=lambda m: (m.width * m.height, m.refresh_rate))
@@ -393,7 +405,11 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
     if not monitors:
         return
 
-    external_monitors = [m["name"] for m in monitors if m["name"] != "eDP-1" and not m.get("disabled", True)]
+    external_monitors = [
+        m["name"]
+        for m in monitors
+        if m["name"] != "eDP-1" and not m.get("disabled", True)
+    ]
 
     for monitor_name in external_monitors:
         # Check if we have a cached rule
@@ -447,7 +463,9 @@ def get_hyprland_socket_path() -> str:
     return socket_path
 
 
-def listen_to_events(ideal_edp1_rule: Optional[MonitorRule], monitor_rules_cache: dict) -> None:
+def listen_to_events(
+    ideal_edp1_rule: Optional[MonitorRule], monitor_rules_cache: dict
+) -> None:
     """Listen to Hyprland events and manage monitors"""
     socket_path = get_hyprland_socket_path()
 
@@ -455,7 +473,7 @@ def listen_to_events(ideal_edp1_rule: Optional[MonitorRule], monitor_rules_cache
 
     sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     sock.settimeout(SOCKET_TIMEOUT)
-    
+
     try:
         sock.connect(socket_path)
     except (ConnectionRefusedError, FileNotFoundError) as e:
