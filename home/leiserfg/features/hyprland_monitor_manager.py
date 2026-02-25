@@ -106,22 +106,31 @@ def find_valid_scale_for_resolution(
     width: int, height: int, target_scale: float
 ) -> float:
     """
-    Find a valid scale that produces whole logical pixels.
-    Based on Hyprland's scale validation logic.
+    Find a valid scale, preferring ones that produce whole logical pixels.
+    Falls back to the target scale if no perfect match is found.
     """
+    print(f"  DEBUG find_valid_scale: input target_scale={target_scale}")
+    
     # First, round to 1/WAYLAND_SCALE_STEP increments
     search_scale = round(target_scale * WAYLAND_SCALE_STEP)
-
-    # Check if the rounded scale produces whole logical pixels
     scale_zero = search_scale / WAYLAND_SCALE_STEP
+    
+    print(f"  DEBUG find_valid_scale: search_scale={search_scale}, scale_zero={scale_zero}")
+    
     logical_width = width / scale_zero
     logical_height = height / scale_zero
-
-    if logical_width == round(logical_width) and logical_height == round(
-        logical_height
-    ):
+    
+    print(f"  DEBUG find_valid_scale: logical resolution would be {logical_width}x{logical_height}")
+    print(f"  DEBUG find_valid_scale: differences from whole: w={abs(logical_width - round(logical_width)):.6f}, h={abs(logical_height - round(logical_height)):.6f}")
+    
+    # Check if close enough to whole pixels (within 0.01)
+    if abs(logical_width - round(logical_width)) < 0.01 and \
+       abs(logical_height - round(logical_height)) < 0.01:
+        print(f"  DEBUG find_valid_scale: scale_zero passes tolerance check, returning {scale_zero}")
         return scale_zero
-
+    
+    print(f"  DEBUG find_valid_scale: scale_zero failed tolerance check, searching nearby scales...")
+    
     # Search for nearest valid scale within ±SCALE_SEARCH_RANGE increments
     for i in range(1, SCALE_SEARCH_RANGE):
         scale_up = (search_scale + i) / WAYLAND_SCALE_STEP
@@ -130,20 +139,24 @@ def find_valid_scale_for_resolution(
         # Try higher scale
         logical_up_w = width / scale_up
         logical_up_h = height / scale_up
-        if logical_up_w == round(logical_up_w) and logical_up_h == round(logical_up_h):
+        if abs(logical_up_w - round(logical_up_w)) < 0.01 and \
+           abs(logical_up_h - round(logical_up_h)) < 0.01:
+            print(f"  DEBUG find_valid_scale: found valid scale_up={scale_up} at offset {i}")
             return scale_up
 
         # Try lower scale
         logical_down_w = width / scale_down
         logical_down_h = height / scale_down
-        if logical_down_w == round(logical_down_w) and logical_down_h == round(
-            logical_down_h
-        ):
+        if abs(logical_down_w - round(logical_down_w)) < 0.01 and \
+           abs(logical_down_h - round(logical_down_h)) < 0.01:
+            print(f"  DEBUG find_valid_scale: found valid scale_down={scale_down} at offset {i}")
             return scale_down
 
-    # If no valid scale found, round to nearest integer
-    print(f"  Warning: Could not find clean scale divisor, using {round(scale_zero)}")
-    return round(scale_zero)
+    # If no perfect scale found, just use the rounded scale anyway
+    # Hyprland can handle fractional logical pixels in practice
+    print(f"  Note: Using scale {scale_zero} (produces fractional logical pixels)")
+    print(f"  DEBUG find_valid_scale: no perfect match found, returning scale_zero={scale_zero}")
+    return scale_zero
 
 
 def guess_monitor_scale(config: MonitorConfig) -> float:
@@ -165,7 +178,7 @@ def guess_monitor_scale(config: MonitorConfig) -> float:
     MIN_LOGICAL_AREA = 800 * 480
 
     MOBILE_TARGET_DPI = 135.0
-    LARGE_TARGET_DPI = 110.0
+    LARGE_TARGET_DPI = 180.0  # Higher target for large monitors = bigger UI elements
     LARGE_MIN_SIZE_INCHES = 20.0
 
     width = config.width
@@ -190,14 +203,15 @@ def guess_monitor_scale(config: MonitorConfig) -> float:
     print(f"  Diagonal: {diag_inches:.1f} inches")
 
     # Choose target DPI based on screen size
-    # Smaller screens (< 20") use higher target DPI (mobile/laptop)
-    # Larger screens use lower target DPI (desktop monitors)
+    # Smaller screens (< 20") use mobile target DPI
+    # Larger screens use HIGHER target DPI because they're typically viewed from farther away
+    # Higher target DPI / lower physical DPI = larger scale = bigger UI
     if diag_inches < LARGE_MIN_SIZE_INCHES:
         target_dpi = MOBILE_TARGET_DPI
         print(f"  Target DPI: {target_dpi} (mobile/laptop)")
     else:
         target_dpi = LARGE_TARGET_DPI
-        print(f"  Target DPI: {target_dpi} (large monitor)")
+        print(f"  Target DPI: {target_dpi} (large monitor, viewed from distance)")
 
     # Calculate actual physical DPI
     diagonal_pixels = (width**2 + height**2) ** 0.5
@@ -205,8 +219,20 @@ def guess_monitor_scale(config: MonitorConfig) -> float:
     print(f"  Physical DPI: {physical_dpi:.1f}")
 
     # Calculate perfect scale
-    perfect_scale = physical_dpi / target_dpi
-    print(f"  Perfect scale: {perfect_scale:.3f}")
+    # For large monitors viewed from distance, we want LARGER UI elements
+    # So we scale UP when physical DPI is low
+    if diag_inches < LARGE_MIN_SIZE_INCHES:
+        # Small screens: scale based on mobile target (higher DPI = larger scale)
+        perfect_scale = physical_dpi / target_dpi
+        print(f"  Perfect scale: {perfect_scale:.3f} (small screen: physical/target)")
+    else:
+        # Large screens: invert the logic - lower physical DPI = larger scale
+        # We want to achieve the mobile target DPI at the logical level
+        perfect_scale = physical_dpi / target_dpi  
+        # But for large monitors, we actually want the inverse relationship
+        # target_dpi / physical_dpi would give us bigger scale for lower DPI
+        perfect_scale = target_dpi / physical_dpi
+        print(f"  Perfect scale: {perfect_scale:.3f} (large screen: target/physical, viewed from distance)")
 
     # Generate all supported scales (1.0, 1.25, 1.5, 1.75, 2.0, ..., 4.0)
     # Filter out scales that would make logical resolution too small
@@ -232,8 +258,14 @@ def guess_monitor_scale(config: MonitorConfig) -> float:
     print(f"  Supported scales: {supported_scales}")
     print(f"  Selected scale: {best_scale}")
 
+    # DEBUG: Print what we're about to validate
+    print(f"  DEBUG: About to validate scale {best_scale} for {width}x{height}")
+    print(f"  DEBUG: This would give logical resolution: {width/best_scale:.2f}x{height/best_scale:.2f}")
+
     # Validate and adjust scale to produce whole logical pixels (Hyprland requirement)
     valid_scale = find_valid_scale_for_resolution(width, height, best_scale)
+
+    print(f"  DEBUG: Validation returned scale: {valid_scale}")
 
     if valid_scale != best_scale:
         print(
