@@ -110,27 +110,39 @@ def find_valid_scale_for_resolution(
     Falls back to the target scale if no perfect match is found.
     """
     print(f"  DEBUG find_valid_scale: input target_scale={target_scale}")
-    
+
     # First, round to 1/WAYLAND_SCALE_STEP increments
     search_scale = round(target_scale * WAYLAND_SCALE_STEP)
     scale_zero = search_scale / WAYLAND_SCALE_STEP
-    
-    print(f"  DEBUG find_valid_scale: search_scale={search_scale}, scale_zero={scale_zero}")
-    
+
+    print(
+        f"  DEBUG find_valid_scale: search_scale={search_scale}, scale_zero={scale_zero}"
+    )
+
     logical_width = width / scale_zero
     logical_height = height / scale_zero
-    
-    print(f"  DEBUG find_valid_scale: logical resolution would be {logical_width}x{logical_height}")
-    print(f"  DEBUG find_valid_scale: differences from whole: w={abs(logical_width - round(logical_width)):.6f}, h={abs(logical_height - round(logical_height)):.6f}")
-    
+
+    print(
+        f"  DEBUG find_valid_scale: logical resolution would be {logical_width}x{logical_height}"
+    )
+    print(
+        f"  DEBUG find_valid_scale: differences from whole: w={abs(logical_width - round(logical_width)):.6f}, h={abs(logical_height - round(logical_height)):.6f}"
+    )
+
     # Check if close enough to whole pixels (within 0.01)
-    if abs(logical_width - round(logical_width)) < 0.01 and \
-       abs(logical_height - round(logical_height)) < 0.01:
-        print(f"  DEBUG find_valid_scale: scale_zero passes tolerance check, returning {scale_zero}")
+    if (
+        abs(logical_width - round(logical_width)) < 0.01
+        and abs(logical_height - round(logical_height)) < 0.01
+    ):
+        print(
+            f"  DEBUG find_valid_scale: scale_zero passes tolerance check, returning {scale_zero}"
+        )
         return scale_zero
-    
-    print(f"  DEBUG find_valid_scale: scale_zero failed tolerance check, searching nearby scales...")
-    
+
+    print(
+        f"  DEBUG find_valid_scale: scale_zero failed tolerance check, searching nearby scales..."
+    )
+
     # Search for nearest valid scale within ±SCALE_SEARCH_RANGE increments
     for i in range(1, SCALE_SEARCH_RANGE):
         scale_up = (search_scale + i) / WAYLAND_SCALE_STEP
@@ -139,23 +151,33 @@ def find_valid_scale_for_resolution(
         # Try higher scale
         logical_up_w = width / scale_up
         logical_up_h = height / scale_up
-        if abs(logical_up_w - round(logical_up_w)) < 0.01 and \
-           abs(logical_up_h - round(logical_up_h)) < 0.01:
-            print(f"  DEBUG find_valid_scale: found valid scale_up={scale_up} at offset {i}")
+        if (
+            abs(logical_up_w - round(logical_up_w)) < 0.01
+            and abs(logical_up_h - round(logical_up_h)) < 0.01
+        ):
+            print(
+                f"  DEBUG find_valid_scale: found valid scale_up={scale_up} at offset {i}"
+            )
             return scale_up
 
         # Try lower scale
         logical_down_w = width / scale_down
         logical_down_h = height / scale_down
-        if abs(logical_down_w - round(logical_down_w)) < 0.01 and \
-           abs(logical_down_h - round(logical_down_h)) < 0.01:
-            print(f"  DEBUG find_valid_scale: found valid scale_down={scale_down} at offset {i}")
+        if (
+            abs(logical_down_w - round(logical_down_w)) < 0.01
+            and abs(logical_down_h - round(logical_down_h)) < 0.01
+        ):
+            print(
+                f"  DEBUG find_valid_scale: found valid scale_down={scale_down} at offset {i}"
+            )
             return scale_down
 
     # If no perfect scale found, just use the rounded scale anyway
     # Hyprland can handle fractional logical pixels in practice
     print(f"  Note: Using scale {scale_zero} (produces fractional logical pixels)")
-    print(f"  DEBUG find_valid_scale: no perfect match found, returning scale_zero={scale_zero}")
+    print(
+        f"  DEBUG find_valid_scale: no perfect match found, returning scale_zero={scale_zero}"
+    )
     return scale_zero
 
 
@@ -174,11 +196,11 @@ def guess_monitor_scale(config: MonitorConfig) -> float:
     # Constants from niri
     MIN_SCALE = 1
     MAX_SCALE = 4
-    STEPS = 4  # 0.25 increments
+    STEPS = 8  # 0.125 increments
     MIN_LOGICAL_AREA = 800 * 480
 
     MOBILE_TARGET_DPI = 135.0
-    LARGE_TARGET_DPI = 180.0  # Higher target for large monitors = bigger UI elements
+    LARGE_TARGET_DPI = 240.0  # Higher target for large monitors = bigger UI elements
     LARGE_MIN_SIZE_INCHES = 20.0
 
     width = config.width
@@ -213,10 +235,16 @@ def guess_monitor_scale(config: MonitorConfig) -> float:
         target_dpi = LARGE_TARGET_DPI
         print(f"  Target DPI: {target_dpi} (large monitor, viewed from distance)")
 
-    # Calculate actual physical DPI
-    diagonal_pixels = (width**2 + height**2) ** 0.5
-    physical_dpi = diagonal_pixels / diag_inches
-    print(f"  Physical DPI: {physical_dpi:.1f}")
+    # Calculate actual physical DPI — use vertical DPI for UI scaling
+    physical_width_in = physical_width_mm / 25.4
+    physical_height_in = physical_height_mm / 25.4
+    horizontal_dpi = width / physical_width_in
+    vertical_dpi = height / physical_height_in
+    physical_dpi = vertical_dpi
+    print(
+        f"  Physical DPI (horizontal x vertical): {horizontal_dpi:.1f} x {vertical_dpi:.1f}"
+    )
+    print(f"  Using vertical DPI ({physical_dpi:.1f}) for scale calculation")
 
     # Calculate perfect scale
     # For large monitors viewed from distance, we want LARGER UI elements
@@ -228,39 +256,80 @@ def guess_monitor_scale(config: MonitorConfig) -> float:
     else:
         # Large screens: invert the logic - lower physical DPI = larger scale
         # We want to achieve the mobile target DPI at the logical level
-        perfect_scale = physical_dpi / target_dpi  
-        # But for large monitors, we actually want the inverse relationship
-        # target_dpi / physical_dpi would give us bigger scale for lower DPI
         perfect_scale = target_dpi / physical_dpi
-        print(f"  Perfect scale: {perfect_scale:.3f} (large screen: target/physical, viewed from distance)")
+        print(
+            f"  Perfect scale: {perfect_scale:.3f} (large screen: target/physical, viewed from distance)"
+        )
 
-    # Generate all supported scales (1.0, 1.25, 1.5, 1.75, 2.0, ..., 4.0)
-    # Filter out scales that would make logical resolution too small
-    supported_scales = []
-    for i in range(MIN_SCALE * STEPS, MAX_SCALE * STEPS + 1):
-        scale = i / STEPS
+    # Generate candidate exact integer-producing scales using gcd method
+    # scale = g / t  where g = gcd(width, height) and t is a positive integer
+    # We prefer candidates that are representable by the compositor (1/WAYLAND_SCALE_STEP)
+    import math
 
-        # Check if this scale gives enough logical area
-        logical_width = int(width / scale)
-        logical_height = int(height / scale)
-        logical_area = logical_width * logical_height
+    g = math.gcd(width, height)
+    candidates = []
 
-        if logical_area >= MIN_LOGICAL_AREA:
-            supported_scales.append(scale)
+    # t range so that scale in [MIN_SCALE, MAX_SCALE]
+    t_min = max(1, math.ceil(g / MAX_SCALE))
+    t_max = max(1, math.floor(g / MIN_SCALE))
 
-    if not supported_scales:
-        print("  No supported scales found, defaulting to 1.0")
-        return 1.0
+    for t in range(t_min, t_max + 1):
+        scale_candidate = g / t
 
-    # Find the scale closest to perfect_scale
-    best_scale = min(supported_scales, key=lambda s: abs(s - perfect_scale))
+        # Must be representable by compositor increments (1/WAYLAND_SCALE_STEP)
+        if (
+            abs(
+                round(scale_candidate * WAYLAND_SCALE_STEP)
+                - scale_candidate * WAYLAND_SCALE_STEP
+            )
+            > 1e-9
+        ):
+            continue
 
-    print(f"  Supported scales: {supported_scales}")
-    print(f"  Selected scale: {best_scale}")
+        # Check logical area constraint
+        logical_w = int(width / scale_candidate)
+        logical_h = int(height / scale_candidate)
+        if logical_w * logical_h >= MIN_LOGICAL_AREA:
+            candidates.append(scale_candidate)
+
+    if candidates:
+        # Pick the candidate closest to perfect_scale
+        best_candidate = min(candidates, key=lambda s: abs(s - perfect_scale))
+        best_candidate = closest_representable_scale(best_candidate)
+        print(f"  Integer-producing representable candidates: {candidates}")
+        print(
+            f"  Selected integer-producing candidate: {best_candidate} (closest to perfect {perfect_scale:.3f})"
+        )
+        best_scale = best_candidate
+    else:
+        # Fallback: generate all supported UI scales and pick closest
+        supported_scales = []
+        for i in range(MIN_SCALE * STEPS, MAX_SCALE * STEPS + 1):
+            scale = i / STEPS
+
+            # Check if this scale gives enough logical area
+            logical_width = int(width / scale)
+            logical_height = int(height / scale)
+            logical_area = logical_width * logical_height
+
+            if logical_area >= MIN_LOGICAL_AREA:
+                supported_scales.append(scale)
+
+        if not supported_scales:
+            print("  No supported scales found, defaulting to 1.0")
+            return 1.0
+
+        # Find the scale closest to perfect_scale
+        best_scale = min(supported_scales, key=lambda s: abs(s - perfect_scale))
+
+        print(f"  Supported scales: {supported_scales}")
+        print(f"  Selected scale: {best_scale}")
 
     # DEBUG: Print what we're about to validate
     print(f"  DEBUG: About to validate scale {best_scale} for {width}x{height}")
-    print(f"  DEBUG: This would give logical resolution: {width/best_scale:.2f}x{height/best_scale:.2f}")
+    print(
+        f"  DEBUG: This would give logical resolution: {width / best_scale:.2f}x{height / best_scale:.2f}"
+    )
 
     # Validate and adjust scale to produce whole logical pixels (Hyprland requirement)
     valid_scale = find_valid_scale_for_resolution(width, height, best_scale)
@@ -384,7 +453,7 @@ def create_ideal_monitor_rule(monitor_name: str) -> Optional[MonitorRule]:
     if not desc:
         print(f"  Warning: No description for {monitor_name}", file=sys.stderr)
         desc = monitor_name  # Fallback to name
-    
+
     print(f"  Description: {desc}")
 
     # Get the best mode (resolution and refresh rate)
@@ -447,14 +516,19 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
     if not monitors:
         return
 
-    external_monitors = [m for m in monitors if m["name"] != "eDP-1" and not m.get("disabled", True)]
+    external_monitors = [
+        m for m in monitors if m["name"] != "eDP-1" and not m.get("disabled", True)
+    ]
 
     for monitor in external_monitors:
         monitor_name = monitor["name"]
         monitor_desc = monitor.get("description", "")
-        
+
         if not monitor_desc:
-            print(f"Warning: No description for {monitor_name}, using name as fallback", file=sys.stderr)
+            print(
+                f"Warning: No description for {monitor_name}, using name as fallback",
+                file=sys.stderr,
+            )
             monitor_desc = monitor_name
 
         # Check if we have a cached rule for this monitor description
@@ -462,7 +536,9 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
             print(f"\nUsing cached rule for {monitor_name} (desc: {monitor_desc})")
             rule = monitor_rules_cache[monitor_desc]
         else:
-            print(f"\nConfiguring external monitor: {monitor_name} (desc: {monitor_desc})")
+            print(
+                f"\nConfiguring external monitor: {monitor_name} (desc: {monitor_desc})"
+            )
             rule = create_ideal_monitor_rule(monitor_name)
             if rule:
                 monitor_rules_cache[monitor_desc] = rule
@@ -516,7 +592,9 @@ def print_cache(monitor_rules_cache: dict) -> None:
     else:
         for desc, rule in monitor_rules_cache.items():
             print(f"  - {desc[:60]}{'...' if len(desc) > 60 else ''}")
-            print(f"    -> {rule.name}: {rule.width}x{rule.height}@{rule.refresh:.0f}Hz, scale={rule.scale}")
+            print(
+                f"    -> {rule.name}: {rule.width}x{rule.height}@{rule.refresh:.0f}Hz, scale={rule.scale}"
+            )
     print("=" * 50 + "\n")
 
 
@@ -579,19 +657,26 @@ def listen_to_events(
                             if not monitor_info:
                                 print(f"Warning: Could not get info for {monitor_name}")
                                 continue
-                            
+
                             monitor_desc = monitor_info.get("description", "")
                             if not monitor_desc:
-                                print(f"Warning: No description for {monitor_name}, using name as fallback", file=sys.stderr)
+                                print(
+                                    f"Warning: No description for {monitor_name}, using name as fallback",
+                                    file=sys.stderr,
+                                )
                                 monitor_desc = monitor_name
 
                             # Check if we have a cached rule for this monitor description
                             if monitor_desc in monitor_rules_cache:
-                                print(f"Using cached rule for {monitor_name} (desc: {monitor_desc})")
+                                print(
+                                    f"Using cached rule for {monitor_name} (desc: {monitor_desc})"
+                                )
                                 external_rule = monitor_rules_cache[monitor_desc]
                             else:
                                 # Create and cache the rule
-                                print(f"Creating new rule for {monitor_name} (desc: {monitor_desc})")
+                                print(
+                                    f"Creating new rule for {monitor_name} (desc: {monitor_desc})"
+                                )
                                 external_rule = create_ideal_monitor_rule(monitor_name)
                                 if external_rule:
                                     monitor_rules_cache[monitor_desc] = external_rule
@@ -613,7 +698,7 @@ def listen_to_events(
 
                             if "eDP-1" in active_monitors:
                                 disable_edp1()
-                            
+
                             # Print cache after monitor added
                             print_cache(monitor_rules_cache)
                         else:
@@ -639,7 +724,7 @@ def listen_to_events(
                                     "No external monitors remaining, re-enabling eDP-1"
                                 )
                                 enable_edp1(ideal_edp1_rule)
-                            
+
                             # Print cache after monitor removed
                             print_cache(monitor_rules_cache)
 
@@ -677,16 +762,21 @@ def main():
 
     # Step 2: Check current monitor setup and configure all monitors
     print("\nStep 2: Checking current monitor setup...")
+
+    # Always attempt to configure external monitors (this will calculate and apply rules
+    # for monitors that are already connected). The function is safe to call if there are
+    # no external monitors.
+    print("Configuring external monitors with optimal settings (if any)...")
+    configure_all_external_monitors(monitor_rules_cache)
+
+    # Re-evaluate active monitors after applying rules
     active_monitors = get_active_monitor_names()
     print(f"Currently active monitors: {active_monitors}")
 
-    # Configure external monitors with optimal settings
+    # If there are external monitors attached, disable the laptop screen (eDP-1)
     external_monitors = [m for m in active_monitors if m != "eDP-1"]
     if external_monitors:
         print(f"\nExternal monitors detected: {external_monitors}")
-        print("Configuring external monitors with optimal settings...")
-        configure_all_external_monitors(monitor_rules_cache)
-
         # Only disable eDP-1 if it's currently active
         if "eDP-1" in active_monitors:
             disable_edp1()
