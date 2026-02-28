@@ -53,7 +53,7 @@
     # numr
     # myPkgs.wl_shimeji
     wtype
-    myPkgs.voxtype
+    voxtype-vulkan
     love
     nix-playground
     mupdf
@@ -80,7 +80,7 @@
     # (steam.override { extraLibraries = pkgs: [ pkgs.curlWithGnuTls ]; }).run
     steam-run
     quickshell
-    myPkgs.jpegli
+    # myPkgs.jpegli
     glsl_analyzer
     # myPkgs.
     glslviewer

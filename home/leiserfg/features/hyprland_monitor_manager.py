@@ -702,8 +702,30 @@ def listen_to_events(
                             # Print cache after monitor added
                             print_cache(monitor_rules_cache)
                         else:
-                            # eDP-1 was added (shouldn't normally happen)
-                            print("eDP-1 reconnected")
+                            # eDP-1 was added — happens on resume from sleep
+                            print("eDP-1 reconnected (resume from sleep?)")
+                            time.sleep(EVENT_DEBOUNCE_DELAY)
+
+                            # Re-assert all cached external rules so sleeping external
+                            # monitors get woken up by Hyprland re-applying their config
+                            print("Re-applying all cached external monitor rules...")
+                            for desc, rule in monitor_rules_cache.items():
+                                if rule.name != "eDP-1":
+                                    print(f"  Re-applying rule for {rule.name} (desc: {desc[:60]})")
+                                    apply_monitor_rule(rule)
+
+                            active_monitors = get_active_monitor_names()
+                            print(f"Active monitors after eDP-1 reconnect: {active_monitors}")
+
+                            external_active = [m for m in active_monitors if m != "eDP-1"]
+                            if external_active:
+                                # External monitor(s) still active — keep eDP-1 off
+                                print(f"External monitors present ({external_active}), disabling eDP-1 again")
+                                disable_edp1()
+                            else:
+                                # No external monitors — enable eDP-1 with stored rule
+                                print("No external monitors, enabling eDP-1")
+                                enable_edp1(ideal_edp1_rule)
 
                     # Monitor removed event
                     elif event_type == "monitorremoved":
