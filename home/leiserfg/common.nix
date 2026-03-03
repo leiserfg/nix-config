@@ -42,6 +42,7 @@
   # services.opensnitch-ui.enable = true;
   home.packages = with pkgs; [
     scrcpy
+    guvcview
     inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi
     gcc
     # qutebrowser
