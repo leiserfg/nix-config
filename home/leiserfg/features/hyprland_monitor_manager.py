@@ -5,6 +5,10 @@ Automatically manages monitor configuration:
 - Sets optimal scale for eDP-1 (laptop screen) on startup
 - Disables eDP-1 when external monitors are connected
 - Re-enables eDP-1 when it's the only monitor remaining
+
+
+
+make sure tu run the doctest if you do any change on the scaling logic
 """
 
 import socket
@@ -23,6 +27,22 @@ SCALE_SEARCH_RANGE = 90  # Search ±90 increments (±0.75) from target scale
 SOCKET_TIMEOUT = 5.0  # Socket timeout in seconds
 SOCKET_BUFFER_SIZE = 8192  # Buffer size for socket receive
 EVENT_DEBOUNCE_DELAY = 0.5  # Debounce delay for monitor events in seconds
+
+# Scale tuning constants (extracted to module level for easy tuning)
+MIN_SCALE = 1
+MAX_SCALE = 4
+STEPS = 8  # 0.125 increments
+MIN_LOGICAL_AREA = 800 * 480
+
+# Map from minimum diagonal size (in inches) to a target DPI used to compute
+# the 'perfect' scale. This allows tuning how aggressively large monitors are
+# scaled. The list should be ordered by increasing min_diagonal.
+# Example: (0, 135) means for any screen >= 0" use 135 DPI target; (20,185)
+# means for screens >= 20" use 185 DPI target.
+SIZE_TO_TARGET_DPI = [
+    (0.0, 135.0),   # phones / laptops
+    (20.0, 185.0),  # large monitors -> tuned to prefer ~1.66 for the ultrawide
+]
 
 
 class MonitorMode(NamedTuple):
@@ -79,10 +99,14 @@ def hyprland_get_monitors(all_monitors: bool = False) -> Optional[list]:
 
 
 def hyprland_set_rule(rule_command: str) -> bool:
-    """Execute hyprctl keyword command to set a rule. Returns True on success."""
+    """Execute hyprctl keyword command to set a rule. Returns True on success.
+    The entire rule_command is passed as a single argument to hyprctl keyword to
+    avoid splitting on spaces which can break monitor descriptions that contain
+    spaces or commas.
+    """
     try:
         subprocess.run(
-            ["hyprctl", "keyword"] + rule_command.split(),
+            ["hyprctl", "keyword", rule_command],
             capture_output=True,
             text=True,
             check=True,
@@ -144,9 +168,15 @@ def find_valid_scale_for_resolution(
     )
 
     # Search for nearest valid scale within ±SCALE_SEARCH_RANGE increments
+    # Check both directions at the same offset and prefer the one closest to the
+    # original target_scale. This avoids always preferring the higher scale
+    # (which could return 2.0 for 1.66-like targets).
     for i in range(1, SCALE_SEARCH_RANGE):
         scale_up = (search_scale + i) / WAYLAND_SCALE_STEP
         scale_down = (search_scale - i) / WAYLAND_SCALE_STEP
+
+        found_up = False
+        found_down = False
 
         # Try higher scale
         logical_up_w = width / scale_up
@@ -155,21 +185,34 @@ def find_valid_scale_for_resolution(
             abs(logical_up_w - round(logical_up_w)) < 0.01
             and abs(logical_up_h - round(logical_up_h)) < 0.01
         ):
+            found_up = True
             print(
                 f"  DEBUG find_valid_scale: found valid scale_up={scale_up} at offset {i}"
             )
-            return scale_up
 
-        # Try lower scale
-        logical_down_w = width / scale_down
-        logical_down_h = height / scale_down
-        if (
-            abs(logical_down_w - round(logical_down_w)) < 0.01
-            and abs(logical_down_h - round(logical_down_h)) < 0.01
-        ):
-            print(
-                f"  DEBUG find_valid_scale: found valid scale_down={scale_down} at offset {i}"
-            )
+        # Try lower scale (ensure positive)
+        if scale_down > 0:
+            logical_down_w = width / scale_down
+            logical_down_h = height / scale_down
+            if (
+                abs(logical_down_w - round(logical_down_w)) < 0.01
+                and abs(logical_down_h - round(logical_down_h)) < 0.01
+            ):
+                found_down = True
+                print(
+                    f"  DEBUG find_valid_scale: found valid scale_down={scale_down} at offset {i}"
+                )
+
+        # If both directions are valid, choose the one closer to the original target
+        if found_up and found_down:
+            # Compare distance to the (unrounded) target_scale passed in
+            if abs(scale_up - target_scale) <= abs(scale_down - target_scale):
+                return scale_up
+            else:
+                return scale_down
+        elif found_up:
+            return scale_up
+        elif found_down:
             return scale_down
 
     # If no perfect scale found, just use the rounded scale anyway
@@ -181,17 +224,34 @@ def find_valid_scale_for_resolution(
     return scale_zero
 
 
-def guess_monitor_scale(config: MonitorConfig) -> float:
+def calculate_scale(width: int, height: int, physical_width_mm: Optional[float], physical_height_mm: Optional[float]) -> float:
     """
-    Calculate the best scale factor based on resolution and physical size.
-    Based on niri's algorithm (which follows Mutter's logic):
-    https://github.com/niri-wm/niri/blob/main/src/utils/scale.rs
+    Pure calculation of the preferred scale for a monitor given its pixel
+    resolution and physical dimensions (in millimetres).
+
+    This encapsulates the algorithm formerly embedded in guess_monitor_scale and
+    returns the finalized scale value (validated to prefer whole logical pixels
+    when possible).
 
     Args:
-        config: MonitorConfig with width, height, and physical dimensions
+        width: pixel width
+        height: pixel height
+        physical_width_mm: physical width in millimetres
+        physical_height_mm: physical height in millimetres
 
     Returns:
-        Float scale factor
+        float preferred scale
+
+    Examples (doctest):
+
+    >>> # eDP-1: 1920x1200, 300x190 mm => should be about 1.20
+    >>> round(calculate_scale(1920, 1200, 300, 190), 2)
+    1.2
+
+    >>> # DP-2: 3440x1440, 800x330 mm => expected approx 1.67
+    >>> round(calculate_scale(3440, 1440, 800, 330), 2)
+    1.67
+
     """
     # Constants from niri
     MIN_SCALE = 1
@@ -199,10 +259,145 @@ def guess_monitor_scale(config: MonitorConfig) -> float:
     STEPS = 8  # 0.125 increments
     MIN_LOGICAL_AREA = 800 * 480
 
-    MOBILE_TARGET_DPI = 135.0
-    LARGE_TARGET_DPI = 240.0  # Higher target for large monitors = bigger UI elements
-    LARGE_MIN_SIZE_INCHES = 20.0
+    # If physical size is missing or invalid, default to 1.0
+    if (
+        not physical_width_mm
+        or not physical_height_mm
+        or physical_width_mm <= 0
+        or physical_height_mm <= 0
+    ):
+        return 1.0
 
+    # Compute diagonal size in inches
+    diag_inches = ((physical_width_mm**2 + physical_height_mm**2) ** 0.5) / 25.4
+
+    # Lookup target DPI from SIZE_TO_TARGET_DPI table. Use the largest entry where
+    # min_diag <= diag_inches.
+    target_dpi = SIZE_TO_TARGET_DPI[0][1]
+    for min_diag, dpi in SIZE_TO_TARGET_DPI:
+        if diag_inches >= min_diag:
+            target_dpi = dpi
+        else:
+            break
+
+    # Use vertical DPI for scaling
+    physical_width_in = physical_width_mm / 25.4
+    physical_height_in = physical_height_mm / 25.4
+    vertical_dpi = height / physical_height_in
+    physical_dpi = vertical_dpi
+
+    # Calculate the 'perfect' (ideal) scale. We keep the same logic as before
+    # where small screens scale as physical/target while large screens invert
+    # (target/physical). Since target_dpi is now tunable per size, this produces
+    # different results depending on SIZE_TO_TARGET_DPI.
+    if diag_inches < SIZE_TO_TARGET_DPI[1][0]:
+        perfect_scale = physical_dpi / target_dpi
+    else:
+        perfect_scale = target_dpi / physical_dpi
+
+    # Candidate integer-producing scales using gcd method
+    import math
+
+    g = math.gcd(width, height)
+    candidates = []
+
+    t_min = max(1, math.ceil(g / MAX_SCALE))
+    t_max = max(1, math.floor(g / MIN_SCALE))
+
+    for t in range(t_min, t_max + 1):
+        scale_candidate = g / t
+
+        # Must be representable by compositor increments (1/WAYLAND_SCALE_STEP)
+        if (
+            abs(round(scale_candidate * WAYLAND_SCALE_STEP) - scale_candidate * WAYLAND_SCALE_STEP)
+            > 1e-9
+        ):
+            continue
+
+        logical_w = int(width / scale_candidate)
+        logical_h = int(height / scale_candidate)
+        if logical_w * logical_h >= MIN_LOGICAL_AREA:
+            candidates.append(scale_candidate)
+
+    if candidates:
+        best_candidate = min(candidates, key=lambda s: abs(s - perfect_scale))
+        best_candidate = closest_representable_scale(best_candidate)
+        best_scale = best_candidate
+    else:
+        supported_scales = []
+        for i in range(MIN_SCALE * STEPS, MAX_SCALE * STEPS + 1):
+            scale = i / STEPS
+            logical_width = int(width / scale)
+            logical_height = int(height / scale)
+            logical_area = logical_width * logical_height
+            if logical_area >= MIN_LOGICAL_AREA:
+                supported_scales.append(scale)
+
+        if not supported_scales:
+            return 1.0
+
+        best_scale = min(supported_scales, key=lambda s: abs(s - perfect_scale))
+
+    # Validate to prefer whole logical pixels
+    def _find_valid_scale(w: int, h: int, target: float) -> float:
+        search_scale = round(target * WAYLAND_SCALE_STEP)
+        scale_zero = search_scale / WAYLAND_SCALE_STEP
+
+        logical_width = w / scale_zero
+        logical_height = h / scale_zero
+
+        if (
+            abs(logical_width - round(logical_width)) < 0.01
+            and abs(logical_height - round(logical_height)) < 0.01
+        ):
+            return scale_zero
+
+        for i in range(1, SCALE_SEARCH_RANGE):
+            scale_up = (search_scale + i) / WAYLAND_SCALE_STEP
+            scale_down = (search_scale - i) / WAYLAND_SCALE_STEP
+
+            found_up = False
+            found_down = False
+
+            logical_up_w = w / scale_up
+            logical_up_h = h / scale_up
+            if (
+                abs(logical_up_w - round(logical_up_w)) < 0.01
+                and abs(logical_up_h - round(logical_up_h)) < 0.01
+            ):
+                found_up = True
+
+            if scale_down > 0:
+                logical_down_w = w / scale_down
+                logical_down_h = h / scale_down
+                if (
+                    abs(logical_down_w - round(logical_down_w)) < 0.01
+                    and abs(logical_down_h - round(logical_down_h)) < 0.01
+                ):
+                    found_down = True
+
+            if found_up and found_down:
+                if abs(scale_up - target) <= abs(scale_down - target):
+                    return scale_up
+                else:
+                    return scale_down
+            elif found_up:
+                return scale_up
+            elif found_down:
+                return scale_down
+
+        return scale_zero
+
+    valid_scale = _find_valid_scale(width, height, best_scale)
+    return valid_scale
+
+
+def guess_monitor_scale(config: MonitorConfig) -> float:
+    """
+    Wrapper around calculate_scale that retains the original debug printing
+    behavior. The actual selection logic is implemented in calculate_scale so
+    tests and tuning use that function.
+    """
     width = config.width
     height = config.height
     physical_width_mm = config.physical_width_mm
@@ -220,128 +415,48 @@ def guess_monitor_scale(config: MonitorConfig) -> float:
 
     print(f"  Physical size: {physical_width_mm}x{physical_height_mm}mm")
 
-    # Calculate diagonal in inches
+    # Compute diagonal and DPI values for logging
     diag_inches = ((physical_width_mm**2 + physical_height_mm**2) ** 0.5) / 25.4
-    print(f"  Diagonal: {diag_inches:.1f} inches")
-
-    # Choose target DPI based on screen size
-    # Smaller screens (< 20") use mobile target DPI
-    # Larger screens use HIGHER target DPI because they're typically viewed from farther away
-    # Higher target DPI / lower physical DPI = larger scale = bigger UI
-    if diag_inches < LARGE_MIN_SIZE_INCHES:
-        target_dpi = MOBILE_TARGET_DPI
-        print(f"  Target DPI: {target_dpi} (mobile/laptop)")
-    else:
-        target_dpi = LARGE_TARGET_DPI
-        print(f"  Target DPI: {target_dpi} (large monitor, viewed from distance)")
-
-    # Calculate actual physical DPI — use vertical DPI for UI scaling
     physical_width_in = physical_width_mm / 25.4
     physical_height_in = physical_height_mm / 25.4
     horizontal_dpi = width / physical_width_in
     vertical_dpi = height / physical_height_in
-    physical_dpi = vertical_dpi
+
+    # Determine target DPI from table for logging
+    target_dpi = SIZE_TO_TARGET_DPI[0][1]
+    for min_diag, dpi in SIZE_TO_TARGET_DPI:
+        if diag_inches >= min_diag:
+            target_dpi = dpi
+        else:
+            break
+
+    print(f"  Diagonal: {diag_inches:.1f} inches")
+    print(f"  Target DPI (from table): {target_dpi}")
     print(
         f"  Physical DPI (horizontal x vertical): {horizontal_dpi:.1f} x {vertical_dpi:.1f}"
     )
-    print(f"  Using vertical DPI ({physical_dpi:.1f}) for scale calculation")
+    print(f"  Using vertical DPI ({vertical_dpi:.1f}) for scale calculation")
 
-    # Calculate perfect scale
-    # For large monitors viewed from distance, we want LARGER UI elements
-    # So we scale UP when physical DPI is low
-    if diag_inches < LARGE_MIN_SIZE_INCHES:
-        # Small screens: scale based on mobile target (higher DPI = larger scale)
-        perfect_scale = physical_dpi / target_dpi
+    # Compute and print the 'perfect' scale for debugging (reuse same logic as
+    # calculate_scale)
+    small_threshold = SIZE_TO_TARGET_DPI[1][0] if len(SIZE_TO_TARGET_DPI) > 1 else float('inf')
+    if diag_inches < small_threshold:
+        perfect_scale = vertical_dpi / target_dpi
         print(f"  Perfect scale: {perfect_scale:.3f} (small screen: physical/target)")
     else:
-        # Large screens: invert the logic - lower physical DPI = larger scale
-        # We want to achieve the mobile target DPI at the logical level
-        perfect_scale = target_dpi / physical_dpi
+        perfect_scale = target_dpi / vertical_dpi
         print(
             f"  Perfect scale: {perfect_scale:.3f} (large screen: target/physical, viewed from distance)"
         )
 
-    # Generate candidate exact integer-producing scales using gcd method
-    # scale = g / t  where g = gcd(width, height) and t is a positive integer
-    # We prefer candidates that are representable by the compositor (1/WAYLAND_SCALE_STEP)
-    import math
+    # Obtain calculated scale and print debug information
+    scale = calculate_scale(width, height, physical_width_mm, physical_height_mm)
+    print(f"  DEBUG: Validation returned scale: {scale}")
 
-    g = math.gcd(width, height)
-    candidates = []
+    if scale != perfect_scale:
+        print(f"  Adjusted to valid scale: {scale} (produces whole logical pixels)")
 
-    # t range so that scale in [MIN_SCALE, MAX_SCALE]
-    t_min = max(1, math.ceil(g / MAX_SCALE))
-    t_max = max(1, math.floor(g / MIN_SCALE))
-
-    for t in range(t_min, t_max + 1):
-        scale_candidate = g / t
-
-        # Must be representable by compositor increments (1/WAYLAND_SCALE_STEP)
-        if (
-            abs(
-                round(scale_candidate * WAYLAND_SCALE_STEP)
-                - scale_candidate * WAYLAND_SCALE_STEP
-            )
-            > 1e-9
-        ):
-            continue
-
-        # Check logical area constraint
-        logical_w = int(width / scale_candidate)
-        logical_h = int(height / scale_candidate)
-        if logical_w * logical_h >= MIN_LOGICAL_AREA:
-            candidates.append(scale_candidate)
-
-    if candidates:
-        # Pick the candidate closest to perfect_scale
-        best_candidate = min(candidates, key=lambda s: abs(s - perfect_scale))
-        best_candidate = closest_representable_scale(best_candidate)
-        print(f"  Integer-producing representable candidates: {candidates}")
-        print(
-            f"  Selected integer-producing candidate: {best_candidate} (closest to perfect {perfect_scale:.3f})"
-        )
-        best_scale = best_candidate
-    else:
-        # Fallback: generate all supported UI scales and pick closest
-        supported_scales = []
-        for i in range(MIN_SCALE * STEPS, MAX_SCALE * STEPS + 1):
-            scale = i / STEPS
-
-            # Check if this scale gives enough logical area
-            logical_width = int(width / scale)
-            logical_height = int(height / scale)
-            logical_area = logical_width * logical_height
-
-            if logical_area >= MIN_LOGICAL_AREA:
-                supported_scales.append(scale)
-
-        if not supported_scales:
-            print("  No supported scales found, defaulting to 1.0")
-            return 1.0
-
-        # Find the scale closest to perfect_scale
-        best_scale = min(supported_scales, key=lambda s: abs(s - perfect_scale))
-
-        print(f"  Supported scales: {supported_scales}")
-        print(f"  Selected scale: {best_scale}")
-
-    # DEBUG: Print what we're about to validate
-    print(f"  DEBUG: About to validate scale {best_scale} for {width}x{height}")
-    print(
-        f"  DEBUG: This would give logical resolution: {width / best_scale:.2f}x{height / best_scale:.2f}"
-    )
-
-    # Validate and adjust scale to produce whole logical pixels (Hyprland requirement)
-    valid_scale = find_valid_scale_for_resolution(width, height, best_scale)
-
-    print(f"  DEBUG: Validation returned scale: {valid_scale}")
-
-    if valid_scale != best_scale:
-        print(
-            f"  Adjusted to valid scale: {valid_scale} (produces whole logical pixels)"
-        )
-
-    return valid_scale
+    return scale
 
 
 def get_monitor_info(monitor_name: str) -> Optional[dict]:
@@ -545,7 +660,12 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
                 print(f"Cached rule for desc: {monitor_desc}")
 
         if rule:
-            apply_monitor_rule(rule)
+            applied = apply_monitor_rule(rule)
+            if applied:
+                # Print cache after successfully applying a rule
+                print_cache(monitor_rules_cache)
+            else:
+                print(f"Warning: Failed to apply rule for {monitor_name}", file=sys.stderr)
 
 
 def disable_edp1() -> None:
