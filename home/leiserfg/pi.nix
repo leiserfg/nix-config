@@ -2,13 +2,25 @@
   config,
   pkgs,
   lib,
+  inputs,
   ...
 }:
 let
   extensionsDir = ./pi-extensions;
   extensionFiles = builtins.readDir extensionsDir;
 
-  # Create home.file entries for each extension
+  # Reference to the pi package
+  piPackage = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi;
+
+  # Directory containing builtin extensions
+  builtinExtensionsDir = "${piPackage}/lib/node_modules/@mariozechner/pi-coding-agent/examples/extensions";
+
+  # List of builtin extension names to include (empty by default, add as needed)
+  builtinExtensionNames = [
+    "custom-provider-qwen-cli"
+  ];
+
+  # Create home.file entries for each local extension
   extensionEntries = lib.mapAttrs' (
     name: type:
     lib.nameValuePair ".pi/agent/extensions/${name}" {
@@ -16,9 +28,29 @@ let
     }
   ) (lib.filterAttrs (name: type: type == "regular") extensionFiles);
 
+  # Create home.file entries for builtin extensions
+  builtinExtensionEntries = lib.listToAttrs (
+    map (extName: {
+      name = ".pi/agent/extensions/${extName}";
+      value = {
+        source = "${builtinExtensionsDir}/${extName}";
+        recursive = true;
+      };
+    }) builtinExtensionNames
+  );
+
+  # Combine both sets of extension entries
+  allExtensionEntries = lib.mkMerge [
+    extensionEntries
+    builtinExtensionEntries
+  ];
+
 in
 {
-  home.file = extensionEntries;
+  home.packages = [ piPackage ];
+
+  home.file = allExtensionEntries;
+
   skills.raw_paths = [
     ./raw_skills
   ];
@@ -30,7 +62,7 @@ in
         # Brave Search
 
         ## Search
-        To search: `${aliases.brave-search} search \"your query\" [-n 5] [--content] [--country <code>] [--freshness <period>]`
+        To search: `${aliases.brave-search} search "your query" [-n 5] [--content] [--country <code>] [--freshness <period>]`
 
         ## Extract Content
         To extract content: `${aliases.brave-search} content <url>`
