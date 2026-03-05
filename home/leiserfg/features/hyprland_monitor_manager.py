@@ -41,7 +41,9 @@ MIN_LOGICAL_AREA = 800 * 480
 # means for screens >= 20" use 185 DPI target.
 SIZE_TO_TARGET_DPI = [
     (0.0, 135.0),   # phones / laptops
-    (20.0, 185.0),  # large monitors -> tuned to prefer ~1.66 for the ultrawide
+    (15.0, 150.0),  # medium monitors -> tuned to prefer ~1.5 scale
+    (27.0, 242.0),  # DELL S2721QS (27") -> tuned to prefer ~1.5 scale
+    (30.0, 185.0),  # ultrawide monitors -> tuned to prefer ~1.66 for the ultrawide
 ]
 
 
