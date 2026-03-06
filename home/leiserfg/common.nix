@@ -369,6 +369,11 @@
                       name = "query";
                       value = "{searchTerms}";
                     }
+                    {
+                      name = "channel";
+                      value = "unstable";
+                    }
+
                   ];
                 }
               ];

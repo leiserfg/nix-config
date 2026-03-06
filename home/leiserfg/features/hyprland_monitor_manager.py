@@ -44,6 +44,9 @@ SIZE_TO_TARGET_DPI = [
     (15.0, 150.0),  # medium monitors -> tuned to prefer ~1.5 scale
     (27.0, 242.0),  # DELL S2721QS (27") -> tuned to prefer ~1.5 scale
     (30.0, 185.0),  # ultrawide monitors -> tuned to prefer ~1.66 for the ultrawide
+    (20.0, 185.0),  # large monitors -> tuned to prefer ~1.66 for the ultrawide
+    (26.0, 242.0),  # ~27" monitors (e.g. Dell S2721QS) -> bias towards ~1.5
+    (30.0, 185.0),  # larger than ~30" fall back to 185 to keep 34" example at ~1.67
 ]
 
 
