@@ -18,8 +18,12 @@ import os
 import sys
 import time
 import re
-from typing import NamedTuple, Optional
+from typing import NamedTuple
 
+
+class RestartableError(Exception):
+    """Raised instead of exiting so the top-level runner can restart main."""
+    pass
 
 # Constants
 WAYLAND_SCALE_STEP = 120  # Wayland fractional-scale protocol uses 1/120 increments
@@ -40,13 +44,10 @@ MIN_LOGICAL_AREA = 800 * 480
 # Example: (0, 135) means for any screen >= 0" use 135 DPI target; (20,185)
 # means for screens >= 20" use 185 DPI target.
 SIZE_TO_TARGET_DPI = [
-    (0.0, 135.0),   # phones / laptops
+    (0.0, 135.0),  # phones / laptops
     (15.0, 150.0),  # medium monitors -> tuned to prefer ~1.5 scale
     (27.0, 242.0),  # DELL S2721QS (27") -> tuned to prefer ~1.5 scale
     (30.0, 185.0),  # ultrawide monitors -> tuned to prefer ~1.66 for the ultrawide
-    (20.0, 185.0),  # large monitors -> tuned to prefer ~1.66 for the ultrawide
-    (26.0, 242.0),  # ~27" monitors (e.g. Dell S2721QS) -> bias towards ~1.5
-    (30.0, 185.0),  # larger than ~30" fall back to 185 to keep 34" example at ~1.67
 ]
 
 
@@ -56,15 +57,6 @@ class MonitorMode(NamedTuple):
     width: int
     height: int
     refresh_rate: float
-
-
-class MonitorConfig(NamedTuple):
-    """Monitor physical and logical configuration"""
-
-    width: int
-    height: int
-    physical_width_mm: Optional[float]
-    physical_height_mm: Optional[float]
 
 
 class MonitorRule(NamedTuple):
@@ -79,7 +71,7 @@ class MonitorRule(NamedTuple):
     scale: float
 
 
-def hyprland_get_monitors(all_monitors: bool = False) -> Optional[list]:
+def hyprland_get_monitors(all_monitors: bool = False) -> list | None:
     """Get list of monitors (including disabled ones if all_monitors=True)"""
     command = "monitors all" if all_monitors else "monitors"
     try:
@@ -92,7 +84,7 @@ def hyprland_get_monitors(all_monitors: bool = False) -> Optional[list]:
 
         monitors = json.loads(result.stdout)
         if any(m["name"].lower() == "fallback" for m in monitors):
-            sys.exit(1)
+            raise RestartableError("hyprctl returned fallback monitor state")
         return monitors
 
     except subprocess.CalledProcessError as e:
@@ -169,7 +161,7 @@ def find_valid_scale_for_resolution(
         return scale_zero
 
     print(
-        f"  DEBUG find_valid_scale: scale_zero failed tolerance check, searching nearby scales..."
+        "  DEBUG find_valid_scale: scale_zero failed tolerance check, searching nearby scales..."
     )
 
     # Search for nearest valid scale within ±SCALE_SEARCH_RANGE increments
@@ -229,7 +221,12 @@ def find_valid_scale_for_resolution(
     return scale_zero
 
 
-def calculate_scale(width: int, height: int, physical_width_mm: Optional[float], physical_height_mm: Optional[float]) -> float:
+def calculate_scale(
+    width: int,
+    height: int,
+    physical_width_mm: float | None,
+    physical_height_mm: float | None,
+) -> float:
     """
     Pure calculation of the preferred scale for a monitor given its pixel
     resolution and physical dimensions (in millimetres).
@@ -286,7 +283,7 @@ def calculate_scale(width: int, height: int, physical_width_mm: Optional[float],
             break
 
     # Use vertical DPI for scaling
-    physical_width_in = physical_width_mm / 25.4
+    physical_width_mm / 25.4
     physical_height_in = physical_height_mm / 25.4
     vertical_dpi = height / physical_height_in
     physical_dpi = vertical_dpi
@@ -314,7 +311,10 @@ def calculate_scale(width: int, height: int, physical_width_mm: Optional[float],
 
         # Must be representable by compositor increments (1/WAYLAND_SCALE_STEP)
         if (
-            abs(round(scale_candidate * WAYLAND_SCALE_STEP) - scale_candidate * WAYLAND_SCALE_STEP)
+            abs(
+                round(scale_candidate * WAYLAND_SCALE_STEP)
+                - scale_candidate * WAYLAND_SCALE_STEP
+            )
             > 1e-9
         ):
             continue
@@ -397,92 +397,30 @@ def calculate_scale(width: int, height: int, physical_width_mm: Optional[float],
     return valid_scale
 
 
-def guess_monitor_scale(config: MonitorConfig) -> float:
+def get_monitor_info(monitor_name: str) -> dict:
+    """Get monitor information by name (including disabled ones).
+    Terminates the script if the monitor is not found (likely indicates a fallback state).
     """
-    Wrapper around calculate_scale that retains the original debug printing
-    behavior. The actual selection logic is implemented in calculate_scale so
-    tests and tuning use that function.
-    """
-    width = config.width
-    height = config.height
-    physical_width_mm = config.physical_width_mm
-    physical_height_mm = config.physical_height_mm
-
-    # Default to scale 1.0 if no physical size
-    if (
-        not physical_width_mm
-        or not physical_height_mm
-        or physical_width_mm <= 0
-        or physical_height_mm <= 0
-    ):
-        print("  Physical size unknown, defaulting to scale 1.0")
-        return 1.0
-
-    print(f"  Physical size: {physical_width_mm}x{physical_height_mm}mm")
-
-    # Compute diagonal and DPI values for logging
-    diag_inches = ((physical_width_mm**2 + physical_height_mm**2) ** 0.5) / 25.4
-    physical_width_in = physical_width_mm / 25.4
-    physical_height_in = physical_height_mm / 25.4
-    horizontal_dpi = width / physical_width_in
-    vertical_dpi = height / physical_height_in
-
-    # Determine target DPI from table for logging
-    target_dpi = SIZE_TO_TARGET_DPI[0][1]
-    for min_diag, dpi in SIZE_TO_TARGET_DPI:
-        if diag_inches >= min_diag:
-            target_dpi = dpi
-        else:
-            break
-
-    print(f"  Diagonal: {diag_inches:.1f} inches")
-    print(f"  Target DPI (from table): {target_dpi}")
-    print(
-        f"  Physical DPI (horizontal x vertical): {horizontal_dpi:.1f} x {vertical_dpi:.1f}"
-    )
-    print(f"  Using vertical DPI ({vertical_dpi:.1f}) for scale calculation")
-
-    # Compute and print the 'perfect' scale for debugging (reuse same logic as
-    # calculate_scale)
-    small_threshold = SIZE_TO_TARGET_DPI[1][0] if len(SIZE_TO_TARGET_DPI) > 1 else float('inf')
-    if diag_inches < small_threshold:
-        perfect_scale = vertical_dpi / target_dpi
-        print(f"  Perfect scale: {perfect_scale:.3f} (small screen: physical/target)")
-    else:
-        perfect_scale = target_dpi / vertical_dpi
-        print(
-            f"  Perfect scale: {perfect_scale:.3f} (large screen: target/physical, viewed from distance)"
-        )
-
-    # Obtain calculated scale and print debug information
-    scale = calculate_scale(width, height, physical_width_mm, physical_height_mm)
-    print(f"  DEBUG: Validation returned scale: {scale}")
-
-    if scale != perfect_scale:
-        print(f"  Adjusted to valid scale: {scale} (produces whole logical pixels)")
-
-    return scale
-
-
-def get_monitor_info(monitor_name: str) -> Optional[dict]:
-    """Get monitor information by name (including disabled ones)"""
     monitors = hyprland_get_monitors(all_monitors=True)
     if not monitors:
         print(
-            f"Warning: No monitors found when looking for {monitor_name}",
+            f"Error: No monitors found when looking for {monitor_name}. Terminating to allow restart.",
             file=sys.stderr,
         )
-        return None
+        raise RestartableError(f"No monitors found when looking for {monitor_name}")
 
     for monitor in monitors:
         if monitor.get("name") == monitor_name:
             return monitor
 
-    print(f"Warning: Monitor {monitor_name} not found in monitor list", file=sys.stderr)
-    return None
+    print(
+        f"Error: Monitor {monitor_name} not found in monitor list (likely fallback state). Terminating to allow restart.",
+        file=sys.stderr,
+    )
+    raise RestartableError(f"Monitor {monitor_name} not found")
 
 
-def get_best_mode_for_monitor(monitor_name: str) -> Optional[MonitorMode]:
+def get_best_mode_for_monitor(monitor_name: str) -> MonitorMode | None:
     """
     Get the best resolution and refresh rate for a monitor.
     Prefers highest resolution with refresh rate >= 60Hz.
@@ -558,9 +496,11 @@ def get_best_mode_for_monitor(monitor_name: str) -> Optional[MonitorMode]:
         return None
 
 
-def create_ideal_monitor_rule(monitor_name: str) -> Optional[MonitorRule]:
+def create_ideal_monitor_rule(
+    monitor_name: str, monitor_info: dict
+) -> MonitorRule | None:
     """Create and store the ideal rule for any monitor"""
-    monitor = get_monitor_info(monitor_name)
+    monitor = monitor_info
     if not monitor:
         print(f"{monitor_name} not found!", file=sys.stderr)
         return None
@@ -592,14 +532,61 @@ def create_ideal_monitor_rule(monitor_name: str) -> Optional[MonitorRule]:
     physical_width_mm = monitor.get("physicalWidth")
     physical_height_mm = monitor.get("physicalHeight")
 
-    # Create monitor config and get the best scale
-    config = MonitorConfig(
-        width=width,
-        height=height,
-        physical_width_mm=physical_width_mm,
-        physical_height_mm=physical_height_mm,
-    )
-    scale = guess_monitor_scale(config)
+    # Calculate the best scale with debug printing
+    if (
+        not physical_width_mm
+        or not physical_height_mm
+        or physical_width_mm <= 0
+        or physical_height_mm <= 0
+    ):
+        print("  Physical size unknown, defaulting to scale 1.0")
+        scale = 1.0
+    else:
+        print(f"  Physical size: {physical_width_mm}x{physical_height_mm}mm")
+
+        # Compute diagonal and DPI values for logging
+        diag_inches = ((physical_width_mm**2 + physical_height_mm**2) ** 0.5) / 25.4
+        physical_width_in = physical_width_mm / 25.4
+        physical_height_in = physical_height_mm / 25.4
+        horizontal_dpi = width / physical_width_in
+        vertical_dpi = height / physical_height_in
+
+        # Determine target DPI from table for logging
+        target_dpi = SIZE_TO_TARGET_DPI[0][1]
+        for min_diag, dpi in SIZE_TO_TARGET_DPI:
+            if diag_inches >= min_diag:
+                target_dpi = dpi
+            else:
+                break
+
+        print(f"  Diagonal: {diag_inches:.1f} inches")
+        print(f"  Target DPI (from table): {target_dpi}")
+        print(
+            f"  Physical DPI (horizontal x vertical): {horizontal_dpi:.1f} x {vertical_dpi:.1f}"
+        )
+        print(f"  Using vertical DPI ({vertical_dpi:.1f}) for scale calculation")
+
+        # Compute and print the 'perfect' scale for debugging
+        small_threshold = (
+            SIZE_TO_TARGET_DPI[1][0] if len(SIZE_TO_TARGET_DPI) > 1 else float("inf")
+        )
+        if diag_inches < small_threshold:
+            perfect_scale = vertical_dpi / target_dpi
+            print(
+                f"  Perfect scale: {perfect_scale:.3f} (small screen: physical/target)"
+            )
+        else:
+            perfect_scale = target_dpi / vertical_dpi
+            print(
+                f"  Perfect scale: {perfect_scale:.3f} (large screen: target/physical, viewed from distance)"
+            )
+
+        # Calculate the actual scale
+        scale = calculate_scale(width, height, physical_width_mm, physical_height_mm)
+        print(f"  DEBUG: Validation returned scale: {scale}")
+
+        if scale != perfect_scale:
+            print(f"  Adjusted to valid scale: {scale} (produces whole logical pixels)")
 
     # Create the monitor rule using desc instead of name
     rule = f"monitor desc:{desc},{width}x{height}@{refresh:.0f},auto,{scale}"
@@ -659,7 +646,7 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
             print(
                 f"\nConfiguring external monitor: {monitor_name} (desc: {monitor_desc})"
             )
-            rule = create_ideal_monitor_rule(monitor_name)
+            rule = create_ideal_monitor_rule(monitor_name, monitor)
             if rule:
                 monitor_rules_cache[monitor_desc] = rule
                 print(f"Cached rule for desc: {monitor_desc}")
@@ -670,7 +657,9 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
                 # Print cache after successfully applying a rule
                 print_cache(monitor_rules_cache)
             else:
-                print(f"Warning: Failed to apply rule for {monitor_name}", file=sys.stderr)
+                print(
+                    f"Warning: Failed to apply rule for {monitor_name}", file=sys.stderr
+                )
 
 
 def disable_edp1() -> None:
@@ -679,7 +668,7 @@ def disable_edp1() -> None:
     hyprland_set_rule("monitor eDP-1,disable")
 
 
-def enable_edp1(ideal_rule: Optional[MonitorRule]) -> None:
+def enable_edp1(ideal_rule: MonitorRule | None) -> None:
     """Enable eDP-1 with ideal rule"""
     if not ideal_rule:
         print("No ideal rule stored for eDP-1!", file=sys.stderr)
@@ -702,7 +691,7 @@ def get_hyprland_socket_path() -> str:
     instance_sig = os.environ.get("HYPRLAND_INSTANCE_SIGNATURE")
     if not instance_sig:
         print("HYPRLAND_INSTANCE_SIGNATURE not found in environment!", file=sys.stderr)
-        sys.exit(1)
+        raise RestartableError("HYPRLAND_INSTANCE_SIGNATURE not found in environment")
 
     runtime_dir = os.environ.get("XDG_RUNTIME_DIR", "/run/user/1000")
     socket_path = f"{runtime_dir}/hypr/{instance_sig}/.socket2.sock"
@@ -724,7 +713,7 @@ def print_cache(monitor_rules_cache: dict) -> None:
 
 
 def listen_to_events(
-    ideal_edp1_rule: Optional[MonitorRule], monitor_rules_cache: dict
+    ideal_edp1_rule: MonitorRule | None, monitor_rules_cache: dict
 ) -> None:
     """Listen to Hyprland events and manage monitors"""
     socket_path = get_hyprland_socket_path()
@@ -738,7 +727,7 @@ def listen_to_events(
         sock.connect(socket_path)
     except (ConnectionRefusedError, FileNotFoundError) as e:
         print(f"Failed to connect to Hyprland socket: {e}", file=sys.stderr)
-        sys.exit(1)
+        raise RestartableError(f"Failed to connect to Hyprland socket: {e}")
 
     print("Connected! Listening for monitor events...")
 
@@ -779,9 +768,6 @@ def listen_to_events(
 
                             # Get monitor info to retrieve description
                             monitor_info = get_monitor_info(monitor_name)
-                            if not monitor_info:
-                                print(f"Warning: Could not get info for {monitor_name}")
-                                continue
 
                             monitor_desc = monitor_info.get("description", "")
                             if not monitor_desc:
@@ -802,7 +788,9 @@ def listen_to_events(
                                 print(
                                     f"Creating new rule for {monitor_name} (desc: {monitor_desc})"
                                 )
-                                external_rule = create_ideal_monitor_rule(monitor_name)
+                                external_rule = create_ideal_monitor_rule(
+                                    monitor_name, monitor_info
+                                )
                                 if external_rule:
                                     monitor_rules_cache[monitor_desc] = external_rule
                                     print(f"Cached rule for desc: {monitor_desc}")
@@ -836,16 +824,24 @@ def listen_to_events(
                             print("Re-applying all cached external monitor rules...")
                             for desc, rule in monitor_rules_cache.items():
                                 if rule.name != "eDP-1":
-                                    print(f"  Re-applying rule for {rule.name} (desc: {desc[:60]})")
+                                    print(
+                                        f"  Re-applying rule for {rule.name} (desc: {desc[:60]})"
+                                    )
                                     apply_monitor_rule(rule)
 
                             active_monitors = get_active_monitor_names()
-                            print(f"Active monitors after eDP-1 reconnect: {active_monitors}")
+                            print(
+                                f"Active monitors after eDP-1 reconnect: {active_monitors}"
+                            )
 
-                            external_active = [m for m in active_monitors if m != "eDP-1"]
+                            external_active = [
+                                m for m in active_monitors if m != "eDP-1"
+                            ]
                             if external_active:
                                 # External monitor(s) still active — keep eDP-1 off
-                                print(f"External monitors present ({external_active}), disabling eDP-1 again")
+                                print(
+                                    f"External monitors present ({external_active}), disabling eDP-1 again"
+                                )
                                 disable_edp1()
                             else:
                                 # No external monitors — enable eDP-1 with stored rule
@@ -898,11 +894,12 @@ def main():
 
     # Step 1: Calculate ideal eDP-1 rule (using 'monitors all' to get it even if disabled)
     print("Step 1: Calculating optimal configuration for eDP-1...")
-    ideal_edp1_rule = create_ideal_monitor_rule("eDP-1")
+    edp1_info = get_monitor_info("eDP-1")
+    ideal_edp1_rule = create_ideal_monitor_rule("eDP-1", edp1_info)
 
     if not ideal_edp1_rule:
-        print("Failed to get eDP-1 information. Exiting.", file=sys.stderr)
-        sys.exit(1)
+        print("Failed to create eDP-1 rule. Will restart main.", file=sys.stderr)
+        raise RestartableError("Failed to create eDP-1 rule")
 
     # Cache the eDP-1 rule using its description
     monitor_rules_cache[ideal_edp1_rule.desc] = ideal_edp1_rule
@@ -941,4 +938,36 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    # Run main inside a loop so RestartableError can cause a restart instead of
+    # letting the script crash. Use exponential backoff on consecutive failures
+    # but reset the failure counter if main runs successfully for a short time.
+    BASE_BACKOFF = 1.0        # seconds
+    MAX_BACKOFF = 60.0        # seconds
+    RESET_THRESHOLD = 10.0    # if main runs at least this long, consider it a success
+
+    consecutive_failures = 0
+
+    while True:
+        try:
+            start_time = time.time()
+            main()
+            # If main returns normally, exit the loop
+            elapsed = time.time() - start_time
+            if elapsed >= RESET_THRESHOLD:
+                consecutive_failures = 0
+            break  # normal exit
+
+        except RestartableError as e:
+            consecutive_failures += 1
+            backoff = min(MAX_BACKOFF, BASE_BACKOFF * (2 ** (consecutive_failures - 1)))
+            print(
+                f"RestartableError: {e}. Consecutive failures={consecutive_failures}. Backing off for {backoff:.1f}s before restart.",
+                file=sys.stderr,
+            )
+            time.sleep(backoff)
+            # On next loop iteration we will try again
+            continue
+
+        except KeyboardInterrupt:
+            print("Interrupted by user, exiting...", file=sys.stderr)
+            break
