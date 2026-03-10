@@ -1,21 +1,11 @@
-{ pkgs, inputs, ... }:
-{
-  # import the home manager module
-  imports = [
-    inputs.noctalia.homeModules.default
-  ];
-
-  # configure options
-  programs.noctalia-shell = {
-    enable = true;
-    systemd.enable = true;
-
-    settings = {
-      # configure noctalia here; defaults will
-      # be deep merged with these attributes.
+{ pkgs, lib, ... }:
+let
+  noctalia-settings = pkgs.writeTextFile {
+    name = "noctalia-settings.json";
+    text = builtins.toJSON {
       appLauncher.terminalCommand = "kitty";
       audio.cavaFrameRate = 30;
-      audio."visualizerType" = "wave";
+      audio.visualizerType = "wave";
 
       bar = {
         density = "compact";
@@ -102,7 +92,6 @@
             }
           ];
         };
-
       };
       colorSchemes.predefinedScheme = "Monochrome";
       wallpaper.enabled = false;
@@ -118,6 +107,28 @@
       dock.enabled = false;
       nightLight.enabled = false;
     };
-
   };
+in
+{
+  systemd.user.services.noctalia-shell = {
+    Unit = {
+      Description = "Noctalia Shell - Wayland desktop shell";
+      Documentation = "https://docs.noctalia.dev";
+      After = "graphical-session.target";
+      PartOf = "graphical-session.target";
+      Restart-Triggers = "${noctalia-settings}";
+    };
+
+    Service = {
+      ExecStart = "${lib.getExe pkgs.noctalia-shell}";
+      Restart = "on-failure";
+    };
+
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  # Optionally, create a symlink to the settings file in a known location
+  home.file.".config/noctalia/settings.json".source = noctalia-settings;
 }
