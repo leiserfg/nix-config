@@ -9,7 +9,7 @@
   networking.networkmanager.wifi.powersave = false;
   powerManagement = {
     powerDownCommands = "${pkgs.util-linux}/bin/rfkill block all";
-    powerUpCommands = "${pkgs.util-linux}/bin/rfkill unblock all";
+    resumeCommands = "${pkgs.util-linux}/bin/rfkill unblock all";
   };
 
   services.udev.extraRules = ''
