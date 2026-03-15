@@ -771,7 +771,7 @@
   };
 
   programs.television = {
-    enable = true;
+    enable = false;
     settings = {
       ui = {
         use_nerd_font_icons = true;
