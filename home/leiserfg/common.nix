@@ -10,7 +10,7 @@
 {
   imports = [
     ../../shared/nix.nix
-    ./features/audio.nix
+    # ./features/audio.nix
     ./features/fish.nix
     ./features/nu.nix
     ./features/cmds.nix

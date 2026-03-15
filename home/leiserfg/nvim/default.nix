@@ -128,8 +128,8 @@ in
               gx-nvim
               gitsigns-nvim
               gitlinker-nvim
-            ]
-            ++ (with pkgs.neovimPlugins; [ wildfire ]);
+            ];
+            # ++ (with pkgs.neovimPlugins; [ wildfire ]);
 
           # shared libraries to be added to LD_LIBRARY_PATH
           sharedLibraries.general = with pkgs; [ ];

@@ -5,8 +5,11 @@
 
     {
 
-      nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
-      nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+      # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+      # nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+
+      nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixpkgs-unstable";
+      nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixpkgs-unstable";
 
       home-manager.url = "github:nix-community/home-manager";
       home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,16 +30,10 @@
 
       nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
-      "plugins-wildfire" = {
-        url = "github:SUSTech-data/wildfire.nvim";
-        flake = false;
-      };
-
       llm-agents = {
         url = "github:numtide/llm-agents.nix";
         inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
       };
-
 
       # run0-sudo-shim = {
       #   url = "github:lordgrimmauld/run0-sudo-shim";
