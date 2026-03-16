@@ -33,5 +33,6 @@
     };
     carapace.enable = true;
     carapace.enableNushellIntegration = false; # Enabled  by hand in the config
+    # carapace.enableBashIntegration = false;
   };
 }

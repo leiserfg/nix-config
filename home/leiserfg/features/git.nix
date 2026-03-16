@@ -202,13 +202,9 @@ in
             "util"
             "exec"
             "--"
-            "bash"
+            "${lib.getExe pkgs.dash}"
             "-c"
-            # bash
-            (''
-              set -euo pipefail
-              ${cmd}
-            '')
+            "${cmd}"
             "" # This will be replaced by bash with $@
           ];
         in
@@ -239,7 +235,11 @@ in
           pre-commit = sh (
             # bash
             ''
-              [ ! -f "$(jj root)/.pre-commit-config.yaml" ] || ${lib.getExe' pkgs.prek "prek"} run -a
+              [ ! -f "$(jj root)/.pre-commit-config.yaml" ] || ${lib.getExe pkgs.prek} run -a
+              # no idea why but this is driving the tty insane
+              status=$?
+              stty sane
+              exit $status
             '');
           push = sh (
             # bash

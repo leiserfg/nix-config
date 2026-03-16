@@ -55,7 +55,7 @@ const ctrl_r = {
     {
       send: executehostcommand
       cmd: "commandline edit --insert (
-      history | select command | reverse | uniq | get command | str join (char -i 0)|fzf --scheme history --read0 --query 'ls'|decode utf-8|str trim
+      history | select command | reverse | uniq | get command | str join (char -i 0)|fzf --scheme history --read0 --query "(commandline)" |decode utf-8|str trim
       )"
     }
   ]

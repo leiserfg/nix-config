@@ -297,12 +297,14 @@
     prek
   ];
 
-  programs = {
-    bash.enable = true;
+  home.shell = {
+    # Let's make bash silly
+    # enableBashIntegration = false;
+  };
 
-    pay-respects = {
+  programs = {
+    bash = {
       enable = true;
-      enableNushellIntegration = true;
     };
 
     # opencode = {
