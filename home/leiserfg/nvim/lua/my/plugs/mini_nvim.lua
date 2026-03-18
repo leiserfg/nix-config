@@ -22,6 +22,10 @@ return {
         f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }, {}),
         c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
       },
+      mappings = {
+          around_next="ax",
+          inside_next="ix",
+      }
     }
     require("mini.icons").mock_nvim_web_devicons()
     require("mini.pairs").setup {

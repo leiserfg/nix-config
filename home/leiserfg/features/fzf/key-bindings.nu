@@ -54,8 +54,8 @@ const ctrl_r = {
   event: [
     {
       send: executehostcommand
-      cmd: "commandline edit --insert (
-      history | select command | reverse | uniq | get command | str join (char -i 0)|fzf --scheme history --read0 --query "(commandline)" |decode utf-8|str trim
+      cmd: "commandline edit --replace (
+      history | select command | reverse | uniq | get command | str join (char -i 0)|fzf --scheme history --read0 --query \$\"(commandline)\" |decode utf-8|str trim
       )"
     }
   ]
