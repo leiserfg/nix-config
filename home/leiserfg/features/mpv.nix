@@ -1,7 +1,7 @@
 { pkgs, ... }:
-let
-  shaders_dir = "${pkgs.mpv-shim-default-shaders}/share/mpv-shim-default-shaders/shaders";
-in
+# let
+#   shaders_dir = "${pkgs.mpv-shim-default-shaders}/share/mpv-shim-default-shaders/shaders";
+# in
 {
   programs.mpv = {
     enable = true;
