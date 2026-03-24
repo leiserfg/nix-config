@@ -1,7 +1,7 @@
 { ... }:
 {
   services = {
-    trayscale.enable = true;
+    # trayscale.enable = true;
     gpg-agent.enable = true;
     udiskie = {
       enable = true;

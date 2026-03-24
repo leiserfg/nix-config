@@ -111,6 +111,7 @@
       render = {
         direct_scanout = 2; # Enable in games
         # new_render_scheduling = true;
+        cm_sdr_eotf = "srgb";
       };
       misc = {
         disable_hyprland_logo = true;

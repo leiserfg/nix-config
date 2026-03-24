@@ -3,6 +3,7 @@
   pkgs,
   lib,
   inputs,
+  myPkgs,
   ...
 }:
 let
@@ -10,7 +11,7 @@ let
   extensionFiles = builtins.readDir extensionsDir;
 
   # Reference to the pi package
-  piPackage = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi;
+  piPackage = myPkgs.pi;
 
   # Directory containing builtin extensions
   builtinExtensionsDir = "${piPackage}/lib/node_modules/@mariozechner/pi-coding-agent/examples/extensions";

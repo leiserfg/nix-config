@@ -1,8 +1,13 @@
-{ pkgs, inputs, unstablePkgs, ... }:
+{
+  pkgs,
+  myPkgs,
+  inputs,
+  unstablePkgs,
+  ...
+}:
 {
   home.packages = with pkgs; [
     # --- AI & LLM ---
-    inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi
     llama-cpp-vulkan
 
     # --- Development Tools ---
