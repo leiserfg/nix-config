@@ -110,6 +110,7 @@ let
   };
 in
 {
+  home.packages = [ pkgs.noctalia-shell ];
   systemd.user.services.noctalia-shell = {
     Unit = {
       Description = "Noctalia Shell - Wayland desktop shell";
@@ -131,4 +132,23 @@ in
 
   # Optionally, create a symlink to the settings file in a known location
   home.file.".config/noctalia/settings.json".source = noctalia-settings;
+  # home.file.".config/noctalia/plugins.json".source = pkgs.writeTextFile {
+  #   name = "noctalia-plugins.json";
+  #   text = builtins.toJSON {
+  #     sources = [
+  #       {
+  #         enabled = true;
+  #         name = "Noctalia Plugins";
+  #         url = "https://github.com/noctalia-dev/noctalia-plugins";
+  #       }
+  #     ];
+  #     states = {
+  #       tailscale = {
+  #         enabled = true;
+  #         sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+  #       };
+  #     };
+  #     version = 2;
+  #   };
+  # };
 }

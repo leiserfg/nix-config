@@ -42,6 +42,7 @@ in
 
       signing.key = ssh_key;
       signing.signByDefault = true;
+      signing.format = "ssh";
 
       aliases = {
         st = "status -sb";
@@ -137,9 +138,6 @@ in
       };
       commit = {
         verbose = true;
-      };
-      gpg = {
-        format = "ssh";
       };
       feature = {
         manyFiles = true;

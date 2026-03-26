@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   gtk = {
     enable = true;
@@ -6,6 +6,9 @@
       package = pkgs.papirus-icon-theme;
       name = "Papirus-Dark";
     };
+
+    gtk4.theme = config.gtk.theme;
+
     font = {
       package = pkgs.inter;
       name = "Inter";
