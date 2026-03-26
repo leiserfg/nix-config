@@ -153,15 +153,5 @@
     rink
     uiua
     shikane
-
-    (calibre-web.overridePythonAttrs {
-      pythonRelaxDeps = [
-        "wand"
-        "regex"
-        "flask-babel"
-        "pypdf"
-        "lxml"
-      ];
-    })
   ];
 }
