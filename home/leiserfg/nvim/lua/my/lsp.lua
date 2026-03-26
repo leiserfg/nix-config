@@ -32,6 +32,7 @@ require("lze").load {
       vim.lsp.config(plugin.name, plugin.lsp or {})
       vim.lsp.enable(plugin.name)
     end,
+
     before = function(_)
       vim.lsp.config("*", {
         capabilities = require("blink.cmp").get_lsp_capabilities(),
@@ -46,8 +47,10 @@ require("lze").load {
   { "glsl_analyzer", lsp = {} },
   { "uiua", lsp = {} },
   { "ruff", lsp = {} },
-  { "nushell", lsp = {} },
+  { "tinymist", lsp = {} },
+
   { "ty", lsp = {} },
+  { "nushell", lsp = {} },
   -- { "pyrefly", lsp = {} },
   {
     "mpls",

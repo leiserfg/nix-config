@@ -23,6 +23,7 @@
         vi = "nvim";
         vim = "nvim";
         awsl = "awslogs groups | fzf | xargs awslogs get -G -S -w";
+        ruff-nvim = "ruff check --output-format=concise | nvim +copen -q -";
       };
 
       plugins = [
