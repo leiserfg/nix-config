@@ -15,6 +15,7 @@
       enable = true;
       extraConfig = (builtins.readFile ./config.nu) + ''
         source ${./brace-expand.nu}
+        source ${./psub.nu}
         source ${./fzf/completion.nu}
         source ${./fzf/key-bindings.nu}
       '';
