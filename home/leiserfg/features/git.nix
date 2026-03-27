@@ -214,11 +214,7 @@ in
           ];
           tug = [
             "bookmark"
-            "move"
-            "--from"
-            "heads(::@- & bookmarks())"
-            "--to"
-            "@-"
+            "advance"
           ];
           rebase-all = [
             "rebase"
