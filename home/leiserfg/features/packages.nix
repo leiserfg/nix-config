@@ -107,8 +107,7 @@
     krita
     vtracer
     inkscape
-    ffmpeg-full
-    gpu-screen-recorder
+    ffmpeg
     kitty-img
     cava
     material-symbols

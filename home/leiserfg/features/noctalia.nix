@@ -1,5 +1,22 @@
 { pkgs, lib, ... }:
 let
+  defaultPluginSourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+  
+  # Helper function to generate plugin states
+  mkPluginStates = plugins:
+    builtins.listToAttrs (map (plugin:
+      let
+        name = if builtins.isString plugin then plugin else plugin.name;
+        sourceUrl = if builtins.isString plugin then defaultPluginSourceUrl else (plugin.sourceUrl or defaultPluginSourceUrl);
+      in {
+        name = name;
+        value = {
+          enabled = true;
+          sourceUrl = sourceUrl;
+        };
+      }
+    ) plugins);
+
   noctalia-settings = pkgs.writeTextFile {
     name = "noctalia-settings.json";
     text = builtins.toJSON {
@@ -48,7 +65,7 @@ let
           ];
           right = [
             {
-              id = "ScreenRecorder";
+              id = "plugin:screen-toolkit";
             }
             {
               blacklist = [ ];
@@ -110,7 +127,25 @@ let
   };
 in
 {
-  home.packages = [ pkgs.noctalia-shell ];
+  home = {
+    packages = with pkgs; [
+      noctalia-shell
+
+     # screen-toolkit
+      grim
+      slurp
+      wl-clipboard
+      tesseract
+      imagemagick
+      zbar
+      curl
+      translate-shell
+      wl-screenrec
+      ffmpeg
+      gifski
+
+    ];
+  };
   systemd.user.services.noctalia-shell = {
     Unit = {
       Description = "Noctalia Shell - Wayland desktop shell";
@@ -132,23 +167,22 @@ in
 
   # Optionally, create a symlink to the settings file in a known location
   home.file.".config/noctalia/settings.json".source = noctalia-settings;
-  # home.file.".config/noctalia/plugins.json".source = pkgs.writeTextFile {
-  #   name = "noctalia-plugins.json";
-  #   text = builtins.toJSON {
-  #     sources = [
-  #       {
-  #         enabled = true;
-  #         name = "Noctalia Plugins";
-  #         url = "https://github.com/noctalia-dev/noctalia-plugins";
-  #       }
-  #     ];
-  #     states = {
-  #       tailscale = {
-  #         enabled = true;
-  #         sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-  #       };
-  #     };
-  #     version = 2;
-  #   };
-  # };
+
+  home.file.".config/noctalia/plugins.json".source = pkgs.writeTextFile {
+    name = "noctalia-plugins.json";
+    text = builtins.toJSON {
+      sources = [
+        {
+          enabled = true;
+          name = "Noctalia Plugins";
+          url = defaultPluginSourceUrl;
+        }
+      ];
+      states = mkPluginStates [
+        "screen-toolkit"
+        # Add more plugins here as strings, or as { name = "plugin-name"; sourceUrl = "custom-url"; }
+      ];
+      version = 2;
+    };
+  };
 }
