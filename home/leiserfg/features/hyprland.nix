@@ -65,8 +65,6 @@
         "$mod, P, exec, rofi_power"
         "$mod, D, exec, vicinae toggle"
 
-        "$mod, s, exec, ${lib.getExe myPkgs.wayscriber} --freeze"
-
         "CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l"
         "CTRL ALT $mod , period, movecurrentworkspacetomonitor, r"
 
