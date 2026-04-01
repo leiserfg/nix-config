@@ -1,21 +1,30 @@
 { pkgs, lib, ... }:
 let
   defaultPluginSourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-  
+
   # Helper function to generate plugin states
-  mkPluginStates = plugins:
-    builtins.listToAttrs (map (plugin:
-      let
-        name = if builtins.isString plugin then plugin else plugin.name;
-        sourceUrl = if builtins.isString plugin then defaultPluginSourceUrl else (plugin.sourceUrl or defaultPluginSourceUrl);
-      in {
-        name = name;
-        value = {
-          enabled = true;
-          sourceUrl = sourceUrl;
-        };
-      }
-    ) plugins);
+  mkPluginStates =
+    plugins:
+    builtins.listToAttrs (
+      map (
+        plugin:
+        let
+          name = if builtins.isString plugin then plugin else plugin.name;
+          sourceUrl =
+            if builtins.isString plugin then
+              defaultPluginSourceUrl
+            else
+              (plugin.sourceUrl or defaultPluginSourceUrl);
+        in
+        {
+          name = name;
+          value = {
+            enabled = true;
+            sourceUrl = sourceUrl;
+          };
+        }
+      ) plugins
+    );
 
   noctalia-settings = pkgs.writeTextFile {
     name = "noctalia-settings.json";
@@ -66,6 +75,10 @@ let
           right = [
             {
               id = "plugin:screen-toolkit";
+            }
+
+            {
+              id = "plugin:usb-drive-manager";
             }
             {
               blacklist = [ ];
@@ -131,7 +144,7 @@ in
     packages = with pkgs; [
       noctalia-shell
 
-     # screen-toolkit
+      # screen-toolkit
       grim
       slurp
       wl-clipboard
@@ -180,6 +193,8 @@ in
       ];
       states = mkPluginStates [
         "screen-toolkit"
+        "usb-drive-manager"
+
         # Add more plugins here as strings, or as { name = "plugin-name"; sourceUrl = "custom-url"; }
       ];
       version = 2;

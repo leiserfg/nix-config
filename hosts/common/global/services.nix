@@ -8,9 +8,14 @@
 {
 
   services = {
-
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
     speechd.enable = false;
-
+    # printing.enable = true;
+    # printing.drivers = [ pkgs.hplip ];
     fstrim.enable = true;
     fwupd.enable = true;
     gvfs.enable = true;
@@ -35,7 +40,7 @@
           ids = [
             "239a:102e"
             "beeb:0001"
-            "1d50:615e"  # default zmk
+            "1d50:615e" # default zmk
           ];
         };
         akko = {

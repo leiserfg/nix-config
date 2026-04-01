@@ -80,15 +80,13 @@ require("lze").load {
   { "plenary.nvim", on_require = "plenary" },
   {
     "render-markdown.nvim",
-    ft = { "markdown", "codecompanion" },
+    ft = { "markdown" },
     after = function()
       require("render-markdown").setup()
     end,
   },
   require "my.plugs.dial_nvim",
   require "my.plugs.gx_nvim",
-  { "copilot.lua", cmd = "Copilot" }, -- only for doing :Copilot auth
-  require "my.plugs.codecompanion_nvim",
   require "my.plugs.conform_nvim",
   require "my.plugs.fzf-lua",
   {

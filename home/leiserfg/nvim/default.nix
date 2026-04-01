@@ -123,7 +123,6 @@ in
               conform-nvim
               plenary-nvim
               dial-nvim
-              codecompanion-nvim
               fzf-lua
               gx-nvim
               gitsigns-nvim

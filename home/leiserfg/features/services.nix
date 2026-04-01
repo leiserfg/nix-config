@@ -3,7 +3,7 @@
   services = {
     gpg-agent.enable = true;
     udiskie = {
-      enable = true;
+      enable = false; # Now using a noctalia plugin
       automount = true;
     };
 
