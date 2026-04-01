@@ -104,7 +104,12 @@
     mupdf
     zathura
     imv
-    krita
+    (krita.overrideAttrs (oldAttrs: {
+      postInstall = (oldAttrs.postInstall or "") + ''
+        substituteInPlace $out/share/applications/org.kde.krita.desktop \
+          --replace "Exec=krita %F" "Exec=env QT_QPA_PLATFORM=wayland krita %F"
+      '';
+    }))
     vtracer
     inkscape
     ffmpeg
