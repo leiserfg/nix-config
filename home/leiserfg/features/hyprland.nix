@@ -189,6 +189,7 @@
         XDG_SESSION_TYPE = "wayland";
         XDG_SESSION_DESKTOP = "Hyprland";
         GRIMBLAST_HIDE_CURSOR = 0;
+        QT_QPA_PLATFORM = "wayland";
         # GDK_SCALE = 2;
       };
     };

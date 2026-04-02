@@ -17,6 +17,7 @@ in
       # git-branchless
       jjui
       mergiraf
+      watchman
       ;
   };
 
@@ -175,7 +176,7 @@ in
         "upstream"
       ];
 
-      # fsmonitor.backend = "watcher";
+      fsmonitor.backend = "watchman";
 
       ui.diff-formatter = [
         "env"
