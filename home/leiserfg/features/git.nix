@@ -29,6 +29,7 @@ in
   programs.git = {
     enable = true;
     lfs.enable = true;
+    signing.format = "ssh";
 
     ignores = [
       ".direnv"
@@ -43,7 +44,6 @@ in
 
       signing.key = ssh_key;
       signing.signByDefault = true;
-      signing.format = "ssh";
 
       aliases = {
         st = "status -sb";
