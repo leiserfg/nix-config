@@ -2,14 +2,16 @@
 {
   services = {
     gpg-agent.enable = true;
-    udiskie = {
-      enable = false; # Now using a noctalia plugin
-      automount = true;
-    };
 
     mpris-proxy.enable = true;
-    blueman-applet.enable = true;
     network-manager-applet.enable = true;
     tailscale-systray.enable = true;
+
+    # These are disabled cause we are now using a noctalia plugin
+    udiskie = {
+      enable = false;
+      automount = true;
+    };
+    blueman-applet.enable = false;
   };
 }

@@ -1,5 +1,9 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 {
+  home.activation.vicinae-refresh-apps = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    run --silence ${lib.getExe config.programs.vicinae.package} deeplink vicinae://launch/core/refresh-apps
+  '';
+
   programs.vicinae = {
     enable = true;
     systemd.enable = true;

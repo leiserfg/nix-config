@@ -117,7 +117,10 @@
     guvcview
 
     # --- File Management ---
-    pcmanfm
+    # pcmanfm
+    # nemo-fileroller
+    nemo
+
     xarchiver
     unzip
     yadm
