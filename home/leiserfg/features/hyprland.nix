@@ -57,9 +57,6 @@
 
         # ''$mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"''
 
-        ",Print, exec, ${lib.getExe pkgs.grimblast} save output - | ${lib.getExe pkgs.swappy} -f -"
-        "SHIFT,Print, exec,  ${lib.getExe pkgs.grimblast} save area - | ${lib.getExe pkgs.swappy} -f -"
-
         "$mod, G, exec, game-picker"
         "$mod, 0, exec, rofi_power"
         "$mod, P, exec, rofi_power"
@@ -182,23 +179,18 @@
       ];
 
       exec-once = [
-        "swaybg -i ~/wall.png -m fill"
+        "${lib.getExe pkgs.swaybg} -i ~/wall.png -m fill"
       ];
       env = lib.attrsets.mapAttrsToList (name: val: "${name},${toString val}") {
         XDG_CURRENT_DESKTOP = "Hyprland";
         XDG_SESSION_TYPE = "wayland";
         XDG_SESSION_DESKTOP = "Hyprland";
-        GRIMBLAST_HIDE_CURSOR = 0;
         QT_QPA_PLATFORM = "wayland";
-        # GDK_SCALE = 2;
       };
     };
   };
 
   home.packages = [
-    pkgs.grim
-    pkgs.slurp
-    pkgs.swaybg
     pkgs.bibata-hyprcursor
   ];
 
@@ -270,10 +262,6 @@
         ];
     };
   };
-
-  programs.mpv.config.target-colorspace-hint = lib.mkIf (
-    builtins.compareVersions pkgs.hyprland.version "0.53.3" <= 0
-  ) "no";
 
   systemd.user.services.hyprland-monitor-manager = {
     Unit = {
