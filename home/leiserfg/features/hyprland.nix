@@ -172,6 +172,7 @@
         "match:initial_class dragon-drop      , pin on"
         "match:class .*                       , idle_inhibit fullscreen"
         "match:class org.telegram.desktop , no_screen_share on"
+        "match:class vicinae, border_size 0"
       ];
 
       layerrule = [
