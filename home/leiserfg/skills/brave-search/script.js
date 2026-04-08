@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+import { execSync } from 'child_process';
+
 import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 import TurndownService from "turndown";
@@ -136,10 +138,12 @@ Examples:
     console.error("No query provided.");
     process.exit(1);
   }
-  const apiKey = process.env.BRAVE_API_KEY;
-  if (!apiKey) {
-    console.error("Error: BRAVE_API_KEY environment variable is required.");
-    console.error("Get your API key at: https://api-dashboard.search.brave.com/app/keys");
+  let apiKey;
+  try {
+    apiKey = execSync('rbw get api-dashboard.search.brave.com --field=notes', { encoding: 'utf8' }).trim();
+  } catch (e) {
+    console.error("Error: Could not retrieve API key from bitwarden.");
+    console.error("Make sure rbw is configured and the entry 'api-dashboard.search.brave.com' exists.");
     process.exit(1);
   }
   async function fetchBraveResults(query, numResults, country, freshness) {
