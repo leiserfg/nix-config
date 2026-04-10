@@ -208,7 +208,7 @@ in
             "util"
             "exec"
             "--"
-            "${lib.getExe pkgs.dash}"
+            "bash"
             "-c"
             "${cmd}"
             "" # This will be replaced by bash with $@
@@ -238,10 +238,6 @@ in
             # bash
             ''
               [ ! -f "$(jj root)/.pre-commit-config.yaml" ] || ${lib.getExe pkgs.prek} run -a
-              # no idea why but this is driving the tty insane
-              status=$?
-              stty sane
-              exit $status
             '');
           push = sh (
             # bash

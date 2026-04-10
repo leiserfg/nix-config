@@ -117,11 +117,12 @@
     guvcview
 
     # --- File Management ---
-    # pcmanfm
-    # nemo-fileroller
-    nemo
+    (nemo-with-extensions.override {
+      extensions = [ pkgs.nemo-fileroller ];
+      useDefaultExtensions = false;
+    })
+    file-roller
 
-    xarchiver
     unzip
     yadm
 
