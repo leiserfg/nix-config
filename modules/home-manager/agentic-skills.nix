@@ -67,7 +67,8 @@ in
         let
           folder = "${skillsRoot}/${skillName}";
           # Make the aliases map for passing to instructions (./alias form)
-          aliasRelPath = lib.mapAttrs (k: _: "{baseDir}/${k}") skill.resources;
+          aliasRelPath = lib.mapAttrs (k: _: "${folder}/${k}") skill.resources;
+          # aliasRelPath = lib.mapAttrs (k: _: "./${k}") skill.resources;
           # Link name to target path
           links = mapAttrsToList (alias: resPath: {
             name = "${folder}/${alias}";

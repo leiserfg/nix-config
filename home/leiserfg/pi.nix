@@ -21,7 +21,7 @@ let
     "custom-provider-qwen-cli"
     "interactive-shell.ts"
     "qna.ts"
-    "subagent"
+    # "subagent"
   ];
 
   # Create home.file entries for each local extension
