@@ -61,6 +61,8 @@
         "$mod, 0, exec, rofi_power"
         "$mod, P, exec, rofi_power"
         "$mod, D, exec, vicinae toggle"
+        "$mod, V, exec, vicinae deeplink vicinae://launch/clipboard/history"
+
 
         "CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l"
         "CTRL ALT $mod , period, movecurrentworkspacetomonitor, r"
@@ -173,6 +175,7 @@
         "match:class .*                       , idle_inhibit fullscreen"
         "match:class org.telegram.desktop , no_screen_share on"
         "match:class vicinae, border_size 0"
+
       ];
 
       layerrule = [

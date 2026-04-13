@@ -9,25 +9,7 @@
     '';
 
     plugins = {
-      inherit (pkgs.yaziPlugins) smart-filter;
-      gvfs = (
-        pkgs.stdenvNoCC.mkDerivation rec {
-          pname = "gvfs.yazi";
-          version = "0.0.1";
-
-          src = pkgs.fetchFromGitHub {
-            owner = "boydaihungst";
-            repo = pname;
-            rev = "30440c7";
-            hash = "sha256-jcNHthObhZ5OPHwBxy0Pc3udlGUaZF9WqxHeoXeFbtg=";
-          };
-
-          buildPhase = ''
-            mkdir $out
-            cp -r $src/* $out
-          '';
-        }
-      );
+      inherit (pkgs.yaziPlugins) smart-filter gvfs;
     };
 
     settings = {

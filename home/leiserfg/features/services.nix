@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, pkgs, ... }:
 {
   services = {
     gpg-agent.enable = true;
@@ -13,5 +13,22 @@
       automount = true;
     };
     blueman-applet.enable = false;
+  };
+
+  systemd.user.services.telegram-desktop = {
+    Unit = {
+      Description = "Telegram Desktop";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "simple";
+      ExecStart = "${lib.getExe pkgs.telegram-desktop}";
+      Restart = "always";
+      RestartSec = 5;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
   };
 }
