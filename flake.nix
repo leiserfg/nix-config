@@ -23,10 +23,6 @@
       nixos-hardware = {
         url = "github:NixOS/nixos-hardware";
       };
-      # noctalia = {
-      #   url = "git+https://github.com/noctalia-dev/noctalia-shell?shallow=1";
-      #   inputs.nixpkgs.follows = "nixpkgs";
-      # };
 
       nixCats.url = "github:BirdeeHub/nixCats-nvim";
 
