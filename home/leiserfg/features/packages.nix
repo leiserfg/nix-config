@@ -9,7 +9,8 @@
   home.packages = with pkgs; [
     # --- AI & LLM ---
     llama-cpp-vulkan
-
+    nvtopPackages.amd
+    ghostscript_headless
     # --- Development Tools ---
     gcc
     gdb

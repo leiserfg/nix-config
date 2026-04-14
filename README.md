@@ -9,5 +9,5 @@ sudo cryptsetup config /dev/nvme0n1p3 --label luks-partition
 
 * Do `nix-shell` before installing the stuff so you get access to the tools
 
-Setup home-manager
-`home-manager switch  --flake .`
+`nh os switch -f . the-host`
+`nh home switch -f .  the-user@the-host`
