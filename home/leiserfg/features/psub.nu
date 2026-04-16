@@ -5,7 +5,7 @@ def tmp_pipe [] {
 }
 
 def cleanup_job [pipe:path, timeout] {
-  job spawn -t psub_cleanup {
+  job spawn -d psub_cleanup {
     let $id = job recv
     try {
       if $timeout != null { job recv --timeout $timeout } else { job recv }
@@ -21,7 +21,7 @@ def main_job [pipe:path, write:bool, task, cleanup:int] {
   use std/assert
   assert ((not $write) or ($task | is-not-empty)) "Needs a task to write to"
   
-  job spawn -t psub {
+  job spawn -d psub {
     job id | job send $cleanup
     if $write {
       open -r $pipe | do $task

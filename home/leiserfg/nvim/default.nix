@@ -160,7 +160,7 @@ in
                 "vim"
                 "vi"
               ];
-              neovim-unwrapped = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
+              # neovim-unwrapped = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.neovim;
               hosts.python3.enable = false;
               hosts.perl.enable = false;
               hosts.node.enable = false;
