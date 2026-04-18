@@ -159,10 +159,9 @@ function inferTokenLimits(modelInfo: ModelInfo, meta?: LlamaCppModel["meta"]): {
 
 	// If meta has context info, use it
 	if (meta?.n_ctx_train) {
-		const defaultOut = Math.min(meta.n_ctx_train / 4, 8192);
 		return {
 			contextWindow: meta.n_ctx_train,
-			maxTokens: Math.max(1024, Math.floor(defaultOut)),
+			maxTokens: meta.n_ctx_train,
 			estimatedFamily: "META",
 		};
 	}
