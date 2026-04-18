@@ -31,6 +31,11 @@
         inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
       };
 
+      pi-condenced-milk = {
+        url = "github:tomooshi/condensed-milk-pi";
+        flake = false;
+      };
+
       # run0-sudo-shim = {
       #   url = "github:lordgrimmauld/run0-sudo-shim";
       #   inputs.nixpkgs.follows = "nixpkgs";
