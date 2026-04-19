@@ -58,8 +58,7 @@
         # ''$mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"''
 
         "$mod, G, exec, game-picker"
-        "$mod, 0, exec, rofi_power"
-        "$mod, P, exec, rofi_power"
+        "$mod, 0, exec, noctalia-shell ipc call sessionMenu toggle"
         "$mod, D, exec, vicinae toggle"
         "$mod, V, exec, vicinae deeplink vicinae://launch/clipboard/history"
 
