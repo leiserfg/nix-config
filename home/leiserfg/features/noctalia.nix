@@ -30,9 +30,8 @@ let
     name = "noctalia-settings.json";
     text = builtins.toJSON {
       appLauncher.terminalCommand = "kitty";
-      audio.cavaFrameRate = 30;
       audio.visualizerType = "wave";
-
+      sessionMenu.largeButtonsStyle = false;
       bar = {
         density = "compact";
         position = "top";
@@ -131,7 +130,6 @@ let
       };
       wallpaper.defaultWallpaper = "/home/leiserfg/wall.png";
       location = {
-        monthBeforeDay = false;
         name = "Berlin, Germany";
       };
       dock.enabled = false;

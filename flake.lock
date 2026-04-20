@@ -465,14 +465,14 @@
         "url": "https://github.com/NixOS/nixpkgs"
       }
     },
-    "pi-condenced-milk": {
+    "pi-condensed-milk": {
       "flake": false,
       "locked": {
-        "lastModified": 1776488685,
-        "narHash": "sha256-4Ngn60QHxAFNEVU2NGgMjNrvzvZ0jmwWSaha3U3q7Tw=",
+        "lastModified": 1776544579,
+        "narHash": "sha256-33pM/wkLdvrEMl9IGPKof+sgaAeZFgZTs73tptoE6Is=",
         "owner": "tomooshi",
         "repo": "condensed-milk-pi",
-        "rev": "f61431f6f7cee63bf69fbc18fc53ddd76c606706",
+        "rev": "0c4ee6b8b91d5f7af2ca1e3658bb5700a1470836",
         "type": "github"
       },
       "original": {
@@ -492,7 +492,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "pi-condenced-milk": "pi-condenced-milk"
+        "pi-condensed-milk": "pi-condensed-milk"
       }
     },
     "systems": {
