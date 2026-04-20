@@ -14,6 +14,7 @@
     nushell = {
       enable = true;
       extraConfig = (builtins.readFile ./config.nu) + ''
+        source ${./notebook_theme.nu}
         source ${./brace-expand.nu}
         source ${./psub.nu}
         source ${./fzf/completion.nu}
