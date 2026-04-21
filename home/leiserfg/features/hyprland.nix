@@ -58,10 +58,13 @@
         # ''$mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"''
 
         "$mod, G, exec, game-picker"
-        "$mod, 0, exec, noctalia-shell ipc call sessionMenu toggle"
+        # "$mod, 0, exec, noctalia-shell ipc call sessionMenu toggle"
+
+        "$mod, 0, exec, vicinae deeplink vicinae://launch/power/"
+        "$mod, 0, exec, vicinae toggle"
+
         "$mod, D, exec, vicinae toggle"
         "$mod, V, exec, vicinae deeplink vicinae://launch/clipboard/history"
-
 
         "CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l"
         "CTRL ALT $mod , period, movecurrentworkspacetomonitor, r"
@@ -117,6 +120,7 @@
         # allow_session_lock_restore = true;
       };
       general = {
+        # layout = "scrolling";
         layout = "master";
         gaps_out = 3;
         gaps_in = 4;
@@ -238,8 +242,8 @@
     enable = true;
     settings = {
       general = {
-        # lock_cmd = "pidof hyprlock || hyprlock";
-        lock_cmd = "noctalia-shell ipc call lockScreen lock";
+        lock_cmd = "pidof hyprlock || hyprlock";
+        # lock_cmd = "noctalia-shell ipc call lockScreen lock";
         before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
         after_sleep_cmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
       };
