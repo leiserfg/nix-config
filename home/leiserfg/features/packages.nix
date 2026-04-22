@@ -8,7 +8,7 @@
 {
   home.packages = with pkgs; [
     # --- AI & LLM ---
-    llama-cpp-vulkan
+    # llama-cpp-vulkan
 
     # --- Development Tools ---
     gcc

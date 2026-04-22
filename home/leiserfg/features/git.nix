@@ -17,7 +17,7 @@ in
       # git-branchless
       jjui
       mergiraf
-      watchman
+      # watchman
       ;
   };
 

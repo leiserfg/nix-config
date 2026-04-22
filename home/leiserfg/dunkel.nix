@@ -12,7 +12,7 @@
   ];
   home.packages = with pkgs; [
     # centrifugo
-    pgcli
+    #pgcli
     insomnia
     libreoffice-qt6
     terraform
