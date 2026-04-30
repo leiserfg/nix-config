@@ -24,7 +24,7 @@ export-env {
   $env.FZF_CTRL_R_OPTS     = $env.FZF_CTRL_R_OPTS?     | default ""
   $env.FZF_ALT_C_COMMAND   = $env.FZF_ALT_C_COMMAND?   | default "^find . -type d"
   $env.FZF_ALT_C_OPTS      = $env.FZF_ALT_C_OPTS?      | default "--preview 'ls --color=always {}'"
-  $env.FZF_DEFAULT_COMMAND = $env.FZF_DEFAULT_COMMAND? | default "^find . -type f"
+  $env.FZF_DEFAULT_COMMAND = $env.FZF_DEFAULT_COMMAND? | default "find . -type f"
 }
 
 # Directories

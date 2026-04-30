@@ -14,12 +14,12 @@
         "x-scheme-handler/http" = browser;
         "x-scheme-handler/https" = browser;
         "text/html" = browser;
-        "inode/directory" = "pcmanfm.desktop";
         "text/*" = editor;
         "application/x-subrip" = editor;
-        "application/zip" = "xarchiver.desktop";
-        "application/pdf" = "org.pwmt.zathura.desktop";
-        "application/epub+zip" = "org.pwmt.zathura.desktop";
+        # "application/pdf" = "org.pwmt.zathura.desktop";
+        "application/pdf" = "sioyek.desktop";
+        "application/epub+zip" = "sioyek.desktop";
+        # "application/epub+zip" = "org.pwmt.zathura.desktop";
         "image/*" = "imv.desktop";
       };
     };

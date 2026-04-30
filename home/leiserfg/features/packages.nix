@@ -9,7 +9,7 @@
   home.packages = with pkgs; [
     # --- AI & LLM ---
     # llama-cpp-vulkan
-
+    (nvtopPackages.amd)
     # --- Development Tools ---
     gcc
     gdb
@@ -101,10 +101,10 @@
     inferno
 
     # --- Media & Graphics ---
-    mupdf
     # zathura
+    sioyek
     imv
-    krita
+    # krita
     vtracer
     inkscape
     ffmpeg
