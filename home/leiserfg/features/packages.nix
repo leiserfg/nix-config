@@ -102,7 +102,7 @@
 
     # --- Media & Graphics ---
     mupdf
-    zathura
+    # zathura
     imv
     krita
     vtracer

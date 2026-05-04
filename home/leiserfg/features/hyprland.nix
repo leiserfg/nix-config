@@ -60,7 +60,8 @@
         "$mod, G, exec, game-picker"
         # "$mod, 0, exec, noctalia-shell ipc call sessionMenu toggle"
 
-        "$mod, 0, exec, vicinae deeplink vicinae://launch/power/"
+        # "$mod, 0, exec, vicinae deeplink vicinae://launch/power/"
+        "$mod, 0, exec, rofi_power"
 
         "$mod, D, exec, vicinae toggle"
         "$mod, V, exec, vicinae deeplink vicinae://launch/clipboard/history"

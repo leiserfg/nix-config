@@ -26,7 +26,8 @@
     #   '';
     # })
 
-    myPkgs.ansel
+    ansel
+    darktable
     # pixieditor
     #pgcli
     # poetry

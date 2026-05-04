@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   home.packages = with pkgs; [
     # --- Scripts & Custom Binaries ---
     (writeShellScriptBin "xdg-open" ''
-      exec -a $0 ${handlr-regex}/bin/handlr open "$@"
+      exec -a $0 ${lib.getExe handlr-regex} open "$@"
     '')
     (writeShellScriptBin "vicinae-pp" ''
       printf " Performance\n Balanced\n Power Saver" \
