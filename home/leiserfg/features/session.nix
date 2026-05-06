@@ -23,6 +23,8 @@
     # Fixes some qt programs crashing while using gtks file-dialog
     GSETTINGS_SCHEMA_DIR = "${pkgs.gtk3}/share/gsettings-schemas/${pkgs.gtk3.name}/glib-2.0/schemas";
 
+    # For pixieditor
+    AVALONIA_GLOBAL_SCALE_FACTOR = 2;
   };
 
   fonts.fontconfig.enable = true;

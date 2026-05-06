@@ -28,7 +28,7 @@
 
     ansel
     darktable
-    # pixieditor
+    myPkgs.pixieditor
     #pgcli
     # poetry
     # blender-hip
