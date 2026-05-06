@@ -4,27 +4,54 @@
 #  / __/ / /_/ __/
 # /_/   /___/_/ key-bindings.nu
 #
-# - $FZF_TMUX_OPTS --
-# - $FZF_CTRL_T_COMMAND
+# - $FZF_TMUX               (default: 0)
+# - $FZF_TMUX_OPTS
+# - $FZF_TMUX_HEIGHT        (default: 40%)
+# - $FZF_CTRL_T_COMMAND     (set to "" to disable)
 # - $FZF_CTRL_T_OPTS
-# - $FZF_CTRL_R_OPTS ---
-# - $FZF_ALT_C_COMMAND
+# - $FZF_CTRL_R_COMMAND     (set to "" to disable)
+# - $FZF_CTRL_R_OPTS
+# - $FZF_ALT_C_COMMAND      (set to "" to disable)
 # - $FZF_ALT_C_OPTS
-
-# Dependencies: `find`, `bat`.
 
 # Code provided by @igor-ramazanov
 # Source: https://github.com/junegunn/fzf/issues/4122#issuecomment-2607368316
 
+# Merge default options in the same order as bash/zsh:
+#   1. --height, --min-height, --bind=ctrl-z:ignore, $prepend
+#   2. $FZF_DEFAULT_OPTS_FILE contents
+#   3. $FZF_DEFAULT_OPTS, $append
+def __fzf_defaults [prepend: string, append: string]: nothing -> string {
+  let base = $"--height ($env.FZF_TMUX_HEIGHT? | default '40%') --min-height 20+ --bind=ctrl-z:ignore ($prepend)"
+  let opts_file = if ($env.FZF_DEFAULT_OPTS_FILE? | default '' | is-not-empty) {
+    try { open --raw ($env.FZF_DEFAULT_OPTS_FILE) | str trim } catch { '' }
+  } else {
+    ''
+  }
+  let default_opts = $env.FZF_DEFAULT_OPTS? | default ''
+  $"($base) ($opts_file) ($default_opts) ($append)" | str trim
+}
+
+# Return the fzf command to use: fzf-tmux when inside tmux and
+# FZF_TMUX is enabled or FZF_TMUX_OPTS is set, plain fzf otherwise.
+def __fzfcmd []: nothing -> list<string> {
+  let in_tmux = ($env.TMUX_PANE? | default '' | into string | is-not-empty)
+  if $in_tmux {
+    let fzf_tmux = ($env.FZF_TMUX? | default 0 | into string)
+    let fzf_tmux_opts = ($env.FZF_TMUX_OPTS? | default '' | into string)
+    if ($fzf_tmux != '0') or ($fzf_tmux_opts | is-not-empty) {
+      let opts = if ($fzf_tmux_opts | is-not-empty) { $fzf_tmux_opts } else { $"-d($env.FZF_TMUX_HEIGHT? | default '40%')" }
+      return ['fzf-tmux' ...(($opts | split row ' ' | where { $in != '' })) '--']
+    }
+  }
+  ['fzf']
+}
+
 
 export-env {
-  $env.FZF_TMUX_OPTS       = $env.FZF_TMUX_OPTS?       | default "--height 40%"
-  $env.FZF_CTRL_T_COMMAND  = $env.FZF_CTRL_T_COMMAND?  | default "^find . -type f"
-  $env.FZF_CTRL_T_OPTS     = $env.FZF_CTRL_T_OPTS?     | default "--preview 'bat --color=always --style=full --line-range=:500 {}' "
+  $env.FZF_CTRL_T_OPTS     = $env.FZF_CTRL_T_OPTS?     | default ""
   $env.FZF_CTRL_R_OPTS     = $env.FZF_CTRL_R_OPTS?     | default ""
-  $env.FZF_ALT_C_COMMAND   = $env.FZF_ALT_C_COMMAND?   | default "^find . -type d"
-  $env.FZF_ALT_C_OPTS      = $env.FZF_ALT_C_OPTS?      | default "--preview 'ls --color=always {}'"
-  $env.FZF_DEFAULT_COMMAND = $env.FZF_DEFAULT_COMMAND? | default "find . -type f"
+  $env.FZF_ALT_C_OPTS      = $env.FZF_ALT_C_OPTS?      | default ""
 }
 
 # Directories
@@ -37,9 +64,18 @@ const alt_c = {
       {
         send: executehostcommand
         cmd: "
-          let fzf_command = \$\"($env.FZF_ALT_C_COMMAND) | fzf ($env.FZF_ALT_C_OPTS)\";
-          let result = nu -c $fzf_command;
-          cd $result;
+          let fzf_opts = (__fzf_defaults '--reverse --walker=dir,follow,hidden --scheme=path' $'($env.FZF_ALT_C_OPTS) +m');
+          let fzfcmd = (__fzfcmd);
+          let fzf_args = ($fzfcmd | skip 1);
+          let alt_c_cmd = ($env.FZF_ALT_C_COMMAND? | default null);
+          let result = if ($alt_c_cmd == null) or ($alt_c_cmd | is-empty) {
+            with-env { FZF_DEFAULT_OPTS: $fzf_opts, FZF_DEFAULT_OPTS_FILE: '' } { ^($fzfcmd | first) ...$fzf_args }
+          } else {
+            let fzf_cmd_str = ($fzfcmd | str join ' ');
+            let sh_cmd = [$alt_c_cmd '|' $fzf_cmd_str] | str join ' ';
+            with-env { FZF_DEFAULT_OPTS: $fzf_opts, FZF_DEFAULT_OPTS_FILE: '' } { ^sh -c $sh_cmd }
+          };
+          if ($result | is-not-empty) { cd $result };
         "
       }
     ]
@@ -47,7 +83,7 @@ const alt_c = {
 
 # History
 const ctrl_r = {
-  name: history_menu
+  name: fzf_history
   modifier: control
   keycode: char_r
   mode: [emacs, vi_insert, vi_normal]
@@ -55,7 +91,24 @@ const ctrl_r = {
     {
       send: executehostcommand
       cmd: "commandline edit --replace (
-      history | select command | reverse | uniq | get command | str join (char -i 0)|fzf --scheme history --read0 --query \$\"(commandline)\" |decode utf-8|str trim
+        let fzf_opts = (__fzf_defaults '' $'--scheme=history --bind=ctrl-r:toggle-sort --wrap-sign \"\t↳ \" --highlight-line ($env.FZF_CTRL_R_OPTS) +m --read0');
+        let fzfcmd = (__fzfcmd);
+        let fzf_args = ($fzfcmd | skip 1);
+        # reverse | uniq: show most recent first, deduplicate keeping the latest.
+        # Nushell's `history` loads the full history as an in-memory table
+        # (bounded by $env.config.history.max_size, default 100,000), so
+        # reverse and uniq run on an already-materialized list. This is O(n)
+        # but acceptable for typical history sizes; unlike bash/zsh `fc -r`,
+        # there is no streaming primitive that would let fzf show the latest
+        # entries before the full list is consumed.
+        history
+          | get command
+          | reverse
+          | uniq
+          | str join (char -i 0)
+          | with-env { FZF_DEFAULT_OPTS: $fzf_opts, FZF_DEFAULT_OPTS_FILE: '' } { ^($fzfcmd | first) ...$fzf_args --query (commandline) }
+          | decode utf-8
+          | str trim
       )"
     }
   ]
@@ -71,8 +124,18 @@ const ctrl_t =  {
       {
         send: executehostcommand
         cmd: "
-          let fzf_command = \$\"($env.FZF_CTRL_T_COMMAND) | fzf ($env.FZF_CTRL_T_OPTS)\";
-          let result = nu -l -i -c $fzf_command;
+          let fzf_opts = (__fzf_defaults '--reverse --walker=file,dir,follow,hidden --scheme=path' $'($env.FZF_CTRL_T_OPTS) -m');
+          let fzfcmd = (__fzfcmd);
+          let fzf_args = ($fzfcmd | skip 1);
+          let ctrl_t_cmd = ($env.FZF_CTRL_T_COMMAND? | default null);
+          let result = if ($ctrl_t_cmd == null) or ($ctrl_t_cmd | is-empty) {
+            with-env { FZF_DEFAULT_OPTS: $fzf_opts, FZF_DEFAULT_OPTS_FILE: '' } { ^($fzfcmd | first) ...$fzf_args }
+          } else {
+            let fzf_cmd_str = ($fzfcmd | str join ' ');
+            let sh_cmd = [$ctrl_t_cmd '|' $fzf_cmd_str] | str join ' ';
+            with-env { FZF_DEFAULT_OPTS: $fzf_opts, FZF_DEFAULT_OPTS_FILE: '' } { ^sh -c $sh_cmd }
+          };
+          let result = ($result | str replace --all (char newline) ' ' | str trim);
           commandline edit --append $result;
           commandline set-cursor --end
         "
@@ -80,10 +143,24 @@ const ctrl_t =  {
     ]
 }
 
-$env.config.keybindings = $env.config.keybindings | append [
-    $alt_c
-    $ctrl_r
-    $ctrl_t
-]
+# Helper to check if a binding is enabled. A binding is disabled when
+# the corresponding *_COMMAND variable is explicitly set to "".
+# When not defined (null), the binding is enabled (using fzf's built-in walker).
+def __fzf_binding_enabled [var_name: string]: nothing -> bool {
+  let val = ($env | get -o $var_name)
+  # null = not defined = enabled; "" = explicitly disabled
+  $val == null or ($val | into string | is-not-empty)
+}
 
-
+# Update the $env.config
+export-env {
+  let fzf_names = ['fzf_files', 'fzf_dirs', 'fzf_history']
+  # Filter out any existing fzf bindings, then re-add the enabled ones.
+  # This allows re-sourcing to update bindings (e.g. after changing
+  # FZF_CTRL_T_COMMAND) without creating duplicates.
+  mut bindings = ($env.config.keybindings | where { |kb| $kb.name not-in $fzf_names })
+  if (__fzf_binding_enabled 'FZF_ALT_C_COMMAND') { $bindings = ($bindings | append $alt_c) }
+  if (__fzf_binding_enabled 'FZF_CTRL_R_COMMAND') { $bindings = ($bindings | append $ctrl_r) }
+  if (__fzf_binding_enabled 'FZF_CTRL_T_COMMAND') { $bindings = ($bindings | append $ctrl_t) }
+  $env.config.keybindings = $bindings
+}
