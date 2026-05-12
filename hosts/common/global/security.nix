@@ -40,6 +40,7 @@
     "net.core.default_qdisc" = "cake";
   };
   boot.kernelModules = [ "tcp_bbr" ];
+  boot.blacklistedKernelModules = [ "esp4" "esp6" "rxrpc" ];
   security.pam.loginLimits = [
     {
       domain = "*";

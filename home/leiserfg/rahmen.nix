@@ -27,7 +27,7 @@
     # })
 
     ansel
-    darktable
+    # darktable
     myPkgs.pixieditor
     #pgcli
     # poetry
@@ -50,21 +50,22 @@
 
     # steam
     # scrcpy
-    llama-cpp-vulkan
+    myPkgs.llama-cpp-vulkan
     # (llama-cpp-vulkan.overrideAttrs (
     #   final: prev: {
     #     version = "8884";
     #     src = fetchFromGitHub {
-    #       owner = "ggml-org";
-    #       repo = "llama.cpp";
-    #       rev = "750579ff14198fe964ab7fc5565b1d77600deab4";
-    #       hash = "sha256-5S/r7u6OI1DF25xEGnvsUNCFrAWJYjuRvBNbW5KaHh8=";
+    #       owner = "Indras-Mirror";
+    #       repo = "llama.cpp-mtp";
+    #       rev = "e2170c42ebb0fb7719e0ecc268826cd08f492e2b";
+    #       hash = "sha256-bQQ4noE761NzBpxJMzoJD+ejMZUdX/gfmxcf2UaMipw=";
     #       leaveDotGit = true;
     #       postFetch = ''
     #         git -C "$out" rev-parse --short HEAD > $out/COMMIT
     #         find "$out" -name .git -print0 | xargs -0 rm -rf
     #       '';
     #     };
+    #     npmDepsHash = "sha256-k62LIbyY2DXvs7XXbX0lNPiYxuYzeJUyQtS4eA+68f8=";
     #   }
     # ))
   ];

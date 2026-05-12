@@ -146,7 +146,7 @@
     localsend
     wtype
     voxtype-vulkan
-    quickshell
+    # quickshell
     steam-run
     glib
     jq
