@@ -14,7 +14,7 @@ let
   piPackage = myPkgs.pi;
 
   # Directory containing builtin extensions
-  builtinExtensionsDir = "${piPackage}/lib/node_modules/@mariozechner/pi-coding-agent/examples/extensions";
+  builtinExtensionsDir = "${piPackage}/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions";
 
   # List of builtin extension names to include (empty by default, add as needed)
   builtinExtensionNames = [
@@ -80,28 +80,10 @@ let
     }) subagentPromptsFiles
   );
 
-  # Get extensions from flake inputs that start with "pi-"
-  # These are non-flake inputs pointing to extension directories
-  # Name is derived from the last path segment in the URL, falling back to stripping the prefix
-  flakeExtensionEntries = lib.pipe inputs [
-    (lib.filterAttrs (name: _: lib.hasPrefix "pi-" name))
-    (lib.mapAttrs' (
-      name: input:
-      let
-        extName = if input ? url then lib.last (lib.splitString "/" input.url) else lib.removePrefix "pi-" name;
-      in
-      lib.nameValuePair ".pi/agent/extensions/${extName}" {
-        source = input.outPath;
-        recursive = true;
-      }
-    ))
-  ];
-
   # Combine all extension entries
   allExtensionEntries = lib.mkMerge [
     extensionEntries
     builtinExtensionEntries
-    flakeExtensionEntries
     agentEntries
     promptEntries
   ];
