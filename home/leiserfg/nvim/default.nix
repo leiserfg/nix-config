@@ -65,7 +65,6 @@ in
             lze
             lzextras
             typst-preview-nvim
-            deepwhite-nvim
             nvim-parinfer
           ];
 

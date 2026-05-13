@@ -86,7 +86,6 @@ require("lze").load {
     end,
   },
   require "my.plugs.dial_nvim",
-  require "my.plugs.gx_nvim",
   require "my.plugs.conform_nvim",
   require "my.plugs.fzf-lua",
   {

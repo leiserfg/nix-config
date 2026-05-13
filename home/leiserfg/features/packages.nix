@@ -118,11 +118,11 @@
 
     # --- File Management ---
     (nemo-with-extensions.override {
-      extensions = [ pkgs.nemo-fileroller ];
+      # extensions = [ pkgs.nemo-fileroller ];
       useDefaultExtensions = false;
     })
-    file-roller
-
+    # file-roller
+    peazip
     unzip
     yadm
 
