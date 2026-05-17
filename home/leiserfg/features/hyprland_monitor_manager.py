@@ -64,7 +64,7 @@ class MonitorRule(NamedTuple):
 
     name: str
     desc: str
-    rule: str
+    rule: dict  # Lua monitor config as dict with keys like 'output', 'scale', 'res', etc.
     width: int
     height: int
     refresh: float
@@ -95,22 +95,51 @@ def hyprland_get_monitors(all_monitors: bool = False) -> list | None:
         return None
 
 
-def hyprland_set_rule(rule_command: str) -> bool:
-    """Execute hyprctl keyword command to set a rule. Returns True on success.
-    The entire rule_command is passed as a single argument to hyprctl keyword to
-    avoid splitting on spaces which can break monitor descriptions that contain
-    spaces or commas.
+def dict_to_lua_syntax(d: dict) -> str:
+    """Convert a Python dict to Lua table syntax.
+    Example: {output='eDP-1', scale=1.5} -> "hl.monitor{output='eDP-1', scale=1.5}"
+    """
+    items = []
+    for key, value in d.items():
+        if isinstance(value, str):
+            # Escape single quotes in strings
+            escaped_value = value.replace("'", "\\'") 
+            items.append(f"{key}='{escaped_value}'")
+        elif isinstance(value, bool):
+            items.append(f"{key}={'true' if value else 'false'}")
+        elif isinstance(value, (int, float)):
+            items.append(f"{key}={value}")
+        else:
+            items.append(f"{key}={value}")
+    
+    return "hl.monitor{" + ", ".join(items) + "}"
+
+
+def hyprland_set_rule(rule_dict: dict) -> bool:
+    """Execute hyprctl eval command to set a Lua rule. Returns True on success.
+    For Hyprland 0.55+, this uses eval to execute Lua code directly.
+    
+    Args:
+        rule_dict: Dictionary with monitor config (e.g., {output='eDP-1', scale=1.5})
     """
     try:
-        subprocess.run(
-            ["hyprctl", "keyword", rule_command],
+        lua_command = dict_to_lua_syntax(rule_dict)
+        print(f"  Executing: hyprctl eval {lua_command}", file=sys.stderr)
+        result = subprocess.run(
+            ["hyprctl", "eval", lua_command],
             capture_output=True,
             text=True,
             check=True,
         )
+        if result.stdout:
+            print(f"  Output: {result.stdout}", file=sys.stderr)
         return True
     except subprocess.CalledProcessError as e:
-        print(f"Error running hyprctl keyword: {e}", file=sys.stderr)
+        print(f"Error running hyprctl eval: {e}", file=sys.stderr)
+        if e.stdout:
+            print(f"  stdout: {e.stdout}", file=sys.stderr)
+        if e.stderr:
+            print(f"  stderr: {e.stderr}", file=sys.stderr)
         return False
 
 
@@ -588,10 +617,16 @@ def create_ideal_monitor_rule(
         if scale != perfect_scale:
             print(f"  Adjusted to valid scale: {scale} (produces whole logical pixels)")
 
-    # Create the monitor rule using desc instead of name
-    rule = f"monitor desc:{desc},{width}x{height}@{refresh:.0f},auto,{scale}"
+    # Create the monitor rule as a dict for Hyprland 0.55+ Lua API
+    # Use desc: for matching by description (more reliable), except for eDP-1 which uses name
+    output_key = monitor_name if monitor_name == "eDP-1" else f"desc:{desc}"
+    rule = {
+        "output": output_key,
+        "scale": scale,
+        "mode": f"{width}x{height}@{refresh:.0f}",
+    }
 
-    print(f"Calculated ideal {monitor_name} rule: {rule}")
+    print(f"Calculated ideal {monitor_name} rule: {dict_to_lua_syntax(rule)}")
     print(f"  Resolution: {width}x{height}")
     print(f"  Refresh rate: {refresh:.0f}Hz")
     print(f"  Scale: {scale}")
@@ -613,7 +648,7 @@ def apply_monitor_rule(monitor_rule: MonitorRule) -> bool:
         print("No monitor rule to apply!", file=sys.stderr)
         return False
 
-    print(f"Applying rule: {monitor_rule.rule}")
+    print(f"Applying rule: {dict_to_lua_syntax(monitor_rule.rule)}")
     return hyprland_set_rule(monitor_rule.rule)
 
 
@@ -665,7 +700,7 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
 def disable_edp1() -> None:
     """Disable eDP-1 monitor"""
     print("Disabling eDP-1...")
-    hyprland_set_rule("monitor eDP-1,disable")
+    hyprland_set_rule({"output": "eDP-1", "disabled": True})
 
 
 def enable_edp1(ideal_rule: MonitorRule | None) -> None:

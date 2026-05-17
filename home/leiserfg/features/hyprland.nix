@@ -14,189 +14,341 @@
     ./_wayland_common.nix
   ];
 
-  services.kanshi.systemdTarget = "hyprland-session.target";
-
   home.pointerCursor.hyprcursor = {
     enable = true;
   };
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    configType = "hyprlang";
-    systemd = {
-      enable = true;
-      variables = [ "--all" ];
-    };
+  wayland.windowManager.hyprland =
+    let
+      lua = lib.generators.mkLuaInline;
+      # Shorthand lua functions
+      exec = cmd: lua "hl.dsp.exec_cmd('${cmd}')";
+      focus = dir: lua "hl.dsp.focus({ direction = '${dir}' })";
+      move = dir: lua "hl.dsp.window.move({ direction = '${dir}' })";
+      close = lua "hl.dsp.window.close()";
+      kill = lua "hl.dsp.window.kill()";
+      fullscreen = lua "hl.dsp.window.fullscreen()";
+      workspace_switch = ws: lua "hl.dsp.focus({ workspace = ${toString ws} })";
+      workspace_move = ws: lua "hl.dsp.window.move({ workspace = ${toString ws} })";
 
-    plugins = [
-      # pkgs.hyprlandPlugins.hypr-dynamic-cursors
-    ];
-    settings = {
-      "$mod" = "SUPER";
+      # Convert bind list to proper format
+      mkBinds =
+        bindList:
+        map (
+          item:
+          if builtins.length item == 2 then
+            {
+              _args = [
+                (builtins.elemAt item 0)
+                (builtins.elemAt item 1)
+              ];
+            }
+          else if builtins.length item == 3 then
+            {
+              _args = [
+                (builtins.elemAt item 0)
+                (builtins.elemAt item 1)
+                (builtins.elemAt item 2)
+              ];
+            }
+          else
+            throw "Invalid bind format: expected 2 or 3 elements"
+        ) bindList;
 
-      bind = [
-
-        # Move focus
-        "$mod, H, movefocus, l"
-        "$mod, L, movefocus, r"
-        "$mod, K, movefocus, u"
-        "$mod, J, movefocus, d"
-
-        "$mod SHIFT, H, movewindow, l"
-        "$mod SHIFT, L, movewindow, r"
-        "$mod SHIFT, K, movewindow, u"
-        "$mod SHIFT, J, movewindow, d"
-
-        "$mod, Escape, killactive"
-        "$mod , X, exec, hyprctl kill"
-
-        "$mod,f,fullscreen"
-        "$mod, Slash, exec, firefox"
-        "$mod, Return, exec, kitty -1"
-
-        # ''$mod, S, exec, sh -c "cat ~/.config/shikane/config.toml|grep name|sed -E 's/.*\"(.*)\"/\1/' | vicinae -dmenu -i  | xargs shikanectl switch"''
-
-        # ''$mod, S, exec, sh -c "hyprctl monitors | grep eDP-1 &&  hyprctl keyword monitor eDP-1,disable || hyprctl keyword monitor eDP-1,preferred,auto,auto"''
-
-        "$mod, G, exec, game-picker"
-        # "$mod, 0, exec, noctalia-shell ipc call sessionMenu toggle"
-
-        # "$mod, 0, exec, vicinae deeplink vicinae://launch/power/"
-        "$mod, 0, exec, rofi_power"
-
-        "$mod, D, exec, vicinae toggle"
-        "$mod, V, exec, vicinae deeplink vicinae://launch/clipboard/history"
-
-        "CTRL ALT $mod , comma, movecurrentworkspacetomonitor, l"
-        "CTRL ALT $mod , period, movecurrentworkspacetomonitor, r"
-
-        ",XF86AudioMute,         exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ",XF86AudioMicMute,      exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-
-      ]
-      ++ (builtins.concatLists (
+      # Generate workspace bindings
+      workspaceBindings = builtins.concatLists (
         lib.lists.imap1 (ws: code: [
-          "$mod, ${code}, workspace, ${toString ws}"
-          "$mod SHIFT, ${code}, movetoworkspace, ${toString ws}"
-
-          "$mod, ${toString ws}, workspace, ${toString ws}"
-          "$mod SHIFT, ${toString ws}, movetoworkspace, ${toString ws}"
+          [
+            "SUPER+${code}"
+            (workspace_switch ws)
+          ]
+          [
+            "SUPER+SHIFT+${code}"
+            (workspace_move ws)
+          ]
+          [
+            "SUPER+${toString ws}"
+            (workspace_switch ws)
+          ]
+          [
+            "SUPER+SHIFT+${toString ws}"
+            (workspace_move ws)
+          ]
         ]) (lib.strings.stringToCharacters "QWERTYUIO")
-      ))
+      );
+    in
+    {
+      enable = true;
+      configType = "lua";
+      systemd = {
+        enable = true;
+        variables = [ "--all" ];
+      };
 
-      ;
-
-      binde = [
-        ",XF86AudioLowerVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ",XF86AudioRaiseVolume,  exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86MonBrightnessUp,   exec, brightnessctl -set 10%+"
-        ",XF86MonBrightnessDown, exec, brightnessctl -set 10%-"
-      ];
-      bindm = [
-        "$mod, mouse:272, movewindow"
-        "$mod, mouse:273, resizewindow"
-        ", mouse:277, overview:toggle"
+      plugins = [
+        # pkgs.hyprlandPlugins.hypr-dynamic-cursors
       ];
 
-      # bindl = [
-      #   '', switch:on:Lid Switch, exec, hyprctl keyword monitor "eDP-1, disable"''
-      #   # Trigger when the switch is turning off.
-      #   '', switch:off:Lid Switch, exec, hyprctl keyword monitor "eDP-1, preferred, auto, 1"''
-      # ];
-
-      # debug = {
-      #   disable_logs = false;
-      # };
-
-      render = {
-        direct_scanout = 2; # Enable in games
-        # new_render_scheduling = true;
-        cm_sdr_eotf = "srgb";
-      };
-      misc = {
-        disable_hyprland_logo = true;
-        # vrr = 2; # in fullscreen
-        vfr = true;
-
-        # allow_session_lock_restore = true;
-      };
-      general = {
-        # layout = "scrolling";
-        layout = "master";
-        gaps_out = 3;
-        gaps_in = 4;
-        "col.active_border" = "rgb(bb3344) rgb(33bb44) 45deg";
-        border_size = 2;
-      };
-
-      cursor = {
-        inactive_timeout = 10;
-      };
-
-      misc = {
-        # enable_swallow = true;
-        # swallow_regex = "^(kitty)$";
-        # swallow_exception_regex = ''^(wpp.*|wps.*|et.*|.*\.tex.*|xev|wev)$'';
-      };
-
-      gestures = {
-        gesture = "4, horizontal, workspace";
-      };
-
-      binds = {
-        workspace_back_and_forth = true;
-      };
-
-      ecosystem = {
-        no_update_news = true;
-        no_donation_nag = true;
-      };
-
-      xwayland = {
-        force_zero_scaling = true;
-      };
-
-      input = {
-        kb_layout = "us";
-        kb_variant = "altgr-intl";
-        follow_mouse = 2;
-
-        touchpad = {
-          disable_while_typing = true;
-          natural_scroll = true;
+      settings = {
+        config = {
+          render = {
+            direct_scanout = 2; # Enable in games
+            cm_sdr_eotf = "srgb";
+          };
+          misc = {
+            disable_hyprland_logo = true;
+          };
+          general = {
+            layout = "master";
+            gaps_out = 3;
+            gaps_in = 4;
+            "col.active_border" = {
+              colors = [
+                "rgba(bb3344ff)"
+                "rgba(33bb44ff)"
+              ];
+              angle = 45;
+            };
+            border_size = 2;
+          };
+          cursor = {
+            inactive_timeout = 10;
+            no_hardware_cursors = 2;
+          };
+          binds = {
+            workspace_back_and_forth = true;
+          };
+          ecosystem = {
+            no_update_news = true;
+            no_donation_nag = true;
+          };
+          xwayland = {
+            force_zero_scaling = true;
+          };
+          input = {
+            kb_layout = "us";
+            kb_variant = "altgr-intl";
+            follow_mouse = 2;
+            touchpad = {
+              disable_while_typing = true;
+              natural_scroll = true;
+            };
+          };
         };
+
+        gesture = {
+          fingers = 4;
+          direction = "horizontal";
+          action = "workspace";
+        };
+
+        env =
+          lib.attrsets.mapAttrsToList
+            (name: val: {
+              _args = [
+                name
+                val
+              ];
+            })
+            {
+              XDG_CURRENT_DESKTOP = "Hyprland";
+              XDG_SESSION_TYPE = "wayland";
+              XDG_SESSION_DESKTOP = "Hyprland";
+              QT_QPA_PLATFORM = "wayland";
+            };
+
+        workspace_rule = [
+          {
+            workspace = "w[t1]";
+            gaps_in = 0;
+            gaps_out = 0;
+            no_border = true;
+          }
+        ];
+
+        window_rule = [
+          {
+            match.class = "firefox";
+            workspace = 1;
+          }
+          {
+            match.class = "org.telegram.desktop";
+            workspace = 4;
+          }
+          {
+            match.class = "pavucontrol";
+            center = true;
+            # floating = true;
+          }
+          {
+            match.class = "pwvucontrol";
+            center = true;
+            # floating = true;
+          }
+          {
+            match.initial_class = "dragon-drop";
+            pin = true;
+          }
+          {
+            match.class = ".*";
+            idle_inhibit = "fullscreen";
+          }
+          {
+            match.class = "org.telegram.desktop";
+            no_screen_share = true;
+          }
+          {
+            match.class = "vicinae";
+            border_size = 0;
+          }
+        ];
+
+        layer_rule = [
+          {
+            match.namespace = "vicinae";
+            no_anim = true;
+            dim_around = true;
+          }
+        ];
+
+        exec_cmd = [
+          "${lib.getExe pkgs.swaybg} -i ~/wall.png -m fill"
+        ];
+
+        bind = mkBinds (
+          [
+            # Move focus
+            [
+              "SUPER+H"
+              (focus "l")
+            ]
+            [
+              "SUPER+L"
+              (focus "r")
+            ]
+            [
+              "SUPER+K"
+              (focus "u")
+            ]
+            [
+              "SUPER+J"
+              (focus "d")
+            ]
+            # Move window
+            [
+              "SUPER+SHIFT+H"
+              (move "l")
+            ]
+            [
+              "SUPER+SHIFT+L"
+              (move "r")
+            ]
+            [
+              "SUPER+SHIFT+K"
+              (move "u")
+            ]
+            [
+              "SUPER+SHIFT+J"
+              (move "d")
+            ]
+            # Window actions
+            [
+              "SUPER+Escape"
+              close
+            ]
+            [
+              "SUPER+X"
+              kill
+            ]
+            [
+              "SUPER+F"
+              fullscreen
+            ]
+            # Applications
+            [
+              "SUPER+Slash"
+              (exec "firefox")
+            ]
+            [
+              "SUPER+Return"
+              (exec "kitty -1")
+            ]
+            [
+              "SUPER+G"
+              (exec "game-picker")
+            ]
+            [
+              "SUPER+0"
+              (exec "rofi_power")
+            ]
+            [
+              "SUPER+D"
+              (exec "vicinae toggle")
+            ]
+            [
+              "SUPER+V"
+              (exec "vicinae deeplink vicinae://launch/clipboard/history")
+            ]
+            # Audio
+            [
+              "XF86AudioMute"
+              (exec "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle")
+              { locked = true; }
+            ]
+            [
+              "XF86AudioMicMute"
+              (exec "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle")
+              { locked = true; }
+            ]
+            # Repeating volume/brightness
+            [
+              "XF86AudioLowerVolume"
+              (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-")
+              {
+                repeating = true;
+                locked = true;
+              }
+            ]
+            [
+              "XF86AudioRaiseVolume"
+              (exec "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+")
+              {
+                repeating = true;
+                locked = true;
+              }
+            ]
+            [
+              "XF86MonBrightnessUp"
+              (exec "brightnessctl -set 10%+")
+              { repeating = true; }
+            ]
+            [
+              "XF86MonBrightnessDown"
+              (exec "brightnessctl -set 10%-")
+              { repeating = true; }
+            ]
+            # Mouse binds
+            [
+              "SUPER+mouse:272"
+              (lua "hl.dsp.window.drag()")
+              { mouse = true; }
+            ]
+            [
+              "SUPER+mouse:273"
+              (lua "hl.dsp.window.resize()")
+              { mouse = true; }
+            ]
+            # [
+            #   "mouse:277"
+            #   (exec "hyprctl dispatch overview:toggle")
+            # ]
+          ]
+          ++ workspaceBindings
+        );
+
       };
-
-      # No gaps for single window
-      workspace = "w[t1], gapsin:0, gapsout:0, border:0";
-
-      windowrule = [
-        "match:class firefox                  , workspace 1"
-        "match:class org.telegram.desktop     , workspace 4"
-        "match:class pavucontrol              , center on,float on"
-        "match:class pwvucontrol              , center on,float on"
-        "match:initial_class dragon-drop      , pin on"
-        "match:class .*                       , idle_inhibit fullscreen"
-        "match:class org.telegram.desktop , no_screen_share on"
-        "match:class vicinae, border_size 0"
-
-      ];
-
-      layerrule = [
-        "match:namespace vicinae, no_anim on, dim_around on"
-      ];
-
-      exec-once = [
-        "${lib.getExe pkgs.swaybg} -i ~/wall.png -m fill"
-      ];
-      env = lib.attrsets.mapAttrsToList (name: val: "${name},${toString val}") {
-        XDG_CURRENT_DESKTOP = "Hyprland";
-        XDG_SESSION_TYPE = "wayland";
-        XDG_SESSION_DESKTOP = "Hyprland";
-        QT_QPA_PLATFORM = "wayland";
-      };
+      # extraConfig = builtins.readFile ./hyprland_monitor_manager.lua;
     };
-  };
 
   home.packages = [
     pkgs.bibata-hyprcursor
@@ -207,7 +359,6 @@
 
     settings = {
       general = {
-        # disable_loading_bar = true;
         grace = 300;
         hide_cursor = true;
         no_fade_in = false;
@@ -238,15 +389,15 @@
       ];
     };
   };
+
   services.hyprpolkitagent.enable = true;
   services.hypridle = {
     enable = true;
     settings = {
       general = {
         lock_cmd = "pidof hyprlock || hyprlock";
-        # lock_cmd = "noctalia-shell ipc call lockScreen lock";
-        before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
-        after_sleep_cmd = "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
+        before_sleep_cmd = "loginctl lock-session";
+        after_sleep_cmd = "hyprctl dispatch dpms on";
       };
 
       listener =
@@ -255,13 +406,13 @@
         in
         [
           {
-            timeout = mins 5; # 5min
-            on-timeout = "loginctl lock-session"; # lock screen when timeout has passed
+            timeout = mins 5;
+            on-timeout = "loginctl lock-session";
           }
           {
             timeout = mins 5.5;
-            on-timeout = "hyprctl dispatch dpms off"; # screen off when timeout has passed
-            on-resume = "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
+            on-timeout = "hyprctl dispatch dpms off";
+            on-resume = "hyprctl dispatch dpms on";
           }
           {
             timeout = mins 10;
@@ -287,5 +438,4 @@
       WantedBy = [ "graphical-session.target" ];
     };
   };
-
 }
