@@ -23,7 +23,35 @@ from typing import NamedTuple
 
 class RestartableError(Exception):
     """Raised instead of exiting so the top-level runner can restart main."""
+
     pass
+
+
+def to_lua(d: dict) -> str:
+    """Convert a Python dict to a Lua table expression string.
+
+    Keys are strings. Values can be strings, bools, and numbers.
+    Returns a string representing the Lua equivalent expression.
+
+    Example:
+        >>> to_lua({"a": 1, "b": "hello", "c": True})
+        '{a = 1, b = "hello", c = true}'
+    """
+    items = []
+    for key, value in d.items():
+        if isinstance(value, bool):
+            lua_value = "true" if value else "false"
+        elif isinstance(value, (int, float)):
+            lua_value = str(value)
+        elif isinstance(value, str):
+            # Escape quotes and backslashes
+            escaped = value.replace("\\", "\\\\").replace('"', '\\"')
+            lua_value = f'"{escaped}"'
+        else:
+            raise TypeError(f"Unsupported value type for key '{key}': {type(value)}")
+        items.append(f"{key} = {lua_value}")
+    return "{" + ", ".join(items) + "}"
+
 
 # Constants
 WAYLAND_SCALE_STEP = 120  # Wayland fractional-scale protocol uses 1/120 increments
@@ -64,7 +92,7 @@ class MonitorRule(NamedTuple):
 
     name: str
     desc: str
-    rule: dict  # Lua monitor config as dict with keys like 'output', 'scale', 'res', etc.
+    rule: dict
     width: int
     height: int
     refresh: float
@@ -95,51 +123,29 @@ def hyprland_get_monitors(all_monitors: bool = False) -> list | None:
         return None
 
 
-def dict_to_lua_syntax(d: dict) -> str:
-    """Convert a Python dict to Lua table syntax.
-    Example: {output='eDP-1', scale=1.5} -> "hl.monitor{output='eDP-1', scale=1.5}"
-    """
-    items = []
-    for key, value in d.items():
-        if isinstance(value, str):
-            # Escape single quotes in strings
-            escaped_value = value.replace("'", "\\'") 
-            items.append(f"{key}='{escaped_value}'")
-        elif isinstance(value, bool):
-            items.append(f"{key}={'true' if value else 'false'}")
-        elif isinstance(value, (int, float)):
-            items.append(f"{key}={value}")
-        else:
-            items.append(f"{key}={value}")
-    
-    return "hl.monitor{" + ", ".join(items) + "}"
-
-
 def hyprland_set_rule(rule_dict: dict) -> bool:
-    """Execute hyprctl eval command to set a Lua rule. Returns True on success.
-    For Hyprland 0.55+, this uses eval to execute Lua code directly.
-    
+    """Execute hyprctl eval command to set a monitor rule. Returns True on success.
+
     Args:
-        rule_dict: Dictionary with monitor config (e.g., {output='eDP-1', scale=1.5})
+        rule_dict: Dict with keys: output, mode, position, scale, disabled
+                   Constructs: hyprctl eval "hl.monitor{output='...', mode='...', position='...', scale=...}"
     """
+    # Convert dict to Lua table format using to_lua function
+    lua_table = to_lua(rule_dict)
+    eval_command = f"hl.monitor{lua_table}"
+
+    print(f'Executing: hyprctl eval "{eval_command}"')
+
     try:
-        lua_command = dict_to_lua_syntax(rule_dict)
-        print(f"  Executing: hyprctl eval {lua_command}", file=sys.stderr)
-        result = subprocess.run(
-            ["hyprctl", "eval", lua_command],
+        subprocess.run(
+            ["hyprctl", "eval", eval_command],
             capture_output=True,
             text=True,
             check=True,
         )
-        if result.stdout:
-            print(f"  Output: {result.stdout}", file=sys.stderr)
         return True
     except subprocess.CalledProcessError as e:
         print(f"Error running hyprctl eval: {e}", file=sys.stderr)
-        if e.stdout:
-            print(f"  stdout: {e.stdout}", file=sys.stderr)
-        if e.stderr:
-            print(f"  stderr: {e.stderr}", file=sys.stderr)
         return False
 
 
@@ -617,16 +623,18 @@ def create_ideal_monitor_rule(
         if scale != perfect_scale:
             print(f"  Adjusted to valid scale: {scale} (produces whole logical pixels)")
 
-    # Create the monitor rule as a dict for Hyprland 0.55+ Lua API
-    # Use desc: for matching by description (more reliable), except for eDP-1 which uses name
-    output_key = monitor_name if monitor_name == "eDP-1" else f"desc:{desc}"
-    rule = {
-        "output": output_key,
-        "scale": scale,
-        "mode": f"{width}x{height}@{refresh:.0f}",
-    }
+    # Create the monitor rule using desc instead of name
+    # mode format is "WIDTHxHEIGHT@REFRESHRATE"
+    mode = f"{width}x{height}@{refresh:.0f}"
+    rule = dict(
+        output=f"desc:{desc}",
+        position="auto",
+        disabled=False,
+        scale=scale,
+        mode=mode,
+    )
 
-    print(f"Calculated ideal {monitor_name} rule: {dict_to_lua_syntax(rule)}")
+    print(f"Calculated ideal {monitor_name} rule: {rule}")
     print(f"  Resolution: {width}x{height}")
     print(f"  Refresh rate: {refresh:.0f}Hz")
     print(f"  Scale: {scale}")
@@ -648,7 +656,7 @@ def apply_monitor_rule(monitor_rule: MonitorRule) -> bool:
         print("No monitor rule to apply!", file=sys.stderr)
         return False
 
-    print(f"Applying rule: {dict_to_lua_syntax(monitor_rule.rule)}")
+    print(f"Applying rule: {monitor_rule.rule}")
     return hyprland_set_rule(monitor_rule.rule)
 
 
@@ -678,13 +686,13 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
             print(f"\nUsing cached rule for {monitor_name} (desc: {monitor_desc})")
             rule = monitor_rules_cache[monitor_desc]
         else:
-            print(
-                f"\nConfiguring external monitor: {monitor_name} (desc: {monitor_desc})"
-            )
+            # print(
+            #     f"\nConfiguring external monitor: {monitor_name} (desc: {monitor_desc})"
+            # )
             rule = create_ideal_monitor_rule(monitor_name, monitor)
             if rule:
                 monitor_rules_cache[monitor_desc] = rule
-                print(f"Cached rule for desc: {monitor_desc}")
+                # print(f"Cached rule for desc: {monitor_desc}")
 
         if rule:
             applied = apply_monitor_rule(rule)
@@ -700,7 +708,11 @@ def configure_all_external_monitors(monitor_rules_cache: dict) -> None:
 def disable_edp1() -> None:
     """Disable eDP-1 monitor"""
     print("Disabling eDP-1...")
-    hyprland_set_rule({"output": "eDP-1", "disabled": True})
+    rule = dict(
+        output="eDP-1",
+        disabled=True,
+    )
+    hyprland_set_rule(rule)
 
 
 def enable_edp1(ideal_rule: MonitorRule | None) -> None:
@@ -735,16 +747,16 @@ def get_hyprland_socket_path() -> str:
 
 def print_cache(monitor_rules_cache: dict) -> None:
     """Print the current cache contents"""
-    print(f"\n=== Monitor Rules Cache ({len(monitor_rules_cache)} entries) ===")
-    if not monitor_rules_cache:
-        print("  (empty)")
-    else:
-        for desc, rule in monitor_rules_cache.items():
-            print(f"  - {desc[:60]}{'...' if len(desc) > 60 else ''}")
-            print(
-                f"    -> {rule.name}: {rule.width}x{rule.height}@{rule.refresh:.0f}Hz, scale={rule.scale}"
-            )
-    print("=" * 50 + "\n")
+    # print(f"\n=== Monitor Rules Cache ({len(monitor_rules_cache)} entries) ===")
+    # if not monitor_rules_cache:
+    #     print("  (empty)")
+    # else:
+    #     for desc, rule in monitor_rules_cache.items():
+    #         print(f"  - {desc[:60]}{'...' if len(desc) > 60 else ''}")
+    #         print(
+    #             f"    -> {rule.name}: {rule.width}x{rule.height}@{rule.refresh:.0f}Hz, scale={rule.scale}"
+    #         )
+    # print("=" * 50 + "\n")
 
 
 def listen_to_events(
@@ -976,9 +988,9 @@ if __name__ == "__main__":
     # Run main inside a loop so RestartableError can cause a restart instead of
     # letting the script crash. Use exponential backoff on consecutive failures
     # but reset the failure counter if main runs successfully for a short time.
-    BASE_BACKOFF = 1.0        # seconds
-    MAX_BACKOFF = 60.0        # seconds
-    RESET_THRESHOLD = 10.0    # if main runs at least this long, consider it a success
+    BASE_BACKOFF = 1.0  # seconds
+    MAX_BACKOFF = 60.0  # seconds
+    RESET_THRESHOLD = 10.0  # if main runs at least this long, consider it a success
 
     consecutive_failures = 0
 
