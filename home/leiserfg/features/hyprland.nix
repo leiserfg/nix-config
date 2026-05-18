@@ -21,6 +21,7 @@
   wayland.windowManager.hyprland =
     let
       lua = lib.generators.mkLuaInline;
+      luaf = body: lib.generators.mkLuaInline ("function() " + body + " end");
       # Shorthand lua functions
       exec = cmd: lua "hl.dsp.exec_cmd('${cmd}')";
       focus = dir: lua "hl.dsp.focus({ direction = '${dir}' })";
@@ -327,6 +328,31 @@
               (exec "brightnessctl -set 10%-")
               { repeating = true; }
             ]
+
+            # [
+            #   "switch:on:Lid Switch"
+            #   (luaf "hl.monitor{output='eDP-1', scale='auto', position='auto', mode='highres', disabled=false}")
+            #   { locked = true; }
+            # ]
+
+            [
+              "switch:off:Lid Switch"
+              (luaf "hl.monitor{output='eDP-1',  disabled=true}")
+              { locked = true; }
+            ]
+
+            [
+              "XF86Display"
+              (luaf "hl.monitor{output='eDP-1',  disabled=not not hl.get_monitor('eDP-1')}")
+              { locked = true; }
+            ]
+
+            [
+              "XF86AudioMedia"
+              (luaf "hl.monitor{output='eDP-1',  disabled=not not hl.get_monitor('eDP-1')}")
+              { locked = true; }
+            ]
+
             # Mouse binds
             [
               "SUPER+mouse:272"
@@ -338,6 +364,7 @@
               (lua "hl.dsp.window.resize()")
               { mouse = true; }
             ]
+
             # [
             #   "mouse:277"
             #   (exec "hyprctl dispatch overview:toggle")
@@ -430,7 +457,7 @@
     };
     Service = {
       Type = "simple";
-      ExecStart = "${lib.getExe pkgs.python3} ${./hyprland_monitor_manager.py}";
+      ExecStart = "${lib.getExe pkgs.python3} ${./monman.py}";
       Restart = "on-failure";
       RestartSec = 5;
     };
