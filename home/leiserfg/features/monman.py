@@ -9,6 +9,7 @@ import math
 import os
 import sys
 from dataclasses import dataclass, fields
+from datetime import datetime
 from functools import cached_property, wraps
 from pathlib import Path
 
@@ -456,16 +457,21 @@ async def apply_monitor_rule(
     return result is not None
 
 
-@async_debounce(1.0)  # Avoid firing the event too many times
+# @async_debounce(1.0)  # Avoid firing the event too many times
 async def setup_monitors() -> None:
     """Handle monitor events (monitoradded/monitorremoved)."""
 
     await asyncio.sleep(0.2)
 
     monitors = await get_monitors()
-    monitors = (m for m in monitors if m.name != "FALLBACK")
+    monitors = [m for m in monitors if m.name != "FALLBACK"]
+
+    if not monitors:
+        await send_hyprland_command("reload")
     for m in monitors:
         await m.set_rule()
+
+    # Trigger Hyprland reload to apply configuration
 
 
 def parse_monitors(data: list[dict]) -> list[Monitor]:
@@ -529,17 +535,17 @@ async def send_hyprland_command(command: str, flags: str = "") -> str | None:
         return None
 
 
-async def get_monitors() -> list[Monitor] | None:
+async def get_monitors() -> list[Monitor]:
     """Get all active monitors"""
     response = await send_hyprland_command("monitors", flags="j")
     if response is None:
-        return None
+        return []
     try:
         data = json.loads(response)
         return parse_monitors(data)
     except json.JSONDecodeError as e:
         print(f"Error: Failed to parse JSON response: {e}", file=sys.stderr)
-        return None
+        return []
 
 
 def parse_event(event: str) -> tuple[str, list[str]] | None:
@@ -598,7 +604,8 @@ async def read_hyprland_events():
                     parsed = parse_event(event)
                     if parsed:
                         name, args = parsed
-                        if name in ("monitoradded", "configreloaded"):
+                        if name in ("monitoradded", "configreloaded", "monitorremoved"):
+                            print(f"[{datetime.now().isoformat()}] {parsed}")
                             await setup_monitors()
 
             except asyncio.CancelledError:

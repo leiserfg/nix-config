@@ -163,7 +163,7 @@ in
       Documentation = "https://docs.noctalia.dev";
       After = "graphical-session.target";
       PartOf = "graphical-session.target";
-      Restart-Triggers = "${noctalia-settings}";
+      X-Restart-Triggers = [ noctalia-settings ];
     };
 
     Service = {

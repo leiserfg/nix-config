@@ -212,8 +212,6 @@
           }
         ];
 
-
-
         bind = mkBinds (
           [
             # Move focus
@@ -327,17 +325,17 @@
               { repeating = true; }
             ]
 
-            # [
-            #   "switch:on:Lid Switch"
-            #   (luaf "hl.monitor{output='eDP-1', scale='auto', position='auto', mode='highres', disabled=false}")
-            #   { locked = true; }
-            # ]
-
             [
-              "switch:off:Lid Switch"
+              "switch:on:Lid Switch"
               (luaf "hl.monitor{output='eDP-1',  disabled=true}")
               { locked = true; }
             ]
+            #
+            # [
+            #   "switch:off:Lid Switch"
+            #   (luaf "hl.monitor{output = 'eDP-1', disabled = false, scale = 1.0, position = 'auto', mode = 'preferred'}")
+            #   { locked = true; }
+            # ]
 
             [
               "XF86Display"
