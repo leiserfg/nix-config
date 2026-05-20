@@ -209,7 +209,10 @@
             match.namespace = "vicinae";
             no_anim = true;
             dim_around = true;
+            blur = true;
+            ignore_alpha = 0;
           }
+
         ];
 
         bind = mkBinds (
