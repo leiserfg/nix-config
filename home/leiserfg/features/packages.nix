@@ -115,13 +115,6 @@
     qpwgraph
     scrcpy
     guvcview
-
-    # --- File Management ---
-    (nemo-with-extensions.override {
-      # extensions = [ pkgs.nemo-fileroller ];
-      useDefaultExtensions = false;
-    })
-    # file-roller
     peazip
     unzip
     yadm

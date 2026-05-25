@@ -31,6 +31,7 @@ let
     text = builtins.toJSON {
       appLauncher.terminalCommand = "kitty";
       audio.visualizerType = "wave";
+      audio.volumeOverdrive = true;
       sessionMenu.largeButtonsStyle = false;
       bar = {
         density = "compact";

@@ -27,6 +27,7 @@
     ./features/services.nix
     ./features/scripts.nix
     ./features/xdg.nix
+    ./features/filemanager.nix
     ./features/gtk-qt.nix
     ./features/session.nix
 
