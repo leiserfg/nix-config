@@ -84,11 +84,12 @@ acmd({ "BufRead", "BufNewFile" }, {
 })
 acmd("BufReadPost", { group = vimrc, command = 'silent! normal! g`"zv' })
 
-local function yank_colors()
+local function yank_callback()
   vim.hl.on_yank { higroup = "IncSearch", timeout = 150 }
+  vim.fn.setreg("+", vim.fn.getreg '"')
 end
 
-acmd("TextYankPost", { group = vimrc, callback = yank_colors })
+acmd("TextYankPost", { group = vimrc, callback = yank_callback })
 
 vim.filetype.add {
   extension = { keymap = "dts", frag = "glsl", ua = "uiua" },
