@@ -7,8 +7,8 @@
   boot = {
     # kernelPackages = pkgs.linuxPackages_6_12;
 
-    # kernelPackages = pkgs.linuxPackages_latest;
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
+    # kernelPackages = pkgs.linuxPackages_zen;
     kernelParams = [ "amdgpu.dcdebugmask=0x410" ];
 
     loader.systemd-boot.enable = true;
