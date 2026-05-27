@@ -337,7 +337,7 @@ class Monitor:
         # Get best mode by height (desc), then rate (desc)
         best = max(
             parsed_modes,
-            key=lambda m: (m.height, m.refresh_rate),
+            key=lambda m: (m.height, m.width, m.refresh_rate),
             default=None,
         )
 

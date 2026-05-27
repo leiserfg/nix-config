@@ -20,4 +20,10 @@ vim.keymap.set(
   '"_dP',
   { noremap = true, silent = true, desc = "Paste over selection without erasing unnamed register" }
 )
+vim.keymap.set(
+  {"n", "v"},
+  "<leader>p",
+  '"+p',
+  { noremap = true, silent = true, desc = "Paste from clipboard" }
+)
 

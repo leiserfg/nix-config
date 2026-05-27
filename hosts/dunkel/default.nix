@@ -2,7 +2,8 @@
   pkgs,
   input,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -21,7 +22,7 @@
 
   systemd.services.set-charge-limit = {
     description = "Set battery charge limit";
-    after = ["multi-user.target"];
+    after = [ "multi-user.target" ];
 
     serviceConfig = {
       Type = "oneshot";
@@ -30,6 +31,24 @@
     };
 
     # This ensures the service runs at startup
-    wantedBy = ["multi-user.target"];
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  # Osquery service for Fleet MDM
+  services.osquery = {
+    enable = true;
+    flags = {
+      tls_server_certs = "/var/lib/osquery/certs.pem";
+      enroll_secret_path = "/var/lib/osquery/secret.txt";
+      enroll_tls_endpoint = "/api/osquery/enroll";
+      config_plugin = "tls";
+      config_tls_endpoint = "/api/osquery/config";
+      logger_plugin = "tls";
+      logger_tls_endpoint = "/api/osquery/log";
+      tls_hostname = "fleet.oneit.g1i.one";
+    };
+    settings = {
+      options = { };
+    };
   };
 }
