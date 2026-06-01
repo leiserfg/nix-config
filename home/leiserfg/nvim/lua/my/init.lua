@@ -1,3 +1,5 @@
+collectgarbage "stop"
+
 require "my.options"
 require "my.keymap"
 
@@ -60,6 +62,14 @@ vim.api.nvim_create_autocmd("UIEnter", {
     }
 
     require("render-markdown").setup()
+
+    collectgarbage "restart"
   end,
 })
 
+vim.api.nvim_create_autocmd("UIEnter", {
+  callback = function()
+    collectgarbage "restart"
+  end,
+  once = true,
+})
