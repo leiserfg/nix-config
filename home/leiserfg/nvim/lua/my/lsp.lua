@@ -2,6 +2,11 @@ local function toggle_inlay()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
 end
 
+local function setup_lsp(server_name, config)
+  vim.lsp.config(server_name, config)
+  vim.lsp.enable(server_name)
+end
+
 local mappings = {
   ["<Leader>lq"] = vim.diagnostic.setloclist,
   ["<Leader>li"] = toggle_inlay,
@@ -11,123 +16,95 @@ for shortcut, callback in pairs(mappings) do
   vim.keymap.set("n", shortcut, callback, { noremap = true, silent = true })
 end
 
--- NOTE: Register a handler from lzextras. This one makes it so that
--- you can set up lsps within lze specs,
--- and trigger vim.lsp.enable and the rtp config collection only on the correct filetypes
--- it adds the lsp field used below
--- (and must be registered before any load calls that use it!)
-require("lze").register_handlers(require("lzextras").lsp)
--- replace the fallback filetype list retrieval function with a slightly faster one
-require("lze").h.lsp.set_ft_fallback(function(name)
-  return dofile(
-    nixCats.pawsible { "allPlugins", "opt", "nvim-lspconfig" } .. "/lsp/" .. name .. ".lua"
-  ).filetypes or {}
-end)
+-- Setup default capabilities from blink.cmp
+local capabilities = require("blink.cmp").get_lsp_capabilities()
 
-require("lze").load {
-  {
-    "nvim-lspconfig",
-    -- event = "DeferredUIEnter",
-    lsp = function(plugin)
-      vim.lsp.config(plugin.name, plugin.lsp or {})
-      vim.lsp.enable(plugin.name)
-    end,
-
-    before = function(_)
-      vim.lsp.config("*", {
-        capabilities = require("blink.cmp").get_lsp_capabilities(),
-      })
-    end,
-  },
-
-  { "gdscript", lsp = {} },
-  { "vimls", lsp = {} },
-  { "clangd", lsp = {} },
-  { "terraformls", lsp = {} },
-  { "glsl_analyzer", lsp = {} },
-  { "uiua", lsp = {} },
-  { "ruff", lsp = {} },
-  { "tinymist", lsp = {} },
-
-  { "ty", lsp = {} },
-  { "nushell", lsp = {} },
-  -- { "pyrefly", lsp = {} },
-  {
-    "mpls",
-    lsp = {
-      cmd = { "mpls", "--enable-emoji", "--enable-footnotes", "--no-auto" },
-      filetypes = { "markdown" },
-      on_attach = function(client, bufnr)
-        vim.api.nvim_buf_create_user_command(bufnr, "MplsOpenPreview", function()
-          local params = {
-            command = "open-preview",
-          }
-          client.request("workspace/executeCommand", params, function(err, _)
-            if err then
-              vim.notify("Error executing command: " .. err.message, vim.log.levels.ERROR)
-            else
-              vim.notify("Preview opened", vim.log.levels.INFO)
-            end
-          end)
-        end, {
-          desc = "Preview markdown with mpls",
-        })
-      end,
-    },
-  },
-  {
-    "lua_ls",
-    lsp = {
-      filetypes = { "lua" },
-      settings = {
-        Lua = {
-          runtime = { version = "LuaJIT" },
-          formatters = {
-            ignoreComments = true,
-          },
-          workspace = {
-            checkThirdParty = false,
-            library = {
-              vim.env.VIMRUNTIME,
-            },
-          },
-          signatureHelp = { enabled = true },
-          diagnostics = {
-            globals = { "nixCats", "vim" },
-            disable = { "missing-fields" },
-          },
-          telemetry = { enabled = false },
-        },
-      },
-    },
-  },
-  {
-    "nixd",
-    lsp = {
-      filetypes = { "nix" },
-      settings = {
-        nixd = {
-          nixpkgs = {
-            expr = nixCats.extra "nixdExtras.nixpkgs" or [[import <nixpkgs> {}]],
-          },
-          formatting = {
-            command = { "nixfmt" },
-          },
-          diagnostic = {
-            suppress = {
-              "sema-escaping-with",
-            },
-          },
-        },
-      },
-    },
-  },
-  { "rustaceanvim" },
-  {
-    "typescript-tools.nvim",
-    ft = { "typscript" },
-    after = function()
-      require("typescript-tools").setup()
-    end,
-  },
+-- Simple servers with default config
+local simple_servers = {
+  "gdscript",
+  "vimls",
+  "clangd",
+  "terraformls",
+  "glsl_analyzer",
+  "uiua",
+  "ruff",
+  "tinymist",
+  "ty",
+  "nushell",
 }
+
+for _, server in ipairs(simple_servers) do
+  setup_lsp(server, {
+    capabilities = capabilities,
+  })
+end
+
+-- Markdown LS (mpls) with preview command
+setup_lsp("mpls", {
+  capabilities = capabilities,
+  cmd = { "mpls", "--enable-emoji", "--enable-footnotes", "--no-auto" },
+  filetypes = { "markdown" },
+  on_attach = function(client, bufnr)
+    vim.api.nvim_buf_create_user_command(bufnr, "MplsOpenPreview", function()
+      local params = {
+        command = "open-preview",
+      }
+      client.request("workspace/executeCommand", params, function(err, _)
+        if err then
+          vim.notify("Error executing command: " .. err.message, vim.log.levels.ERROR)
+        else
+          vim.notify("Preview opened", vim.log.levels.INFO)
+        end
+      end)
+    end, {
+      desc = "Preview markdown with mpls",
+    })
+  end,
+})
+
+-- Lua LS
+setup_lsp("lua_ls", {
+  capabilities = capabilities,
+  filetypes = { "lua" },
+  settings = {
+    Lua = {
+      runtime = { version = "LuaJIT" },
+      formatters = {
+        ignoreComments = true,
+      },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME,
+        },
+      },
+      signatureHelp = { enabled = true },
+      diagnostics = {
+        globals = { "nixCats", "vim" },
+        disable = { "missing-fields" },
+      },
+      telemetry = { enabled = false },
+    },
+  },
+})
+
+-- Nix LS
+setup_lsp("nixd", {
+  capabilities = capabilities,
+  filetypes = { "nix" },
+  settings = {
+    nixd = {
+      -- nixpkgs = {
+      --   expr = nixCats.extra "nixdExtras.nixpkgs" or [[import <nixpkgs> {}]],
+      -- },
+      formatting = {
+        command = { "nixfmt" },
+      },
+      diagnostic = {
+        suppress = {
+          "sema-escaping-with",
+        },
+      },
+    },
+  },
+})

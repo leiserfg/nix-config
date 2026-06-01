@@ -24,8 +24,6 @@
         url = "github:NixOS/nixos-hardware";
       };
 
-      nixCats.url = "github:BirdeeHub/nixCats-nvim";
-
       llm-agents = {
         url = "github:numtide/llm-agents.nix";
         inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
