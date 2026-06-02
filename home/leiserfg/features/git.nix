@@ -256,6 +256,7 @@ in
           '';
         };
       templates = {
+        git_push_bookmark = ''slugify(description) ++ "/" ++ change_id.short()'';
         log_node = ''
           if(self && !current_working_copy && !immutable && !conflict && in_branch(self),
             "◇",
@@ -266,6 +267,17 @@ in
       template-aliases = {
         "in_branch(commit)" = ''commit.contained_in("immutable_heads()..bookmarks()")'';
 
+        "slugify(str)" = ''
+          truncate_end(
+            30,
+            str.first_line()
+              .replace(regex:'[^[[:alnum:]].]', '-')
+              .replace(regex:'-{2,}', '-')
+              .replace(regex:'\.{2,}', '.')
+              .replace(regex:'(^-+|-+$)', "")
+              .lower()
+          )
+        '';
         log_with_files = ''
           if(root,
             format_root_commit(self),
