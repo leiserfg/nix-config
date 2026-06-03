@@ -3,6 +3,7 @@
   pkgs,
   lib,
   myPkgs,
+  inputs,
   ...
 }:
 let
@@ -17,8 +18,6 @@ let
 
   # List of builtin extension names to include (empty by default, add as needed)
   builtinExtensionNames = [
-    "custom-provider-qwen-cli"
-    "interactive-shell.ts"
     "qna.ts"
     "subagent"
     "ssh.ts"
@@ -79,10 +78,25 @@ let
     }) subagentPromptsFiles
   );
 
+  # Filter inputs for pi-* entries
+  piInputs = lib.filterAttrs (name: value: lib.hasPrefix "pi-" name) inputs;
+
+  # Create home.file entries for pi-* inputs from flake
+  piInputEntries = lib.listToAttrs (
+    map (name: {
+      name = ".pi/agent/extensions/${name}";
+      value = {
+        source = inputs.${name};
+        recursive = true;
+      };
+    }) (lib.attrNames piInputs)
+  );
+
   # Combine all extension entries
   allExtensionEntries = lib.mkMerge [
     extensionEntries
     builtinExtensionEntries
+    piInputEntries
     agentEntries
     promptEntries
   ];

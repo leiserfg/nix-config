@@ -432,6 +432,22 @@
         "type": "github"
       }
     },
+    "pi-goal": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1779652737,
+        "narHash": "sha256-UTVl9WG3avLmGO48IyERGwwe8PIvzXU/KU/lUPZXTFg=",
+        "owner": "Michaelliv",
+        "repo": "pi-goal",
+        "rev": "806d849f4dc86dfa2bb1a59b977248fefb9c25be",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Michaelliv",
+        "repo": "pi-goal",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "blender": "blender",
@@ -442,7 +458,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "pi-condensed-milk": "pi-condensed-milk"
+        "pi-condensed-milk": "pi-condensed-milk",
+        "pi-goal": "pi-goal"
       }
     },
     "systems": {
