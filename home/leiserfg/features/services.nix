@@ -7,9 +7,8 @@
     network-manager-applet.enable = true;
     tailscale-systray.enable = true;
 
-    # These are disabled cause we are now using a noctalia plugin
     udiskie = {
-      enable = false;
+      enable = true;
       automount = true;
     };
     blueman-applet.enable = false;

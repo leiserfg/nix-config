@@ -20,7 +20,8 @@
     ./features/mpv.nix
     ./features/git.nix
     ./features/kitty.nix
-    ./features/noctalia.nix
+    # ./features/noctalia.nix
+    ./features/noctalia_v5.nix
 
     # New feature modules
     ./features/packages.nix
