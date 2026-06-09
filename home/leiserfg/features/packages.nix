@@ -147,6 +147,6 @@
     handlr-regex
     rink
     uiua
-    shikane
+    myPkgs.noctalia_5
   ];
 }
