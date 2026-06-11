@@ -36,6 +36,13 @@ let
     };
     brightness.enable_ddcutil = true;
     desktop_widgets.enabled = true;
+    idle = {
+      enable = true;
+      idle_timeout = 300; # 5 minutes
+      lock_timeout = 330; # 5.5 minutes
+      suspend_timeout = 600; # 10 minutes
+    };
+    lockscreen.blurred_desktop = true;
     location.auto_locate = true;
     noctalia_state.setup_wizard_completed = true;
     shell = {
@@ -62,12 +69,10 @@ let
   noctalia-settings = tomlFormat.generate "noctalia-settings.toml" noctalia-config;
 in
 {
-  home = {
-    packages = with pkgs; [
-
-    ];
-  };
+  # home = {
+  # };
   systemd.user.services.noctalia = {
+
     Unit = {
       Description = "Noctalia Shell - Wayland desktop shell";
       Documentation = "https://docs.noctalia.dev";
@@ -88,5 +93,4 @@ in
 
   # Optionally, create a symlink to the settings file in a known location
   home.file.".config/noctalia/settings.toml".source = noctalia-settings;
-
 }

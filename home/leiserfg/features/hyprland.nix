@@ -286,6 +286,10 @@
               (exec "vicinae toggle")
             ]
             [
+              "SUPER+S"
+              (exec "wayscriber -a --freeze")
+            ]
+            [
               "SUPER+V"
               (exec "vicinae deeplink vicinae://launch/clipboard/history")
             ]
@@ -378,6 +382,9 @@
 
   home.packages = [
     pkgs.bibata-hyprcursor
+    pkgs.wayscriber
+    pkgs.slurp
+    pkgs.grim
   ];
 
   programs.hyprlock = {
@@ -418,7 +425,7 @@
 
   services.hyprpolkitagent.enable = true;
   services.hypridle = {
-    enable = true;
+    enable = false; # Whe are using noctalia
     settings = {
       general = {
         lock_cmd = "pidof hyprlock || hyprlock";
