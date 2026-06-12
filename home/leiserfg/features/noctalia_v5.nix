@@ -41,10 +41,24 @@ let
       idle_timeout = 300; # 5 minutes
       lock_timeout = 330; # 5.5 minutes
       suspend_timeout = 600; # 10 minutes
+      behavior.lock = {
+        action = "lock";
+        enabled = true;
+        timeout = 600;
+      };
+      behavior.lock-and-suspend = {
+        action = "lock_and_suspend";
+        enabled = false;
+        timeout = 900;
+      };
+      behavior.screen-off = {
+        action = "screen_off";
+        enabled = true;
+        timeout = 660;
+      };
     };
     lockscreen.blurred_desktop = true;
     location.auto_locate = true;
-    noctalia_state.setup_wizard_completed = true;
     shell = {
       corner_radius_scale = 0.0;
       clipboard_enabled = false;
