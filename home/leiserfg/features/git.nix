@@ -245,14 +245,14 @@ in
               jj pre-commit && jj git push "$@"
             '');
           prc = sh ''
-            gh pr create --head $(jj log -T "bookmarks" --no-graph -r @) "$@"
+            gh pr create --head "$(jj log -T "bookmarks" --no-graph -r @)" "$@"
           '';
           prw = sh ''
-            gh pr view  $(jj log -T "bookmarks" --no-graph -r @) -w "$@"
+            gh pr view "$(gh pr list --head "$(jj log -T "bookmarks" --no-graph -r @)" --json number -q '.[0].number')" -w "$@"
           '';
 
           prm = sh ''
-            gh pr merge  $(jj log -T "bookmarks" --no-graph -r @) "$@"
+            gh pr merge "$(gh pr list --head "$(jj log -T "bookmarks" --no-graph -r @)" --json number -q '.[0].number')" "$@"
           '';
         };
       templates = {
