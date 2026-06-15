@@ -145,7 +145,6 @@
     jq
     xh
     handlr-regex
-    rink
     uiua
     myPkgs.noctalia_5
   ];
