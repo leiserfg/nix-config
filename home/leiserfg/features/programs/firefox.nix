@@ -19,7 +19,7 @@
           # Enable user chrome
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           "sidebar.position_start" = false; # Sideberry in the right side
-          "widget.wayland.fractional-scale.enabled" = false;
+          "widget.wayland.fractional-scale.enabled" = true;
           "browser.compactmode.show" = true;
           "dom.webgpu.enabled" = true;
           "browser.uidensity" = 1;
