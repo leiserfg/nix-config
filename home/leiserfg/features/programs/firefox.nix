@@ -3,6 +3,19 @@
   programs.firefox = {
     enable = true;
     configPath = "${config.xdg.configHome}/mozilla/firefox";
+
+    nativeMessagingHosts = [
+      (pkgs.writeTextDir "lib/mozilla/native-messaging-hosts/com.vicinae.vicinae.json" (
+        builtins.toJSON {
+          name = "com.vicinae.vicinae";
+          description = "Vicinae Native Messaging Host";
+          path = "${pkgs.vicinae}/libexec/vicinae/vicinae-browser-link";
+          type = "stdio";
+          allowed_extensions = [ "firefox@vicinae.com" ];
+        }
+      ))
+    ];
+
     profiles = {
       yolo = {
         userContent = "";

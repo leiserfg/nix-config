@@ -48,7 +48,7 @@
 
     # myPkgs.tola
 
-    # steam
+    steam
     # scrcpy
     llama-cpp-vulkan
   ];
