@@ -10,6 +10,13 @@
   home.file."${config.xdg.configHome}/nushell/nix-your-shell.nu".source =
     pkgs.nix-your-shell.generate-config "nu";
 
+  home.packages = [
+    (pkgs.runCommand "nushell-fzf-integration" { } ''
+      mkdir -p $out/share/nushell/vendor/autoload
+      ${lib.getExe pkgs.fzf} --nushell > $out/share/nushell/vendor/autoload/fzf.nu
+    '')
+
+  ];
   programs = {
     nushell = {
       enable = true;
@@ -17,8 +24,6 @@
         source ${./notebook_theme.nu}
         source ${./brace-expand.nu}
         source ${./psub.nu}
-        source ${./fzf/completion.nu}
-        source ${./fzf/key-bindings.nu}
       '';
       shellAliases = {
         fg = "job unfreeze";
