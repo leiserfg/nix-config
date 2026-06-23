@@ -1,9 +1,10 @@
-{ ... }:
+{ pkgs, ... }:
 {
   # nix.gc = {
   #   options = "--delete-older-than 14d";
   #   automatic = true;
   # };
+  nix.package = pkgs.lixPackageSets.stable.lix;
   nix.settings = {
     auto-optimise-store = true;
     warn-dirty = false;

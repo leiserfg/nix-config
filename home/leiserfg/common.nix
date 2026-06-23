@@ -38,7 +38,6 @@
     ./features/programs/yazi.nix
     ./features/programs/vicinae.nix
 
-
     # Pi and nvim
     ./pi.nix
     ./nvim
@@ -59,7 +58,6 @@
 
   nix = {
     enable = true;
-    package = pkgs.nix;
   };
 
   home.shell = {
