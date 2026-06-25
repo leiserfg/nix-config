@@ -1,10 +1,9 @@
-{ pkgs, config, ... }:
+{
+  pkgs,
+  ...
+}:
 {
   programs = {
-    bash = {
-      enable = true;
-    };
-
     aria2 = {
       enable = true;
       settings = { };
@@ -44,10 +43,23 @@
       settings = {
         # A bit of obfuscation doesn't hurt
         base_url = "https:" + "//bw.nul.mywire.org/";
-        email = "${config.home.username}@gmail.com";
+        email = "leiserfg@gmail.com";
         lock_timeout = 60 * 60 * 8;
         pinentry = pkgs.pinentry-qt;
       };
     };
+
+    bash = {
+      enable = true;
+      initExtra = ''
+        export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/rbw/ssh-agent-socket"
+      '';
+    };
+
+    nushell = {
+      enable = true;
+      extraConfig = ''$env.SSH_AUTH_SOCK = $env.XDG_RUNTIME_DIR + "/rbw/ssh-agent-socket"'';
+    };
   };
+
 }

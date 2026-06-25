@@ -38,14 +38,22 @@
   services.osquery = {
     enable = true;
     flags = {
-      tls_server_certs = "/var/lib/osquery/certs.pem";
-      enroll_secret_path = "/var/lib/osquery/secret.txt";
-      enroll_tls_endpoint = "/api/osquery/enroll";
       config_plugin = "tls";
-      config_tls_endpoint = "/api/osquery/config";
+      config_tls_endpoint = "/api/v1/osquery/config";
+      config_refresh = "60";
+      enroll_secret_path = "/var/lib/osquery/secret.txt";
+      enroll_tls_endpoint = "/api/v1/osquery/enroll";
       logger_plugin = "tls";
-      logger_tls_endpoint = "/api/osquery/log";
+      logger_tls_endpoint = "/api/v1/osquery/log";
+      disable_distributed = "false";
+      distributed_plugin = "tls";
+      distributed_tls_read_endpoint = "/api/v1/osquery/distributed/read";
+      distributed_tls_write_endpoint = "/api/v1/osquery/distributed/write";
+      distributed_tls_max_attempts = "10";
+      distributed_interval = "10";
       tls_hostname = "fleet.oneit.g1i.one";
+      tls_server_certs = "/var/lib/osquery/certs.pem";
+      host_identifier = "uuid";
     };
     settings = {
       options = { };
