@@ -1,4 +1,5 @@
 local ls = require "luasnip"
+ls.cleanup()
 -- local l = require("luasnip.extras").l
 -- local rep = require("luasnip.extras").rep
 -- local fmt = require("luasnip.extras.fmt").fmt
@@ -11,8 +12,7 @@ local f = ls.f
 local c = ls.c
 local sn = ls.sn
 local fmt = require("luasnip.extras.fmt").fmt
-
-local sp = require "luasnip.nodes.snippetProxy"
+local parse = require("luasnip.util.parser").parse_snippet
 
 math.randomseed(os.time())
 
@@ -62,47 +62,34 @@ local function lorem(_, snp)
   end
 end
 
-vim.filetype.add {
-  pattern = {
-    [".*.spec.ts"] = "jest.typescript",
-  },
-}
-
 ls.add_snippets(nil, {
-  jest = {
-    sp('3"', [["""${1:$TM_SELECTED_TEXT}"""]]),
-  },
   python = {
-    s(
-      "for",
-      fmt(
-        [[
-  for {} in {}:
-      
-  ]],
-        {
-          i(1, "it"),
-          i(2, "iterator"),
-        }
-      )
-    ),
+    parse("for", [[
+for ${1:it} in ${2:iterator}:
+    ${3}
+]]),
+    parse("class", [[
+class ${1:MyClass}${2:(BaseClass)}:
+    """${3:Docstring}"""
+    def __init__(self${4:}):
+        ${5:pass}
+]]),
+    parse("def", [[
+def ${1:function_name}(${2:args}):
+    """${3:Docstring}"""
+    ${4:pass}
+]]),
+    parse("defm", [[
+def ${1:method_name}(self${2:}):
+    """${3:Docstring}"""
+    ${4:pass}
+]]),
   },
 
   direnv = {
-    s(
-      { wordTrig = true, trig = "lay" },
-      { t { "layout " }, i(1, { "python" }), i(0, {}) }
-    ),
+    s({ wordTrig = true, trig = "lay" }, { t { "layout " }, i(1, { "python" }), i(0, {}) }),
   },
   all = {
-    -- ls.snippet({ trig = "bade" }, { ls.insert_node(1, "é") }),
-    -- ls.snippet({ trig="bad..." }, { ls.insert_node(1, "…") }),
-    --
-    ls.parser.parse_snippet(
-      "abc",
-      [[``` ${1|a,b,c|} title=\"${2:title}\"${3: linenums=\"1\"}${4: hl_lines=\"\"}","${5:printf(\"%s\\n\", code);} ```\n\n$0"]]
-    ),
-
     sf("date", date),
     sf("uuid", uuid_),
     sf("lorem(%d*)", lorem, true),
@@ -129,4 +116,3 @@ vim.keymap.set(
 vim.cmd [[
     inoremap <c-t> <cmd>lua require("luasnip.extras.select_choice")()<cr>
 ]]
-

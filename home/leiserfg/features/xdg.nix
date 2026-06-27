@@ -51,22 +51,4 @@
       }
     ];
   };
-
-
-  xdg.desktopEntries = {
-    lolo = {
-      name = "Lolo";
-      genericName = "Web Browser";
-      exec = "lolo %U";
-      terminal = false;
-      categories = [
-        "Network"
-        "WebBrowser"
-      ];
-      mimeType = [
-        "text/html"
-        "text/xml"
-      ];
-    };
-  };
 }

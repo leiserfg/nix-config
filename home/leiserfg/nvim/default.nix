@@ -88,6 +88,7 @@
           markdown_inline
           nix
           nu
+          nim
           python
           regex
           rust
@@ -103,7 +104,7 @@
       lualine-nvim
       lualine-lsp-progress
       render-markdown-nvim
-      friendly-snippets
+      # friendly-snippets
       gitsigns-nvim
       nvim-lint
       conform-nvim
