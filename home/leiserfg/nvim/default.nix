@@ -66,7 +66,6 @@
           nvim-treesitter-parsers.zig
         ];
       }))
-      vim-test
       rustaceanvim
       vim-suda
       yazi-nvim
