@@ -144,6 +144,23 @@
         "type": "github"
       }
     },
+    "calepin": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782498597,
+        "narHash": "sha256-V+snpfNaaxZDmBA7GYyZNLdQxT2pZO+JnCVBkVZkS0I=",
+        "ref": "refs/heads/main",
+        "rev": "343fb20042c7fbe4a974bef6b50ea677d24fab73",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/vincentarelbundock/calepin"
+      },
+      "original": {
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/vincentarelbundock/calepin"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -230,16 +247,18 @@
     },
     "leiserfg-overlay": {
       "inputs": {
+        "calepin": "calepin",
         "llm-agents": "llm-agents",
         "nixpkgs": "nixpkgs",
-        "noctalia": "noctalia"
+        "noctalia": "noctalia",
+        "pytest-language-server": "pytest-language-server"
       },
       "locked": {
-        "lastModified": 1781858852,
-        "narHash": "sha256-COfnn/QEodSX3ROjiPPSG6xjMvANcLNBra5Nd4LB1nU=",
+        "lastModified": 1782978561,
+        "narHash": "sha256-H4fZ1LcnxhwmP80fISPUB0Ykm5/RO6RMH+WehPconwY=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "de51fc30fc5924cae266b0ca59f0d62444a967b7",
+        "rev": "ef1a49312472fe803d178287a63e9a13be3afe38",
         "type": "github"
       },
       "original": {
@@ -261,10 +280,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1781839026,
-        "narHash": "sha256-va+uSimE2DiYN6tZ/XtJy7on2nrvRLblhinL2XBHLjM=",
+        "lastModified": 1782366663,
+        "narHash": "sha256-hcxEl/eWQQaYkUqygP4ca8S7WlX9c6vqgvQCqtV3vuw=",
         "ref": "refs/heads/main",
-        "rev": "815fcb0494fc165dae77c828ecf63634e9030043",
+        "rev": "5f9d86061f538b3f5f3568583c001fb9c0705b71",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/numtide/llm-agents.nix"
@@ -442,10 +461,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1781819536,
-        "narHash": "sha256-v7TwET8a1wtdae/1D+ewIEauTh39hT3zBONv6XkRHe8=",
+        "lastModified": 1782441418,
+        "narHash": "sha256-49CemYU4sRtKteMyPm6LhLvz9HY+VyjwqOBSwPmk/LY=",
         "ref": "refs/heads/main",
-        "rev": "7bc707b611fcb88401f64a52f483f389e2771f43",
+        "rev": "a4fe58a1c2972eba7f199ea0601105243bf57bb0",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/noctalia-dev/noctalia"
@@ -486,6 +505,23 @@
         "owner": "Michaelliv",
         "repo": "pi-goal",
         "type": "github"
+      }
+    },
+    "pytest-language-server": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1782640681,
+        "narHash": "sha256-a+b+A6tF/mXFkK08ooHiQdHl/CU+EgmChH6pfX7Mwao=",
+        "ref": "refs/heads/master",
+        "rev": "9d95a505db2b844fcb6564961aa1576e180684bd",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/bellini666/pytest-language-server"
+      },
+      "original": {
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/bellini666/pytest-language-server"
       }
     },
     "root": {

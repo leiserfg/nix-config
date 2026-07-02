@@ -1,5 +1,6 @@
 {
   pkgs,
+  myPkgs,
   ...
 }:
 {
@@ -32,6 +33,7 @@
       taplo
       pyrefly
       yamlfix
+      myPkgs.pytest-language-server
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -44,6 +46,27 @@
       typescript-tools-nvim
       luasnip
       quicker-nvim
+      (nvim-test.overrideAttrs (old: {
+        src = pkgs.fetchFromGitHub {
+          owner = "klen";
+          repo = "nvim-test";
+          rev = "feb834cbc806029239479f501e8492c01a2bea65";
+          hash = "sha256-DTns8LG3PFFKYG6Ayt90Brf2lbZjNfDLLKUDxsqMisk=";
+        };
+        dependencies = with self; [
+          nvim-treesitter
+          nvim-treesitter-parsers.c_sharp
+          nvim-treesitter-parsers.go
+          nvim-treesitter-parsers.haskell
+          nvim-treesitter-parsers.javascript
+          nvim-treesitter-parsers.python
+          nvim-treesitter-parsers.ruby
+          nvim-treesitter-parsers.rust
+          nvim-treesitter-parsers.typescript
+          nvim-treesitter-parsers.zig
+        ];
+      }))
+      vim-test
       rustaceanvim
       vim-suda
       yazi-nvim
@@ -92,11 +115,11 @@
     ];
 
     # Point to your init.lua configuration file
-    initLua = #lua
-    ''
-    package.path = "${./lua}/?.lua;${./lua}/?/init.lua;" .. package.path
-    require "my"
-    '';
+    initLua = # lua
+      ''
+        package.path = "${./lua}/?.lua;${./lua}/?/init.lua;" .. package.path
+        require "my"
+      '';
 
   };
 

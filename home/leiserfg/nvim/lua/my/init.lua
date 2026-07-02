@@ -56,6 +56,9 @@ vim.api.nvim_create_autocmd("UIEnter", {
     require "my.plugs.fzf-lua"
     require("quicker").setup()
     require("gitlinker").setup()
+    
+    -- Disabled until fixed
+    require("nvim-test").setup()
 
     require("typst-preview").setup {
       dependencies_bin = { ["tinymist"] = "tinymist", ["websocat"] = "websocat" },
