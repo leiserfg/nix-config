@@ -293,6 +293,14 @@
               "SUPER+V"
               (exec "vicinae deeplink vicinae://launch/clipboard/history")
             ]
+            [
+              "SUPER+Z"
+              (luaf ''
+                local current = hl.get_config("cursor.zoom_factor")
+                local next_zoom = current == 1.0 and 3.0 or 1.0
+                hl.config({ cursor = { zoom_factor = next_zoom } })
+              '')
+            ]
             # Audio
             [
               "XF86AudioMute"
