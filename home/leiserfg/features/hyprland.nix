@@ -294,6 +294,10 @@
               (exec "vicinae deeplink vicinae://launch/clipboard/history")
             ]
             [
+              "SUPER+semicolon"
+              (exec "vicinae deeplink vicinae://launch/core/search-emojis")
+            ]
+            [
               "SUPER+Z"
               (luaf ''
                 local current = hl.get_config("cursor.zoom_factor")

@@ -10,6 +10,9 @@ end
 local function ast_grep()
   fzf.fzf_live("ast-grep --context 0 --heading never --pattern <query> 2>/dev/null", {
     exec_empty_query = false,
+    multiprocess = true,
+    previewer = "builtin",
+    preview_opts = "hidden",
     actions = {
       ["default"] = require("fzf-lua").actions.file_edit,
       ["ctrl-q"] = {

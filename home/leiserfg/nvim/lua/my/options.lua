@@ -84,6 +84,13 @@ acmd({ "BufRead", "BufNewFile" }, {
 })
 acmd("BufReadPost", { group = vimrc, command = 'silent! normal! g`"zv' })
 
+acmd("FileType", {
+  pattern = "python",
+  group = vimrc,
+  command = "compiler pytest",
+  desc = "Set pytest as compiler for Python files",
+})
+
 local function yank_callback()
   vim.hl.on_yank { higroup = "IncSearch", timeout = 150 }
   vim.fn.setreg("+", vim.fn.getreg '"')

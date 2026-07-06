@@ -30,6 +30,7 @@ local simple_servers = {
   "ruff",
   "tinymist",
   "ty",
+  -- "zuban",
   "nushell",
 }
 

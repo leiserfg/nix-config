@@ -31,7 +31,8 @@
       nixfmt
       terraform-ls
       taplo
-      pyrefly
+      # pyrefly
+      # zuban
       yamlfix
       myPkgs.pytest-language-server
     ];
@@ -46,6 +47,7 @@
       typescript-tools-nvim
       luasnip
       quicker-nvim
+      vim-dispatch
       (nvim-test.overrideAttrs (old: {
         src = pkgs.fetchFromGitHub {
           owner = "klen";

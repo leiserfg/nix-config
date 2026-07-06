@@ -30,4 +30,23 @@
       WantedBy = [ "graphical-session.target" ];
     };
   };
+
+
+  systemd.user.services.rbw = {
+    Unit = {
+      Description = "rbw agent";
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${lib.getExe pkgs.rbw} login";
+      # ExecStop = "${lib.getExe pkgs.rbw} stop-agent";
+      RemainAfterExit = true;
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
 }

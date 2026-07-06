@@ -4,6 +4,9 @@ local map = vim.keymap.set
 map("i", "<c-c>", "<ESC>", { noremap = true })
 map("n", "<leader>w", ":w!<cr>")
 
+map("n", "]q", ":cnf<cr>")
+map("n", "[q", ":cpf<cr>")
+
 map("n", "n", "nzzzv", { desc = "Next Search Result" })
 map("n", "N", "Nzzzv", { desc = "Previous Search Result" })
 
@@ -20,10 +23,10 @@ vim.keymap.set(
   '"_dP',
   { noremap = true, silent = true, desc = "Paste over selection without erasing unnamed register" }
 )
+
 vim.keymap.set(
-  {"n", "v"},
+  { "n", "x" },
   "<leader>p",
   '"+p',
   { noremap = true, silent = true, desc = "Paste from clipboard" }
 )
-

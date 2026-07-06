@@ -21,7 +21,7 @@ ai.setup {
   mappings = {
     around_next = "ax",
     inside_next = "ix",
-  }
+  },
 }
 require("mini.icons").mock_nvim_web_devicons()
 require("mini.pairs").setup {
@@ -74,16 +74,13 @@ require("mini.surround").setup {
   search_method = "cover_or_next",
 }
 vim.api.nvim_del_keymap("x", "ys")
-vim.api.nvim_set_keymap(
-  "x",
-  "S",
-  [[:<C-u>lua MiniSurround.add('visual')<CR>]],
-  { noremap = true }
-)
+vim.api.nvim_set_keymap("x", "S", [[:<C-u>lua MiniSurround.add('visual')<CR>]], { noremap = true })
 vim.api.nvim_set_keymap("n", "yss", "ys_", { noremap = false })
 require("mini.bracketed").setup {
   comment = { suffix = "k" },
+  quickfix = { suffix = "" }, -- we map it to  :cnf
 }
+
 local miniclue = require "mini.clue"
 miniclue.setup {
   triggers = {
