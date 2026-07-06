@@ -143,11 +143,11 @@ in
       feature = {
         manyFiles = true;
       };
-      url = {
-        "ssh://git@github.com/" = {
-          insteadOf = "https://github.com/";
-        };
-      };
+      # url = {
+      #   "ssh://git@github.com/" = {
+      #     insteadOf = "https://github.com/";
+      #   };
+      # };
     };
   };
 
@@ -238,12 +238,14 @@ in
             # bash
             ''
               [ ! -f "$(jj root)/.pre-commit-config.yaml" ] || ${lib.getExe pkgs.prek} run -a
-            '');
+            ''
+          );
           push = sh (
             # bash
             ''
               jj pre-commit && jj git push "$@"
-            '');
+            ''
+          );
           prc = sh ''
             gh pr create --head "$(jj log -T "bookmarks" --no-graph -r @)" "$@"
           '';
