@@ -1,12 +1,13 @@
 {
   pkgs,
   myPkgs,
+  # neovimPkgs,
   ...
 }:
 {
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-unwrapped;
+    # package = neovimPkgs.default;
 
     withPython3 = false;
     withRuby = false;

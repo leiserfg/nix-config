@@ -12,6 +12,7 @@
     fzf = {
       enable = true;
       defaultOptions = [ "--color=light" ];
+      defaultCommand = "rg --files --hidden --follow --glob '!.git/*'";
     };
 
     btop = {

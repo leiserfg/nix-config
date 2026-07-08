@@ -13,12 +13,15 @@
 
       home-manager.url = "github:nix-community/home-manager";
       home-manager.inputs.nixpkgs.follows = "nixpkgs";
-      neovim-nightly = {
-        url = "github:nix-community/neovim-nightly-overlay";
-      };
+
+      # neovim-nightly = {
+      #   url = "github:nix-community/neovim-nightly-overlay";
+      # };
+
       leiserfg-overlay.url = "github:leiserfg/leiserfg-overlay";
-      blender.url = "github:edolstra/nix-warez?dir=blender";
-      blender.inputs.nixpkgs.follows = "nixpkgs";
+
+      # blender.url = "github:edolstra/nix-warez?dir=blender";
+      # blender.inputs.nixpkgs.follows = "nixpkgs";
 
       nixos-hardware = {
         url = "github:NixOS/nixos-hardware";
@@ -97,7 +100,7 @@
         import inputs.nixpkgs {
           inherit system;
           overlays = (builtins.attrValues overlays) ++ [
-            inputs.blender.overlays.default
+            # inputs.blender.overlays.default
           ];
           config.allowUnfree = true;
           # config.permittedInsecurePackages = [
