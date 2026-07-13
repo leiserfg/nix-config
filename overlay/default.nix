@@ -13,8 +13,8 @@
     glslviewer = prev.glslviewer.overrideAttrs (oldAttrs: {
       patches = (oldAttrs.patches or []) ++ [
         (final.writeText "glslviewer-fix-audio-nullptr.patch" ''
-          --- a/src/gl/textureStreamAudio.cpp
-          +++ b/src/gl/textureStreamAudio.cpp
+          --- src/gl/textureStreamAudio.cpp
+          +++ src/gl/textureStreamAudio.cpp
           @@ -58,7 +58,6 @@ TextureStreamAudio::TextureStreamAudio(): TextureStream() {
                m_dft_buffer = (float*)av_malloc_array(sizeof(float), m_buf_len);
                m_buffer_wr.resize(m_buf_len, 0);
