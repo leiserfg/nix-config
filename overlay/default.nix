@@ -11,20 +11,10 @@
     # that was added in commit 79078eb ("Fix in-class initialization")
     # Bug: https://github.com/patriciogonzalezvivo/glslViewer/issues/...
     glslviewer = prev.glslviewer.overrideAttrs (oldAttrs: {
-      patches = (oldAttrs.patches or []) ++ [
-        (final.writeText "glslviewer-fix-audio-nullptr.patch" ''
-          --- src/gl/textureStreamAudio.cpp
-          +++ src/gl/textureStreamAudio.cpp
-          @@ -58,7 +58,6 @@ TextureStreamAudio::TextureStreamAudio(): TextureStream() {
-               m_dft_buffer = (float*)av_malloc_array(sizeof(float), m_buf_len);
-               m_buffer_wr.resize(m_buf_len, 0);
-               m_buffer_re.resize(m_buf_len, 0);
-          -    m_dft_buffer = nullptr;
-           }
-           
-           TextureStreamAudio::~TextureStreamAudio() {
-        '')
-      ];
+      postPatch = (oldAttrs.postPatch or "") + ''
+        # Remove the incorrect m_dft_buffer = nullptr line that breaks audio
+        sed -i 's/    m_dft_buffer = nullptr;//' src/gl/textureStreamAudio.cpp
+      '';
     });
   };
 in
