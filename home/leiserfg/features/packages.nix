@@ -43,7 +43,7 @@
     docker-compose
     act
     glsl_analyzer
-    glslviewer
+    myPkgs.glslviewer
 
     # --- Git & VCS ---
     git
