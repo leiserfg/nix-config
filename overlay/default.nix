@@ -12,7 +12,7 @@
     # Bug: https://github.com/patriciogonzalezvivo/glslViewer/issues/...
     glslviewer = prev.glslviewer.overrideAttrs (oldAttrs: {
       patches = (oldAttrs.patches or []) ++ [
-        ./patches/glslviewer-fix-audio-nullptr.patch
+        (./patches/glslviewer-fix-audio-nullptr.patch)
       ];
     });
   };
