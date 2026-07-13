@@ -9,11 +9,11 @@
     '')
 
     (writeShellScriptBin "glslViewer_monitor" ''
-      glslViewer -audio $(pactl --format=json list sources | jq 'to_entries|.[]|select(.value.monitor_source == "'$(pactl get-default-sink)'")|.key' ) "$@"
+      glslViewer -audio $(pw-dump | jq '.[] | select(.type == "Port" and .info.direction == "in") | select(.info.name | contains("monitor")) | .id' | head -1) "$@"
     '')
 
     (writeShellScriptBin "wf_rec_monitor" ''
-      wf-recorder --audio=$(pactl --format=json list sources | jq 'to_entries|.[]|select(.value.monitor_source == "'$(pactl get-default-sink)'")|.value.name' -r)  "$@"
+      wf-recorder --audio=$(pw-dump | jq -r '.[] | select(.type == "Port" and .info.direction == "in") | select(.info.name | contains("monitor")) | .info.name' | head -1)  "$@"
     '')
   ];
 }

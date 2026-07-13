@@ -8,7 +8,7 @@
     MOZ_USE_XINPUT2 = "1";
 
     # Fix telegram input
-    # ALSOFT_DRIVERS = "pulse";
+    ALSOFT_DRIVERS = "pulse";
 
     # Disable qt decoration for telegram
     QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
