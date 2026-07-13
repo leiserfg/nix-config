@@ -13,7 +13,7 @@
     glslviewer = prev.glslviewer.overrideAttrs (oldAttrs: {
       postPatch = (oldAttrs.postPatch or "") + ''
         # Remove the incorrect m_dft_buffer = nullptr line that breaks audio
-        sed -i 's/    m_dft_buffer = nullptr;//' src/gl/textureStreamAudio.cpp
+        find . -name "textureStreamAudio.cpp" -exec sed -i 's/^    m_dft_buffer = nullptr;$//' {} \;
       '';
     });
   };
