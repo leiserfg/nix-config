@@ -57,7 +57,11 @@ let
         timeout = 660;
       };
     };
-    lockscreen.blurred_desktop = true;
+    lockscreen = {
+      blurred_desktop = true;
+      fingerprint = false; # so it does not activate the fingerprint reader at lock screen already
+      allow_empty_password = true; # this activates the reader on Enter key press
+    };
     location.auto_locate = true;
     shell = {
       corner_radius_scale = 0.0;
