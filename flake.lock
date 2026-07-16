@@ -27,31 +27,6 @@
         "type": "github"
       }
     },
-    "blueprint_2": {
-      "inputs": {
-        "nixpkgs": [
-          "llm-agents",
-          "nixpkgs"
-        ],
-        "systems": [
-          "llm-agents",
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1776249299,
-        "narHash": "sha256-Dt9t1TGRmJFc0xVYhttNBD6QsAgHOHCArqGa0AyjrJY=",
-        "owner": "numtide",
-        "repo": "blueprint",
-        "rev": "56131e8628f173d24a27f6d27c0215eff57e40dd",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "blueprint",
-        "type": "github"
-      }
-    },
     "bun2nix": {
       "inputs": {
         "flake-parts": [
@@ -189,11 +164,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1783618078,
-        "narHash": "sha256-F43DGcBoIO8xOZFAfodg3jy0VghB9NGdb6xbTYAIx1A=",
+        "lastModified": 1784129366,
+        "narHash": "sha256-N5JiyICSeQF14x+OQebNyPpYowOT9Rs1iKyeCylSzOA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "144f4e36d0186195037da9fce80a727108978070",
+        "rev": "165228b0efefc3e635e5174020c40ea64271dc25",
         "type": "github"
       },
       "original": {
@@ -206,16 +181,17 @@
       "inputs": {
         "calepin": "calepin",
         "llm-agents": "llm-agents",
+        "nimony": "nimony",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
         "pytest-language-server": "pytest-language-server"
       },
       "locked": {
-        "lastModified": 1783613697,
-        "narHash": "sha256-ToGplKMYUq+VHbUSfxnpIx2ao/Qbb/WzoRk08VklRWw=",
+        "lastModified": 1784271779,
+        "narHash": "sha256-cnnKjEHkVip0aSsfuAhI7k6aFX9tOYkPVaWI4P6jhJA=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "3c3e64e74d464e7426c92dd59e23ec5dac5d4164",
+        "rev": "eff0a18d20572cd5dd7c565fb488d54048cc0a3e",
         "type": "github"
       },
       "original": {
@@ -253,7 +229,6 @@
     },
     "llm-agents_2": {
       "inputs": {
-        "blueprint": "blueprint_2",
         "bun2nix": "bun2nix_2",
         "flake-parts": "flake-parts_2",
         "nixpkgs": [
@@ -263,11 +238,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1783603646,
-        "narHash": "sha256-plXAK4U32Kub++YIs9zPYMfE2y6GAAcKjjY8yuqOkWE=",
+        "lastModified": 1784258713,
+        "narHash": "sha256-Fxltsmg9SHOTRJuc4x8J/MB6/cEIjKcMGN/9GyKYQcY=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "89b3d6ef814f387a2c6b574a0153a8fb40db7bf7",
+        "rev": "31405cadaf364d17d2d736e9002efb91558bf07d",
         "type": "github"
       },
       "original": {
@@ -276,16 +251,33 @@
         "type": "github"
       }
     },
+    "nimony": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784242754,
+        "narHash": "sha256-+GwNjurlhvqUIz8KsqdDgkKCL2emGsNJCff8IlgPEK4=",
+        "ref": "refs/heads/master",
+        "rev": "63a36b22346659ee91ef1ffe456e0bf2c5f5737a",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/nim-lang/nimony"
+      },
+      "original": {
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/nim-lang/nimony"
+      }
+    },
     "nixos-hardware": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1783582157,
-        "narHash": "sha256-EteIu2AVVbxzkBnBKjrbdknbpjxBkWTMNg02rXj4mgU=",
+        "lastModified": 1784100666,
+        "narHash": "sha256-HF/mrw5NYQfKFZgkfV2h1UL5/E3ccfsE2XJ1AbbLLJ0=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "968980fba2c290b5529025636474eae8457b854c",
+        "rev": "fccfa9031a85b78a437f2f153c1f6449f3bc3185",
         "type": "github"
       },
       "original": {
@@ -313,10 +305,10 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1783224372,
-        "narHash": "sha256-8i/87eeoqiGE4yOTjwSA3Eh/ziJRQEmd/unYU+K27sk=",
+        "lastModified": 1784120854,
+        "narHash": "sha256-KesHgItiZPgGX740axSiQLcIQ8D24MDqNpkKYWIek8k=",
         "ref": "nixos-unstable",
-        "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+        "rev": "753cc8a3a87467296ddd1fa93f0cc3e81120ee46",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -343,10 +335,10 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1783224372,
-        "narHash": "sha256-8i/87eeoqiGE4yOTjwSA3Eh/ziJRQEmd/unYU+K27sk=",
+        "lastModified": 1784120854,
+        "narHash": "sha256-KesHgItiZPgGX740axSiQLcIQ8D24MDqNpkKYWIek8k=",
         "ref": "nixos-unstable",
-        "rev": "d407951447dcd00442e97087bf374aad70c04cea",
+        "rev": "753cc8a3a87467296ddd1fa93f0cc3e81120ee46",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -366,10 +358,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1783609831,
-        "narHash": "sha256-dRvGsRCSWjWn05qaB2cE/ft3QCtyP/U/FZNLbjoF5qw=",
+        "lastModified": 1784210019,
+        "narHash": "sha256-DfE6kFtK8RG4I9EQplJzUUjb16CG1alx5rprs2cibE0=",
         "ref": "refs/heads/main",
-        "rev": "0571a4523bc5efaef901c084a7fae16ee6b8231a",
+        "rev": "cb15ce1c85a5e8c652f8aabc3ccd6f266b344e57",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/noctalia-dev/noctalia"

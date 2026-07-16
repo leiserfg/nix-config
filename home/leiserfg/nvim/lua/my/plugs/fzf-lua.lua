@@ -1,5 +1,6 @@
 local fzf = require "fzf-lua"
 fzf.setup {
+  -- fzf_bin = "sk",
   winopts = { treesitter = false },
   fzf_colors = true,
 }

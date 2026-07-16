@@ -13,7 +13,7 @@
   home.packages = [
     (pkgs.runCommand "nushell-fzf-integration" { } ''
       mkdir -p $out/share/nushell/vendor/autoload
-      ${lib.getExe pkgs.fzf} --nushell > $out/share/nushell/vendor/autoload/fzf.nu
+      ${lib.getExe pkgs.fzf} --nushell | sed s/downcase/lowercase/g > $out/share/nushell/vendor/autoload/fzf.nu
     '')
 
   ];
@@ -41,6 +41,7 @@
     };
     carapace.enable = true;
     carapace.enableNushellIntegration = false; # Enabled  by hand in the config
+    fzf.enableNushellIntegration = false; # set by hand until it get fixed upstream
     # carapace.enableBashIntegration = false;
   };
 }

@@ -89,7 +89,7 @@
     rsync
     moreutils
     cntr
-    patool
+    ouch-rar
     unrar
     zpaq
     p7zip
@@ -147,5 +147,6 @@
     handlr-regex
     uiua
     myPkgs.noctalia_5
+    myPkgs.nimony
   ];
 }

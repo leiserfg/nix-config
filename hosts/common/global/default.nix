@@ -43,8 +43,7 @@
 
   environment.systemPackages = with pkgs; [
     android-tools
-    vim
-    cntr
+    neovim-unwrapped
   ];
 
   hardware.logitech.wireless.enable = true;
