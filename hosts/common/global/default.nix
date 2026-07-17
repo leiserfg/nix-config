@@ -18,6 +18,7 @@
     ./nix.nix
     ./services.nix
     ./security.nix
+    ./beacon.nix
   ];
   environment = {
     loginShellInit = ''

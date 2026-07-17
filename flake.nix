@@ -4,7 +4,6 @@
   inputs =
 
     {
-
       nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
       nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
 
@@ -23,8 +22,14 @@
       # blender.url = "github:edolstra/nix-warez?dir=blender";
       # blender.inputs.nixpkgs.follows = "nixpkgs";
 
+      beacon = {
+
+        url = "git+https://github.com/adisbladis/nix-cache-beacon?shallow=1";
+      };
+
       nixos-hardware = {
         url = "github:NixOS/nixos-hardware";
+        inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
       };
 
       llm-agents = {
@@ -112,6 +117,7 @@
       nixosConfigurations =
         let
           common-mods = (builtins.attrValues nixosModules) ++ [
+            inputs.beacon.nixosModules.default
             # inputs.run0-sudo-shim.nixosModules.default
           ];
         in

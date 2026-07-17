@@ -41,6 +41,8 @@
       Type = "exec";
       ExecStart = "${lib.getExe' pkgs.rbw "rbw-agent"} --no-daemonize";
       Restart = "on-failure";
+      PassEnvironment = "WAYLAND_DISPLAY DISPLAY XDG_RUNTIME_DIR";
+      Environment = "QT_QPA_PLATFORM=wayland";
     };
     Install = {
       WantedBy = [ "graphical-session.target" ];
