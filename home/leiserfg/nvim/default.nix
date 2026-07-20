@@ -36,6 +36,8 @@
       # zuban
       yamlfix
       myPkgs.pytest-language-server
+      # nimlangserver
+      nimlsp
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -49,62 +51,41 @@
       luasnip
       quicker-nvim
       vim-dispatch
-      (nvim-test.overrideAttrs (old: {
-        src = pkgs.fetchFromGitHub {
-          owner = "klen";
-          repo = "nvim-test";
-          rev = "feb834cbc806029239479f501e8492c01a2bea65";
-          hash = "sha256-DTns8LG3PFFKYG6Ayt90Brf2lbZjNfDLLKUDxsqMisk=";
-        };
-        dependencies = with self; [
-          nvim-treesitter
-          nvim-treesitter-parsers.c_sharp
-          nvim-treesitter-parsers.go
-          nvim-treesitter-parsers.haskell
-          nvim-treesitter-parsers.javascript
-          nvim-treesitter-parsers.python
-          nvim-treesitter-parsers.ruby
-          nvim-treesitter-parsers.rust
-          nvim-treesitter-parsers.typescript
-          nvim-treesitter-parsers.zig
-        ];
-      }))
       rustaceanvim
-      vim-suda
+      # vim-suda   in nixos I never need this
       yazi-nvim
-      (nvim-treesitter.withPlugins (
-        plugins: with plugins; [
-          bash
-          c
-          css
-          cpp
-          csv
-          elixir
-          gitcommit
-          query
-          html
-          hurl
-          json
-          lua
-          markdown
-          markdown_inline
-          nix
-          nu
-          nim
-          python
-          regex
-          rust
-          sql
-          toml
-          typescript
-          terraform
-          typst
-          yaml
-          vimdoc
-        ]
-      ))
+      (nvim-treesitter.withPlugins (ts: [
+        ts.bash
+        ts.c
+        ts.css
+        ts.cpp
+        ts.csv
+        ts.elixir
+        ts.gitcommit
+        ts.query
+        ts.html
+        ts.hurl
+        ts.json
+        ts.lua
+        ts.markdown
+        ts.markdown_inline
+        ts.nix
+        ts.nu
+        ts.nim
+        ts.python
+        ts.regex
+        ts.rust
+        ts.sql
+        ts.toml
+        ts.typescript
+        ts.terraform
+        ts.typst
+        ts.yaml
+        ts.vimdoc
+      ]))
       lualine-nvim
       lualine-lsp-progress
+
       render-markdown-nvim
       # friendly-snippets
       gitsigns-nvim

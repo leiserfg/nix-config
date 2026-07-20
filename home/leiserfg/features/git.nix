@@ -177,12 +177,12 @@ in
       ];
 
       fsmonitor.backend = "watchman";
-      merge-tools.nvim.diff-args = [
+      merge-tools.nvim.merge-args = [
         "-c"
         "packadd nvim.difftool"
         "-d"
-        "$local"
-        "$remote"
+        "$left"
+        "$right"
       ];
 
       ui.diff-formatter = [

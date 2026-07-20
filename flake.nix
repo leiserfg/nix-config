@@ -23,8 +23,8 @@
       # blender.inputs.nixpkgs.follows = "nixpkgs";
 
       beacon = {
-
-        url = "git+https://github.com/adisbladis/nix-cache-beacon?shallow=1";
+        # url = "git+https://github.com/adisbladis/nix-cache-beacon?shallow=1";
+        url = "git+https://github.com/leiserfg/nix-cache-beacon?shallow=1&ref=dedupe-keys/srvowquuonkn";
       };
 
       nixos-hardware = {

@@ -32,6 +32,7 @@ local simple_servers = {
   "ty",
   -- "zuban",
   "nushell",
+  "nimlsp",
 }
 
 for _, server in ipairs(simple_servers) do

@@ -40,7 +40,7 @@ require "my.plugs.gitsigns_nvim"
 require "my.lsp"
 
 -- Simple plugin setups
-vim.g.suda_smart_edit = 1
+-- vim.g.suda_smart_edit = 1
 
 -- Defer plugin loading until after editor is fully loaded
 vim.api.nvim_create_autocmd("UIEnter", {
@@ -58,7 +58,7 @@ vim.api.nvim_create_autocmd("UIEnter", {
     require("gitlinker").setup()
     
     -- Disabled until fixed
-    require("nvim-test").setup()
+    -- require("nvim-test").setup()
 
     require("typst-preview").setup {
       dependencies_bin = { ["tinymist"] = "tinymist", ["websocat"] = "websocat" },
