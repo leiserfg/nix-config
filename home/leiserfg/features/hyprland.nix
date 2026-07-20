@@ -82,8 +82,7 @@
       enable = true;
       configType = "lua";
 
-      # package = inputs.hyprland.packages.x86_64-linux.default;
-      package = myPkgs.hyprland;
+      # package = myPkgs.hyprland;
 
       systemd = {
         enable = true;
