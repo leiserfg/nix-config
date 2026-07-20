@@ -42,41 +42,24 @@ let
     }) builtinExtensionNames
   );
 
-  # Get all md files from agents directory of subagent extension
-  subagentAgentsDir = "${builtinExtensionsDir}/subagent/agents";
-  subagentAgentsFiles = lib.pipe subagentAgentsDir [
-    builtins.readDir
-    (dir: lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".md" name) dir)
-    lib.attrNames
-  ];
-
-  # Create home.file entries for agents (symlinks)
-  agentEntries = lib.listToAttrs (
-    map (file: {
-      name = ".pi/agent/agents/${file}";
-      value = {
-        source = "${subagentAgentsDir}/${file}";
-      };
-    }) subagentAgentsFiles
-  );
 
   # Get all md files from prompts directory of subagent extension
-  subagentPromptsDir = "${builtinExtensionsDir}/subagent/prompts";
-  subagentPromptsFiles = lib.pipe subagentPromptsDir [
-    builtins.readDir
-    (dir: lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".md" name) dir)
-    lib.attrNames
-  ];
+  # subagentPromptsDir = "${builtinExtensionsDir}/subagent/prompts";
+  # subagentPromptsFiles = lib.pipe subagentPromptsDir [
+  #   builtins.readDir
+  #   (dir: lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".md" name) dir)
+  #   lib.attrNames
+  # ];
 
   # Create home.file entries for prompts (symlinks)
-  promptEntries = lib.listToAttrs (
-    map (file: {
-      name = ".pi/agent/prompts/${file}";
-      value = {
-        source = "${subagentPromptsDir}/${file}";
-      };
-    }) subagentPromptsFiles
-  );
+  # promptEntries = lib.listToAttrs (
+  #   map (file: {
+  #     name = ".pi/agent/prompts/${file}";
+  #     value = {
+  #       source = "${subagentPromptsDir}/${file}";
+  #     };
+  #   }) subagentPromptsFiles
+  # );
 
   # Filter inputs for pi-* entries
   piInputs = lib.filterAttrs (name: value: lib.hasPrefix "pi-" name) inputs;
@@ -97,8 +80,7 @@ let
     extensionEntries
     builtinExtensionEntries
     piInputEntries
-    agentEntries
-    promptEntries
+    # promptEntries
   ];
 
 in

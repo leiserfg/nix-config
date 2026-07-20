@@ -53,7 +53,7 @@
       # };
 
       # hyprland = {
-      #   url = "github:leiserfg/Hyprland";
+      #   url = "github:hyprwm/Hyprland";
       # };
     };
 

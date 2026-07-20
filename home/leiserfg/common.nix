@@ -10,7 +10,7 @@
 {
   imports = [
     # Shared settings
-    ../../shared/nix.nix
+    # ../../shared/nix.nix
 
     # Feature modules
     ./features/fish.nix
@@ -56,9 +56,9 @@
     stateVersion = "22.05";
   };
 
-  nix = {
-    enable = true;
-  };
+  # nix = {
+  #   enable = true;
+  # };
 
   home.shell = {
     # Let's make bash silly
