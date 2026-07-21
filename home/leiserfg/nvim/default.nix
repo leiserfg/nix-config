@@ -110,6 +110,7 @@
   xdg.configFile = {
     "nvim/colors".source = ./colors;
     "nvim/plugin".source = ./plugin;
+    "nvim/ftplugin".source = ./ftplugin;
   };
 
   # Create aliases for vim and vi

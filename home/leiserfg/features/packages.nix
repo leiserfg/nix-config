@@ -148,5 +148,6 @@
     uiua
     myPkgs.noctalia_5
     myPkgs.nimony
+    nim
   ];
 }

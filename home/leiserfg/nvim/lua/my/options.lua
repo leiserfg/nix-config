@@ -41,7 +41,7 @@ o.breakindent = true
 o.fillchars = { eob = " ", diff = "╱" }
 o.virtualedit = "block"
 o.shiftwidth = 4
-o.softtabstop = 4
+o.softtabstop = -1 -- to force using shiftwidth
 o.linebreak = true
 o.smartindent = true
 o.signcolumn = "yes"
