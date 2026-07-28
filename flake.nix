@@ -37,13 +37,8 @@
         inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
       };
 
-      pi-condensed-milk = {
-        url = "github:tomooshi/condensed-milk-pi";
-        flake = false;
-      };
-
-      pi-goal = {
-        url = "github:Michaelliv/pi-goal";
+      pi-llamacpp = {
+        url = "github:huggingface/pi-llama";
         flake = false;
       };
 

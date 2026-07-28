@@ -104,7 +104,7 @@
     # zathura
     sioyek
     imv
-    # krita
+    krita
     vtracer
     inkscape
     ffmpeg

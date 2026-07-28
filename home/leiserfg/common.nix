@@ -56,9 +56,9 @@
     stateVersion = "22.05";
   };
 
-  # nix = {
-  #   enable = true;
-  # };
+  nix = {
+    package = pkgs.lixPackageSets.stable.lix;
+  };
 
   home.shell = {
     # Let's make bash silly

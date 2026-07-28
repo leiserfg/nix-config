@@ -369,35 +369,19 @@
         "url": "https://github.com/noctalia-dev/noctalia"
       }
     },
-    "pi-condensed-milk": {
+    "pi-llamacpp": {
       "flake": false,
       "locked": {
-        "lastModified": 1779577159,
-        "narHash": "sha256-Mc4OFw0sJT9cUW6iQPuKUFtkFo8sDz/nNna9hkE9roo=",
-        "owner": "tomooshi",
-        "repo": "condensed-milk-pi",
-        "rev": "71f9e396951c42687f0c3456727b2b5c8c625da1",
+        "lastModified": 1783349760,
+        "narHash": "sha256-5cTimbW+wLYiAUsqoNUi9AbArrWUR2Mzd+22zkwrTlg=",
+        "owner": "huggingface",
+        "repo": "pi-llama",
+        "rev": "8a876fca45c7824a50cd74f01ea11e0bab7964a2",
         "type": "github"
       },
       "original": {
-        "owner": "tomooshi",
-        "repo": "condensed-milk-pi",
-        "type": "github"
-      }
-    },
-    "pi-goal": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1782023283,
-        "narHash": "sha256-bp/Gk/iPN0Cx7hIbAKkIOuRgb0gzCeL8bgjVU8iXBto=",
-        "owner": "Michaelliv",
-        "repo": "pi-goal",
-        "rev": "3f100be5434454d3388755a119d01caca9127c16",
-        "type": "github"
-      },
-      "original": {
-        "owner": "Michaelliv",
-        "repo": "pi-goal",
+        "owner": "huggingface",
+        "repo": "pi-llama",
         "type": "github"
       }
     },
@@ -427,8 +411,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "pi-condensed-milk": "pi-condensed-milk",
-        "pi-goal": "pi-goal"
+        "pi-llamacpp": "pi-llamacpp"
       }
     },
     "systems": {
