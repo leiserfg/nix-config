@@ -13,6 +13,7 @@
     ../common/features/hyprland.nix
     ../common/features/docker.nix
     ../common/features/laptop.nix
+    ../common/features/tailscale.nix
   ];
 
   programs.dconf.enable = true;

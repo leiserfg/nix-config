@@ -2,11 +2,6 @@
 {
   hardware.bluetooth.enable = true;
 
-  services.tailscale = {
-    enable = true;
-    openFirewall = true;
-    useRoutingFeatures = "client";
-  };
   services.resolved.enable = true;
   networking = {
     wireless.iwd.enable = true;

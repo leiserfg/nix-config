@@ -14,7 +14,14 @@
     ../common/features/oom.nix
     ../common/features/zswap.nix
     ../common/features/laptop.nix
+    ../common/features/laptop.nix
   ];
+
+  services.netbird = {
+    enable = true;
+    ui.enable = true;
+  };
+
   hardware.cpu.amd.updateMicrocode = true;
   services.fprintd.enable = true;
 

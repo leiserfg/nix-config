@@ -5,7 +5,6 @@
     # ssh-agent.enable = true;
     mpris-proxy.enable = true;
     network-manager-applet.enable = true;
-    tailscale-systray.enable = true;
 
     udiskie = {
       enable = true;
