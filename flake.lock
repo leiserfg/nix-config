@@ -2,22 +2,23 @@
   "nodes": {
     "beacon": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1784485148,
-        "narHash": "sha256-KFI27Et9Ikfg00+UgvyVvOYDPhcI2atFVr51ufKVZr0=",
-        "ref": "dedupe-keys/srvowquuonkn",
-        "rev": "c568708f7d21a3c7037b8fd284ae6fd0b0990814",
+        "lastModified": 1786104427,
+        "narHash": "sha256-Gu6qfMbxHDV5PF80YBfOdOTYAaxJvQ6UfE4yMc5jEdQ=",
+        "ref": "refs/heads/master",
+        "rev": "8cb2c7b93c0f66485be62311e9e0894cc6370c94",
         "shallow": true,
         "type": "git",
-        "url": "https://github.com/leiserfg/nix-cache-beacon"
+        "url": "https://github.com/adisbladis/nix-cache-beacon"
       },
       "original": {
-        "ref": "dedupe-keys/srvowquuonkn",
         "shallow": true,
         "type": "git",
-        "url": "https://github.com/leiserfg/nix-cache-beacon"
+        "url": "https://github.com/adisbladis/nix-cache-beacon"
       }
     },
     "bun2nix": {
@@ -175,7 +176,7 @@
         "calepin": "calepin",
         "llm-agents": "llm-agents",
         "nimony": "nimony",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
         "pytest-language-server": "pytest-language-server"
       },
@@ -284,18 +285,19 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1780749050,
-        "narHash": "sha256-3av0pIjlOWQ6rDbNOmpUSvbNnJkGORQKKjb4LtCZsIY=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "a799d3e3886da994fa307f817a6bc705ae538eeb",
-        "type": "github"
+        "lastModified": 1785571196,
+        "narHash": "sha256-KoTsyMQqnXQZq8deCEnu4QkyldkwH/bpMMhUcfMdGIw=",
+        "ref": "nixos-unstable",
+        "rev": "148bab9c1c3c53136ecb44a6ea356a0ed5b39b06",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/NixOS/nixpkgs"
       },
       "original": {
-        "owner": "nixos",
         "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/NixOS/nixpkgs"
       }
     },
     "nixpkgs-unstable": {
@@ -316,23 +318,6 @@
       }
     },
     "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1785571196,
-        "narHash": "sha256-KoTsyMQqnXQZq8deCEnu4QkyldkwH/bpMMhUcfMdGIw=",
-        "ref": "nixos-unstable",
-        "rev": "148bab9c1c3c53136ecb44a6ea356a0ed5b39b06",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      },
-      "original": {
-        "ref": "nixos-unstable",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      }
-    },
-    "nixpkgs_3": {
       "locked": {
         "lastModified": 1785692966,
         "narHash": "sha256-vUfIeBEfpbAfZ5zjgIkYk7eHBeVfCYVjLbWnMkseYnk=",
@@ -411,7 +396,7 @@
         "leiserfg-overlay": "leiserfg-overlay",
         "llm-agents": "llm-agents_2",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pi-llamacpp": "pi-llamacpp"
       }
