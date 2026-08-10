@@ -10,15 +10,17 @@ let
   noctalia-config = {
     audio.enable_overdrive = true;
     bar.default = {
+      position = "right";
       start = [
         "taskbar"
         "media"
       ];
-      center = [ "active_window" ];
+      center = [
+        # "active_window"
+      ];
       end = [
         "tray"
         "notifications"
-        "clipboard"
         "network"
         "bluetooth"
         "volume"
@@ -81,6 +83,8 @@ let
       group_by_workspace = true;
       hide_empty_workspaces = false;
       show_all_outputs = true;
+      workspace_label_placement = "inside";
+      inactive_opacity = 0.5;
     };
   };
 
@@ -100,7 +104,7 @@ in
     };
 
     Service = {
-      ExecStart = "${lib.getExe myPkgs.noctalia_5}";
+      ExecStart = "${lib.getExe pkgs.noctalia}";
       Restart = "on-failure";
     };
 

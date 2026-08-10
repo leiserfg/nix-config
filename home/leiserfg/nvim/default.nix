@@ -42,7 +42,8 @@
 
     plugins = with pkgs.vimPlugins; [
       typst-preview-nvim
-      nvim-parinfer
+      # nvim-parinfer
+      fff-nvim
       tiny-inline-diagnostic-nvim
       vim-startuptime
       mini-nvim

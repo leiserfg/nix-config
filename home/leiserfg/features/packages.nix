@@ -146,7 +146,7 @@
     xh
     handlr-regex
     uiua
-    myPkgs.noctalia_5
+    noctalia
     myPkgs.nimony
     nim
   ];

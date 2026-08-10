@@ -178,14 +178,15 @@
         "nimony": "nimony",
         "nixpkgs": "nixpkgs",
         "noctalia": "noctalia",
-        "pytest-language-server": "pytest-language-server"
+        "pytest-language-server": "pytest-language-server",
+        "sokol-tools-bin": "sokol-tools-bin"
       },
       "locked": {
-        "lastModified": 1786099176,
-        "narHash": "sha256-U5FmWzoJmf4s35cLAWGOPM05kZxiu8mN2sD0/Axms/U=",
+        "lastModified": 1786348901,
+        "narHash": "sha256-n/766KGb2sNWBHwfqsCf8GmLdwSeZTXMR0OgPnOFbTw=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "083574fc4e6362576d02d95394735efe7b98f890",
+        "rev": "e5ee599a994c5babf7ffccbff3e335aa10ef60cb",
         "type": "github"
       },
       "original": {
@@ -247,10 +248,10 @@
     "nimony": {
       "flake": false,
       "locked": {
-        "lastModified": 1786028528,
-        "narHash": "sha256-o4DjWWdKgcXQFV8VNTRANfbbpFMve3krwS/9G1zkvCY=",
+        "lastModified": 1786346108,
+        "narHash": "sha256-cdO6KbeJRmvWbB7zJ7NsFWzB1SLzO3AP1npvIQ9KlZY=",
         "ref": "refs/heads/master",
-        "rev": "b7e5691070024bfed80919cb51862be6fd02e3ab",
+        "rev": "5ffd643d84e5cd6ee9a923e2e5116dcfe2248307",
         "shallow": true,
         "submodules": true,
         "type": "git",
@@ -399,6 +400,25 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pi-llamacpp": "pi-llamacpp"
+      }
+    },
+    "sokol-tools-bin": {
+      "flake": false,
+      "locked": {
+        "dir": "bin/linux",
+        "lastModified": 1786285306,
+        "narHash": "sha256-tYlwaY7RS8vR+dutMoKvE5bJFpMEdK1QVHK3wFjNGO8=",
+        "ref": "refs/heads/master",
+        "rev": "af9a893b745c9302114791cde57371b66af9aed6",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/floooh/sokol-tools-bin"
+      },
+      "original": {
+        "dir": "bin/linux",
+        "shallow": true,
+        "type": "git",
+        "url": "https://github.com/floooh/sokol-tools-bin"
       }
     },
     "systems": {
