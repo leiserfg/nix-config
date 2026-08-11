@@ -11,14 +11,14 @@ let
     audio.enable_overdrive = true;
     bar.default = {
       position = "right";
-      start = [
-        "taskbar"
-        "media"
-      ];
       center = [
-        # "active_window"
+        "taskbar"
       ];
       end = [
+        # "active_window"
+      ];
+      start = lib.reverseList [
+        "media"
         "tray"
         "notifications"
         "network"
@@ -27,7 +27,7 @@ let
         "brightness"
         "battery"
         "control-center"
-        "session"
+        # "session"
         "clock"
       ];
       margin_ends = 0;
@@ -84,7 +84,7 @@ let
       hide_empty_workspaces = false;
       show_all_outputs = true;
       workspace_label_placement = "inside";
-      inactive_opacity = 0.5;
+      inactive_opacity = 0.7;
     };
   };
 
