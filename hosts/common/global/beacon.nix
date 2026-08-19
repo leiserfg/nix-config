@@ -17,5 +17,8 @@
   # Local binary cache using Harmonia
   # nix-cache-beacon can be used with any cache implementation
   services.harmonia.cache.enable = true; # Serve up local Nix store
+  services.harmonia.cache.settings = {
+    priority = 30;
+  };
   networking.firewall.allowedTCPPorts = [ 5000 ]; # Open firewall port for Harmonia
 }
