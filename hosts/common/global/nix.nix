@@ -74,4 +74,7 @@
   services.harmonia.cache.enable = true; # Serve up local Nix store
   networking.firewall.allowedTCPPorts = [ 5000 ]; # Open firewall port for Harmonia
 
+  services.harmonia.cache.settings = {
+    priority = 30;
+  };
 }
