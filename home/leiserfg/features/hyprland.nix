@@ -140,6 +140,14 @@
           };
         };
 
+        on = {
+          _args = [
+            "hyprland.start"
+            (luaf ''
+              hl.exec_cmd("rbw-agent")
+            '')
+          ];
+        };
         gesture = {
           fingers = 4;
           direction = "horizontal";
@@ -392,6 +400,7 @@
         );
 
       };
+
       # extraConfig = builtins.readFile ./hyprland_monitor_manager.lua;
     };
 

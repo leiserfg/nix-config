@@ -1,14 +1,14 @@
 {
   pkgs,
   myPkgs,
-  # neovimPkgs,
+  inputs,
   ...
 }:
 {
   programs.neovim = {
     enable = true;
     # package = neovimPkgs.default;
-
+    package = inputs.neovim-nightly.packages.${pkgs.system}.default;
     withPython3 = false;
     withRuby = false;
     withNodeJs = false;
