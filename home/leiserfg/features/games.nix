@@ -22,7 +22,7 @@ rec {
       # mgba
       # aseprite
       fuse-overlayfs
-      dwarfs
+      # dwarfs
       bubblewrap
       umu-launcher
       # glslviewer
