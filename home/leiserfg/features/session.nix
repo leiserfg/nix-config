@@ -15,8 +15,6 @@
     # Make cargo use git to pull from github
     CARGO_NET_GIT_FETCH_WITH_CLI = "true";
 
-    # FREETYPE_PROPERTIES = "cff:no-stem-darkening=0 autofitter:no-stem-darkening=0";
-
     # Force wayland for electron
     NIXOS_OZONE_WL = 1;
 

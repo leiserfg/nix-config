@@ -20,6 +20,7 @@
     ./features/mpv.nix
     ./features/git.nix
     ./features/kitty.nix
+    # ./features/fontconfig.nix
     # ./features/noctalia.nix
     ./features/noctalia_v5.nix
 
