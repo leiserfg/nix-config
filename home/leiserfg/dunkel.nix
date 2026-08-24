@@ -18,7 +18,7 @@
     terraform
     # traceroute
     # chromium
-    (unstablePkgs.teams-for-linux)
+    # (unstablePkgs.teams-for-linux)
     # slack
     bruno
   ];
