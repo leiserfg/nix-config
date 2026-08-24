@@ -21,7 +21,7 @@
     gvfs.enable = true;
 
     scx = {
-      enable = true;
+      # enable = true;
       scheduler = "scx_lavd";
       extraArgs = [ "--autopower" ];
     };
