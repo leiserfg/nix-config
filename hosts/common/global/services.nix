@@ -20,11 +20,11 @@
     fwupd.enable = true;
     gvfs.enable = true;
 
-    scx = {
-      # enable = true;
-      scheduler = "scx_lavd";
-      extraArgs = [ "--autopower" ];
-    };
+    # scx = {
+    #   # enable = true;
+    #   scheduler = "scx_lavd";
+    #   extraArgs = [ "--autopower" ];
+    # };
 
     openssh.enable = true;
     dbus.implementation = "broker";
