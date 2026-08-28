@@ -104,6 +104,7 @@
     # zathura
     sioyek
     imv
+    jamesdsp
     krita
     vtracer
     inkscape
