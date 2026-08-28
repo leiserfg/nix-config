@@ -1,15 +1,5 @@
 { lib, ... }:
 {
-  # zramSwap = {
-  #   enable = true;
-  #   algorithm = "zstd";
-  #   memoryPercent = 30;
-  # };
-
-  # boot.kernelParams = [
-  #   "zswap.enabled=1"
-  # ];
-
   systemd.tmpfiles.rules = (
     lib.mapAttrsToList (n: v: "w /sys/module/zswap/parameters/${n}  - - - - ${toString v}") {
       enabled = true;

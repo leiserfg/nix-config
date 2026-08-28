@@ -7,8 +7,7 @@
 {
   programs.neovim = {
     enable = true;
-    # package = neovimPkgs.default;
-    package = inputs.neovim-nightly.packages.${pkgs.system}.default;
+    # package = inputs.neovim-nightly.packages.${pkgs.system}.default;
     withPython3 = false;
     withRuby = false;
     withNodeJs = false;
@@ -45,7 +44,7 @@
       # nvim-parinfer
       fff-nvim
       tiny-inline-diagnostic-nvim
-      vim-startuptime
+      # vim-startuptime
       mini-nvim
       blink-cmp
       typescript-tools-nvim
@@ -92,10 +91,8 @@
       gitsigns-nvim
       nvim-lint
       conform-nvim
-      plenary-nvim
       dial-nvim
       fzf-lua
-      gx-nvim
       gitlinker-nvim
     ];
 

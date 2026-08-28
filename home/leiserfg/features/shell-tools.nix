@@ -32,6 +32,7 @@
         "$python"
         "$hostname"
         "$aws"
+        "$terraform"
         "$custom"
       ];
       custom.jj = {

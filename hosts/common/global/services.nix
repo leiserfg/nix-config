@@ -24,14 +24,14 @@
       enable = true;
 
       # Use this one when the issue get's fixed
-      # scheduler = "scx_lavd";
-      # extraArgs = [ "--autopower" ];
+      scheduler = "scx_lavd";
+      extraArgs = [ "--autopower" ];
 
-      scheduler = "scx_bpfland";
-      extraArgs = [
-        "-m"
-        " auto"
-      ];
+      # scheduler = "scx_bpfland";
+      # extraArgs = [
+      #   "-m"
+      #   " auto"
+      # ];
     };
 
     openssh.enable = true;
