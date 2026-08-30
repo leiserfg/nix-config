@@ -24,6 +24,7 @@
       luaf = body: lib.generators.mkLuaInline ("function() " + body + " end");
       # Shorthand lua functions
       exec = cmd: lua "hl.dsp.exec_cmd('${cmd}')";
+
       focus = dir: lua "hl.dsp.focus({ direction = '${dir}' })";
       move = dir: lua "hl.dsp.window.move({ direction = '${dir}' })";
       close = lua "hl.dsp.window.close()";
@@ -278,7 +279,13 @@
             # Applications
             [
               "SUPER+Slash"
-              (exec "firefox")
+              (luaf ''
+                local win = hl.get_window("class:firefox")
+                hl.dispatch(win
+                    and hl.dsp.window.focus({ window = "address:" .. win.address })
+                    or hl.dsp.exec_cmd('firefox')
+                )
+              '')
             ]
             [
               "SUPER+Return"

@@ -1,19 +1,10 @@
 { lib, ... }:
 {
-  systemd.tmpfiles.rules = (
-    lib.mapAttrsToList (n: v: "w /sys/module/zswap/parameters/${n}  - - - - ${toString v}") {
-      enabled = true;
-
-      # I think with swap, you need speed first and foremost and compression
-      # efficiency is secondary. OTOH, in my testing, zstd is able to store
-      # the first 3 pages of random files in my closure in 1 page ~40% of
-      # the time vs. only ~10% with lz4 although the bulk is 2 pages in
-      # either case. I consider zswap as a best-effort speed efficiency
-      # boost though, so speed is more important I think.
-      compressor = "lz4";
-    }
-  );
-
+  boot.zswap = {
+    enable = true;
+    shrinkerEnabled = true;
+    compressor = "lz4";
+  };
   boot.kernel.sysctl = {
     "vm.watermark_boost_factor" = 0; # watermark boosting can cause unpredictable stalls as seen here: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/1861359
 

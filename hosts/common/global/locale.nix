@@ -4,5 +4,4 @@
     extraLocaleSettings.LC_TIME = "en_DK.UTF-8";
   };
   time.timeZone = lib.mkDefault "Europe/Berlin";
-
 }
