@@ -280,9 +280,10 @@
             [
               "SUPER+Slash"
               (luaf ''
-                local win = hl.get_window("class:firefox")
-                hl.dispatch(win
-                    and hl.dsp.window.focus({ window = "address:" .. win.address })
+                local win = hl.get_window[[initialclass:firefox]]
+                hl.dispatch(
+                    win
+                    and hl.dsp.focus{window=win}
                     or hl.dsp.exec_cmd('firefox')
                 )
               '')
