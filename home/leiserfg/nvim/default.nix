@@ -36,7 +36,7 @@
       yamlfix
       myPkgs.pytest-language-server
       # nimlangserver
-      nimlsp
+      # nimlsp
     ];
 
     plugins = with pkgs.vimPlugins; [

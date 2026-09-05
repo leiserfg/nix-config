@@ -32,7 +32,6 @@ local simple_servers = {
   "ty",
   -- "zuban",
   "nushell",
-  "nimlsp",
 }
 
 for _, server in ipairs(simple_servers) do
@@ -116,3 +115,9 @@ setup_lsp("pytest_lsp", {
   filetypes = { "python" },
   root_markers = { "pyproject.toml", "setup.py", "setup.cfg", "pytest.ini", ".git" },
 })
+
+-- setup_lsp("nimony-lsp", {
+--   cmd = { "nimony-lsp" },
+--   filetypes = { "nim" },
+--   root_markers = { "nimony.paths", ".git", "*.nimble" },
+-- })
