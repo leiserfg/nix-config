@@ -160,11 +160,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788487777,
-        "narHash": "sha256-Ro/e1N4ZR8/XaFF+sF9SgfPK79HM5YNEppzFj8p+0Ak=",
+        "lastModified": 1788651960,
+        "narHash": "sha256-v9wJd32eZ2bvhBzVOd7TIjLQd011P7nwOhjKtWlci5I=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "693e8ce0fb240a73c116a03cfd7b19269c87af88",
+        "rev": "2c0350c759688177331b8f5242311fae8877bdb3",
         "type": "github"
       },
       "original": {
@@ -195,18 +195,17 @@
         "calepin": "calepin",
         "kcd": "kcd",
         "llm-agents": "llm-agents",
-        "nim2-nimony-lsp": "nim2-nimony-lsp",
         "nimony": "nimony",
         "nixpkgs": "nixpkgs",
         "pytest-language-server": "pytest-language-server",
         "sokol-tools-bin": "sokol-tools-bin"
       },
       "locked": {
-        "lastModified": 1788605399,
-        "narHash": "sha256-Zdeer3ikCA6cx1vYerorzrWREn/ME+bPy9SSfZcqGxY=",
+        "lastModified": 1788691155,
+        "narHash": "sha256-12kiuYiEfRy5wGI4h4MhziTQ3RcgQKej5w2Wciqz+cM=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "dc6d0746a98424f34fca9cda667508381d5d2250",
+        "rev": "9dbb94b83fb69444962880fc91ebf6216eb1e8de",
         "type": "github"
       },
       "original": {
@@ -252,34 +251,17 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1788602747,
-        "narHash": "sha256-WsI2ZhA2Gv/1pSYcovj7kbikl4hfuJmFPb0GK1Nfpzo=",
+        "lastModified": 1788684345,
+        "narHash": "sha256-+3tYyzbgr5LdaqPDQ9tHM1JuXx7DVQqZH8MeQ7ooStI=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "9cd345e386f30d746cf763343de805f283068649",
+        "rev": "76e610601903fd31e82b996b28a49c6d1adb559c",
         "type": "github"
       },
       "original": {
         "owner": "numtide",
         "repo": "llm-agents.nix",
         "type": "github"
-      }
-    },
-    "nim2-nimony-lsp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1788539354,
-        "narHash": "sha256-FD+e5KQ/7JDVcxT4z0QT9f0JM1pEgt3XULExWZIVWnU=",
-        "ref": "refs/heads/main",
-        "rev": "3f9bf79ce7426b1686d07e1845265137c4fd618b",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/leiserfg/nim2-nimony-lsp"
-      },
-      "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/leiserfg/nim2-nimony-lsp"
       }
     },
     "nimony": {
@@ -341,10 +323,10 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1788531059,
-        "narHash": "sha256-hLD4l3QOGBQhkVp3mQ2lJ/YbEi99qUgKapb40KovZ88=",
+        "lastModified": 1788614874,
+        "narHash": "sha256-7QYjT2vHLuX9Z1pdxHXDKCbh1CR3D/2rywB9Tx0MPRg=",
         "ref": "nixos-unstable",
-        "rev": "801bef6abd86b91e51083066b83fb354a11fc640",
+        "rev": "c043004d1c6985732bcc1cbc5a9c9aecbbb4e0f0",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -358,10 +340,10 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1788531059,
-        "narHash": "sha256-hLD4l3QOGBQhkVp3mQ2lJ/YbEi99qUgKapb40KovZ88=",
+        "lastModified": 1788614874,
+        "narHash": "sha256-7QYjT2vHLuX9Z1pdxHXDKCbh1CR3D/2rywB9Tx0MPRg=",
         "ref": "nixos-unstable",
-        "rev": "801bef6abd86b91e51083066b83fb354a11fc640",
+        "rev": "c043004d1c6985732bcc1cbc5a9c9aecbbb4e0f0",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"

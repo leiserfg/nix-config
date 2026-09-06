@@ -1,9 +1,9 @@
-{ unstablePkgs, ... }:
+{ myPkgs, ... }:
 {
 
   programs.kitty = {
     enable = true;
-    package = unstablePkgs.kitty;
+    package = myPkgs.kitty;
     environment = {
       FZF_DEFAULT_OPTS = "--color=light";
     };
