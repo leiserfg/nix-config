@@ -214,6 +214,11 @@
             match.class = "vicinae";
             border_size = 0;
           }
+
+          {
+            match.class = "kitty";
+            fullscreen_state = "0 0"; # kitty remembers maximized and tries to set it back
+          }
         ];
 
         layer_rule = [

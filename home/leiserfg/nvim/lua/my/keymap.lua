@@ -25,8 +25,14 @@ vim.keymap.set(
 )
 
 vim.keymap.set(
-  { "n", "x" },
+  "n",
   "<leader>p",
   '"+p',
   { noremap = true, silent = true, desc = "Paste from clipboard" }
+)
+vim.keymap.set(
+  "x",
+  "<leader>p",
+  '"_d"+P',
+  { noremap = true, silent = true, desc = "Paste from clipboard over selection" }
 )
