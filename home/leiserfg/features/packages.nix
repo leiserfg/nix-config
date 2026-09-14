@@ -146,6 +146,8 @@
     uiua
     noctalia
     myPkgs.nimony
+    myPkgs.nativenif
+    tinycc
     nim
   ];
 }

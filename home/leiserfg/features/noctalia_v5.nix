@@ -68,6 +68,7 @@ let
     shell = {
       corner_radius_scale = 0.0;
       clipboard_enabled = false;
+      screenshot.annotate = true;
     };
     theme = {
       mode = "dark";

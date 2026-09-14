@@ -37,6 +37,7 @@
       myPkgs.pytest-language-server
       # nimlangserver
       # nimlsp
+      shader-slang
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -82,6 +83,7 @@
         ts.typst
         ts.yaml
         ts.vimdoc
+        ts.slang
       ]))
       lualine-nvim
       lualine-lsp-progress

@@ -310,7 +310,12 @@
             ]
             [
               "SUPER+S"
-              (exec "wayscriber -a --freeze")
+              (exec "noctalia msg screenshot-fullscreen")
+            ]
+
+            [
+              "SUPER+A"
+              (exec "noctalia msg annotate")
             ]
             [
               "SUPER+V"
@@ -418,9 +423,9 @@
 
   home.packages = [
     pkgs.bibata-hyprcursor
-    pkgs.wayscriber
-    pkgs.slurp
-    pkgs.grim
+    # pkgs.wayscriber
+    # pkgs.slurp
+    # pkgs.grim
   ];
 
   programs.hyprlock = {

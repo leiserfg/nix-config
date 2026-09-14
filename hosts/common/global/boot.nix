@@ -29,7 +29,7 @@
   # hardware.enableRedistributableFirmware = true;
 
   hardware.firmware = [
-    inputs.nixpkgs-pinned.legacyPackages.${pkgs.system}.linux-firmware
+    inputs.nixpkgs-pinned.legacyPackages.${pkgs.stdenv.hostPlatform.system}.linux-firmware
     pkgs.ipw2200-firmware
     pkgs.rtl8192su-firmware
     pkgs.rt5677-firmware
