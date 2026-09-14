@@ -5,7 +5,6 @@
   config,
   outputs,
 
-  unstablePkgs,
   myPkgs,
   ...
 }:
@@ -18,7 +17,6 @@ rec {
       # wineWowPackages.staging
       winetricks
       myPkgs.eden-emu
-      # unstablePkgs.ryujinx
       # mgba
       # aseprite
       fuse-overlayfs

@@ -1,7 +1,6 @@
 {
   pkgs,
   myPkgs,
-  unstablePkgs,
   lib,
   config,
   options,

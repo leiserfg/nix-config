@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  inputs,
   ...
 }:
 {
@@ -23,4 +24,20 @@
     ];
 
   };
+
+  # Ideally this should be enough, but we can't use it cause upstream linux-firmware is borked
+  # hardware.enableRedistributableFirmware = true;
+
+  hardware.firmware = [
+    inputs.nixpkgs-pinned.legacyPackages.${pkgs.system}.linux-firmware
+    pkgs.ipw2200-firmware
+    pkgs.rtl8192su-firmware
+    pkgs.rt5677-firmware
+    pkgs.rtl8761b-firmware
+    pkgs.zd1211fw
+    pkgs.alsa-firmware
+    pkgs.sof-firmware
+    pkgs.libreelec-dvb-firmware
+
+  ];
 }

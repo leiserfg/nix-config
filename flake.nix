@@ -5,7 +5,7 @@
 
     {
       nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
-      nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+      nixpkgs-pinned.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&rev=3ed67ec0a4d3c7ab4ae1f04f8ee8df07bfa506a2";
 
       # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixpkgs-unstable";
       # nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixpkgs-unstable";
@@ -67,14 +67,6 @@
         # "aarch64-darwin"
         # "x86_64-darwin"
       ];
-
-      unstablePackages = forAllSystems (
-        system:
-        import inputs.nixpkgs-unstable {
-          inherit system;
-          config.allowUnfree = true;
-        }
-      );
     in
     rec {
       overlays = {
@@ -121,7 +113,6 @@
             pkgs = legacyPackages.x86_64-linux;
             specialArgs = {
               inherit inputs;
-              unstablePkgs = unstablePackages.x86_64-linux;
             };
             modules = common-mods ++ [
               ./hosts/shiralad
@@ -132,7 +123,6 @@
             pkgs = legacyPackages.x86_64-linux;
             specialArgs = {
               inherit inputs;
-              unstablePkgs = unstablePackages.x86_64-linux;
             };
             modules = common-mods ++ [
               nixos-hardware.nixosModules.framework-13-7040-amd
@@ -144,7 +134,6 @@
             pkgs = legacyPackages.x86_64-linux;
             specialArgs = {
               inherit inputs;
-              unstablePkgs = unstablePackages.x86_64-linux;
             };
             modules = common-mods ++ [
               nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen3
@@ -161,7 +150,6 @@
           }
           // {
             myPkgs = inputs.leiserfg-overlay.packages.x86_64-linux;
-            unstablePkgs = unstablePackages.x86_64-linux;
           };
         in
         {

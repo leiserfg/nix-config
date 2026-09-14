@@ -1,6 +1,5 @@
 {
   pkgs,
-  unstablePkgs,
   ...
 }:
 {
@@ -18,9 +17,7 @@
     terraform
     # traceroute
     # chromium
-    # (unstablePkgs.teams-for-linux)
     # slack
-    bruno
   ];
 
   services.shikane = {

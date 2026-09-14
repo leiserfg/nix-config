@@ -2,7 +2,6 @@
   inputs,
   lib,
   pkgs,
-  unstablePkgs,
   config,
   outputs,
   ...

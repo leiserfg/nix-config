@@ -33,7 +33,6 @@
   programs.fuse.userAllowOther = true;
 
   programs.dconf.enable = true;
-  hardware.enableRedistributableFirmware = true;
 
   programs.nix-ld.enable = true;
 

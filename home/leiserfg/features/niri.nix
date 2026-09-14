@@ -1,6 +1,5 @@
 {
   pkgs,
-  unstablePkgs,
   lib,
   hyprPkgs,
   config,

@@ -2,7 +2,6 @@
   pkgs,
   myPkgs,
   inputs,
-  unstablePkgs,
   ...
 }:
 {
@@ -36,7 +35,7 @@
     nix-search-cli
     stylua
     ty
-    (unstablePkgs.ruff)
+    ruff
     terraform-ls
     awscli2
     awslogs
@@ -60,7 +59,7 @@
     # --- Networking & Communication ---
     mosh
     websocat
-    (unstablePkgs.telegram-desktop)
+    telegram-desktop
     sshuttle
     autossh
     openssh
@@ -111,17 +110,15 @@
     ffmpeg
     kitty-img
     material-symbols
-    noto-fonts-color-emoji
+    # noto-fonts-color-emoji
     noto-fonts-cjk-sans
     qpwgraph
     scrcpy
     guvcview
-    peazip
     unzip
     yadm
 
     # --- Fonts ---
-    (pkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
     nerd-fonts.symbols-only
 
     # --- Audio ---

@@ -1,6 +1,5 @@
 {
   pkgs,
-  unstablePkgs,
   config,
   myPkgs,
   inputs,
@@ -33,7 +32,6 @@
     # poetry
     # blender-hip
     # gamescope
-    # unstablePkgs.godot_4
     # godot
     # mindustry-wayland
     # nushell
