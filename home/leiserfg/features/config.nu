@@ -114,6 +114,6 @@ def --env awsenv [] {
    export-env {$env.AWS_PROFILE = (open ~/.aws/credentials | from ini | columns | input list --fuzzy )}
 }
 
-def terraform_partial [] {
-    commandline edit --replace (terraform plan | grep '\sresource\s".*{' | sed -E 's/.*resource "(.*)" "(.*)".*/ "\1.\2"  /' | fzf -m --bind ctrl-a:select-all,ctrl-d:deselect-all |  sed "s/^/-target/"  | xargs echo terraform apply)
+def tf [] {
+  terraform plan -json | from json -o | where type == planned_change | get change.resource.addr | input list -m | each {|target| $"-target=($target)"} | str join " " |  commandline edit --replace $"terraform apply ($in)"
 }

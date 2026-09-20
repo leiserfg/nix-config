@@ -8,6 +8,9 @@
   programs.vicinae = {
     enable = true;
     systemd.enable = true;
+    settings = {
+
+    };
     # package = myPkgs.vicinae;
     extensions =
       let

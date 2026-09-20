@@ -12,7 +12,7 @@
   home.packages = with pkgs; [
     # centrifugo
     #pgcli
-    insomnia
+    bruno
     libreoffice-qt6
     terraform
     # traceroute

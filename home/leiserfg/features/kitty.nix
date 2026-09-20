@@ -6,6 +6,7 @@
     # package = myPkgs.kitty;
     environment = {
       FZF_DEFAULT_OPTS = "--color=light";
+      SHELL = "nu";
     };
     font = {
       name = "Iosevka Term SS15 Medium";
