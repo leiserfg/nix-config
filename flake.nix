@@ -5,10 +5,9 @@
 
     {
       nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
-      nixpkgs-pinned.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&rev=3ed67ec0a4d3c7ab4ae1f04f8ee8df07bfa506a2";
 
-      # nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixpkgs-unstable";
-      # nixpkgs-unstable.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixpkgs-unstable";
+      nixpkgs-pinned.url =  "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+      # nixpkgs-pinned.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&rev=3ed67ec0a4d3c7ab4ae1f04f8ee8df07bfa506a2";
 
       home-manager.url = "github:nix-community/home-manager";
       home-manager.inputs.nixpkgs.follows = "nixpkgs";

@@ -3,7 +3,7 @@
 
   programs.kitty = {
     enable = true;
-    package = myPkgs.kitty;
+    # package = myPkgs.kitty;
     environment = {
       FZF_DEFAULT_OPTS = "--color=light";
     };
