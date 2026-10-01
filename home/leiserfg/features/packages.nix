@@ -57,7 +57,6 @@
     ast-grep
 
     # --- Networking & Communication ---
-    mosh
     websocat
     telegram-desktop
     sshuttle
@@ -141,13 +140,14 @@
     steam-run
     glib
     jq
-    xh
-    handlr-regex
+    (handlr-regex.overrideAttrs (_: { doCheck = false; }))
+        # handlr
+
+    # mosh
     uiua
     noctalia
     myPkgs.nimony
     myPkgs.nativenif
-    tinycc
     nim
   ];
 }

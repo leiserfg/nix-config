@@ -16,7 +16,7 @@ in
       glab
       # git-branchless
       jjui
-      mergiraf
+      # mergiraf
       watchman
       ;
   };

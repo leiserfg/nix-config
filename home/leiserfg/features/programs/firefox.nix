@@ -36,6 +36,7 @@
           "browser.compactmode.show" = true;
           "dom.webgpu.enabled" = true;
           "browser.uidensity" = 1;
+          "browser.nova.enabled" = false;
           "media.ffmpeg.vaapi.enabled" = true;
           "media.ffvpx.enabled" = true;
         };

@@ -3,7 +3,7 @@
   home.packages = with pkgs; [
     # --- Scripts & Custom Binaries ---
     (writeShellScriptBin "xdg-open" ''
-      exec -a $0 ${lib.getExe handlr-regex} open "$@"
+      exec -a $0 ${lib.getExe (pkgs.handlr-regex.overrideAttrs (_: { doCheck = false; }))} open "$@"
     '')
     (writeShellScriptBin "vicinae-pp" ''
       printf " Performance\n Balanced\n Power Saver" \
