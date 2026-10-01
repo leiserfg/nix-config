@@ -3,7 +3,10 @@
   ...
 }:
 {
-  home.packages = [ pkgs.pcmanfm-qt ];
+  home.packages = [
+    pkgs.pcmanfm-qt
+    pkgs.tree
+  ];
   home.file.".local/share/file-manager/actions/send-to-telegram.desktop".text = ''
     [Desktop Entry]
     Type=Action
