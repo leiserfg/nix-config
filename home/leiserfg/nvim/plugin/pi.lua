@@ -86,7 +86,7 @@ local function ensure_kitty_running()
   }
 
   -- Give Kitty a moment to start
-  vim.wait(500, function()
+  vim.wait(1000, function()
     return is_kitty_running()
   end, 100)
 

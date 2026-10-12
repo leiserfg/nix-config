@@ -36,3 +36,7 @@ for shortcut, callback in pairs {
 } do
   map("n", shortcut, callback, { noremap = true })
 end
+
+
+
+

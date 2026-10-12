@@ -28,7 +28,7 @@
         fg = "job unfreeze";
         vi = "nvim";
         vim = "nvim";
-        awsl = "awslogs groups | fzf | xargs awslogs get -G -S -w";
+        awsl = "awslogs get -G -S -w (awslogs groups | lines | input list -f)";
         ruff-nvim = "ruff check --output-format=concise | nvim +copen -q -";
       };
 

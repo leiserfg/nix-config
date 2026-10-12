@@ -111,7 +111,16 @@ def __parse_cmd [] {
 # ]
 
 def --env awsenv [] {
-   export-env {$env.AWS_PROFILE = (open ~/.aws/credentials | from ini | columns | input list --fuzzy )}
+   export-env {
+      let credentials_file = (open ~/.aws/credentials | from ini)
+      let profile = ($credentials_file | columns | input list --fuzzy)
+      let credentials = ($credentials_file | get $profile)
+
+      $env.AWS_PROFILE = $profile
+      $env.AWS_ACCESS_KEY_ID = $credentials.aws_access_key_id
+      $env.AWS_SECRET_ACCESS_KEY = $credentials.aws_secret_access_key
+
+   }
 }
 
 def tf [] {

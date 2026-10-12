@@ -140,8 +140,9 @@
     steam-run
     glib
     jq
-    (handlr-regex.overrideAttrs (_: { doCheck = false; }))
-        # handlr
+    handlr-regex
+
+    # handlr
 
     # mosh
     uiua
