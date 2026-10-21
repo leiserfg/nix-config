@@ -110,7 +110,7 @@ in
     playwright-skill = {
       resources.playwright-node = lib.getExe (
         pkgs.writeShellScriptBin "playwright-node" ''
-          export NODE_PATH="${pkgs.playwright-test}/lib/node_modules"
+          export NODE_PATH="${pkgs.playwright}/lib/node_modules"
           export PLAYWRIGHT_BROWSERS_PATH="${pkgs.playwright-driver.browsers-chromium}"
           exec ${pkgs.nodejs}/bin/node "$@"
         ''

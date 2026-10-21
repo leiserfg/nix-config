@@ -14,6 +14,7 @@
   boot.kernel.sysctl."vm.max_map_count" = 544288;
 
   hardware.cpu.amd.updateMicrocode = true;
+  hardware.framework.enableKmod = false;
 
   nixpkgs.hostPlatform.system = "x86_64-linux";
 

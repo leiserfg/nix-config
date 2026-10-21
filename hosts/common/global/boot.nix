@@ -19,7 +19,6 @@
       "k10temp"
     ];
     extraModulePackages = with config.boot.kernelPackages; [
-      zenpower
       # ddcci-driver
     ];
 

@@ -176,7 +176,7 @@ in
         "upstream"
       ];
 
-      fsmonitor.backend = "watchman";
+      # fsmonitor.backend = "watchman";
       merge-tools.nvim.merge-args = [
         "-c"
         "packadd nvim.difftool"
