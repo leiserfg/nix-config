@@ -9,13 +9,13 @@
   home.file."${config.xdg.configHome}/nushell/nix-your-shell.nu".source =
     pkgs.nix-your-shell.generate-config "nu";
 
-  home.packages = [
-    (pkgs.runCommand "nushell-fzf-integration" { } ''
-      mkdir -p $out/share/nushell/vendor/autoload
-      ${lib.getExe pkgs.fzf} --nushell | sed s/downcase/lowercase/g > $out/share/nushell/vendor/autoload/fzf.nu
-    '')
+  # home.packages = [
+  #   (pkgs.runCommand "nushell-fzf-integration" { } ''
+  #     mkdir -p $out/share/nushell/vendor/autoload
+  #     ${lib.getExe pkgs.fzf} --nushell | sed s/downcase/lowercase/g > $out/share/nushell/vendor/autoload/fzf.nu
+  #   '')
 
-  ];
+  # ];
   programs = {
     nushell = {
       enable = true;

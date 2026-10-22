@@ -1,22 +1,9 @@
 use std/config light-theme
 
-let carapace_completer = {|spans: list<string>|
+$env.CARAPACE_LENIENT = 1 # https://carapace-sh.github.io/carapace-bin/setup/environment.html#carapace_lenient
 
-   let expanded_alias = scope aliases
-    | where name == $spans.0
-    | get -o 0.expansion
-
-    let spans = if $expanded_alias != null {
-        $spans
-        | skip 1
-        | prepend ($expanded_alias | split row ' ' | take 1)
-    } else {
-        $spans
-    }
-
-    carapace $spans.0 nushell ...$spans
-    | from json
-    | if ($in | default [] | where value =~ '^-.*ERR$' | is-empty) { $in } else { null }
+let carapace_completer = {|place|
+    carapace $place.command.0 nushell ...$place.command | from json
 }
 
 $env.config = {
@@ -51,30 +38,6 @@ def __parse_cmd [] {
 }
 
 # $env.config.keybindings ++=  [
-# # History
-# {
-#   name: history_menu
-#   modifier: control
-#   keycode: char_0
-#   mode: [emacs, vi_insert, vi_normal]
-#   event: [
-#     {
-#       send: executehostcommand
-#       cmd: "
-# commandline edit --replace (
-#         history
-#           | get command
-#           | reverse
-#           | uniq
-#           | str join (char -i 0)
-#           | fzf --scheme=history --read0 --tiebreak=chunk --layout=reverse --height=70% -q (commandline)
-#           | decode utf-8
-#           | str trim
-#       )
-#       "
-#     }
-#   ]
-# }
 # {
 #     name: fzf_files
 #     modifier: control
