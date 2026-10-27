@@ -37,41 +37,24 @@ def __parse_cmd [] {
   let text = $in
 }
 
-# $env.config.keybindings ++=  [
-# {
-#     name: fzf_files
-#     modifier: control
-#     keycode: char_t
-#     mode: [emacs, vi_normal, vi_insert]
-#     event: [
-#       {
-#         send: executehostcommand
-#         cmd: "
-#
-#           let token_end = commandline get-cursor;
-#           let text = commandline;
-#           let ending = $text | str substring ($token_end + 1 )..-1;
-#           let text = $text | str substring 0..$token_end;
-#
-#           let res = $text | parse --regex '(?s)\\A(?P<prefix>.*[\\s=])(?P<needle>\\S+)$';
-#
-#           let parts = if ($res | is-empty) {
-#            [
-#             ['prefix' 'needle'];
-#             [$text    '']
-#            ];
-#           } else { $res } | first
-#
-#           let result = rg --files | fzf --reverse --walker=file,dir,follow,hidden --scheme=path --walker-root=($parts.needle | path expand)
-#           commandline edit --replace ([$parts.prefix $result]|str join '')
-#           commandline set-cursor --end
-#           commandline edit --append $ending
-#         "
-#       }
-#     ]
-# }
 
-# ]
+$env.config.keybindings ++= [
+  {
+    name: fuzzy_path_completion
+    modifier: control
+    keycode: char_t
+    mode: [emacs, vi_normal, vi_insert]
+    event: {
+      send: executehostcommand
+      cmd: "
+        let path = (rg --files | lines | input list --fuzzy 'Select path:')
+        if $path != null {
+          commandline edit --insert $path
+        }
+      "
+    }
+  }
+]
 
 def --env awsenv [] {
    export-env {
