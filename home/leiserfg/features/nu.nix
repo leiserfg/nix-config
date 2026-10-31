@@ -19,6 +19,8 @@
   programs = {
     nushell = {
       enable = true;
+      loadSessionVariables = true;
+
       extraConfig = (builtins.readFile ./config.nu) + ''
         source ${./notebook_theme.nu}
         source ${./brace-expand.nu}

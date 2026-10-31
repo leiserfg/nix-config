@@ -160,11 +160,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792668857,
-        "narHash": "sha256-chUrnAqBhBLvXBUsLFxFYBIl8c0GWp06wdjmAMS8l+U=",
+        "lastModified": 1793193205,
+        "narHash": "sha256-X6xa6sGA7RnJQuZGbFMC+K+KToWAlBDCCjJXfTwEPsw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "cb7de2c7e589afe7531d4832c71ad4df144624ea",
+        "rev": "095fef2f265c3c0da4fe315efba8f8a04495ab34",
         "type": "github"
       },
       "original": {
@@ -203,11 +203,11 @@
         "sokol-tools-bin": "sokol-tools-bin"
       },
       "locked": {
-        "lastModified": 1792400845,
-        "narHash": "sha256-65N2cKIM7hda0ESAYiywgjgCDhPLdGuGvCsvYze4Vx8=",
+        "lastModified": 1792821290,
+        "narHash": "sha256-rNCKm5tUJot6/xq5q7Lc3QNcDmkOouGmx2cw5YmsCtE=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "cf80924a9bf00c229af1e6fcbff907aaec0f11ad",
+        "rev": "f5ab9180e7617209741b8cf3a02d00a2ed26d64c",
         "type": "github"
       },
       "original": {
@@ -228,10 +228,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1792381975,
-        "narHash": "sha256-jXmORmL8tbeyDo7/FiPk68P+UBctz/vph2x8XMHg1uM=",
+        "lastModified": 1792708153,
+        "narHash": "sha256-WA8ApztLScSY330voQfUR28FS+erMCphfFMPy+/aIF0=",
         "ref": "refs/heads/main",
-        "rev": "84a9f135716cbcdc1fa58ab3c52b85f9a1a0cd0f",
+        "rev": "d026657ab1ee7ec8a7ca0509e17657d5247ddc42",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/numtide/llm-agents.nix"
@@ -253,11 +253,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1792668368,
-        "narHash": "sha256-PoqUEkQ+/NKnGF66iwIwLzqdVOUO6lX1i8DvvtU7buY=",
+        "lastModified": 1793337267,
+        "narHash": "sha256-HiJivFTcq8no0L9bac+3MkaPeFy5gP+LLQMZXQNo5O8=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "327ba8b06108782bb26e22aec8df01806573aa49",
+        "rev": "467c27cb367fa1059583bcadf28390611f66550b",
         "type": "github"
       },
       "original": {
@@ -288,10 +288,10 @@
     "nimony": {
       "flake": false,
       "locked": {
-        "lastModified": 1792397519,
-        "narHash": "sha256-GRSNbLXkr+hLw2oFJi2in6Gs4mEnVkcaFQ0T2df8ot8=",
+        "lastModified": 1792702245,
+        "narHash": "sha256-DHksADFpM0L0tJb4zeQAMn7v4LxKmSRJwPKiKgrVdcs=",
         "ref": "refs/heads/master",
-        "rev": "2886287b74eeb134191d9ee51d8a27ae658d2e05",
+        "rev": "c5dc002e3559351433af18396cd57773fe043063",
         "shallow": true,
         "submodules": true,
         "type": "git",
@@ -311,11 +311,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792491056,
-        "narHash": "sha256-6n1Dn+WYtD8lprnSi+0k4FjbKfIVNG8lblpJ5MiiqXs=",
+        "lastModified": 1793355509,
+        "narHash": "sha256-/Zs18x+IW4LuVH0rKxra0WPRgsk0DQsi0Bwkf8sOC5c=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "efb6d0d5e2394c3c5416a18652808aba206c0988",
+        "rev": "04c6b94fa104bc23650983a4513aea196794d321",
         "type": "github"
       },
       "original": {
@@ -326,10 +326,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1792094642,
-        "narHash": "sha256-zp8ToDMnqZcu4o4IH9pdwXFXGp7yLm/M0dEnNWnyd7I=",
+        "lastModified": 1792502884,
+        "narHash": "sha256-IoNisKcGbUjdd45qCqywGMCYmZ5EnkxezvLII0FWwNA=",
         "ref": "nixos-unstable",
-        "rev": "fe13242281a67641c0102cdb1087f0ebe586c7df",
+        "rev": "02c087f3fe673c9e317f206a627cb6b910336dbe",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -343,10 +343,10 @@
     },
     "nixpkgs-pinned": {
       "locked": {
-        "lastModified": 1792502884,
-        "narHash": "sha256-IoNisKcGbUjdd45qCqywGMCYmZ5EnkxezvLII0FWwNA=",
+        "lastModified": 1793341285,
+        "narHash": "sha256-Y1CiZ4SoBUjLQyQM/pY+rS2dXD3CHLPstF0lmOc73D4=",
         "ref": "nixos-unstable",
-        "rev": "02c087f3fe673c9e317f206a627cb6b910336dbe",
+        "rev": "1c89083e451e891152365b799595cf7790a43325",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -360,10 +360,10 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1792502884,
-        "narHash": "sha256-IoNisKcGbUjdd45qCqywGMCYmZ5EnkxezvLII0FWwNA=",
+        "lastModified": 1793341285,
+        "narHash": "sha256-Y1CiZ4SoBUjLQyQM/pY+rS2dXD3CHLPstF0lmOc73D4=",
         "ref": "nixos-unstable",
-        "rev": "02c087f3fe673c9e317f206a627cb6b910336dbe",
+        "rev": "1c89083e451e891152365b799595cf7790a43325",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -378,11 +378,11 @@
     "pi-llamacpp": {
       "flake": false,
       "locked": {
-        "lastModified": 1790172086,
-        "narHash": "sha256-Q63awf1R2Un2Is0UfxFFTKH0FKeayP5+5/MhpzVNJn0=",
+        "lastModified": 1793387494,
+        "narHash": "sha256-3t+4y6vNHOwOmC9b+pK++Euqwra/pKSlBuk8q5DB+Hs=",
         "owner": "huggingface",
         "repo": "pi-llama",
-        "rev": "e03e07be02abdf0f7ac52032e2050e19e2bdd5c7",
+        "rev": "306f8a885f49986f6346cb5cffab351c7d43d02c",
         "type": "github"
       },
       "original": {
@@ -394,10 +394,10 @@
     "pytest-language-server": {
       "flake": false,
       "locked": {
-        "lastModified": 1791622116,
-        "narHash": "sha256-Iyn7dh9YBXkaSRa5vRLUwunVMIhekp/0OwPaiVPgSWA=",
+        "lastModified": 1792424862,
+        "narHash": "sha256-B7T4jPrUNMk7ZGASdto7OpVO+xXxXVOvxDKW5CcwbMM=",
         "ref": "refs/heads/master",
-        "rev": "c0d19b0e6f90496a22e7a23a1eda3e09bc655d86",
+        "rev": "22d4952d9464aa183030ca7d784fa6f806c88320",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/bellini666/pytest-language-server"
@@ -411,10 +411,10 @@
     "raddebugger": {
       "flake": false,
       "locked": {
-        "lastModified": 1792202668,
-        "narHash": "sha256-+xX9R7PIbXYFOJSAPs9QoIYszi5w7YssrtmncvJk5xE=",
+        "lastModified": 1792507179,
+        "narHash": "sha256-y76eVv2SkDeaesHuBFmiHQ6bd2rnkbt9j2qE3fm8B/E=",
         "ref": "refs/heads/master",
-        "rev": "62b715a30e5da6b8d7e02372a8e7458feab1df97",
+        "rev": "771f63dd35d3d17f0c7914c5031959282802be5f",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/EpicGames/raddebugger"

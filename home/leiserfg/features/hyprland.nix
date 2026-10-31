@@ -418,6 +418,13 @@
 
       };
 
+      extraLuaFiles = {
+        "monman" = {
+          content = ./monman.lua;
+          autoLoad = true;
+        };
+
+      };
       # extraConfig = builtins.readFile ./hyprland_monitor_manager.lua;
     };
 
@@ -496,22 +503,22 @@
     };
   };
 
-  systemd.user.services.hyprland-monitor-manager = {
-    Unit = {
-      Description = "Hyprland Monitor Manager";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      Type = "simple";
-      ExecStart = "${lib.getExe pkgs.python3} ${./monman.py}";
-      Restart = "on-failure";
-      RestartSec = 5;
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
+  # systemd.user.services.hyprland-monitor-manager = {
+  #   Unit = {
+  #     Description = "Hyprland Monitor Manager";
+  #     After = [ "graphical-session.target" ];
+  #     PartOf = [ "graphical-session.target" ];
+  #   };
+  #   Service = {
+  #     Type = "simple";
+  #     ExecStart = "${lib.getExe pkgs.python3} ${./monman.py}";
+  #     Restart = "on-failure";
+  #     RestartSec = 5;
+  #   };
+  #   Install = {
+  #     WantedBy = [ "graphical-session.target" ];
+  #   };
+  # };
 
   systemd.user.services.swaybg-wallpaper = {
     Unit = {

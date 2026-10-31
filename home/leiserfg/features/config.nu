@@ -72,3 +72,27 @@ def --env awsenv [] {
 def tf [] {
   terraform plan -json | from json -o | where type == planned_change | get change.resource.addr | input list -m | each {|target| $"-target=($target)"} | str join " " |  commandline edit --replace $"terraform apply ($in)"
 }
+
+ def fetch-nix-index [] {
+       let arch = if $nu.os-info.arch == "arm64" {
+           "aarch64"
+       } else {
+           $nu.os-info.arch
+       }
+
+       let os_name = $nu.os-info.name | str lowercase
+       let os = if $os_name == "macos" {
+           "darwin"
+       } else {
+           $os_name
+       }
+
+       let filename = $"index-($arch)-($os)"
+       let cache_dir = ($nu.home-dir | path join ".cache" "nix-index")
+       let files_path = ($cache_dir | path join "files")
+       let url = $"https://github.com/nix-community/nix-index-database/releases/latest/download/($filename)"
+
+       mkdir $cache_dir
+       http get --raw $url | save --force $files_path
+}
+

@@ -150,5 +150,6 @@
     myPkgs.nimony
     myPkgs.nativenif
     nim
+    comma
   ];
 }
