@@ -56,18 +56,31 @@ $env.config.keybindings ++= [
   }
 ]
 
-def --env awsenv [] {
-   export-env {
-      let credentials_file = (open ~/.aws/credentials | from ini)
-      let profile = ($credentials_file | columns | input list --fuzzy)
-      let credentials = ($credentials_file | get $profile)
+  def with-aws [cmd: string, ...args: string] {
+     let creds = (aws configure export-credentials --format process | from json)
 
-      $env.AWS_PROFILE = $profile
-      $env.AWS_ACCESS_KEY_ID = $credentials.aws_access_key_id
-      $env.AWS_SECRET_ACCESS_KEY = $credentials.aws_secret_access_key
-
+     with-env {
+       AWS_ACCESS_KEY_ID: $creds.AccessKeyId
+       AWS_SECRET_ACCESS_KEY: $creds.SecretAccessKey
+       AWS_SESSION_TOKEN: $creds.SessionToken
+     } {
+       ^$cmd ...$args
+     }
    }
-}
+
+
+# def --env awsenv [] {
+#    export-env {
+#       let credentials_file = (open ~/.aws/credentials | from ini)
+#       let profile = ($credentials_file | columns | input list --fuzzy)
+#       let credentials = ($credentials_file | get $profile)
+#
+#       $env.AWS_PROFILE = $profile
+#       $env.AWS_ACCESS_KEY_ID = $credentials.aws_access_key_id
+#       $env.AWS_SECRET_ACCESS_KEY = $credentials.aws_secret_access_key
+#
+#    }
+# }
 
 def tf [] {
   terraform plan -json | from json -o | where type == planned_change | get change.resource.addr | input list -m | each {|target| $"-target=($target)"} | str join " " |  commandline edit --replace $"terraform apply ($in)"

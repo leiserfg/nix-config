@@ -40,10 +40,6 @@
       brightness.enable_ddcutil = true;
       desktop_widgets.enabled = true;
       idle = {
-        enable = true;
-        idle_timeout = 300; # 5 minutes
-        lock_timeout = 330; # 5.5 minutes
-        suspend_timeout = 600; # 10 minutes
         behavior.lock = {
           action = "lock";
           enabled = true;
