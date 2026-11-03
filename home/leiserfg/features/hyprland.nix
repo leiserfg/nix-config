@@ -503,37 +503,20 @@
     };
   };
 
-  # systemd.user.services.hyprland-monitor-manager = {
+  # systemd.user.services.swaybg-wallpaper = {
   #   Unit = {
-  #     Description = "Hyprland Monitor Manager";
+  #     Description = "Set wallpaper with swaybg";
   #     After = [ "graphical-session.target" ];
   #     PartOf = [ "graphical-session.target" ];
   #   };
   #   Service = {
   #     Type = "simple";
-  #     ExecStart = "${lib.getExe pkgs.python3} ${./monman.py}";
   #     Restart = "on-failure";
   #     RestartSec = 5;
+  #     ExecStart = "${lib.getExe pkgs.swaybg} -i /home/leiserfg/wall.png -m fill";
   #   };
   #   Install = {
   #     WantedBy = [ "graphical-session.target" ];
   #   };
   # };
-
-  systemd.user.services.swaybg-wallpaper = {
-    Unit = {
-      Description = "Set wallpaper with swaybg";
-      After = [ "graphical-session.target" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      Type = "simple";
-      Restart = "on-failure";
-      RestartSec = 5;
-      ExecStart = "${lib.getExe pkgs.swaybg} -i /home/leiserfg/wall.png -m fill";
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-  };
 }
