@@ -3,7 +3,17 @@ use std/config light-theme
 $env.CARAPACE_LENIENT = 1 # https://carapace-sh.github.io/carapace-bin/setup/environment.html#carapace_lenient
 
 let carapace_completer = {|place|
-    carapace $place.command.0 nushell ...$place.command | from json
+    # When completing a wrapped command, ask carapace about the underlying command.
+    let command = if $place.command.0 == "with-aws" {
+        $place.command | skip 1
+    } else {
+        $place.command
+    }
+    if ($command | is-empty) {
+        []
+    } else {
+        carapace $command.0 nushell ...$command | from json
+    }
 }
 
 $env.config = {
@@ -56,7 +66,10 @@ $env.config.keybindings ++= [
   }
 ]
 
-  def with-aws [cmd: string, ...args: string] {
+  # Usage: with-aws terraform plan
+  # Nushell commands and pipelines can be passed as a closure:
+  # with-aws { aws s3 ls | lines }
+  def --wrapped with-aws [command: any, ...args: string] {
      let creds = (aws configure export-credentials --format process | from json)
 
      with-env {
@@ -64,7 +77,11 @@ $env.config.keybindings ++= [
        AWS_SECRET_ACCESS_KEY: $creds.SecretAccessKey
        AWS_SESSION_TOKEN: $creds.SessionToken
      } {
-       ^$cmd ...$args
+       if (($command | describe) == "closure") {
+         do $command
+       } else {
+         run-external $command ...$args
+       }
      }
    }
 

@@ -9,6 +9,8 @@
     checkConfig = true;
     systemd.enable = true;
     settings = {
+      location.address = "Berlin";
+      auto_locate = false;
       audio.enable_overdrive = true;
       bar.default = {
         position = "right";
@@ -60,7 +62,9 @@
         blurred_desktop = true;
         fingerprint = false; # so it does not activate the fingerprint reader at lock screen already
         allow_empty_password = true; # this activates the reader on Enter key press
+        grace_period_seconds = 3;
       };
+
       location.auto_locate = true;
       shell = {
         corner_radius_scale = 0.0;

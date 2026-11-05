@@ -101,9 +101,9 @@
     sioyek
     imv
     jamesdsp
-    krita
-    vtracer
-    inkscape
+    # krita
+    # vtracer
+    # inkscape
     ffmpeg
     kitty-img
     material-symbols
@@ -133,8 +133,7 @@
     ntfs3g
     localsend
     wtype
-    voxtype-vulkan
-    # quickshell
+    # voxtype-vulkan
     steam-run
     glib
     jq
