@@ -20,18 +20,16 @@
     fwupd.enable = true;
     gvfs.enable = true;
 
-    scx = {
+    scx-loader = {
       enable = true;
-
-      # Use this one when the issue get's fixed
-      scheduler = "scx_lavd";
-      extraArgs = [ "--autopower" ];
-
-      # scheduler = "scx_bpfland";
-      # extraArgs = [
-      #   "-m"
-      #   " auto"
-      # ];
+      config = {
+        default_sched = "scx_lavd";
+        scx_lavd.auto_mode = [
+          "--autopilot"
+          "--pinned-slice-us"
+          "500"
+        ];
+      };
     };
 
     openssh.enable = true;

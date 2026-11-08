@@ -16,7 +16,7 @@
   ];
 
   home.packages = with pkgs; [
-    immich-go
+    # immich-go
     # (kdePackages.qtquickeffectmaker.overrideAttrs {
     #   postPatch = ''
     #     ls

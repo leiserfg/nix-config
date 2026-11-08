@@ -2,7 +2,6 @@
   pkgs,
   input,
   config,
-  lib,
   ...
 }:
 {
@@ -26,6 +25,10 @@
   # finger cross to this workarounding mesa issues
   boot.kernelParams = [ "amdgpu.dcdebugmask=0x10" ];
 
+  boot.extraModprobeConfig = ''
+    options cros_charge_control probe_with_fwk_charge_control=1
+  '';
+
   powerManagement = {
     powerDownCommands = ''
       echo "0 0 1 0 0 0" > /sys/class/leds/chromeos\:multicolor\:charging/multi_intensity && echo "60" > /sys/class/leds/chromeos\:multicolor\:charging/brightness
@@ -39,14 +42,19 @@
     description = "Set battery charge limit";
     after = [ "multi-user.target" ];
 
+    script = ''
+      echo 60 > /sys/class/power_supply/BAT1/charge_control_start_threshold
+      echo 80 > /sys/class/power_supply/BAT1/charge_control_end_threshold
+    '';
+
     serviceConfig = {
       Type = "oneshot";
-      # ExecStart = "${lib.getExe pkgs.bash} -c 'echo 100 > /sys/class/power_supply/BAT1/charge_control_end_threshold'";
-      ExecStart = "${pkgs.bash}/bin/bash -c 'echo 80 > /sys/class/power_supply/BAT1/charge_control_end_threshold'";
       RemainAfterExit = true;
     };
 
     # This ensures the service runs at startup
     wantedBy = [ "multi-user.target" ];
   };
+
+  environment.systemPackages = [ pkgs.fw-ectool ];
 }

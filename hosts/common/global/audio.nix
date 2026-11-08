@@ -5,7 +5,8 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    jack.enable = true;
+    # Use pw-jack if needed
+    # jack.enable = true;
   };
   security.rtkit.enable = true;
 }

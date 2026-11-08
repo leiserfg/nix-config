@@ -16,7 +16,7 @@ rec {
     [
       # wineWowPackages.staging
       winetricks
-      myPkgs.eden-emu
+      # myPkgs.eden-emu
       # mgba
       # aseprite
       fuse-overlayfs

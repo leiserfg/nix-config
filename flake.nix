@@ -41,11 +41,6 @@
         flake = false;
       };
 
-      # run0-sudo-shim = {
-      #   url = "github:lordgrimmauld/run0-sudo-shim";
-      #   inputs.nixpkgs.follows = "nixpkgs";
-      # };
-
       # hyprland = {
       #   url = "github:hyprwm/Hyprland";
       # };

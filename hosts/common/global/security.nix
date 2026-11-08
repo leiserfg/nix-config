@@ -40,7 +40,11 @@
     "net.core.default_qdisc" = "cake";
   };
   boot.kernelModules = [ "tcp_bbr" ];
-  boot.blacklistedKernelModules = [ "esp4" "esp6" "rxrpc" ];
+  boot.blacklistedKernelModules = [
+    "esp4"
+    "esp6"
+    "rxrpc"
+  ];
   security.pam.loginLimits = [
     {
       domain = "*";
@@ -49,4 +53,8 @@
       value = "32768";
     }
   ];
+
+  security.run0.sudo-shim.enable = true;
+  security.run0.enable = true;
+  security.sudo.enable = false;
 }
