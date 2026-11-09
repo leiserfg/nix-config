@@ -73,4 +73,19 @@
     };
   };
 
+  systemd.user.services.rbw-agent = {
+    Unit = {
+      Description = "Unofficial Bitwarden CLI Agent (Default Profile)";
+      Documentation = "man:rbw-agent(1)";
+    };
+    Service = {
+      Type = "exec";
+      ExecStart = "${pkgs.lib.getExe' myPkgs.rbw "rbw-agent"} --no-daemonize";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
 }

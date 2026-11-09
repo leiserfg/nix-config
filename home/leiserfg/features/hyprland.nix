@@ -140,14 +140,6 @@
           };
         };
 
-        on = {
-          _args = [
-            "hyprland.start"
-            (luaf ''
-              hl.exec_cmd("rbw-agent")
-            '')
-          ];
-        };
         gesture = {
           fingers = 4;
           direction = "horizontal";
