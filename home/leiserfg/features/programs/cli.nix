@@ -1,5 +1,6 @@
 {
   pkgs,
+  myPkgs,
   ...
 }:
 {
@@ -8,6 +9,10 @@
     aria2 = {
       enable = true;
       settings = { };
+    };
+
+    devenv = {
+      enable = true;
     };
 
     fzf = {
@@ -45,6 +50,7 @@
 
     rbw = {
       enable = true;
+      package = myPkgs.rbw;
       settings = {
         # A bit of obfuscation doesn't hurt
         base_url = "https:" + "//bw.nul.mywire.org/";

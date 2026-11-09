@@ -203,11 +203,11 @@
         "sokol-tools-bin": "sokol-tools-bin"
       },
       "locked": {
-        "lastModified": 1793940278,
-        "narHash": "sha256-OrgxQFb5CLeLAnmFZ5u3zm3KOIrDit22F86VzUsjzz8=",
+        "lastModified": 1794145294,
+        "narHash": "sha256-UuRsC1fkGrP47n8BwUNL5Qk3liAawa3M7eurhQnkyP4=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "8412db7b659581ceecab913c16d66de35c8faa20",
+        "rev": "cb63df812ac19af12271962ce72d103c0f96c3a5",
         "type": "github"
       },
       "original": {
@@ -253,11 +253,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1794116168,
-        "narHash": "sha256-Dsc08opiicQ3fnDfNdobPwp1ciLO24lhj+cioQ7NN1E=",
+        "lastModified": 1794136683,
+        "narHash": "sha256-cvhBTH6nsE6R6b6uNjoSeuCOH4iaurC5A+/prTxk8Rw=",
         "owner": "numtide",
         "repo": "llm-agents.nix",
-        "rev": "cc555ccdfc76237727ce7ceccdc40fde61dae577",
+        "rev": "b351c893c53850908a89bc30ea2cbf6437ada413",
         "type": "github"
       },
       "original": {

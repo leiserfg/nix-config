@@ -25,9 +25,7 @@
     python313Packages.ipython
     pipenv
     uv
-    devenv
     nix
-    nixd
     nix-update
     nixfmt
     nixpkgs-review
@@ -152,4 +150,5 @@
     nim
     comma
   ];
+
 }

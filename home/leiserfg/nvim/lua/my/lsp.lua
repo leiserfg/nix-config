@@ -96,9 +96,18 @@ setup_lsp("nixd", {
   filetypes = { "nix" },
   settings = {
     nixd = {
-      -- nixpkgs = {
-      --   expr = nixCats.extra "nixdExtras.nixpkgs" or [[import <nixpkgs> {}]],
-      -- },
+      options = {
+        nixos = {
+          expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.<hostname>.options",
+        },
+        home_manager = {
+          expr = '(builtins.getFlake (toString ./.)).homeConfigurations."<username>@<hostname>".options',
+        },
+      },
+
+      nixpkgs = {
+        expr = "import <nixpkgs> { }",
+      },
       formatting = {
         command = { "nixfmt" },
       },
