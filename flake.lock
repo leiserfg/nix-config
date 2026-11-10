@@ -1,26 +1,5 @@
 {
   "nodes": {
-    "beacon": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1786104427,
-        "narHash": "sha256-Gu6qfMbxHDV5PF80YBfOdOTYAaxJvQ6UfE4yMc5jEdQ=",
-        "ref": "refs/heads/master",
-        "rev": "8cb2c7b93c0f66485be62311e9e0894cc6370c94",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/adisbladis/nix-cache-beacon"
-      },
-      "original": {
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/adisbladis/nix-cache-beacon"
-      }
-    },
     "bun2nix": {
       "inputs": {
         "flake-parts": [
@@ -427,7 +406,6 @@
     },
     "root": {
       "inputs": {
-        "beacon": "beacon",
         "home-manager": "home-manager",
         "leiserfg-overlay": "leiserfg-overlay",
         "llm-agents": "llm-agents_2",

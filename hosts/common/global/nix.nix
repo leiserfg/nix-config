@@ -24,7 +24,8 @@
         # "https://nix-gaming.cachix.org"
         # "https://nyx.chaotic.cx"
         # "https://hyprland.cachix.org"
-        "http://localhost:5028" # local beacon cache
+
+        # "http://localhost:5028" # local beacon cache
       ];
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
@@ -56,25 +57,25 @@
     clean.extraArgs = "--keep-since 9d --keep 3";
   };
 
-  services.nix-cache-beacon = {
-    # Announce cache to the local network
-    advert = {
-      enable = true;
-      port = 5000; # Harmonia port
-    };
-
-    # Enable local binary cache using discovered caches on the local network
-    cache.enable = true;
-  };
-
-  # Make Nix aware of our local network cache
-
-  # Local binary cache using Harmonia
-  # nix-cache-beacon can be used with any cache implementation
-  services.harmonia.cache.enable = true; # Serve up local Nix store
-  networking.firewall.allowedTCPPorts = [ 5000 ]; # Open firewall port for Harmonia
-
-  services.harmonia.cache.settings = {
-    priority = 30;
-  };
+  # services.nix-cache-beacon = {
+  #   # Announce cache to the local network
+  #   advert = {
+  #     enable = true;
+  #     port = 5000; # Harmonia port
+  #   };
+  #
+  #   # Enable local binary cache using discovered caches on the local network
+  #   cache.enable = true;
+  # };
+  #
+  # # Make Nix aware of our local network cache
+  #
+  # # Local binary cache using Harmonia
+  # # nix-cache-beacon can be used with any cache implementation
+  # services.harmonia.cache.enable = true; # Serve up local Nix store
+  # networking.firewall.allowedTCPPorts = [ 5000 ]; # Open firewall port for Harmonia
+  #
+  # services.harmonia.cache.settings = {
+  #   priority = 30;
+  # };
 }

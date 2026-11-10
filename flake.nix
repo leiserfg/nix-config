@@ -21,10 +21,10 @@
       # blender.url = "github:edolstra/nix-warez?dir=blender";
       # blender.inputs.nixpkgs.follows = "nixpkgs";
 
-      beacon = {
-        url = "git+https://github.com/adisbladis/nix-cache-beacon?shallow=1";
-        inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
-      };
+      # beacon = {
+      #   url = "git+https://github.com/adisbladis/nix-cache-beacon?shallow=1";
+      #   inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
+      # };
 
       nixos-hardware = {
         url = "github:NixOS/nixos-hardware";
@@ -98,7 +98,6 @@
       nixosConfigurations =
         let
           common-mods = (builtins.attrValues nixosModules) ++ [
-            inputs.beacon.nixosModules.default
           ];
         in
         {
