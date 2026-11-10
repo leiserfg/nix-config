@@ -10,8 +10,6 @@
     # ./features/daw.nix
   ];
   home.packages = with pkgs; [
-    # centrifugo
-    #pgcli
     bruno
     libreoffice-qt6
     terraform
@@ -19,93 +17,5 @@
     # chromium
     # slack
   ];
-
-  services.shikane = {
-    enable = false;
-    settings = {
-
-      profile = [
-
-        {
-          name = "left-docked-home";
-          output = [
-            {
-              match = "eDP-1";
-              enable = false;
-            }
-            {
-              search = [
-                "m=DELL S2721QS"
-                "s=DY1CM43"
-                "v=Dell Inc."
-              ];
-              enable = true;
-              scale = 1.5;
-              mode = "3840x2160@60.00Hz";
-            }
-          ];
-        }
-
-        {
-          name = "ultra-wide-lg";
-          output = [
-            {
-              match = "eDP-1";
-              enable = false;
-            }
-            {
-              search = [ "m=LG HDR WQHD" ];
-              enable = true;
-              scale = 1.6666;
-              mode = "3840x1600@59.99300";
-            }
-          ];
-        }
-
-        {
-          name = "ultra-wide-dell";
-          output = [
-            {
-              match = "eDP-1";
-              enable = false;
-            }
-            {
-              search = [ "m=DELL U3421WE" ];
-              enable = true;
-              scale = 1.6666;
-              mode = "3440x1440@59.97300";
-            }
-          ];
-        }
-
-        {
-          name = "left-docked";
-          output = [
-            {
-              match = "eDP-1";
-              enable = false;
-            }
-            {
-              search = "/.*";
-              enable = true;
-              scale = 1.5;
-              mode = "3840x2160@60.00Hz";
-            }
-          ];
-        }
-        {
-          name = "lonly";
-          output = [
-            {
-              match = "eDP-1";
-              enable = true;
-              scale = 1.2;
-              mode = "1920x1200@60.00Hz";
-            }
-          ];
-        }
-      ];
-    };
-  };
 
 }

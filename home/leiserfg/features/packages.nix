@@ -101,9 +101,9 @@
     sioyek
     imv
     jamesdsp
-    # krita
+    krita
     # vtracer
-    # inkscape
+    inkscape
     ffmpeg
     kitty-img
     material-symbols

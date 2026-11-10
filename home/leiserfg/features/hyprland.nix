@@ -297,6 +297,17 @@
               (exec "rofi_power")
             ]
             [
+              "SUPER+0"
+              (luaf ''
+                pcall(function() hl.clear_crashed_lockscreen() end)
+                hl.dsp.exec_cmd('noctalia msg session lock')
+              '')
+              {
+                locked = true;
+                long_press = true;
+              }
+            ]
+            [
               "SUPER+D"
               (exec "vicinae toggle")
             ]
@@ -366,7 +377,7 @@
 
             [
               "switch:on:Lid Switch"
-              (luaf "hl.monitor{output='eDP-1',  disabled=true}")
+              (luaf "if #hl.get_monitors() > 1 then hl.monitor{output='eDP-1', disabled=true} end")
               { locked = true; }
             ]
             #
