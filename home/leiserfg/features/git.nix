@@ -171,6 +171,7 @@ in
       #   sign-on-push = true;
       # };
 
+      git.subprocess = true;
       git.fetch = [
         "origin"
         "upstream"
