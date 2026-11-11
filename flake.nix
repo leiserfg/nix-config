@@ -35,12 +35,9 @@
         url = "github:numtide/llm-agents.nix";
         inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
       };
+
       pi-claude = {
         url = "github:earendil-works/pi-claude-code";
-        flake = false;
-      };
-      pi-llamacpp = {
-        url = "github:huggingface/pi-llama";
         flake = false;
       };
 

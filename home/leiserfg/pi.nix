@@ -97,7 +97,7 @@ in
   skills.entries = {
     brave-search = {
       resources.brave-search = lib.getExe (import ./skills/brave-search { inherit pkgs; });
-      description = "Brave web search (with content extraction)";
+      description = "See/search the web and get results as markdown";
       instructions = aliases: ''
         # Brave Search
 
