@@ -375,6 +375,22 @@
         "url": "https://github.com/NixOS/nixpkgs"
       }
     },
+    "pi-claude": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793912427,
+        "narHash": "sha256-86zfGr9YoM+I/PmWHDJb8AbcxhYC1m8aOeghJjvN414=",
+        "owner": "earendil-works",
+        "repo": "pi-claude-code",
+        "rev": "d5b5e04c314d3452d357174d16d10dda34daa2d2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "earendil-works",
+        "repo": "pi-claude-code",
+        "type": "github"
+      }
+    },
     "pi-llamacpp": {
       "flake": false,
       "locked": {
@@ -434,6 +450,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-pinned": "nixpkgs-pinned",
+        "pi-claude": "pi-claude",
         "pi-llamacpp": "pi-llamacpp"
       }
     },

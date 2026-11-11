@@ -42,7 +42,6 @@ let
     }) builtinExtensionNames
   );
 
-
   # Get all md files from prompts directory of subagent extension
   # subagentPromptsDir = "${builtinExtensionsDir}/subagent/prompts";
   # subagentPromptsFiles = lib.pipe subagentPromptsDir [
@@ -85,7 +84,10 @@ let
 
 in
 {
-  home.packages = [ piPackage ];
+  home.packages = [
+    piPackage
+    pkgs.claude-code
+  ];
 
   home.file = allExtensionEntries;
 

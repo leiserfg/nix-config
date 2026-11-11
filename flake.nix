@@ -6,7 +6,7 @@
     {
       nixpkgs.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
 
-      nixpkgs-pinned.url =  "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
+      nixpkgs-pinned.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&ref=nixos-unstable";
       # nixpkgs-pinned.url = "git+https://github.com/NixOS/nixpkgs?shallow=1&rev=3ed67ec0a4d3c7ab4ae1f04f8ee8df07bfa506a2";
 
       home-manager.url = "github:nix-community/home-manager";
@@ -35,7 +35,10 @@
         url = "github:numtide/llm-agents.nix";
         inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
       };
-
+      pi-claude = {
+        url = "github:earendil-works/pi-claude-code";
+        flake = false;
+      };
       pi-llamacpp = {
         url = "github:huggingface/pi-llama";
         flake = false;
@@ -99,7 +102,6 @@
         let
           common-mods = (builtins.attrValues nixosModules) ++ [
             inputs.beacon.nixosModules.default
-            # inputs.run0-sudo-shim.nixosModules.default
           ];
         in
         {
