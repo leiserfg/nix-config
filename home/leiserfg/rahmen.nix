@@ -48,7 +48,7 @@
 
     steam
     # scrcpy
-    llama-cpp-vulkan
+    # llama-cpp-vulkan
   ];
 
   # home.sessionVariables = {

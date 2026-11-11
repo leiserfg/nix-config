@@ -391,22 +391,6 @@
         "type": "github"
       }
     },
-    "pi-llamacpp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1793387494,
-        "narHash": "sha256-3t+4y6vNHOwOmC9b+pK++Euqwra/pKSlBuk8q5DB+Hs=",
-        "owner": "huggingface",
-        "repo": "pi-llama",
-        "rev": "306f8a885f49986f6346cb5cffab351c7d43d02c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "huggingface",
-        "repo": "pi-llama",
-        "type": "github"
-      }
-    },
     "pytest-language-server": {
       "flake": false,
       "locked": {
@@ -450,8 +434,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-pinned": "nixpkgs-pinned",
-        "pi-claude": "pi-claude",
-        "pi-llamacpp": "pi-llamacpp"
+        "pi-claude": "pi-claude"
       }
     },
     "sokol-tools-bin": {
