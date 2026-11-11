@@ -46,6 +46,7 @@
     neovim-unwrapped
   ];
 
+  networking.nftables.enable = true;
   hardware.logitech.wireless.enable = true;
   programs.solaar.enable = true;
 }

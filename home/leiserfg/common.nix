@@ -54,6 +54,11 @@
     username = lib.mkDefault "leiserfg";
     homeDirectory = "/home/${config.home.username}";
     stateVersion = "22.05";
+
+    file."Pictures/Wallpapers" = {
+      source = ./assets/Wallpapers;
+      recursive = true;
+    };
   };
 
   nix = {
@@ -66,4 +71,6 @@
   };
 
   manual.manpages.enable = false; # Doc framework is broken; so let's stop updating this
+
+
 }

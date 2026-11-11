@@ -56,5 +56,5 @@
     wantedBy = [ "multi-user.target" ];
   };
 
-  environment.systemPackages = [ pkgs.fw-ectool ];
+  environment.systemPackages = [ ];
 }

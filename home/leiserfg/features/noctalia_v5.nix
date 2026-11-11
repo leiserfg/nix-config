@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   ...
 }:
@@ -74,6 +75,13 @@
       theme = {
         mode = "dark";
         source = "builtin";
+      };
+      wallpaper = {
+        directory = "${config.home.homeDirectory}/Pictures/Wallpapers/";
+        automation = {
+          enabled = true;
+          pause_on_fullscreen = true;
+        };
       };
       widget.media = {
         hide_when_no_media = true;
