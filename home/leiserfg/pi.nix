@@ -3,18 +3,14 @@
   pkgs,
   lib,
   myPkgs,
-  inputs,
   ...
 }:
 let
   extensionsDir = ./pi-extensions;
   extensionFiles = builtins.readDir extensionsDir;
 
-  # Reference to the pi package
-  piPackage = myPkgs.pi;
-
-  # Directory containing builtin extensions
-  builtinExtensionsDir = "${piPackage}/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions";
+  # Directory containing builtin extensions from the configured pi package
+  builtinExtensionsDir = "${config.programs.pi-coding-agent.package}/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions";
 
   # List of builtin extension names to include (empty by default, add as needed)
   builtinExtensionNames = [
@@ -42,58 +38,37 @@ let
     }) builtinExtensionNames
   );
 
-  # Get all md files from prompts directory of subagent extension
-  # subagentPromptsDir = "${builtinExtensionsDir}/subagent/prompts";
-  # subagentPromptsFiles = lib.pipe subagentPromptsDir [
-  #   builtins.readDir
-  #   (dir: lib.filterAttrs (name: type: type == "regular" && lib.hasSuffix ".md" name) dir)
-  #   lib.attrNames
-  # ];
-
-  # Create home.file entries for prompts (symlinks)
-  # promptEntries = lib.listToAttrs (
-  #   map (file: {
-  #     name = ".pi/agent/prompts/${file}";
-  #     value = {
-  #       source = "${subagentPromptsDir}/${file}";
-  #     };
-  #   }) subagentPromptsFiles
-  # );
-
-  # Filter inputs for pi-* entries
-  piInputs = lib.filterAttrs (name: value: lib.hasPrefix "pi-" name) inputs;
-
-  # Create home.file entries for pi-* inputs from flake
-  piInputEntries = lib.listToAttrs (
-    map (name: {
-      name = ".pi/agent/extensions/${name}";
-      value = {
-        source = inputs.${name};
-        recursive = true;
-      };
-    }) (lib.attrNames piInputs)
-  );
-
   # Combine all extension entries
   allExtensionEntries = lib.mkMerge [
     extensionEntries
     builtinExtensionEntries
-    piInputEntries
-    # promptEntries
   ];
 
 in
 {
-  home.packages = [
-    piPackage
-    pkgs.claude-code
-  ];
+  programs.pi-coding-agent = {
+    enable = true;
+    package = myPkgs.pi;
+    extraPackages = [
+      pkgs.git
+      pkgs.nodejs
+    ];
+
+    # Let Pi manage package installs and updates without making settings read-only.
+    mutableSettings = true;
+    settings.packages = [
+      "git:github.com/earendil-works/pi-claude-code"
+    ];
+  };
+
+  home.packages = [ pkgs.claude-code ];
 
   home.file = allExtensionEntries;
 
   skills.raw_paths = [
     ./raw_skills
   ];
+
   skills.entries = {
     brave-search = {
       resources.brave-search = lib.getExe (import ./skills/brave-search { inherit pkgs; });

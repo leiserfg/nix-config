@@ -21,24 +21,9 @@
       # blender.url = "github:edolstra/nix-warez?dir=blender";
       # blender.inputs.nixpkgs.follows = "nixpkgs";
 
-      # beacon = {
-      #   url = "git+https://github.com/adisbladis/nix-cache-beacon?shallow=1";
-      #   inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
-      # };
-
       nixos-hardware = {
         url = "github:NixOS/nixos-hardware";
         inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
-      };
-
-      llm-agents = {
-        url = "github:numtide/llm-agents.nix";
-        inputs.nixpkgs.follows = "nixpkgs"; # I don't wanna use the cache
-      };
-
-      pi-claude = {
-        url = "github:earendil-works/pi-claude-code";
-        flake = false;
       };
 
       # hyprland = {
