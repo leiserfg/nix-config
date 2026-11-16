@@ -44,9 +44,11 @@
   environment.systemPackages = with pkgs; [
     android-tools
     neovim-unwrapped
+    pkgs.iptables # For sshuttle
   ];
 
-  networking.nftables.enable = true;
+  # networking.nftables.enable = true;
+
   hardware.logitech.wireless.enable = true;
   programs.solaar.enable = true;
 }

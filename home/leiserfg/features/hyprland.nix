@@ -211,7 +211,6 @@
             fullscreen_state = "0 0"; # kitty remembers maximized and tries to set it back
           }
         ];
-
         layer_rule = [
           {
             match.namespace = "vicinae";
@@ -220,7 +219,6 @@
             blur = true;
             ignore_alpha = 0;
           }
-
         ];
 
         bind = mkBinds (

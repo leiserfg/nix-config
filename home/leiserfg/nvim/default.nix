@@ -7,7 +7,7 @@
 {
   programs.neovim = {
     enable = true;
-    # package = inputs.neovim-nightly.packages.${pkgs.system}.default;
+    # package = inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default;
     withPython3 = false;
     withRuby = false;
     withNodeJs = false;
