@@ -1,8 +1,9 @@
 { lib, pkgs, ... }:
 {
   services = {
-    gpg-agent.enable = true;
+    # gpg-agent.enable = true;
     # ssh-agent.enable = true;
+
     mpris-proxy.enable = true;
     network-manager-applet.enable = false;
 

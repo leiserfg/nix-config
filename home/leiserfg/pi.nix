@@ -48,7 +48,6 @@ in
 {
   programs.pi-coding-agent = {
     enable = true;
-    package = myPkgs.pi;
     extraPackages = [
       pkgs.git
       pkgs.nodejs

@@ -84,11 +84,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794715309,
-        "narHash": "sha256-awkBBs5ctFKgEYjpNGpi3t/VqF589n5EWfdinRb2gNI=",
+        "lastModified": 1795268568,
+        "narHash": "sha256-1RJm4DEu7YHJv94sjSY7sjqT+kHx/AUwmtUN4dtFBUo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a1293da7dd8e497e08d26173f97e2976b36a31ea",
+        "rev": "6857c7f7c338ad181729c52071386b0d3afa24bc",
         "type": "github"
       },
       "original": {
@@ -109,11 +109,11 @@
         "sokol-tools-bin": "sokol-tools-bin"
       },
       "locked": {
-        "lastModified": 1794738691,
-        "narHash": "sha256-jEQBterF3gy9iZhKwme4P0SfhlCMgwWWnIsj4d1MZFU=",
+        "lastModified": 1795291868,
+        "narHash": "sha256-nFrl8q5XqF/JhrKDNXqzSb6lCvR2PhgFD6uoYT0Igxg=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "de4ad5e0b252b5770874aee0e4a7a7386c80f274",
+        "rev": "0c61e7b90f5633eb5aa556ea43cda989a66bea38",
         "type": "github"
       },
       "original": {
@@ -134,10 +134,10 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1794529915,
-        "narHash": "sha256-7RDIC9WIlfKgsyh+OkjeL3Ae5KvokiF5JclFFtHrLUM=",
+        "lastModified": 1795136326,
+        "narHash": "sha256-SIQ2I5EZgbaTUyyMO8E/IeT+UQKkYMKQMPXh+kl49ZY=",
         "ref": "refs/heads/main",
-        "rev": "60533bc9bb15b0c60c12607ecf8dfc00c87b298e",
+        "rev": "3e6e622935b31f805b3ef893d71b97c1469965e1",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/numtide/llm-agents.nix"
@@ -151,10 +151,10 @@
     "nativenif": {
       "flake": false,
       "locked": {
-        "lastModified": 1794543729,
-        "narHash": "sha256-PhrL7TMML9kIFCyZnr6X9THCe/VlJs+PeUP2CyJKHpE=",
+        "lastModified": 1795074815,
+        "narHash": "sha256-q5J569XPWpJpJTo6JNKn/zePYRWTU6Z8Qfpkt8A/yUs=",
         "ref": "refs/heads/master",
-        "rev": "268c72e649a2e81a911d9fb3536b005c2338eb67",
+        "rev": "6d40924f70282a56a5231c394afb0e6f4d61f274",
         "shallow": true,
         "submodules": true,
         "type": "git",
@@ -170,10 +170,10 @@
     "nimony": {
       "flake": false,
       "locked": {
-        "lastModified": 1794544205,
-        "narHash": "sha256-YFpFC7WmvNh3WrutVGH53kPk8jNzCDDqB8oveuAIRl4=",
+        "lastModified": 1795150929,
+        "narHash": "sha256-/eeofrHW9RHJqXLL0kmNfrZ7n7IQHO0T+5Z67IvGuZ8=",
         "ref": "refs/heads/master",
-        "rev": "44668bf32beb7a21015005b9ca7817b0603a6ec1",
+        "rev": "7e37272a44fa69330781029ad6a567400f94c9eb",
         "shallow": true,
         "submodules": true,
         "type": "git",
@@ -193,11 +193,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1794597451,
-        "narHash": "sha256-bUkc9dMpCFiJuuf5Efr7pnCDs5q18aA8zJah+MYZl9w=",
+        "lastModified": 1795018746,
+        "narHash": "sha256-glQAHvZGgBVjzGIWgIZYSf3X10gvtO2LPR4rtyP/Soc=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "eb3c90bd715f7a9a28719bb014f53d309ccb2fc8",
+        "rev": "33475966110df258f52d05ec4d4cd6394637cbb9",
         "type": "github"
       },
       "original": {
@@ -208,27 +208,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1794386569,
-        "narHash": "sha256-x9sADJvoVG0L6RejZB+/BB4YiGZFBZrfTlhF4uBq1tQ=",
+        "lastModified": 1794890597,
+        "narHash": "sha256-lME2lHoDHAaSHP3/okgiVoJ0icVEvsQH8LeU3We7tcc=",
         "ref": "nixos-unstable",
-        "rev": "d4f25a3e562008648d45bcf2d70bcc7422cad84e",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      },
-      "original": {
-        "ref": "nixos-unstable",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      }
-    },
-    "nixpkgs-pinned": {
-      "locked": {
-        "lastModified": 1794537146,
-        "narHash": "sha256-Wpz/7x/YWnDIBu7yj6ixe8j6fIMsidd9Y+o1PqPF3iM=",
-        "ref": "nixos-unstable",
-        "rev": "d5cc6833999746cffdfe0598f7bc801a57b887a9",
+        "rev": "04906337b6d53e8bb0eaf0470ae9f070a4d4eb55",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -242,10 +225,10 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1794537146,
-        "narHash": "sha256-Wpz/7x/YWnDIBu7yj6ixe8j6fIMsidd9Y+o1PqPF3iM=",
+        "lastModified": 1795234589,
+        "narHash": "sha256-f/VVvxf5RsQgWVhUtefoca5ktVg0DA2bnkMOcmSnozo=",
         "ref": "nixos-unstable",
-        "rev": "d5cc6833999746cffdfe0598f7bc801a57b887a9",
+        "rev": "2786a2a72088ecf32aea5b3ec52099e6a7cff78f",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -260,10 +243,10 @@
     "pytest-language-server": {
       "flake": false,
       "locked": {
-        "lastModified": 1794043369,
-        "narHash": "sha256-7R9dIr5ZFn2xtlneayeRWLmgG2+2weQ+SrsyZG5Tses=",
+        "lastModified": 1794653644,
+        "narHash": "sha256-fxg3v7x/aJK65Pt8OCPdj5pTH+RXpOeFR9o/NnI/gRk=",
         "ref": "refs/heads/master",
-        "rev": "fd41bde1f64ca982c486a88ba1e6e889060754a8",
+        "rev": "28e22164cca0fac5807be68c0120ebcb52a292a3",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/bellini666/pytest-language-server"
@@ -296,18 +279,17 @@
         "home-manager": "home-manager",
         "leiserfg-overlay": "leiserfg-overlay",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
-        "nixpkgs-pinned": "nixpkgs-pinned"
+        "nixpkgs": "nixpkgs_2"
       }
     },
     "sokol-tools-bin": {
       "flake": false,
       "locked": {
         "dir": "bin/linux",
-        "lastModified": 1794334731,
-        "narHash": "sha256-XKIgXKze1xKJrdaMUAvtb+o2bAuIKPCTHQsSygteBf0=",
+        "lastModified": 1795032342,
+        "narHash": "sha256-aQdNnwix6gEb1DRCtn7gOtb15a78Q22PpgqmJrw0vlI=",
         "ref": "refs/heads/master",
-        "rev": "2428a421bb4c2d765c43cb77167b6e1d6e0d498f",
+        "rev": "b893e838089db3d36ae1090655ccf0b25d788c87",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/floooh/sokol-tools-bin"

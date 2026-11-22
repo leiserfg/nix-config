@@ -8,13 +8,6 @@ vim.cmd.colorscheme "notebook"
 local map = vim.keymap.set
 local opts = { silent = true, expr = true }
 
-vim.g.fff = {
-  lazy_sync = true,
-  debug = { enabled = true, show_scores = true },
-}
-vim.keymap.set('n', 'ff', function() require('fff').find_files() end, { desc = 'FFFind files' })
-
-
 map("i", "<c-j>", function()
   return require("luasnip").expand_or_jumpable() and "<Plug>luasnip-expand-or-jump" or "<c-j>"
 end, opts)
