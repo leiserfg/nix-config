@@ -130,11 +130,11 @@
         "sokol-tools-bin": "sokol-tools-bin"
       },
       "locked": {
-        "lastModified": 1795291868,
-        "narHash": "sha256-nFrl8q5XqF/JhrKDNXqzSb6lCvR2PhgFD6uoYT0Igxg=",
+        "lastModified": 1795464899,
+        "narHash": "sha256-cMnvssQOM2PDdPz3X1EDuTW/FhRr4klNcehpTwP4IZ8=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "0c61e7b90f5633eb5aa556ea43cda989a66bea38",
+        "rev": "e1106c174e8687900d2fec92fe55239df6606392",
         "type": "github"
       },
       "original": {

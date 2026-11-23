@@ -7,7 +7,7 @@
 {
   home.packages = with pkgs; [
     # --- AI & LLM ---
-    myPkgs.llama-cpp-vulkan
+    # myPkgs.llama-cpp-vulkan
     (nvtopPackages.amd)
     # --- Development Tools ---
     gcc

@@ -1,10 +1,12 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
 {
+  home.packages = [ pkgs.gpu-screen-recorder ];
   programs.noctalia = {
     enable = true;
     checkConfig = true;
@@ -22,6 +24,7 @@
           # "active_window"
         ];
         start = lib.reverseList [
+          "recorder"
           "media"
           "tray"
           "notifications"
@@ -66,6 +69,7 @@
         grace_period_seconds = 3;
       };
 
+      plugins.enabled = [ "noctalia/screen_recorder" ];
       location.auto_locate = true;
       shell = {
         corner_radius_scale = 0.0;
@@ -96,6 +100,8 @@
         workspace_label_placement = "inside";
         inactive_opacity = 0.7;
       };
+
+      widget.recorder.type = "noctalia/screen_recorder:recorder";
     };
 
   };
