@@ -298,7 +298,7 @@
               "SUPER+0"
               (luaf ''
                 pcall(function() hl.clear_crashed_lockscreen() end)
-                hl.dsp.exec_cmd('noctalia msg session lock')
+                hl.dsp.exec_cmd("bash -c 'sleep 3 && noctalia msg session lock'")
               '')
               {
                 locked = true;

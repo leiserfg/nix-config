@@ -18,6 +18,19 @@
   home.packages = [
     pkgs.twitter-color-emoji
     (pkgs.iosevka-bin.override { variant = "SGr-IosevkaTermSS15"; })
+    #     (
+    # (pkgs.iosevka.override {
+    #   set = "TermSS15";
+    #   privateBuildPlan = {
+    #     family = "Iosevka Term SS15";
+    #     spacing = "term";
+    #     serifs = "sans";
+    #     noCvSs = true;
+    #     exportGlyphNames = false;
+    #     buildTextureFeature = true;
+    #     variants.inherits = "ss15";
+    #   };
+    # })
   ];
 
   # home.sessionVariables = {
