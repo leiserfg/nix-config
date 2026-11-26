@@ -102,6 +102,11 @@
       };
 
       widget.recorder.type = "noctalia/screen_recorder:recorder";
+
+      theme.templates = {
+        enable_builtin_templates = true;
+        builtin_ids = [ "luciole" ];
+      };
     };
 
   };

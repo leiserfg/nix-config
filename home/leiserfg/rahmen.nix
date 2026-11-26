@@ -41,10 +41,10 @@
 
     # playwright-test
     # anki
-    # sunvox
-    orca-c
+    sunvox
+    # orca-c
 
-    # myPkgs.tola
+    # tola
 
     steam
     # scrcpy

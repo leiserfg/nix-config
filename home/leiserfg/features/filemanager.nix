@@ -1,21 +1,25 @@
 {
   pkgs,
+  myPkgs,
   ...
 }:
 {
   home.packages = [
-    pkgs.pcmanfm-qt
+    myPkgs.luciole
     pkgs.tree
   ];
-  home.file.".local/share/file-manager/actions/send-to-telegram.desktop".text = ''
-    [Desktop Entry]
-    Type=Action
-    Profiles=profile_id
-    Name=Send to telegram
-    Icon=telegram
+  home.file.".local/share/luciole/scripts/send-to-telegram".source =
+    pkgs.writeShellScript "send-to-telegram" ''
+      Telegram -sendpath "$@"
+    '';
 
-    [X-Action-Profile profile_id]
-    MimeTypes=all/all;
-    Exec=Telegram -sendpath %F
-  '';
+  xdg.portal = {
+    extraPortals = [ myPkgs.luciole ];
+    config.common = {
+      "org.freedesktop.impl.portal.FileChooser" = [
+        "luciole"
+        "gtk"
+      ];
+    };
+  };
 }
