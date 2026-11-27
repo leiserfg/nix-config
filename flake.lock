@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795618997,
-        "narHash": "sha256-d9Osol//t6hqeo1xlspsYMbhTJK507h6t0EmPyF5Db0=",
+        "lastModified": 1795748630,
+        "narHash": "sha256-J1iQ1QMnkFwZFXnlPt2t3Qx7TsGjw08/0L3QMqNt+Wg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6a13737c0ed27c7c285f59e3be423ed972aa605f",
+        "rev": "54f903fdaaf5d5720ed36706fe75332af69eb793",
         "type": "github"
       },
       "original": {
@@ -31,11 +31,11 @@
         "sokol-tools-bin": "sokol-tools-bin"
       },
       "locked": {
-        "lastModified": 1795637657,
-        "narHash": "sha256-Y7RVuan/VPPpuWh+0p97b3NcR1gtn6JovE6bN/Fvu44=",
+        "lastModified": 1795768691,
+        "narHash": "sha256-qo/gaWfCsRDYtpvNCde0l+12yxO0ao7TPi0k3TUY+UI=",
         "owner": "leiserfg",
         "repo": "leiserfg-overlay",
-        "rev": "e8742505700b07078fb67ba1fe0b39be80f78f59",
+        "rev": "ac4c6fb210122104422757f4e7d1a69ee31c3a59",
         "type": "github"
       },
       "original": {
@@ -52,10 +52,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1795632256,
-        "narHash": "sha256-Gkq01QTnU3YeG3VOz6C8uX62ZJ+3k+nJ0AoxVg0LAko=",
+        "lastModified": 1795747531,
+        "narHash": "sha256-LeMhoQtV2J74MH+QiqPZ5Ng9XU+lTkyjfDTCcM48//U=",
         "ref": "refs/heads/main",
-        "rev": "3978159ae64f8fa94a9be43cd5651e32cf041471",
+        "rev": "179bc55ced1cf69acfcb58e0dd287c3e2c4e4ffe",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/noctalia-dev/luciole"
@@ -69,10 +69,10 @@
     "nativenif": {
       "flake": false,
       "locked": {
-        "lastModified": 1795074815,
-        "narHash": "sha256-q5J569XPWpJpJTo6JNKn/zePYRWTU6Z8Qfpkt8A/yUs=",
+        "lastModified": 1795187487,
+        "narHash": "sha256-H35kJxbG0L2LphO6L/OTmdW03eKiV6pqv++t/f76KM0=",
         "ref": "refs/heads/master",
-        "rev": "6d40924f70282a56a5231c394afb0e6f4d61f274",
+        "rev": "35c56a553fa000a753f35009c6edf8f0b006c66a",
         "shallow": true,
         "submodules": true,
         "type": "git",
@@ -88,10 +88,10 @@
     "nimony": {
       "flake": false,
       "locked": {
-        "lastModified": 1795150929,
-        "narHash": "sha256-/eeofrHW9RHJqXLL0kmNfrZ7n7IQHO0T+5Z67IvGuZ8=",
+        "lastModified": 1795721977,
+        "narHash": "sha256-kU2QKnEvZGylT26rOYKus0Aj3ajyroZawpGRFkeWQx0=",
         "ref": "refs/heads/master",
-        "rev": "7e37272a44fa69330781029ad6a567400f94c9eb",
+        "rev": "9b92d71fe129e135ceffccb2c25ae1f7d5565445",
         "shallow": true,
         "submodules": true,
         "type": "git",
@@ -111,11 +111,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1795549782,
-        "narHash": "sha256-0mlYwyAv7lUDD6HBgPMqBXjMcIfIZBsLryNnkspeIGs=",
+        "lastModified": 1795690694,
+        "narHash": "sha256-9QjYnidlKg7EtcPkr07D3epP7I1WuVBfA5nk47+I5dc=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "97a30ee0974b815496bec7b136af6b945bd65aef",
+        "rev": "ec39df522f291a1da3bee80d3ff67d99c57a17b0",
         "type": "github"
       },
       "original": {
@@ -126,10 +126,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1794890597,
-        "narHash": "sha256-lME2lHoDHAaSHP3/okgiVoJ0icVEvsQH8LeU3We7tcc=",
+        "lastModified": 1795234589,
+        "narHash": "sha256-f/VVvxf5RsQgWVhUtefoca5ktVg0DA2bnkMOcmSnozo=",
         "ref": "nixos-unstable",
-        "rev": "04906337b6d53e8bb0eaf0470ae9f070a4d4eb55",
+        "rev": "2786a2a72088ecf32aea5b3ec52099e6a7cff78f",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -161,10 +161,10 @@
     "pytest-language-server": {
       "flake": false,
       "locked": {
-        "lastModified": 1794653644,
-        "narHash": "sha256-fxg3v7x/aJK65Pt8OCPdj5pTH+RXpOeFR9o/NnI/gRk=",
+        "lastModified": 1795261430,
+        "narHash": "sha256-Q8Fsxqaf4Wf5wRyBYcZS8bWEn2Na6F7X4W6iloSNreI=",
         "ref": "refs/heads/master",
-        "rev": "28e22164cca0fac5807be68c0120ebcb52a292a3",
+        "rev": "d8d8f29036c47d63c8b0146d55511b791598d2ca",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/bellini666/pytest-language-server"
@@ -204,10 +204,10 @@
       "flake": false,
       "locked": {
         "dir": "bin/linux",
-        "lastModified": 1795032342,
-        "narHash": "sha256-aQdNnwix6gEb1DRCtn7gOtb15a78Q22PpgqmJrw0vlI=",
+        "lastModified": 1795521141,
+        "narHash": "sha256-BTC1WFrkq4kismpmuUzWopMCoyykUx1Cc1Pkp9DYxyM=",
         "ref": "refs/heads/master",
-        "rev": "b893e838089db3d36ae1090655ccf0b25d788c87",
+        "rev": "4f5b2796806875dcf0a5a5dfa9f9dab462726a5e",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/floooh/sokol-tools-bin"
